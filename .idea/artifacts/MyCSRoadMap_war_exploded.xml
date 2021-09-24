@@ -1,0 +1,54 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="MyCSRoadMap:war exploded">
+    <output-path>$PROJECT_DIR$/target/MyCSRoadMap-1.0-SNAPSHOT</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>MyCSRoadMap</module>
+        <packaging>war</packaging>
+        <unpackNestedArchives>false</unpackNestedArchives>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="MyCSRoadMap" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver-legacy:4.1.1" />
+          <element id="library" level="project" name="Maven: org.mongodb:bson:4.1.1" />
+          <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver-core:4.1.1" />
+          <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver-sync:4.1.1" />
+          <element id="library" level="project" name="Maven: javax.mail:mail:1.4" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-mongodb:3.1.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.3.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:5.3.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.3.0" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.3.0" />
+          <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:2.4.0" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.8.6" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.10" />
+          <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.6.10" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.7.25" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+          <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-test:5.2.3.RELEASE" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/MyCSRoadMap-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="MyCSRoadMap/web/Web" />
+    </root>
+  </artifact>
+</component>
