@@ -18,26 +18,26 @@
 
     <dependencies>
 
-<!--        &lt;!&ndash; MongoDB 접속을 위한 드라이버 &ndash;&gt;-->
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+
+        <!--        &lt;!&ndash; MongoDB 접속을 위한 드라이버 &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.mongodb</groupId>-->
 <!--            <artifactId>mongo-java-driver</artifactId>-->
 <!--            <version>3.11.1</version>-->
 <!--        </dependency>-->
 
-        <!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-legacy -->
+<!--         https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-legacy-->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-legacy</artifactId>
-            <version>4.1.1</version>
-        </dependency>
-
-
-        <!--mail -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4</version>
+            <version>4.2.0-beta1</version>
         </dependency>
 
         <!-- MongoDB와 스프링 프레임워크와의 연동을 위해 추가 -->
@@ -46,6 +46,14 @@
             <artifactId>spring-data-mongodb</artifactId>
             <version>3.1.0</version>
         </dependency>
+
+        <!--mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4</version>
+        </dependency>
+
 
         <!-- RequestBody 사용시, JSON 변환이 안되는 경우 추가함 -->
         <dependency>
@@ -68,7 +76,6 @@
             <version>1.1.1</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -82,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <artifactId>spring-web</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
 
@@ -138,12 +145,14 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
             <version>2.1</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
