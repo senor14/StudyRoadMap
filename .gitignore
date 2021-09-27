@@ -1,0 +1,4 @@
+/target/
+/src/main/webapp/WEB-INF/applicationContext.xml
+/src/main/java/service/MailService.java
+/.metadata/
