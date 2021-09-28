@@ -33,7 +33,7 @@
     </filter-mapping>
     <!-- 도메인만 입력했을 경우, 보여주는 페이지 -->
     <welcome-file-list>
-        <welcome-file>/index</welcome-file>
+        <welcome-file>/RoadMap/Login</welcome-file>
     </welcome-file-list>
     <absolute-ordering />
 </web-app>
