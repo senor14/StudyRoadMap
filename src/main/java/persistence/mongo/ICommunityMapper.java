@@ -6,5 +6,5 @@ public interface ICommunityMapper {
 
     JSONArray getStudyRoadMap();
 
-    JSONArray getStudyMindMap();
+    JSONArray getCareerRoadMap();
 }

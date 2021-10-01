@@ -54,7 +54,35 @@ public class CommunityMapper implements ICommunityMapper {
     }
 
     @Override
-    public JSONArray getStudyMindMap() {
-        return null;
+    public JSONArray getCareerRoadMap() {
+
+        log.info(this.getClass().getName());
+
+        JSONArray studyRoadMap = new JSONArray();
+
+        try {
+            MongoCollection<Document> collection = mongodb.getCollection("CareerRoadMap");
+
+            Document query = new Document();
+            query.append("public", "Y");
+
+            Document projection = new Document();
+
+            projection.append("career_id", "$career_id");
+            projection.append("user_uuid", "$user_uuid");
+            projection.append("created", "$created");
+            projection.append("_id", 0);
+
+            Document sort = new Document();
+
+            sort.append("created", -1);
+
+            Consumer<Document> processBlock = studyRoadMap::add;
+            collection.find(query).projection(projection).forEach(processBlock);
+
+        } catch (Exception e) {
+            // handle exception
+        }
+        return studyRoadMap;
     }
 }

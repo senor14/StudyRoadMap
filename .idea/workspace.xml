@@ -9,13 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[INITIAL]-test.java file에서 mongodb연결 이슈 null값 반환">
+    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[UPDATE] getStudyRoadMap 날짜 오름차순 정렬 및 JSONArray로 type변경">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -210,7 +207,7 @@
       <workItem from="1632662862516" duration="5854000" />
       <workItem from="1632744800484" duration="9862000" />
       <workItem from="1632824189493" duration="9702000" />
-      <workItem from="1632915884554" duration="8225000" />
+      <workItem from="1632915884554" duration="9132000" />
     </task>
     <task id="LOCAL-00001" summary="[UPDATE]">
       <created>1632826950981</created>
@@ -219,7 +216,14 @@
       <option name="project" value="LOCAL" />
       <updated>1632826950981</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="[UPDATE] getStudyRoadMap 날짜 오름차순 정렬 및 JSONArray로 type변경">
+      <created>1633082588435</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1633082588435</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,9 +243,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[UPDATE]" />
-    <MESSAGE value="[UPDATE] getStudyRoadMap 날짜 오름차순 정렬 및 JSONArray로 type변경" />
     <MESSAGE value="[INITIAL]-test.java file에서 mongodb연결 이슈 null값 반환" />
-    <option name="LAST_COMMIT_MESSAGE" value="[INITIAL]-test.java file에서 mongodb연결 이슈 null값 반환" />
+    <MESSAGE value="[UPDATE] getStudyRoadMap 날짜 오름차순 정렬 및 JSONArray로 type변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="[UPDATE] getStudyRoadMap 날짜 오름차순 정렬 및 JSONArray로 type변경" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
