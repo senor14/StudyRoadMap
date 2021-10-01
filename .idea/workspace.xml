@@ -14,13 +14,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mapper/IUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/IUserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mapper/impl/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/impl/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoScheduleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoScheduleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoUserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/IMailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IMailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/MailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/util/EncryptUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/EncryptUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +190,7 @@
       <workItem from="1632791612500" duration="12208000" />
       <workItem from="1632831664735" duration="3408000" />
       <workItem from="1632879007140" duration="10147000" />
-      <workItem from="1632969333936" duration="15991000" />
+      <workItem from="1632969333936" duration="24623000" />
     </task>
     <servers />
   </component>

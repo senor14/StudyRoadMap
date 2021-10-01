@@ -3,6 +3,9 @@ package controller;
 import static util.CmmUtil.nvl;
 
 import javax.annotation.Resource;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,9 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import dto.UserDTO;
 import service.IMailService;
 import service.IUserService;
+import util.CmmUtil;
 import util.EncryptUtil;
 import util.RandomUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -441,6 +449,55 @@ public class UserController {
         return "/redirect";
     }
 
+    // 비밀번호 변경 페이지
+    @RequestMapping(value = "RoadMap/PassWordChange")
+    public String PassWordChange() {
+
+        log.info("PassWordChange 시작");
+
+        log.info("PassWordChange 종료");
+
+        return "/Main/PassWordChange";
+    }
+
+    // 비밀번호 변경 처리
+    @RequestMapping(value = "RoadMap/PassWordChangeProc")
+    public String PassWordChangeProc(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
+
+        log.info("PassWordChange 시작");
+
+        String user_id = (String) session.getAttribute("SS_USER_ID");
+        String user_pwd = CmmUtil.nvl(request.getParameter("user_pwd"));
+        String Hash_pwd = EncryptUtil.enHashSHA256(user_pwd);
+
+        Map<String, Object> beforeMap = new HashMap<>();
+
+        beforeMap.put("user_id", user_id);
+
+        Map<String, Object> afterMap = new HashMap<>();
+
+        afterMap.put("user_pwd", Hash_pwd);
+
+        int res = userService.passWordChange(beforeMap, afterMap);
+
+        String msg = "";
+        String url = "/RoadMap/PassWordChange.do";
+
+        if(res == 1){
+            msg = "비밀번호 변경이 성공하였습니다.";
+        } else {
+            msg = "서버의 오류로 인해 비밀번호 변경이 실패했습니다. 잠시 후 다시 시도해주세요. 변경이 계속 실패하는 경우 고객센터에 문의 바랍니다.";
+        }
+
+        model.addAttribute("msg", msg);
+        model.addAttribute("url", url);
+
+        log.info("PassWordChange 종료");
+
+        return "/redirect";
+    }
+
+
     // 회원 탈퇴 페이지
     @RequestMapping(value = "RoadMap/userWithdrawal")
     public String userWithdrawal() {
@@ -452,16 +509,69 @@ public class UserController {
         return "/Main/userWithdrawal";
     }
 
+    // 탈퇴 입력문자열 확인
+    @ResponseBody
+    @RequestMapping(value = "/RoadMap/userWithdrawalCheck", method = RequestMethod.POST)
+    public int TheUserDeleteCheck(HttpServletRequest request) {
+
+        log.info("/RoadMap/userWithdrawalCheck 시작");
+
+        int result = 0;
+        log.info("String 변수저장 시작");
+        String DeleteCheck = request.getParameter("DeleteCheck");
+        log.info("String 변수저장 종료");
+        log.info("DeleteCheck : " + DeleteCheck);
+
+        if (DeleteCheck.equals("Account_withdrawal")) {
+            result = 1;
+        } else {
+            result = 0;
+        }
+
+        log.info("result :" + result);
+        log.info("/RoadMap/userWithdrawalCheck 종료");
+
+        return result;
+    }
+
     // 회원 탈퇴 처리
-    @RequestMapping(value = "RoadMap/userWithdrawal")
-    public String userWithdrawalProc() {
+    @RequestMapping(value = "RoadMap/userWithdrawalProc")
+    public String userWithdrawalProc(HttpSession session, ModelMap model) throws Exception{
 
         log.info("userWithdrawalProc 시작");
+
+        String user_id = (String) session.getAttribute("SS_USER_ID");
+        String enc_id = EncryptUtil.encAES128CBC(user_id);
+        String user_email = (String) session.getAttribute("SS_USER_EMAIL");
+        String enc_email = (String) EncryptUtil.encAES128CBC(user_email);
+
+        Map<String, Object> uMap = new HashMap<>();
+
+        uMap.put("user_id", enc_id);
+        uMap.put("user_email", enc_email);
+
+        List<Map<String, Object>> rList = userService.getDeleteUserInfo(uMap);
+
+        Map<String, Object> pMap = rList.get(0);
+
+        pMap.put("public", "N");
+
+        int career_res = userService.deleteCareerRoadMap(pMap);
+        int mind_res = userService.deleteStudyMinddMap(pMap);
+        int study_res = userService.deleteStudyRoadMap(pMap);
+
+        String msg = "회원탈퇴가 완료되었습니다. 이용해주셔서 감사합니다. 비공개 커리어 로드맵 " + career_res + "개, 스터디 마인드맵 " + mind_res + "개, 스터디 로드맵" + study_res + "개가 삭제되었습니다.";
+        String url = "/RoadMap/Login.do";
+
+        model.addAttribute("msg", msg);
+        model.addAttribute("url", url);
 
         log.info("userWithdrawalProc 종료");
 
         return "/redirect";
     }
+
+
 
 
 }

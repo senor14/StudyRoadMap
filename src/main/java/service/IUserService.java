@@ -18,4 +18,14 @@ public interface IUserService {
     int insertAuthNum(Map<String, Object> pMap);
 
     int getAuthNum(Map<String, Object> uMap);
+
+    List<Map<String, Object>> getDeleteUserInfo(Map<String, Object> uMap);
+
+    int deleteCareerRoadMap(Map<String, Object> pMap);
+
+    int deleteStudyMinddMap(Map<String, Object> pMap);
+
+    int deleteStudyRoadMap(Map<String, Object> pMap);
+
+    int passWordChange(Map<String, Object> beforeMap, Map<String, Object> afterMap);
 }

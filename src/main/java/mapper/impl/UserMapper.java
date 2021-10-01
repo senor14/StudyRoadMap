@@ -2,6 +2,7 @@ package mapper.impl;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import lombok.extern.slf4j.Slf4j;
 import mapper.IUserMapper;
@@ -165,6 +166,161 @@ public class UserMapper implements IUserMapper {
     @Override
     public int reMakePW(Map<String, Object> beforeMap, Map<String, Object> afterMap, String colNm) {
 
+        MongoCollection<Document> collection = mongodb.getCollection(colNm);
+
+        Document findQuery = new Document(beforeMap);
+
+        Document updateQuery = new Document(afterMap);
+
+        UpdateResult updateResults = collection.updateOne(findQuery, new Document("$set", updateQuery));
+
+        int res = 0;
+        res = (int) updateResults.getMatchedCount();
+
+        return res;
+    }
+
+    // 유저의 정보 보냄과 동시에 유저 정보 삭제
+    @Override
+    public List<Map<String, Object>> getDeleteUserInfo(Map<String, Object> uMap, String colNm) {
+
+        List<Map<String, Object>> rList = new LinkedList<>();
+
+        MongoCollection<Document> collection = mongodb.getCollection(colNm);
+
+        Document query = new Document(uMap);
+
+        Consumer<Document> processBlock = document -> {
+
+            Map<String, Object> rMap = new HashMap<>();
+
+            rMap.put("user_uuid", document.getString("user_uuid"));
+
+            rList.add(rMap);
+
+            rMap = null;
+        };
+
+        collection.find(query).forEach(processBlock);
+
+        FindIterable<Document> dRs = collection.find(new Document(uMap));
+        Iterator<Document> cursor = dRs.iterator();
+
+        if (cursor.hasNext()) {
+
+            while (cursor.hasNext()) {
+                collection.deleteOne(cursor.next());
+            }
+
+        }
+        cursor = null;
+        dRs = null;
+        collection = null;
+
+        return rList;
+    }
+
+    @Override
+    public int deleteCareerRoadMap(Map<String, Object> pMap, String career_colNm) {
+
+        log.info(this.getClass().getName() + "deleteCareerRoadMap start");
+
+        MongoCollection<Document> col = mongodb.getCollection(career_colNm);
+
+        FindIterable<Document> dRs = col.find(new Document(pMap));
+
+        Iterator<Document> cursor = dRs.iterator();
+
+        DeleteResult deleteResult = null;
+        int res = 0;
+
+        if (cursor.hasNext()) {
+
+            while (cursor.hasNext()) {
+                deleteResult = col.deleteOne(cursor.next());
+            }
+
+            res = (int) deleteResult.getDeletedCount();
+
+        }
+        cursor = null;
+        dRs = null;
+        col = null;
+        deleteResult = null;
+
+        log.info(this.getClass().getName() + "deleteCareerRoadMap end");
+
+        return res;
+    }
+
+    @Override
+    public int deleteStudyMinddMap(Map<String, Object> pMap, String mind_colNm) {
+
+        log.info(this.getClass().getName() + "deleteCareerRoadMap start");
+
+        MongoCollection<Document> col = mongodb.getCollection(mind_colNm);
+
+        FindIterable<Document> dRs = col.find(new Document(pMap));
+
+        Iterator<Document> cursor = dRs.iterator();
+
+        DeleteResult deleteResult = null;
+        int res = 0;
+
+        if (cursor.hasNext()) {
+
+            while (cursor.hasNext()) {
+                deleteResult = col.deleteOne(cursor.next());
+            }
+
+            res = (int) deleteResult.getDeletedCount();
+
+        }
+        cursor = null;
+        dRs = null;
+        col = null;
+        deleteResult = null;
+
+        log.info(this.getClass().getName() + "deleteCareerRoadMap end");
+
+        return res;
+    }
+
+    @Override
+    public int deleteStudyRoadMap(Map<String, Object> pMap, String road_colNm) {
+
+        log.info(this.getClass().getName() + "deleteCareerRoadMap start");
+
+        MongoCollection<Document> col = mongodb.getCollection(road_colNm);
+
+        FindIterable<Document> dRs = col.find(new Document(pMap));
+
+        Iterator<Document> cursor = dRs.iterator();
+
+        DeleteResult deleteResult = null;
+        int res = 0;
+
+        if (cursor.hasNext()) {
+
+            while (cursor.hasNext()) {
+                deleteResult = col.deleteOne(cursor.next());
+            }
+
+            res = (int) deleteResult.getDeletedCount();
+
+        }
+        cursor = null;
+        dRs = null;
+        col = null;
+        deleteResult = null;
+
+        log.info(this.getClass().getName() + "deleteCareerRoadMap end");
+
+        return res;
+    }
+
+    @Override
+    public int passWordChange(Map<String, Object> beforeMap, Map<String, Object> afterMap, String colNm) {
 
         MongoCollection<Document> collection = mongodb.getCollection(colNm);
 
