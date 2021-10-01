@@ -1,6 +1,5 @@
 package service.impl;
 
-import dto.UserDTO;
 import mapper.IUserMapper;
 import org.springframework.stereotype.Service;
 import service.IUserService;
@@ -17,6 +16,7 @@ public class UserService implements IUserService {
     IUserMapper userMapper;
 
     public static String colNm = "User";
+    public static String auth_colNm = "email_auth";
 
     @Override
     public List<Map<String, String>> getUserInfo(Map<String, Object> uMap) {
@@ -31,17 +31,33 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDTO idCheck(String userId) {
-        return null;
+    public int idCheck(Map<String, Object> uMap) {
+
+        return userMapper.idCheck(uMap, colNm);
     }
 
     @Override
-    public UserDTO getUserEmail(UserDTO pDTO) {
-        return null;
+    public int getUserEmail(Map<String, Object> uMap) {
+
+        return userMapper.getUserEmail(uMap, colNm);
+
     }
 
     @Override
-    public int reMakePW(UserDTO pDTO) {
-        return 0;
+    public int reMakePW(Map<String, Object> beforeMap, Map<String, Object> afterMap) {
+
+        return userMapper.reMakePW(beforeMap, afterMap, colNm);
+    }
+
+    @Override
+    public int insertAuthNum(Map<String, Object> pMap) {
+
+        return userMapper.insertAuthNum(pMap, auth_colNm);
+    }
+
+    @Override
+    public int getAuthNum(Map<String, Object> uMap) {
+
+        return userMapper.getAuthNum(uMap, auth_colNm);
     }
 }

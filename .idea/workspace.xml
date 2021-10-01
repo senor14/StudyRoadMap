@@ -10,15 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/mapper/IUserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/IUserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Main/Login.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Main/SignUp.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyCSRoadMap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MyCSRoadMap.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/IUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/IUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/impl/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/impl/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoScheduleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoScheduleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/IMailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IMailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +31,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -71,7 +74,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -189,6 +192,9 @@
       <workItem from="1632734496835" duration="5161000" />
       <workItem from="1632742447306" duration="1863000" />
       <workItem from="1632791612500" duration="12208000" />
+      <workItem from="1632831664735" duration="3408000" />
+      <workItem from="1632879007140" duration="10147000" />
+      <workItem from="1632969333936" duration="15991000" />
     </task>
     <servers />
   </component>

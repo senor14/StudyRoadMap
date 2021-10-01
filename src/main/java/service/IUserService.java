@@ -1,7 +1,5 @@
 package service;
 
-import dto.UserDTO;
-
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +9,13 @@ public interface IUserService {
 
     int UserSignUp(Map<String, Object> uMap);
 
-    UserDTO idCheck(String userId);
+    int idCheck(Map<String, Object> uMap);
 
-    UserDTO getUserEmail(UserDTO pDTO);
+    int getUserEmail(Map<String, Object> uMap);
 
-    int reMakePW(UserDTO pDTO);
+    int reMakePW(Map<String, Object> beforeMap, Map<String, Object> afterMap);
 
+    int insertAuthNum(Map<String, Object> pMap);
 
+    int getAuthNum(Map<String, Object> uMap);
 }

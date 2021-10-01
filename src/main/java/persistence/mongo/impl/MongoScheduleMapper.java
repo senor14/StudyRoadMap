@@ -23,7 +23,6 @@ import persistence.mongo.IMongoScheduleMapper;
 @Component("MongoScheduleMapper")
 public class MongoScheduleMapper implements IMongoScheduleMapper {
 
-	@Autowired
 	private MongoTemplate mongodb;
 
 	private Logger log = Logger.getLogger(this.getClass());
