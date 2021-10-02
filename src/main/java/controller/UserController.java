@@ -51,7 +51,7 @@ public class UserController {
 
     // 로그인 페이지
     @RequestMapping(value = "RoadMap/Login")
-    public String ReminderLogin(HttpSession session, ModelMap model) throws Exception {
+    public String Login(HttpSession session, ModelMap model) throws Exception {
 
         log.info("Login 시작");
         // 로그인 페이지 접속 시 로그인 상태 지우기 위해 invalidate 실행(세션 올라가있는 상태에서 또 올리면 오류가 나기 때문에)
@@ -64,7 +64,7 @@ public class UserController {
 
     // 로그인 처리
     @RequestMapping(value = "RoadMap/LoginProc")
-    public String TheLoginProc(HttpServletRequest request, Model model, HttpSession session) throws Exception {
+    public String LoginProc(HttpServletRequest request, Model model, HttpSession session) throws Exception {
 
         log.info("/Reminder/ReminderLoginProc start");
         String id = nvl(request.getParameter("id"));
@@ -114,7 +114,7 @@ public class UserController {
 
     // 로그아웃
     @RequestMapping(value = "RoadMap/Logout")
-    public String TheLogout(HttpSession session, Model model) throws Exception {
+    public String Logout(HttpSession session, Model model) throws Exception {
 
         log.info("/RoadMap/Logout 시작");
 
@@ -127,7 +127,7 @@ public class UserController {
 
     // 회원가입 페이지
     @RequestMapping(value = "RoadMap/SignUp")
-    public String ReminderSignUp() {
+    public String SignUp() {
 
         log.info("SignUp 시작");
 
@@ -235,7 +235,7 @@ public class UserController {
     // 이메일 인증코드 확인
     // res는 에러코드 0: 인증 실패, 1: 인증 성공
     @ResponseBody
-    @RequestMapping(value = "RoadMap/emailAuth", method = RequestMethod.POST)
+    @RequestMapping(value = "RoadMap/emailCertified", method = RequestMethod.POST)
     public int emailCertified(HttpServletRequest request) throws Exception {
         log.info("emailCertified 시작");
 
