@@ -16,8 +16,13 @@ public class CommunityService implements ICommunityService {
     private ICommunityMapper CommunityMapper;
 
     @Override
-    public JSONArray getStudyMap(String r_mCheck) {
+    public JSONArray getStudyMap(String category) {
         log.info(this.getClass().getName());
-        return r_mCheck.equals("r") ? CommunityMapper.getStudyRoadMap() : CommunityMapper.getCareerRoadMap();
+        return category.equals("r") ? CommunityMapper.getStudyRoadMap() : CommunityMapper.getCareerRoadMap();
+    }
+
+    @Override
+    public JSONArray findStudyMap(String r_mCheck) {
+        return null;
     }
 }

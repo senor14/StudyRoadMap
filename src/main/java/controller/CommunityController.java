@@ -23,12 +23,18 @@ public class CommunityController {
     @GetMapping("/getStudyMap")
     public JSONArray getStudyMap(HttpServletRequest request){
 
-        String r_mCheck = CmmUtil.nvl(request.getParameter("r_mCheck"));
+        String category = CmmUtil.nvl(request.getParameter("category"));
 
-        log.info("r_mCheck "+r_mCheck);
-
-        return communityService.getStudyMap(r_mCheck);
+        return communityService.getStudyMap(category);
     }
 
+    @ResponseBody
+    @GetMapping("/searchStudyMap")
+    public JSONArray findStudyMap(HttpServletRequest request){
 
+        String category = CmmUtil.nvl(request.getParameter("category"));
+        String serch = CmmUtil.nvl(request.getParameter("serch"));
+
+        return communityService.findStudyMap(serch);
+    }
 }

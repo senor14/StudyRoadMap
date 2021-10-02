@@ -85,4 +85,5 @@ public class CommunityMapper implements ICommunityMapper {
         }
         return studyRoadMap;
     }
+
 }
