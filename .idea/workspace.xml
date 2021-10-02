@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성">
+    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/test.java" afterDir="false" />
@@ -242,7 +242,7 @@
       <workItem from="1632662862516" duration="5854000" />
       <workItem from="1632744800484" duration="9862000" />
       <workItem from="1632824189493" duration="9702000" />
-      <workItem from="1632915884554" duration="30744000" />
+      <workItem from="1632915884554" duration="41866000" />
     </task>
     <task id="LOCAL-00001" summary="[UPDATE]">
       <created>1632826950981</created>
@@ -279,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633154467781</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="[UPDATE] findStudyMap &quot; &quot;을 기준으로 단어별 검색 완성">
+      <created>1633166386374</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1633166386374</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,7 +338,9 @@
     <MESSAGE value="[UPDATE] getCareerRoadMap 추가 CareerRoadMap에서 데이터 조회" />
     <MESSAGE value="[FIX] getCareerRoadMap 삭제" />
     <MESSAGE value="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성" />
-    <option name="LAST_COMMIT_MESSAGE" value="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성" />
+    <MESSAGE value="[UPDATE] findStudyMap &quot; &quot;을 기준으로 단어별 검색 완성" />
+    <MESSAGE value="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출" />
+    <option name="LAST_COMMIT_MESSAGE" value="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

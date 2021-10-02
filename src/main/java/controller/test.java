@@ -6,10 +6,8 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.BsonRegularExpression;
 import org.bson.Document;
 import org.json.simple.JSONArray;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import util.DateUtil;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static util.DateUtil.getDateTime;
@@ -20,7 +18,8 @@ public class test {
       test ts = new test();
       System.out.println(getDateTime());
 //      ts.testGetStudyMap();
-      ts.testfindStudyMap("road_category","프로 백");
+//      ts.testfindStudyMap("road_category","프로 백");
+      ts.getComment();
    }
 
    public void testGetStudyMap() {
@@ -106,5 +105,65 @@ public class test {
 //      System.out.println(studyRoadMap);
    }
 
-   public void insert(){}
+   public void insertComment(){
+      try {
+         Map<String, Object> comment = new HashMap<>();
+
+         String studyRoad_id = "3b357972-3c00-4b00-a3ba-8199065ea1db";
+         String user_id = "sample_id";
+         String user_uuid = "9db17796-2357-4171-edbe-f4b54b040497";
+         String comment_id = UUID.randomUUID().toString();
+         String comment_contents = "다시보니 그닥";
+         String created = DateUtil.getDateTime();
+
+         comment.put("studyRoad_id",studyRoad_id);
+         comment.put("user_id",user_id);
+         comment.put("user_uuid",user_uuid);
+         comment.put("comment_id",comment_id);
+         comment.put("comment_contents",comment_contents);
+         comment.put("created",created);
+
+         MongoClient client = new MongoClient("52.79.231.216", 21316);
+         MongoDatabase database = client.getDatabase("RoadMap");
+         MongoCollection<Document> collection = database.getCollection("Comment");
+
+         collection.insertOne(new Document(comment));
+
+//         long count = collection.countDocuments(new Document(comment));
+//         System.out.println(count);
+//         int res = Long.valueOf(count).intValue();
+//         System.out.println(res);
+
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void getComment(){
+      JSONArray studyRoadMap = new JSONArray();
+      try (MongoClient client = new MongoClient("52.79.231.216", 21316)) {
+         MongoDatabase database = client.getDatabase("RoadMap");
+         MongoCollection<Document> collection = database.getCollection("Comment");
+
+         Document query = new Document();
+         query.append("studyRoad_id", "3b357972-3c00-4b00-a3ba-8199065ea1db");
+
+         Document projection = new Document();
+
+         projection.append("comment_contents", "$comment_contents");
+         projection.append("user_id", "$user_id");
+         projection.append("created", "$created");
+         projection.append("_id", 0);
+
+         Document sort = new Document();
+
+         sort.append("created", -1);
+
+         collection.find(query).projection(projection).sort(sort).forEach(studyRoadMap::add);
+         System.out.println(studyRoadMap);
+      }catch (Exception e){
+         e.printStackTrace();
+      }
+   }
+
 }

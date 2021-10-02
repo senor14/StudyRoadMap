@@ -12,7 +12,7 @@ import persistence.mongo.ICommunityMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Map;
 
 @Slf4j
 @Component("CommunityMapper")
@@ -50,7 +50,7 @@ public class CommunityMapper implements ICommunityMapper {
             collection.find(query).projection(projection).forEach(studyRoadMap::add);
 
         } catch (Exception e) {
-            // handle exception
+            e.printStackTrace();
         }
         return studyRoadMap;
     }
@@ -82,7 +82,7 @@ public class CommunityMapper implements ICommunityMapper {
             collection.find(query).projection(projection).forEach(studyRoadMap::add);
 
         } catch (Exception e) {
-            // handle exception
+            e.printStackTrace();
         }
         return studyRoadMap;
     }
@@ -123,7 +123,7 @@ public class CommunityMapper implements ICommunityMapper {
             collection.find(query).projection(projection).forEach(studyRoadMap::add);
 
         } catch (Exception e) {
-            // handle exception
+            e.printStackTrace();
         }
         return studyRoadMap;
     }
@@ -142,6 +142,7 @@ public class CommunityMapper implements ICommunityMapper {
 
             // 조건 Document 리스트 생성
             List<Document> conditions= new ArrayList<>();
+
             conditions.add(new Document().append("public", "Y"));
             for(String word : words){
                 conditions.add(new Document().append("career_title", new BsonRegularExpression("^.*"+word+".*$", "i")));
@@ -162,9 +163,56 @@ public class CommunityMapper implements ICommunityMapper {
             collection.find(query).projection(projection).forEach(studyRoadMap::add);
 
         } catch (Exception e) {
-            // handle exception
+            e.printStackTrace();
         }
         return studyRoadMap;
     }
+
+    @Override
+    public boolean insertComment(Map<String, Object> pMap) {
+        log.info(this.getClass().getName());
+        try {
+            MongoCollection<Document> collection = mongodb.getCollection("Comment");
+            collection.insertOne(new Document(pMap));
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public JSONArray getComment(String studyRoad_id) {
+        log.info(this.getClass().getName());
+
+        JSONArray studyRoadMap = new JSONArray();
+
+        try {
+            MongoCollection<Document> collection = mongodb.getCollection("Comment");
+
+            Document query = new Document();
+
+            query.append("studyRoad_id", studyRoad_id);
+
+            Document projection = new Document();
+
+            projection.append("comment_contents", "$comment_contents");
+            projection.append("user_id", "$user_id");
+            projection.append("created", "$created");
+            projection.append("_id", 0);
+
+            Document sort = new Document();
+
+            sort.append("created", -1);
+
+            collection.find(query).projection(projection).sort(sort).forEach(studyRoadMap::add);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return studyRoadMap;
+    }
+
 
 }

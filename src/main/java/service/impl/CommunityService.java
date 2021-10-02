@@ -7,6 +7,7 @@ import persistence.mongo.ICommunityMapper;
 import service.ICommunityService;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 @Slf4j
 @Service("CommunityService")
@@ -24,6 +25,16 @@ public class CommunityService implements ICommunityService {
     @Override
     public JSONArray findStudyMap(String category, String searchType, String keyWord) {
         return category.equals("r") ? CommunityMapper.findStudyRoadMap(searchType, keyWord) : CommunityMapper.findCareerRoadMap(keyWord);
+    }
+
+    @Override
+    public boolean insertComment(Map<String, Object> pMap) {
+        return CommunityMapper.insertComment(pMap);
+    }
+
+    @Override
+    public JSONArray getComment(String studyRoad_id) {
+        return CommunityMapper.getComment(studyRoad_id);
     }
 
 }
