@@ -33,8 +33,11 @@ public class CommunityController {
     public JSONArray findStudyMap(HttpServletRequest request){
 
         String category = CmmUtil.nvl(request.getParameter("category"));
-        String serch = CmmUtil.nvl(request.getParameter("serch"));
+        String searchType = CmmUtil.nvl(request.getParameter("searchType"));
+        String keyWord = CmmUtil.nvl(request.getParameter("keyWord"));
 
-        return communityService.findStudyMap(serch);
+        return communityService.findStudyMap(category, searchType, keyWord);
     }
+
+
 }

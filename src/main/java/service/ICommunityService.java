@@ -6,5 +6,5 @@ public interface ICommunityService {
 
     JSONArray getStudyMap(String typeCheck);
 
-    JSONArray findStudyMap(String r_mCheck);
+    JSONArray findStudyMap(String category, String searchType, String keyWord);
 }

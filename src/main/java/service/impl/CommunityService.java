@@ -22,7 +22,8 @@ public class CommunityService implements ICommunityService {
     }
 
     @Override
-    public JSONArray findStudyMap(String r_mCheck) {
-        return null;
+    public JSONArray findStudyMap(String category, String searchType, String keyWord) {
+        return category.equals("r") ? CommunityMapper.findStudyRoadMap(searchType, keyWord) : CommunityMapper.findCareerRoadMap(keyWord);
     }
+
 }

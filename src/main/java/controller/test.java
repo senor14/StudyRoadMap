@@ -1,12 +1,15 @@
 package controller;
 
-import com.mongodb.*;
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.BsonRegularExpression;
 import org.bson.Document;
 import org.json.simple.JSONArray;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static util.DateUtil.getDateTime;
@@ -17,7 +20,7 @@ public class test {
       test ts = new test();
       System.out.println(getDateTime());
 //      ts.testGetStudyMap();
-      ts.testfindStudyMap("프로그래밍");
+      ts.testfindStudyMap("road_category","프로 백");
    }
 
    public void testGetStudyMap() {
@@ -56,8 +59,10 @@ public class test {
 //      System.out.println(studyRoadMap);
    }
 
-   public void testfindStudyMap(String serch) {
+   public void testfindStudyMap(String searchType,String keyWord) {
 
+      String[] words = keyWord.split(" ");
+      
       JSONArray studyRoadMap = new JSONArray();
       //select road_id,road_category,road_title,user_uuid from StudyRoadMap where public ="Y" order by created desc
       try (MongoClient client = new MongoClient("52.79.231.216", 21316)) {
@@ -67,8 +72,18 @@ public class test {
 
          Document query = new Document();
 
-         query.append("public", "Y");
-         query.append("road_title", new BsonRegularExpression("^.*"+serch+".*$", "i"));
+         // 조건 Document 리스트 생성
+         List<Document> conditions= new ArrayList<>();
+         conditions.add(new Document().append("public", "Y"));
+         for(String word : words){
+            conditions.add(new Document().append(searchType, new BsonRegularExpression("^.*"+word+".*$", "i")));
+         }
+
+         query.append("$and", conditions);
+         
+//         query.append("public", "Y");
+//         System.out.println(query["$and"]);
+//         query.append(searchType, new BsonRegularExpression("^.*"+keyWord+".*$", "i"));
 
          Document projection = new Document();
 
@@ -83,9 +98,7 @@ public class test {
 
          sort.append("created", -1);
 
-         Consumer<Document> processBlock = studyRoadMap::add;
-
-         collection.find(query).projection(projection).forEach(processBlock);
+         collection.find(query).projection(projection).forEach(studyRoadMap::add);
          System.out.println(studyRoadMap);
       }catch (Exception e) {
          // handle exception
@@ -93,5 +106,5 @@ public class test {
 //      System.out.println(studyRoadMap);
    }
 
-
+   public void insert(){}
 }

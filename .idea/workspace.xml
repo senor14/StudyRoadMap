@@ -9,10 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[FIX] getCareerRoadMap 삭제">
+    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" afterDir="false" />
@@ -31,6 +32,37 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/feature/커뮤니티" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="d80fc7eae79a7ad7ce7b9d8cbf09b7397d0b9ab5" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -72,7 +104,7 @@
     <property name="project.structure.last.edited" value="아티팩트" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -194,6 +226,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="애플리케이션.test" />
+        <item itemvalue="애플리케이션.test" />
       </list>
     </recent_temporary>
   </component>
@@ -209,7 +242,7 @@
       <workItem from="1632662862516" duration="5854000" />
       <workItem from="1632744800484" duration="9862000" />
       <workItem from="1632824189493" duration="9702000" />
-      <workItem from="1632915884554" duration="18840000" />
+      <workItem from="1632915884554" duration="30744000" />
     </task>
     <task id="LOCAL-00001" summary="[UPDATE]">
       <created>1632826950981</created>
@@ -239,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633154003042</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성">
+      <created>1633154467781</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1633154467781</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +290,34 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/feature/커뮤니티" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/feature/커뮤니티" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
@@ -263,7 +330,8 @@
     <MESSAGE value="[UPDATE] getStudyRoadMap 날짜 오름차순 정렬 및 JSONArray로 type변경" />
     <MESSAGE value="[UPDATE] getCareerRoadMap 추가 CareerRoadMap에서 데이터 조회" />
     <MESSAGE value="[FIX] getCareerRoadMap 삭제" />
-    <option name="LAST_COMMIT_MESSAGE" value="[FIX] getCareerRoadMap 삭제" />
+    <MESSAGE value="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성" />
+    <option name="LAST_COMMIT_MESSAGE" value="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -274,5 +342,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
