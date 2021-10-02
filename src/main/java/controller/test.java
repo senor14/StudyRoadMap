@@ -17,12 +17,14 @@ public class test {
    public static void main(String[] args) {
       test ts = new test();
       System.out.println(getDateTime());
-//      ts.testGetStudyMap();
-//      ts.testfindStudyMap("road_category","프로 백");
-      ts.getComment();
+//      ts.getRoadMap();
+//      ts.findStudyMap("road_category","프로 백");
+//      ts.insertComment();
+//      ts.getComment();
+      ts.copyRoadMap();
    }
 
-   public void testGetStudyMap() {
+   public void getRoadMap() {
 
       JSONArray studyRoadMap = new JSONArray();
       //select road_id,road_category,road_title,user_uuid from StudyRoadMap where public ="Y" order by created desc
@@ -58,7 +60,7 @@ public class test {
 //      System.out.println(studyRoadMap);
    }
 
-   public void testfindStudyMap(String searchType,String keyWord) {
+   public void findStudyMap(String searchType,String keyWord) {
 
       String[] words = keyWord.split(" ");
       
@@ -164,6 +166,10 @@ public class test {
       }catch (Exception e){
          e.printStackTrace();
       }
+   }
+
+   public void copyRoadMap(){
+
    }
 
 }

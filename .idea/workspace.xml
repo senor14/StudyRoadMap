@@ -13,8 +13,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" afterDir="false" />
     </list>
@@ -242,7 +240,7 @@
       <workItem from="1632662862516" duration="5854000" />
       <workItem from="1632744800484" duration="9862000" />
       <workItem from="1632824189493" duration="9702000" />
-      <workItem from="1632915884554" duration="41866000" />
+      <workItem from="1632915884554" duration="44931000" />
     </task>
     <task id="LOCAL-00001" summary="[UPDATE]">
       <created>1632826950981</created>
@@ -286,7 +284,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633166386374</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출">
+      <created>1633180842805</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1633180842805</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

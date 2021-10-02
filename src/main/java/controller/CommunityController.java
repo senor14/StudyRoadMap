@@ -3,7 +3,9 @@ package controller;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.ICommunityService;
 import util.CmmUtil;
@@ -26,31 +28,31 @@ public class CommunityController {
 
     @ResponseBody
     @GetMapping("/getStudyMap")
-    public JSONArray getStudyMap(HttpServletRequest request){
+    public JSONArray getRoadMap(HttpServletRequest request){
 
         String category = CmmUtil.nvl(request.getParameter("category"));
 
-        return communityService.getStudyMap(category);
+        return communityService.getRoadMap(category);
     }
 
     @ResponseBody
-    @GetMapping("/findStudyMap")
-    public JSONArray findStudyMap(HttpServletRequest request){
+    @GetMapping("/findRoadMap")
+    public JSONArray findRoadMap(HttpServletRequest request){
 
         String category = CmmUtil.nvl(request.getParameter("category"));
         String searchType = CmmUtil.nvl(request.getParameter("searchType"));
         String keyWord = CmmUtil.nvl(request.getParameter("keyWord"));
 
-        return communityService.findStudyMap(category, searchType, keyWord);
+        return communityService.findRoadMap(category, searchType, keyWord);
     }
 
     @ResponseBody
-    @GetMapping("/insertComment")
-    public boolean insertComment(HttpServletRequest request, HttpSession session){
+    @GetMapping("/insertComment/{roadMapId}")
+    public boolean insertComment(HttpServletRequest request, HttpSession session, @PathVariable String roadMapId){
 
         Map<String, Object> pMap = new HashMap<>();
 
-        String studyRoad_id = (String) session.getAttribute("SS_USER_ID");
+        String studyRoad_id = roadMapId;
         String user_id = (String) session.getAttribute("USER_ID");
         String user_uuid = (String) session.getAttribute("SS_USER_ID");
         String comment_id = UUID.randomUUID().toString();
@@ -68,12 +70,12 @@ public class CommunityController {
     }
 
     @ResponseBody
-    @GetMapping("/getComment")
-    public JSONArray getComment(){
+    @GetMapping("/getComment/{roadMapId}")
+    public JSONArray getComment(@PathVariable String roadMapId){
 
-        String studyRoad_id = "";
+        String roadMap_id = roadMapId;
 
-        return communityService.getComment(studyRoad_id);
+        return communityService.getComment(roadMap_id);
     }
 
 }

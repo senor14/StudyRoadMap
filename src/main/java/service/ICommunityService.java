@@ -6,9 +6,9 @@ import java.util.Map;
 
 public interface ICommunityService {
 
-    JSONArray getStudyMap(String typeCheck);
+    JSONArray getRoadMap(String typeCheck);
 
-    JSONArray findStudyMap(String category, String searchType, String keyWord);
+    JSONArray findRoadMap(String category, String searchType, String keyWord);
 
     boolean insertComment(Map<String, Object> pMap);
 

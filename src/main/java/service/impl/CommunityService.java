@@ -17,13 +17,13 @@ public class CommunityService implements ICommunityService {
     private ICommunityMapper CommunityMapper;
 
     @Override
-    public JSONArray getStudyMap(String category) {
+    public JSONArray getRoadMap(String category) {
         log.info(this.getClass().getName());
         return category.equals("r") ? CommunityMapper.getStudyRoadMap() : CommunityMapper.getCareerRoadMap();
     }
 
     @Override
-    public JSONArray findStudyMap(String category, String searchType, String keyWord) {
+    public JSONArray findRoadMap(String category, String searchType, String keyWord) {
         return category.equals("r") ? CommunityMapper.findStudyRoadMap(searchType, keyWord) : CommunityMapper.findCareerRoadMap(keyWord);
     }
 
