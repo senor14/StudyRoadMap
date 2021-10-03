@@ -49,46 +49,6 @@ button::-moz-focus-inner {
 }
 
 
-/* box */
-.box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 0 4rem 2rem;
-}
-
-.box:not(:first-child) {
-    height: 45rem;
-}
-
-.box__title {
-    font-size: 10rem;
-    font-weight: normal;
-    letter-spacing: .8rem;
-    margin-bottom: 2.6rem;
-}
-
-.box__title::first-letter {
-    color: var(--primary);
-}
-
-.box__p,
-.box__info,
-.box__note {
-    font-size: 1.6rem;
-}
-
-.box__info {
-    margin-top: 6rem;
-}
-
-.box__note {
-    line-height: 2;
-}
-
-
 /* modal */
 .modal-container {
     position: fixed;
