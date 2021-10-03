@@ -27,6 +27,7 @@
     <!-- Service에서 호출할 때 사용 객체를 싱글톤으로 로딩하기 위해 설정 -->
     <context:component-scan base-package="service" />
     <context:component-scan base-package="persistence.mongo" />
+    <context:component-scan base-package="mapper" />
 
 
     <!-- ViewResolver : 뷰 선택자 -->
@@ -50,7 +51,7 @@
         </property>
     </bean>
 
-    <mvc:view-controller path="/" view-name="index"/>
+    <mvc:view-controller path="/" view-name="Main/Login"/>
 
 
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>

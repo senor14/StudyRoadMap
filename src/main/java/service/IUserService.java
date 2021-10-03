@@ -28,4 +28,6 @@ public interface IUserService {
     int deleteStudyRoadMap(Map<String, Object> pMap);
 
     int passWordChange(Map<String, Object> beforeMap, Map<String, Object> afterMap);
+
+    int deleteAuthNum(Map<String, Object> pMap);
 }

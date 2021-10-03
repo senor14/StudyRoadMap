@@ -40,9 +40,12 @@ public class UserMapper implements IUserMapper {
 
             String user_id = document.getString("user_id");
             String user_email = document.getString("user_email");
+            String user_uuid = document.getString("user_uuid");
+
 
             rMap.put("user_id", user_id);
             rMap.put("user_email", user_email);
+            rMap.put("user_uuid", user_uuid);
 
             rList.add(rMap);
 
@@ -87,22 +90,6 @@ public class UserMapper implements IUserMapper {
     }
 
     @Override
-    public int getUserEmail(Map<String, Object> uMap, String colNm) {
-
-        log.info("getUserEmail start");
-
-        MongoCollection<Document> collection = mongodb.getCollection(colNm);
-
-        long count = collection.countDocuments(new Document(uMap));
-
-        int res = Long.valueOf(count).intValue();
-
-        log.info("getUserEmail end");
-
-        return res;
-    }
-
-    @Override
     public int insertAuthNum(Map<String, Object> pMap, String auth_colNm) {
 
         log.info("insertAuthNum start");
@@ -116,6 +103,22 @@ public class UserMapper implements IUserMapper {
         int res = Long.valueOf(count).intValue();
 
         log.info("insertAuthNum end");
+
+        return res;
+    }
+
+    @Override
+    public int getUserEmail(Map<String, Object> uMap, String colNm) {
+
+        log.info("getUserEmail start");
+
+        MongoCollection<Document> collection = mongodb.getCollection(colNm);
+
+        long count = collection.countDocuments(new Document(uMap));
+
+        int res = Long.valueOf(count).intValue();
+
+        log.info("getUserEmail end");
 
         return res;
     }
@@ -136,7 +139,7 @@ public class UserMapper implements IUserMapper {
         return res;
     }
 
-    // 인증번호 확인 확인된 인증번호는 즉시 폐기
+    // 인증번호 확인
     @Override
     public int getAuthNum(Map<String, Object> uMap, String auth_colNm) {
 
@@ -145,20 +148,6 @@ public class UserMapper implements IUserMapper {
         long count = collection.countDocuments(new Document(uMap));
 
         int res = Long.valueOf(count).intValue();
-
-        FindIterable<Document> dRs = collection.find(new Document(uMap));
-        Iterator<Document> cursor = dRs.iterator();
-
-        if (cursor.hasNext()) {
-
-            while (cursor.hasNext()) {
-                collection.deleteOne(cursor.next());
-            }
-
-        }
-        cursor = null;
-        dRs = null;
-        collection = null;
 
         return res;
     }
@@ -332,6 +321,39 @@ public class UserMapper implements IUserMapper {
 
         int res = 0;
         res = (int) updateResults.getMatchedCount();
+
+        return res;
+    }
+
+    @Override
+    public int deleteAuthNum(Map<String, Object> pMap, String auth_colNm) {
+
+        log.info(this.getClass().getName() + "deleteAuthNum start");
+
+        MongoCollection<Document> col = mongodb.getCollection(auth_colNm);
+
+        FindIterable<Document> dRs = col.find(new Document(pMap));
+
+        Iterator<Document> cursor = dRs.iterator();
+
+        DeleteResult deleteResult = null;
+        int res = 0;
+
+        if (cursor.hasNext()) {
+
+            while (cursor.hasNext()) {
+                deleteResult = col.deleteOne(cursor.next());
+            }
+
+            res = (int) deleteResult.getDeletedCount();
+
+        }
+        cursor = null;
+        dRs = null;
+        col = null;
+        deleteResult = null;
+
+        log.info(this.getClass().getName() + "deleteAuthNum end");
 
         return res;
     }

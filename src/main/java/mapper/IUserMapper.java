@@ -28,4 +28,6 @@ public interface IUserMapper {
     int deleteStudyRoadMap(Map<String, Object> pMap, String road_colNm);
 
     int passWordChange(Map<String, Object> beforeMap, Map<String, Object> afterMap, String colNm);
+
+    int deleteAuthNum(Map<String, Object> pMap, String auth_colNm);
 }

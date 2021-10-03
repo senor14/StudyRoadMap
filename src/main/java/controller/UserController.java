@@ -3,13 +3,10 @@ package controller;
 import static util.CmmUtil.nvl;
 
 import javax.annotation.Resource;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,17 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import dto.UserDTO;
 import service.IMailService;
 import service.IUserService;
 import util.CmmUtil;
 import util.EncryptUtil;
 import util.RandomUtil;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,11 +29,9 @@ import java.util.UUID;
  * Developer: 김창영
  * Comment: 회원 정보들이 처리되는 컨트롤러
  * */
-
+@Slf4j
 @Controller
 public class UserController {
-
-    private Logger log = Logger.getLogger(this.getClass());
 
     @Resource(name = "UserService")
     IUserService userService;
@@ -54,8 +44,8 @@ public class UserController {
     public String Login(HttpSession session, ModelMap model) throws Exception {
 
         log.info("Login 시작");
-        // 로그인 페이지 접속 시 로그인 상태 지우기 위해 invalidate 실행(세션 올라가있는 상태에서 또 올리면 오류가 나기 때문에)
-        session.invalidate();
+        // 로그인 페이지 접속 시 로그인 상태 지우기 위해 invalidate 실행
+        //session.invalidate();
 
         log.info("Login 종료");
 
@@ -66,7 +56,7 @@ public class UserController {
     @RequestMapping(value = "RoadMap/LoginProc")
     public String LoginProc(HttpServletRequest request, Model model, HttpSession session) throws Exception {
 
-        log.info("/Reminder/ReminderLoginProc start");
+        log.info("/RoadMap/LoginProc start");
         String id = nvl(request.getParameter("id"));
         String pwd = nvl(request.getParameter("pwd"));
 
@@ -79,7 +69,7 @@ public class UserController {
         Map<String, Object> uMap = new HashMap<>();
 
         uMap.put("user_id", encId);
-        uMap.put("user_id", HashEnc);
+        uMap.put("user_pwd", HashEnc);
 
         List<Map<String,String>> rList = userService.getUserInfo(uMap);
 
@@ -87,19 +77,22 @@ public class UserController {
         String url = "";
         if (rList == null) {
             msg = "아이디 비밀번호가 틀렸거나 가입하지 않은 회원입니다.";
-            url = "/Reminder/ReminderLogin.do";
+            url = "/RoadMap/Login";
         } else {
             String decId = "";
             String decEmail = "";
+            String uuid = "";
 
             for (Map<String,String> data: rList) {
                 decId = EncryptUtil.decAES128CBC(data.get("user_id"));
                 decEmail = EncryptUtil.decAES128CBC(data.get("user_email"));
+                uuid = data.get("user_uuid");
             }
 
             session.setAttribute("SS_USER_ID", decId);
             session.setAttribute("SS_USER_EMAIL", decEmail);
-            url = "/RoadMap/Main.do";
+            session.setAttribute("SS_USER_UUID", uuid);
+            url = "/RoadMap/Login";
             model.addAttribute("url", url);
             return "/redirectNArt";
         }
@@ -107,7 +100,7 @@ public class UserController {
         model.addAttribute("msg", msg);
         model.addAttribute("url", url);
 
-        log.info("Reminder/ReminderLoginProc end");
+        log.info("RoadMap/LoginProc end");
 
         return "/redirect";
     }
@@ -120,7 +113,7 @@ public class UserController {
 
         session.invalidate();
 
-        log.info("/Reminder/ReminderLogout 종료");
+        log.info("/RoadMap/Logout 종료");
 
         return "/Main/Login";
     }
@@ -146,12 +139,14 @@ public class UserController {
         String user_id = request.getParameter("id");
         String user_pwd = nvl(request.getParameter("pwd"));
         String user_email = nvl(request.getParameter("email"));
+        String auth_num = nvl(request.getParameter("auth"));
         String user_uuid = UUID.randomUUID().toString();
         log.info("request.getParameter 종료");
 
         String encId = EncryptUtil.encAES128CBC(user_id);
         String HashEnc = EncryptUtil.enHashSHA256(user_pwd);
         String encEmail = EncryptUtil.encAES128CBC(user_email);
+        String enc_auth_num = EncryptUtil.encAES128CBC(auth_num);
 
         log.info("user_id : " + encId);
         log.info("user_pwd : " + HashEnc);
@@ -178,6 +173,18 @@ public class UserController {
             msg = "회원가입에 성공했습니다.";
         } else {
             msg = "회원가입에 실패했습니다.";
+        }
+        Map<String, Object> pMap = new HashMap<>();
+
+        pMap.put("user_email", encEmail);
+        pMap.put("auth_num", enc_auth_num);
+
+        int del_res = userService.deleteAuthNum(pMap);
+
+        if(del_res == 1){
+            log.info("인증번호 삭제 성공");
+        } else {
+            log.info("인증번호 삭제 실패");
         }
 
         log.info("model.addAttribute 시작");
@@ -214,10 +221,11 @@ public class UserController {
         }
 
         String enc_email = EncryptUtil.encAES128CBC(user_email);
+        String enc_auth_num = EncryptUtil.encAES128CBC(auth_num);
         Map<String, Object> pMap = new HashMap<>();
 
         pMap.put("user_email", enc_email);
-        pMap.put("auth_num", auth_num);
+        pMap.put("auth_num", enc_auth_num);
 
         int result = userService.insertAuthNum(pMap);
 
@@ -242,12 +250,16 @@ public class UserController {
         String user_email = request.getParameter("user_email");
         String enc_email = EncryptUtil.encAES128CBC(user_email);
         String auth_num = request.getParameter("auth_num");
+        String enc_auth_num = EncryptUtil.encAES128CBC(auth_num);
 
         Map<String, Object> uMap = new HashMap<>();
-        uMap.put("user_email", enc_email);
-        uMap.put("auth_num", auth_num);
 
+        uMap.put("user_email", enc_email);
+        uMap.put("auth_num", enc_auth_num);
+
+        log.info("getAuthNum Start");
         int res = userService.getAuthNum(uMap);
+        log.info("getAuthNum End");
 
         if(res == 1){
             log.info(this.getClass().getName() + "Certified success");
@@ -259,7 +271,8 @@ public class UserController {
 
         return res;
     }
-    // 0: 단일, 1: 중복
+
+    // 0: 단일, 1: 중복, 2: 올바르지 않은 형식
     // 이메일 중복확인
     @ResponseBody
     @RequestMapping(value = "RoadMap/emailCheck", method = RequestMethod.POST)
@@ -267,6 +280,12 @@ public class UserController {
         log.info("emailCheck 시작");
 
         String user_email = request.getParameter("user_email");
+
+        // 이메일 주소의 99% 커버 가능한 정규식
+        if(!(user_email.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])$"))) {
+            return 2;
+        }
+
         String enc_email = EncryptUtil.encAES128CBC(user_email);
 
         Map<String, Object> uMap = new HashMap<>();
@@ -280,7 +299,7 @@ public class UserController {
         return res;
     }
 
-    // 0: 단일, 1: 중복
+    // 0: 단일, 1: 중복, 2: 올바르지 않은 형식
     // 아이디 중복확인
     @ResponseBody
     @RequestMapping(value = "RoadMap/idCheck", method = RequestMethod.POST)
@@ -289,9 +308,23 @@ public class UserController {
 
         String user_id = request.getParameter("user_id");
 
+        // 숫자로만 아이디 만드는 경우 방지
+        if((user_id.matches("^[0-9]*$"))){
+            log.info("result : 2, 숫자로만 생성");
+            log.info("idCheck 종료");
+            return 2;
+        // 영어 대문자 혹은 소문자로 시작하게 하고 -_.특수문자만 허용. 6 ~ 14자리로 아이디 생성
+        } else if(!(user_id.matches("^[a-zA-Z][a-zA-Z0-9-_.]{5,13}$"))) {
+            log.info("result : 2, 숫자로 시작 혹은 자릿수 초과");
+            log.info("idCheck 종료");
+            return 2;
+        }
+
+        String enc_id = EncryptUtil.encAES128CBC(user_id);
+
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_id", user_id);
+        uMap.put("user_id", enc_id);
 
         log.info("TheService.idCheck 시작");
         int res =  userService.idCheck(uMap);
@@ -311,7 +344,7 @@ public class UserController {
 
         log.info("ForgotPassWord 종료");
 
-        return "/Main/ForgotID";
+        return "/Main/ForgotPwd";
     }
 
     // 비밀번호 찾기 처리
@@ -320,9 +353,9 @@ public class UserController {
 
         log.info("RoadMap/ReMakePW 시작");
 
-        String user_email = nvl(request.getParameter("user_email"));
+        String user_email = nvl(request.getParameter("userEmail"));
         String enc_email = EncryptUtil.encAES128CBC(user_email);
-        String user_id = nvl(request.getParameter("user_id"));
+        String user_id = nvl(request.getParameter("userId"));
         String enc_id = EncryptUtil.encAES128CBC(user_id);
         String random = RandomUtil.RandomNum();
         String hash_pw = EncryptUtil.enHashSHA256(random);
@@ -382,11 +415,11 @@ public class UserController {
     @RequestMapping(value = "RoadMap/ForgotID")
     public String forgotID() {
 
-        log.info("ForgotPassWord 시작");
+        log.info("ForgotID 시작");
 
-        log.info("ForgotPassWord 종료");
+        log.info("ForgotID 종료");
 
-        return "/Main/ForgotID";
+        return "/Main/ForgotId";
     }
 
     // 아이디 찾기 처리
@@ -395,7 +428,7 @@ public class UserController {
 
         log.info("RoadMap/SendId 시작");
 
-        String user_email = nvl(request.getParameter("user_email"));
+        String user_email = nvl(request.getParameter("userEmail"));
         String enc_email = EncryptUtil.encAES128CBC(user_email);
 
         Map<String, Object> uMap = new HashMap<>();
@@ -419,15 +452,15 @@ public class UserController {
 
         Map<String, String> pMap = rList.get(0);
 
-        String email = pMap.get("user_email");
         String id = pMap.get("user_id");
+        String dec_id = EncryptUtil.decAES128CBC(id);
 
         pMap = null;
 
         pMap = new HashMap<>();
 
-        pMap.put("user_email", email);
-        pMap.put("user_id", id);
+        pMap.put("user_email", user_email);
+        pMap.put("user_id", dec_id);
 
         int mailRes = MailService.doSendIdMail(pMap);
         if(mailRes <= 1) {
@@ -467,12 +500,14 @@ public class UserController {
         log.info("PassWordChange 시작");
 
         String user_id = (String) session.getAttribute("SS_USER_ID");
-        String user_pwd = CmmUtil.nvl(request.getParameter("user_pwd"));
+        log.info("user_id: " + user_id);
+        String enc_id = EncryptUtil.encAES128CBC(user_id);
+        String user_pwd = CmmUtil.nvl(request.getParameter("pwd"));
         String Hash_pwd = EncryptUtil.enHashSHA256(user_pwd);
 
         Map<String, Object> beforeMap = new HashMap<>();
 
-        beforeMap.put("user_id", user_id);
+        beforeMap.put("user_id", enc_id);
 
         Map<String, Object> afterMap = new HashMap<>();
 
@@ -481,7 +516,7 @@ public class UserController {
         int res = userService.passWordChange(beforeMap, afterMap);
 
         String msg = "";
-        String url = "/RoadMap/PassWordChange.do";
+        String url = "/RoadMap/PassWordChange";
 
         if(res == 1){
             msg = "비밀번호 변경이 성공하였습니다.";
@@ -506,7 +541,7 @@ public class UserController {
 
         log.info("userWithdrawal 종료");
 
-        return "/Main/userWithdrawal";
+        return "/Main/UserWithdrawal";
     }
 
     // 탈퇴 입력문자열 확인
@@ -543,7 +578,7 @@ public class UserController {
         String user_id = (String) session.getAttribute("SS_USER_ID");
         String enc_id = EncryptUtil.encAES128CBC(user_id);
         String user_email = (String) session.getAttribute("SS_USER_EMAIL");
-        String enc_email = (String) EncryptUtil.encAES128CBC(user_email);
+        String enc_email = EncryptUtil.encAES128CBC(user_email);
 
         Map<String, Object> uMap = new HashMap<>();
 

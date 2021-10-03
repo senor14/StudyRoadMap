@@ -17,8 +17,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import service.IMailService;
 import util.CmmUtil;
-import util.EncryptUtil;
-
 
 @Service("MailService")
 public class MailService implements IMailService {
@@ -26,8 +24,8 @@ public class MailService implements IMailService {
 	private Logger log = Logger.getLogger(this.getClass());
 	
 	final String host = "smtp.gmail.com";
-	final String user = "freedevgcp@gmail.com"; //보내는 사람 주소
-	final String password = "pythonflask0037!"; // 로그인을 위한 비밀번호
+	final String user = "newshfkfk@gmail.com"; //보내는 사람 주소
+	final String password = "ufrikazlauweveyy"; // 로그인을 위한 비밀번호
 
 	@Override
 	public int doSendMail(Map<String, String> pMap) throws Exception {

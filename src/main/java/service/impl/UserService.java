@@ -93,4 +93,12 @@ public class UserService implements IUserService {
 
         return userMapper.passWordChange(beforeMap, afterMap, user_colNm);
     }
+
+    @Override
+    public int deleteAuthNum(Map<String, Object> pMap) {
+
+        return userMapper.deleteAuthNum(pMap, auth_colNm);
+    }
+
+
 }
