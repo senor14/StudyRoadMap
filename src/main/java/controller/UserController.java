@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import service.IMailService;
 import service.IUserService;
-import util.CmmUtil;
 import util.EncryptUtil;
 import util.RandomUtil;
 
@@ -33,18 +32,21 @@ import java.util.UUID;
 @Controller
 public class UserController {
 
+    // userService에 연결하기 위한 객체
     @Resource(name = "UserService")
     IUserService userService;
 
+    // mail 서비스에 연결하기 위한 객체
     @Resource(name = "MailService")
     IMailService MailService;
 
     // 로그인 페이지
     @RequestMapping(value = "RoadMap/Login")
-    public String Login(HttpSession session, ModelMap model) throws Exception {
+    public String Login() {
 
         log.info("Login 시작");
         // 로그인 페이지 접속 시 로그인 상태 지우기 위해 invalidate 실행
+        // 테스트를 용이하게 하기 위해서 잠시 주석으로 가려놓았습니다. 테스트 이후에는 다시 주석을 해제해야 합니다.
         //session.invalidate();
 
         log.info("Login 종료");
@@ -57,57 +59,44 @@ public class UserController {
     public String LoginProc(HttpServletRequest request, Model model, HttpSession session) throws Exception {
 
         log.info("/RoadMap/LoginProc start");
-        String id = nvl(request.getParameter("id"));
-        String pwd = nvl(request.getParameter("pwd"));
 
-        String encId = EncryptUtil.encAES128CBC(id);
-        String HashEnc = EncryptUtil.enHashSHA256(pwd);
+        String encId = EncryptUtil.encAES128CBC(nvl(request.getParameter("id")));
+        String HashEnc = EncryptUtil.enHashSHA256(nvl(request.getParameter("pwd")));
 
-        log.info("id :" + encId);
-        log.info("pwd :" + HashEnc);
-
+        // 몽고디비에 도큐먼트 방식으로 사용 하기 위한 <String, Object>형 Map 객체
         Map<String, Object> uMap = new HashMap<>();
 
         uMap.put("user_id", encId);
         uMap.put("user_pwd", HashEnc);
 
+        // 입력받은 아이디와 비밀번호를 조회하여 유저의 정보를 가져온다.
         List<Map<String,String>> rList = userService.getUserInfo(uMap);
 
-        String msg = "";
-        String url = "";
-        if (rList == null) {
-            msg = "아이디 비밀번호가 틀렸거나 가입하지 않은 회원입니다.";
-            url = "/RoadMap/Login";
+        // 조회 결과가 없으면 안내 메세지를 띄우고 다시 로그인 페이지로 보냄
+        if (rList.size() == 0) {
+            model.addAttribute("msg", "아이디 비밀번호가 틀렸거나 가입하지 않은 회원입니다.");
+            model.addAttribute("url", "/RoadMap/Login");
+
+            log.info("RoadMap/LoginProc end");
+
+            return "/redirect";
+        // 조회 결과가 있으면 세션에 올리고 메인페이지로 이동
         } else {
-            String decId = "";
-            String decEmail = "";
-            String uuid = "";
+            session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("user_id")));
+            session.setAttribute("SS_USER_UUID", rList.get(0).get("user_uuid"));
 
-            for (Map<String,String> data: rList) {
-                decId = EncryptUtil.decAES128CBC(data.get("user_id"));
-                decEmail = EncryptUtil.decAES128CBC(data.get("user_email"));
-                uuid = data.get("user_uuid");
-            }
+            model.addAttribute("url", "/RoadMap/Login");
 
-            session.setAttribute("SS_USER_ID", decId);
-            session.setAttribute("SS_USER_EMAIL", decEmail);
-            session.setAttribute("SS_USER_UUID", uuid);
-            url = "/RoadMap/Login";
-            model.addAttribute("url", url);
+            log.info("RoadMap/LoginProc end");
+
+            // redirectNArt 파일은 리다이렉트에 alert 없앤 것
             return "/redirectNArt";
         }
-
-        model.addAttribute("msg", msg);
-        model.addAttribute("url", url);
-
-        log.info("RoadMap/LoginProc end");
-
-        return "/redirect";
     }
 
     // 로그아웃
     @RequestMapping(value = "RoadMap/Logout")
-    public String Logout(HttpSession session, Model model) throws Exception {
+    public String Logout(HttpSession session) {
 
         log.info("/RoadMap/Logout 시작");
 
@@ -129,29 +118,22 @@ public class UserController {
         return "/Main/SignUp";
     }
 
+    /**
+     * Comment: 회원가입 후 인증번호 폐기
+     * */
     // 회원가입 처리
     @RequestMapping(value = "RoadMap/SignUpProc", method = RequestMethod.POST)
-    public String ReminderSignUpProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+    public String ReminderSignUpProc(HttpServletRequest request, ModelMap model) throws Exception {
 
         log.info("/RoadMap/SignUpProc 시작");
 
         log.info("request.getParameter 시작");
-        String user_id = request.getParameter("id");
-        String user_pwd = nvl(request.getParameter("pwd"));
-        String user_email = nvl(request.getParameter("email"));
-        String auth_num = nvl(request.getParameter("auth"));
+        String encId = EncryptUtil.encAES128CBC(nvl(request.getParameter("id")));
+        String HashEnc = EncryptUtil.enHashSHA256(nvl(request.getParameter("pwd")));
+        String encEmail = EncryptUtil.encAES128CBC(nvl(request.getParameter("email")));
+        String enc_auth_num = EncryptUtil.encAES128CBC(nvl(request.getParameter("auth")));
         String user_uuid = UUID.randomUUID().toString();
         log.info("request.getParameter 종료");
-
-        String encId = EncryptUtil.encAES128CBC(user_id);
-        String HashEnc = EncryptUtil.enHashSHA256(user_pwd);
-        String encEmail = EncryptUtil.encAES128CBC(user_email);
-        String enc_auth_num = EncryptUtil.encAES128CBC(auth_num);
-
-        log.info("user_id : " + encId);
-        log.info("user_pwd : " + HashEnc);
-        log.info("user_email : " + encEmail);
-        log.info("uuid : " + user_uuid);
 
         log.info("put 시작");
         Map<String, Object> uMap = new HashMap<>();
@@ -204,7 +186,7 @@ public class UserController {
     public int emailAuth(HttpServletRequest request) throws Exception {
         log.info("emailAuth 시작");
 
-        String user_email = request.getParameter("user_email");
+        String user_email = nvl(request.getParameter("user_email"));
         String auth_num = RandomUtil.RandomNum();
 
         Map<String, String> uMap = new HashMap<>();
@@ -247,10 +229,8 @@ public class UserController {
     public int emailCertified(HttpServletRequest request) throws Exception {
         log.info("emailCertified 시작");
 
-        String user_email = request.getParameter("user_email");
-        String enc_email = EncryptUtil.encAES128CBC(user_email);
-        String auth_num = request.getParameter("auth_num");
-        String enc_auth_num = EncryptUtil.encAES128CBC(auth_num);
+        String enc_email = EncryptUtil.encAES128CBC(nvl(request.getParameter("user_email")));
+        String enc_auth_num = EncryptUtil.encAES128CBC(nvl(request.getParameter("auth_num")));
 
         Map<String, Object> uMap = new HashMap<>();
 
@@ -347,6 +327,9 @@ public class UserController {
         return "/Main/ForgotPwd";
     }
 
+    /**
+     * Comment: 입력받은 아이디와 이메일을 사용하여 유저가 존재하는지 조회 후 존재하면 랜덤번호를 생성해서 비밀번호로 교체한다.
+     * */
     // 비밀번호 찾기 처리
     @RequestMapping(value = "RoadMap/ReMakePW", method = RequestMethod.POST)
     public String ReMakePW(HttpServletRequest request, ModelMap model) throws Exception {
@@ -355,10 +338,9 @@ public class UserController {
 
         String user_email = nvl(request.getParameter("userEmail"));
         String enc_email = EncryptUtil.encAES128CBC(user_email);
-        String user_id = nvl(request.getParameter("userId"));
-        String enc_id = EncryptUtil.encAES128CBC(user_id);
         String random = RandomUtil.RandomNum();
         String hash_pw = EncryptUtil.enHashSHA256(random);
+        String enc_id = EncryptUtil.encAES128CBC(nvl(request.getParameter("userId")));
 
         Map<String, Object> beforeMap = new HashMap<>();
 
@@ -367,14 +349,9 @@ public class UserController {
 
         int res = userService.getUserEmail(beforeMap);
 
-        String msg = "";
-        String url = "";
-
         if(res == 0) {
-            msg = "존재하지 않는 이메일 혹은 아이디입니다. 이메일 주소와 아이디를 확인해주세요.";
-            url = "/RoadMap/ForgotPassWord.do";
-            model.addAttribute("msg", msg);
-            model.addAttribute("url", url);
+            model.addAttribute("msg", "존재하지 않는 이메일 혹은 아이디입니다. 이메일 주소와 아이디를 확인해주세요.");
+            model.addAttribute("url", "/RoadMap/ForgotPassWord.do");
             return "/redirect";
         }
 
@@ -393,19 +370,13 @@ public class UserController {
         if(result == 1) {
             int mailRes = MailService.doSendPassWordMail(uMap);
             if(mailRes <= 1) {
-                msg = "임시 비밀번호가 가입하신 메일 주소로 전송되었습니다.";
-                url = "/RoadMap/Login.do";
+                model.addAttribute("msg", "임시 비밀번호가 가입하신 메일 주소로 전송되었습니다.");
+                model.addAttribute("url", "/RoadMap/Login.do");
             } else {
-                msg = "메일 서버의 오류로 임시 비밀번호 전송을 실패했습니다. 잠시 후 다시 시도해주세요.";
-                url = "/RoadMap/ReMakePW.do";
+                model.addAttribute("msg", "메일 서버의 오류로 임시 비밀번호 전송을 실패했습니다. 잠시 후 다시 시도해주세요.");
+                model.addAttribute("url", "/RoadMap/ReMakePW.do");
             }
         }
-
-        log.info("model.addAttribute 시작");
-        model.addAttribute("msg", msg);
-        model.addAttribute("url", url);
-        log.info("model.addAttribute 종료");
-
         log.info("RoadMap/ReMakePW 종료");
 
         return "/redirect";
@@ -422,9 +393,12 @@ public class UserController {
         return "/Main/ForgotId";
     }
 
+    /**
+     * Comment: 유저에게 입력받은 이메일 주소로 해당하는 아이디를 가져와서 메일로 전송해줌.
+     * */
     // 아이디 찾기 처리
     @RequestMapping(value = "RoadMap/SendId", method = RequestMethod.POST)
-    public String SendId(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+    public String SendId(HttpServletRequest request, ModelMap model) throws Exception {
 
         log.info("RoadMap/SendId 시작");
 
@@ -435,16 +409,16 @@ public class UserController {
 
         uMap.put("user_email", enc_email);
 
+        // 이메일 주소가 존재하는지 조회
         int res = userService.getUserEmail(uMap);
 
-        String msg = "";
-        String url = "";
-
+        // 조회 결과가 없으면 안내 메세지를 띄우고 다시 아이디 찾기 페이지로 보냄.
         if(res == 0) {
-            msg = "존재하지 않는 이메일입니다. 이메일 주소를 확인해주세요.";
-            url = "/RoadMap/ForgotID.do";
-            model.addAttribute("msg", msg);
-            model.addAttribute("url", url);
+            model.addAttribute("msg", "존재하지 않는 이메일입니다. 이메일 주소를 확인해주세요.");
+            model.addAttribute("url", "/RoadMap/ForgotID.do");
+
+            log.info("RoadMap/SendId 종료");
+
             return "/redirect";
         }
 
@@ -452,30 +426,18 @@ public class UserController {
 
         Map<String, String> pMap = rList.get(0);
 
-        String id = pMap.get("user_id");
-        String dec_id = EncryptUtil.decAES128CBC(id);
+        pMap.replace("user_email", EncryptUtil.decAES128CBC(pMap.get("user_email")));
+        pMap.replace("user_id", EncryptUtil.decAES128CBC(pMap.get("user_id")));
 
-        pMap = null;
+        int email_res = MailService.doSendIdMail(pMap);
 
-        pMap = new HashMap<>();
-
-        pMap.put("user_email", user_email);
-        pMap.put("user_id", dec_id);
-
-        int mailRes = MailService.doSendIdMail(pMap);
-        if(mailRes <= 1) {
-            msg = "아이디가 가입하신 메일 주소로 전송되었습니다.";
-            url = "/RoadMap/Login.do";
+        if(email_res <= 1) {
+            model.addAttribute("msg", "아이디가 가입하신 메일 주소로 전송되었습니다.");
+            model.addAttribute("url", "/RoadMap/Login.do");
         } else {
-            msg = "서버의 오류로 아이디 전송을 실패했습니다. 잠시 후 다시 시도해주세요.";
-            url = "/RoadMap/ReMakePW.do";
+            model.addAttribute("msg", "서버의 오류로 아이디 전송을 실패했습니다. 잠시 후 다시 시도해주세요.");
+            model.addAttribute("url", "/RoadMap/ReMakePW.do");
         }
-
-
-        log.info("model.addAttribute 시작");
-        model.addAttribute("msg", msg);
-        model.addAttribute("url", url);
-        log.info("model.addAttribute 종료");
 
         log.info("RoadMap/SendId 종료");
 
@@ -492,18 +454,18 @@ public class UserController {
 
         return "/Main/PassWordChange";
     }
-
+    
+    /**
+     * Comment: 세션에 올라가 있는 아이디로 정보를 찾아서 입력받은 비밀번호로 교체
+     **/
     // 비밀번호 변경 처리
     @RequestMapping(value = "RoadMap/PassWordChangeProc")
     public String PassWordChangeProc(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
 
         log.info("PassWordChange 시작");
 
-        String user_id = (String) session.getAttribute("SS_USER_ID");
-        log.info("user_id: " + user_id);
-        String enc_id = EncryptUtil.encAES128CBC(user_id);
-        String user_pwd = CmmUtil.nvl(request.getParameter("pwd"));
-        String Hash_pwd = EncryptUtil.enHashSHA256(user_pwd);
+        String enc_id = EncryptUtil.encAES128CBC(nvl((String) session.getAttribute("SS_USER_ID")));
+        String Hash_pwd = EncryptUtil.enHashSHA256(nvl(request.getParameter("pwd")));
 
         Map<String, Object> beforeMap = new HashMap<>();
 
@@ -515,17 +477,12 @@ public class UserController {
 
         int res = userService.passWordChange(beforeMap, afterMap);
 
-        String msg = "";
-        String url = "/RoadMap/PassWordChange";
-
         if(res == 1){
-            msg = "비밀번호 변경이 성공하였습니다.";
+            model.addAttribute("msg", "비밀번호 변경이 성공하였습니다.");
         } else {
-            msg = "서버의 오류로 인해 비밀번호 변경이 실패했습니다. 잠시 후 다시 시도해주세요. 변경이 계속 실패하는 경우 고객센터에 문의 바랍니다.";
+            model.addAttribute("msg", "서버의 오류로 인해 비밀번호 변경이 실패했습니다. 잠시 후 다시 시도해주세요. 변경이 계속 실패하는 경우 고객센터에 문의 바랍니다.");
         }
-
-        model.addAttribute("msg", msg);
-        model.addAttribute("url", url);
+        model.addAttribute("url", "/RoadMap/PassWordChange");
 
         log.info("PassWordChange 종료");
 
@@ -551,7 +508,7 @@ public class UserController {
 
         log.info("/RoadMap/userWithdrawalCheck 시작");
 
-        int result = 0;
+        int result;
         log.info("String 변수저장 시작");
         String DeleteCheck = request.getParameter("DeleteCheck");
         log.info("String 변수저장 종료");
@@ -564,6 +521,7 @@ public class UserController {
         }
 
         log.info("result :" + result);
+
         log.info("/RoadMap/userWithdrawalCheck 종료");
 
         return result;
