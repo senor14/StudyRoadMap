@@ -5,9 +5,9 @@ import java.util.Map;
 
 public interface IMongoUserMapper {
 
-	public int insertUserInfo(Map<String, Object> pMap, String colNm) throws Exception;
-
 	public List<Map<String, String>> getUserInfo(Map<String, Object> pMap, String colNm) throws Exception;
+
+	public int insertUserInfo(Map<String, Object> pMap, String colNm) throws Exception;
 
 	public int deleteUserInfo(Map<String, Object> pMap, String colNm);
 
