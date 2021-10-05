@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.btncls {
+	background-color: white;
+	transition: background-color 1s, color 1s;
+	font-size: 29px;
+	font-weight: bold;
+	padding-bottom: 5px;
+	width: 50px;
+}
+
+.btncls:hover {
+	background-color: black;
+	color: white;
+}
