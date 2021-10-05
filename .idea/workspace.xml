@@ -10,8 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Main/Login_or_Signup.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/login_template.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/login_style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/login_main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Main/Login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/Main/Login.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,6 +87,9 @@
       <recent name="C:\RoadMapPrj\src\main\webapp\WEB-INF\view\Main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\RoadMapPrj\src\main\webapp\resources\css" />
+      <recent name="C:\RoadMapPrj\src\main\webapp\resources\js" />
+      <recent name="C:\RoadMapPrj\src\main\webapp\resources\css\css" />
       <recent name="E:\CSRoadMap\StudyRoadMap\src\main\webapp\WEB-INF" />
       <recent name="E:\CSRoadMap\StudyRoadMap\src\main\resources" />
     </key>
@@ -200,6 +208,8 @@
       <workItem from="1633162223954" duration="20041000" />
       <workItem from="1633227049737" duration="12605000" />
       <workItem from="1633255112260" duration="10766000" />
+      <workItem from="1633274925778" duration="2834000" />
+      <workItem from="1633398377989" duration="13432000" />
     </task>
     <servers />
   </component>
