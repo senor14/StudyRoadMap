@@ -41,7 +41,7 @@ public class UserController {
     IMailService MailService;
 
     // 로그인 페이지
-    @RequestMapping(value = "RoadMap/Login")
+    @RequestMapping(value = "RoadMap/LoginOrSignUp")
     public String Login() {
 
         log.info("Login 시작");
@@ -51,7 +51,7 @@ public class UserController {
 
         log.info("Login 종료");
 
-        return "/Main/Login";
+        return "/Main/Login_or_Signup";
     }
 
     // 로그인 처리
@@ -75,7 +75,7 @@ public class UserController {
         // 조회 결과가 없으면 안내 메세지를 띄우고 다시 로그인 페이지로 보냄
         if (rList.size() == 0) {
             model.addAttribute("msg", "아이디 비밀번호가 틀렸거나 가입하지 않은 회원입니다.");
-            model.addAttribute("url", "/RoadMap/Login");
+            model.addAttribute("url", "/RoadMap/Login_or_Signup");
 
             log.info("RoadMap/LoginProc end");
 
@@ -85,7 +85,7 @@ public class UserController {
             session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("user_id")));
             session.setAttribute("SS_USER_UUID", rList.get(0).get("user_uuid"));
 
-            model.addAttribute("url", "/RoadMap/Login");
+            model.addAttribute("url", "/RoadMap/Login_or_Signup");
 
             log.info("RoadMap/LoginProc end");
 
@@ -104,18 +104,7 @@ public class UserController {
 
         log.info("/RoadMap/Logout 종료");
 
-        return "/Main/Login";
-    }
-
-    // 회원가입 페이지
-    @RequestMapping(value = "RoadMap/SignUp")
-    public String SignUp() {
-
-        log.info("SignUp 시작");
-
-        log.info("SignUp 종료");
-
-        return "/Main/SignUp";
+        return "/Main/Login_or_Signup";
     }
 
     /**
