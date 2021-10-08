@@ -1,18 +1,30 @@
 package service;
 
-import dto.StudyRoadInfoDTO;
+import domain.StudyMindData;
+import domain.StudyMindNodeData;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IStudyMindService {
 
-    public List<Map<String, String>> getMindMap(StudyRoadInfoDTO pDto) throws Exception;
+    public List<StudyMindData> getMindMapData(StudyMindData mindeData) throws Exception;
 
-    public List<Map<String, String>> getMindMapNode(StudyRoadInfoDTO pDto) throws Exception;
+    public List<StudyMindNodeData> getMindMapNode(StudyMindNodeData nodeData) throws Exception;
 
-    public int insertDefaultMindMap(Map<String, Object> pMap, String colNm) throws Exception;
+    public int insertMindData(StudyMindData mindData) throws Exception;
 
-    public int insertRootNode(Map<String, Object> nMap, Map<String, String> mMap, String colNm) throws Exception;
+    public int insertNodeData(StudyMindNodeData nodeData) throws Exception;
+
+    public StudyMindData getMindMapInfoByMindId(String mindId) throws Exception;
+
+    public StudyMindNodeData getMindMapNodeByMindId(String mindId) throws Exception;
+
+    public StudyMindData updateMindData(StudyMindData mindData) throws Exception;
+
+    public StudyMindNodeData updateNodeData(StudyMindNodeData nodeData) throws Exception;
+
+    public StudyMindData deleteMindData(String mindId) throws Exception;
+
+    public StudyMindNodeData deleteMindNodeData(String mindId) throws Exception;
 
 }

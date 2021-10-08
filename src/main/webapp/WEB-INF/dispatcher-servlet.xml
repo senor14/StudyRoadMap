@@ -27,6 +27,8 @@
     <!-- Service에서 호출할 때 사용 객체를 싱글톤으로 로딩하기 위해 설정 -->
     <context:component-scan base-package="service" />
     <context:component-scan base-package="persistence.mongo" />
+    <context:component-scan base-package="jpa" />
+    <context:component-scan base-package="domain" />
 
 
     <!-- ViewResolver : 뷰 선택자 -->

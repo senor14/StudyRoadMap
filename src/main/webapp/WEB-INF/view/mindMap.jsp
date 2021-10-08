@@ -1,5 +1,7 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
+<%@ page import="domain.StudyMindData" %>
+<%@ page import="domain.StudyMindNodeData" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
     
@@ -7,8 +9,8 @@
     /* 사용자 영문 이름 */
     String en_name = " senorKim"; /* (String)request.getAttribute("") */
 
-    List<Map<String, String>> mindMap = (List<Map<String, String>>)request.getAttribute("mindMap");
-    List<Map<String, String>> mindMapNode = (List<Map<String, String>>)request.getAttribute("mindMapNode");
+    List<StudyMindData> mindMapInfo = (List<StudyMindData>)request.getAttribute("mindMapInfo");
+    List<StudyMindNodeData> mindMapNode = (List<StudyMindNodeData>)request.getAttribute("mindMapNode");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -47,13 +49,36 @@
 <div class="demo-footer"><a href="http://www.turkishnews.com/Ataturk/life.htm" target="_blank">Source/Kaynak</a></div>
 
 <%-- modal --%>
-<div class="modal-container" id="m2-o" style="                                                                                                                                                                                                                                                                                                                                                                                                                                              --m-background: hsla(0, 0%, 0%, .4);">
+<div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <h1 class="modal__title">Modal 2 Title</h1>
-        <p class="modal__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex dicta maiores libero minus obcaecati iste optio, eius labore repellendus.</p>
-        <button class="modal__btn">Button &rarr;</button>
-        <button class="modal__btn">Button &rarr;</button>
-        <a href="#" class="link-2"></a>
+        <h1 class="modal__title">네트워크</h1>
+<%--        <p class="modal__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex dicta maiores libero minus obcaecati iste optio, eius labore repellendus.</p>--%>
+        <div>링크: <input type="text"></div>
+        <div>참고서적 제목:
+<%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
+
+            <input type="text">
+        </div>
+        <div>
+            참고서적 링크: <input type="text">
+        </div>
+        <div>내용: <textarea rows="5" cols="33"></textarea></div>
+        <button class="modal__btn">추가</button>
+        <button class="modal__btn">수정</button>
+        <button class="modal__btn" onclick="window.location.href='#m1-o'">삭제</button>
+        <button class="modal__btn">취소</button>
+        <a onclick="fnCloseModal();" class="link-2"></a>
+    </div>
+</div>
+
+<div class="modal-container" id="m1-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+    <a href="#" class="link-2"></a>
+    <div class="team-boxed">
+        <div class="item">
+                <h1>정말 삭제하시겠습니까?</h1>
+                <button class="modal__btn">확인</button>
+                <button class="modal__btn link-2" onclick="window.location.href='#'">취소</button>
+        </div>
     </div>
 </div>
 
@@ -64,38 +89,42 @@
 <%--    <script src="https://unpkg.com/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>
 <%--<script type="module" src="${pageContext.request.contextPath}/resources/js/study_mindMap/study_mindMap.js"></script>--%>
+
+<%-- 마인드맵 화면 --%>
 <script>
     // cytoscape.use( cola );
 
+    // 노드 데이터 가져올 껍데기
     let data = {
         nodes: [],
         edges: []
     }
 
+        // 껍데기에 노드 정보 넣는 로직
         <%
-            for (Map<String, String> node : mindMapNode) {
-                if (node.get("group").equals("nodes")) {
+            for (StudyMindNodeData node : mindMapNode) {
+                if (node.getGroup().equals("nodes")) {
         %>
                     data.nodes.push(
                         {
                             data:
                                 {
-                                    "id": "<%=node.get("id")%>",
-                                    "label": "<%=node.get("label")%>"
+                                    "id": "<%=node.getMindId()%>",
+                                    "label": "<%=node.getMindLabel()%>"
                                 }
                         }
                     );
                     console.log(data);
         <%
-                } else if (node.get("group").equals("edges")) {
+                } else if (node.getGroup().equals("edges")) {
         %>
                     data.edges.push(
                         {
                             data:
                                 {
-                                    "id": "<%=node.get("id")%>",
-                                    "source": "<%=node.get("source")%>",
-                                    "target": "<%=node.get("target")%>"
+                                    "id": "<%=node.getMindId()%>",
+                                    "source": "<%=node.getSource()%>",
+                                    "target": "<%=node.getTarget()%>"
                                 }
                         }
                     );
@@ -105,6 +134,7 @@
             }
         %>
 
+    //노드 그리기
     window.addEventListener('DOMContentLoaded', function(){ // on dom ready
 
         // photos from flickr with creative commons license
@@ -187,7 +217,8 @@
             wheelSensitivity: 0.25
         }); // cy init
 
-        console.log('hi')
+
+        // 노드 레이아웃 설정
         const layoutConfig = {
             name: "cola",
             handleDisconnected: true,
@@ -203,8 +234,7 @@
             }
         }
 
-
-        // let nodeid = 1;
+        // 클릭시 반응
         cy.on('tap', 'node', evt => {
 
             cy.nodes().forEach(node => {
@@ -213,49 +243,35 @@
 
             const currentNodeId = create_UUID();
             const currentEdgeId = create_UUID();
-            console.log(currentNodeId);
+
             const targetId = evt.target.data('id'); //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
 
-            // data.nodes.push({
-            //     data: {
-            //         "id": currentNodeId,
-            //         "url":  "a",
-            //         "label": 'abc'
+            fnOpenModal(targetId);
+
+            // cy.add([
+            //     {
+            //         group: 'nodes',
+            //         data: {
+            //             "id": currentNodeId,
+            //             "url":  "a",
+            //             "label": 'abc'
+            //         }
+            //     },
+            //     {
+            //         group: 'edges',
+            //         data: {
+            //             id: currentEdgeId,
+            //             source: currentNodeId,
+            //             target: targetId
+            //         }
             //     }
-            // })
+            // ]);
             //
-            // data.edges.push({
-            //     data: {
-            //         "id": currentEdgeId,
-            //         "source": currentNodeId,
-            //         "target": targetId
-            //     }
-            // })
-
-            cy.add([
-                {
-                    group: 'nodes',
-                    data: {
-                        "id": currentNodeId,
-                        "url":  "a",
-                        "label": 'abc'
-                    }
-                },
-                {
-                    group: 'edges',
-                    data: {
-                        id: currentEdgeId,
-                        source: currentNodeId,
-                        target: targetId
-                    }
-                }
-            ]);
-
-            cy.on('cxttap', function (e) {
-                console.log('cxttap');
-                // cy.remove(cy.$('#'+currentNodeId));
-                cy.remove(cy.$('#'+e.target.data('id')));
-            });
+            // cy.on('cxttap', function (e) {
+            //     console.log('cxttap');
+            //     // cy.remove(cy.$('#'+currentNodeId));
+            //     cy.remove(cy.$('#'+e.target.data('id')));
+            // });
 
             // cy.on('tap', function (e) {
             //   const url = e.target.data('url')
@@ -275,6 +291,83 @@
 
 
         });
+
+
+
+        <!--노드 생성 백업 -->
+        // cy.on('tap', 'node', evt => {
+        //
+        //     cy.nodes().forEach(node => {
+        //         node.lock();
+        //     });
+        //
+        //     const currentNodeId = create_UUID();
+        //     const currentEdgeId = create_UUID();
+        //     console.log(currentNodeId);
+        //     const targetId = evt.target.data('id'); //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
+        //
+        //     // data.nodes.push({
+        //     //     data: {
+        //     //         "id": currentNodeId,
+        //     //         "url":  "a",
+        //     //         "label": 'abc'
+        //     //     }
+        //     // })
+        //     //
+        //     // data.edges.push({
+        //     //     data: {
+        //     //         "id": currentEdgeId,
+        //     //         "source": currentNodeId,
+        //     //         "target": targetId
+        //     //     }
+        //     // })
+        //
+        //     cy.add([
+        //         {
+        //             group: 'nodes',
+        //             data: {
+        //                 "id": currentNodeId,
+        //                 "url":  "a",
+        //                 "label": 'abc'
+        //             }
+        //         },
+        //         {
+        //             group: 'edges',
+        //             data: {
+        //                 id: currentEdgeId,
+        //                 source: currentNodeId,
+        //                 target: targetId
+        //             }
+        //         }
+        //     ]);
+        //
+        //     cy.on('cxttap', function (e) {
+        //         console.log('cxttap');
+        //         // cy.remove(cy.$('#'+currentNodeId));
+        //         cy.remove(cy.$('#'+e.target.data('id')));
+        //     });
+        //
+        //     // cy.on('tap', function (e) {
+        //     //   const url = e.target.data('url')
+        //     //   if (url && url !== '') {
+        //     //     window.open(url);
+        //     //   }
+        //     // });
+        //
+        //     const layout = cy.makeLayout(layoutConfig);
+        //     layout.run();
+        //
+        //     layout.on("layoutstop", () => {
+        //         cy.nodes().forEach(node => {
+        //             node.unlock();
+        //         })
+        //     })
+        //
+        //
+        // });
+        <!--노드 생성 백업 -->
+
+
 
         cy.on('tapstart mouseover', 'node', function (e) {
             setDimStyle(cy, {
@@ -373,6 +466,18 @@
         }
 
     }); // on dom ready
+</script>
+<%-- 모달 조작 함수 --%>
+<script>
+    // 모달 오픈
+    function fnOpenModal(type){
+        console.log(type);
+        $('#m2-o').css("display", "flex");
+    }
+    // 모달 종료
+    function fnCloseModal(){
+        $('#m2-o').css("display", "none");
+    }
 </script>
 </body>
 </html>
