@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import service.IStudyMindService;
 import util.DateUtil;
+import vo.ResponseNodeData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -137,11 +138,11 @@ public class StudyMindController {
     }
 
     @PostMapping("/mindmap/{studyRoadNodeId}/{mindId}")
-    public ResponseEntity<StudyMindNodeData> insertNodeData(@PathVariable String studyRoadNodeId,
-                                 @PathVariable String mindId,
-                                 HttpServletRequest request,
-                                 HttpServletResponse response,
-                                 ModelMap model) throws Exception {
+    public ResponseEntity<ResponseNodeData> insertNodeData(@PathVariable String studyRoadNodeId,
+                                                           @PathVariable String mindId,
+                                                           HttpServletRequest request,
+                                                           HttpServletResponse response,
+                                                           ModelMap model) throws Exception {
 
         log.info(this.getClass().getName() + ".insertNodeData Start!");
 
@@ -163,13 +164,6 @@ public class StudyMindController {
         studyMindService.insertMindData(mind);
         log.info("mind: "+ mind.toString());
 
-//        if (mRes == 0) {
-//            msg = "마인드맵 생성중입니다.";
-//        } else {
-//            msg = "마인드맵 생성 실패.";
-//        }
-
-
         StudyMindNodeData node = new StudyMindNodeData();
         node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
         node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
@@ -180,11 +174,6 @@ public class StudyMindController {
 
         studyMindService.insertNodeData(node);
 
-//        if (nRes == 0) {
-//            msg = "노드 생성중입니다.";
-//        } else {
-//            msg = "노드 생성 실패.";
-//        }
         String randomEdgeId = UUID.randomUUID().toString();
         log.info("randomEdgeId: "+randomEdgeId);
 
@@ -199,18 +188,18 @@ public class StudyMindController {
 
         studyMindService.insertNodeData(edge);
 
-//        if (eRes==0 && eRes2==0) {
-//            msg = "엣지 생성중입니다.";
-//        } else {
-//            msg = "엣지 생성 실패.";
-//        }
+        ResponseNodeData nodeData = new ResponseNodeData();
 
-//        model.addAttribute("msg", msg);
-//        model.addAttribute("url", url);
+        nodeData.setNodeMindId(randomMindId);
+        nodeData.setEdgeMindId(randomEdgeId);
+        nodeData.setMindLabel(nvl(request.getParameter("mindLabel")));
+        nodeData.setSource(randomMindId);
+        nodeData.setTarget(mindId);
+        log.info("nodeData: "+ nodeData);
 
         log.info(this.getClass().getName() + ".insertNodeData End!");
 
-        return ResponseEntity.status(HttpStatus.OK).body(edge);
+        return ResponseEntity.status(HttpStatus.OK).body(nodeData);
 
     }
 

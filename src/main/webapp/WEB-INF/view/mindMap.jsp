@@ -1,4 +1,3 @@
-<%@ page import="java.util.Map" %>
 <%@ page import="java.util.List" %>
 <%@ page import="domain.StudyMindData" %>
 <%@ page import="domain.StudyMindNodeData" %>
@@ -28,7 +27,7 @@
         <h2 class="timeline-header__title">스터디로드맵에서 넘어올때 라벨가져옴</h2>
         <h3 class="timeline-header__subtitle"><%=en_name %></h3>
     </div>
-    <div id="MindMap">
+    <div id="mind_map">
         <div class="map_box">
             <div id="cy"></div>
         </div>
@@ -119,10 +118,6 @@
 </div>
 <%-- modal 삭제 끝 --%>
 
-
-<
-</div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/study_mindMap/cytoscape.min.js"></script>
 <%--    <script src="https://unpkg.com/webcola@3.4.0/WebCola/cola.min.js"></script>--%>
@@ -169,9 +164,6 @@
                             }
                     }
             );
-            console.log(node_data);
-            console.log("node_data.nodes.mindId");
-            console.log(node_data.nodes);
     <%
             }
         }
@@ -182,24 +174,28 @@
 
     // photos from flickr with creative commons license
 
-    // // Rank
-    // const cy_for_rank = cytoscape({
-    //   elements: data
-    // });
-    // const pageRank = cy_for_rank.elements().pageRank();
+    // Rank
+    let cy_for_rank = cytoscape({
+      elements: node_data
+    });
+    // let pageRank = cy_for_rank.elements().pageRank();
 
-    const nodeMaxSize = 50;
-    const nodeMinSize = 5;
-    const nodeActiveSize = 28;
-    const fontMaxSize = 8;
-    const fontMinSize = 5;
-    const fontActiveSize = 7;
+    cytoscape({
+        elements: node_data
+    }).elements().pageRank()
+
+    const nodeMaxSize = 80;
+    const nodeMinSize = 40;
+    const nodeActiveSize = 100;
+    const fontMaxSize = 20;
+    const fontMinSize = 15;
+    const fontActiveSize = 23;
 
     const edgeWidth = '6px';
     var edgeActiveWidth = '6px';
     const arrowScale = 1;
     const arrowActiveScale = 1.2;
-// edge & arrow 크기값
+    // edge & arrow 크기값
 
     const dimColor = '#dfe4ea';
     const edgeColor = '#ffaaaa';
@@ -207,13 +203,12 @@
     const nodeActiveColor = '#ffa502';
 
     const successorColor = '#ff6348';
-// 상위 node & edge color
+    // 상위 node & edge color
     const predecessorsColor = '#1e90ff';
-// 하위 node & edge color
+    // 하위 node & edge color
 
 
     const cy = cytoscape({
-
         container: document.getElementById('cy'),
         elements: node_data,
         style: [ // the stylesheet for the graph
@@ -222,8 +217,23 @@
                 style: {
                     'background-color': nodeColor,
                     'color': nodeColor,
-                    'width': 80,
-                    'height': 80,
+                    // 'width': 80,
+                    'width': function (ele) {
+                        return nodeMaxSize * cytoscape({
+                            elements: node_data
+                        }).elements().pageRank().rank('#' + ele.id()) + nodeMinSize;
+                    },
+                    // 'height': 80,
+                    'height': function (ele) {
+                        return nodeMaxSize * cytoscape({
+                            elements: node_data
+                        }).elements().pageRank().rank('#' + ele.id()) + nodeMinSize;
+                    },
+                    'font-size': function (ele) {
+                        return fontMaxSize * cytoscape({
+                            elements: node_data
+                        }).elements().pageRank().rank('#' + ele.id()) + fontMinSize;
+                    },
                     'label': 'data(label)',
                     'border-color': '#000',
                     'border-width': 3,
@@ -246,9 +256,10 @@
             name: 'cola',
             directed: true,
             animate: false,
-            graviryRangeCompound: 1.5,
+            gravityRangeCompound: 1.5,
             fit: true,
-            tile: true
+            tile: true,
+            directed: true
         },
         wheelSensitivity: 0.25
     }); // cy init
@@ -277,13 +288,9 @@
             node.lock();
         });
 
-        const currentNodeId = create_UUID();
-        const currentEdgeId = create_UUID();
-
         const targetId = evt.target.data('id'); //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
 
         getMindDataByAjax(targetId)
-
         fnOpenModal('#m2-o');
 
         const layout = cy.makeLayout(layoutConfig);
@@ -366,10 +373,12 @@
     function setResetFocus(target_cy) {
         target_cy.nodes().forEach(function (target) {
             target.style('background-color', nodeColor);
-            // var rank = pageRank.rank(target);
-            // target.style('width', nodeMaxSize * rank + nodeMinSize);
-            // target.style('height', nodeMaxSize * rank + nodeMinSize);
-            // target.style('font-size', fontMaxSize * rank + fontMinSize);
+            var rank = cytoscape({
+                elements: node_data
+            }).elements().pageRank().rank(target);
+            target.style('width', nodeMaxSize * rank + nodeMinSize);
+            target.style('height', nodeMaxSize * rank + nodeMinSize);
+            target.style('font-size', fontMaxSize * rank + fontMinSize);
             target.style('color', nodeColor);
             target.style('opacity', 1);
         });
@@ -382,19 +391,18 @@
         });
     }
 
-    // UUID 생성기
-    function create_UUID(){
-        var dt = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = (dt + Math.random()*16)%16 | 0;
-            dt = Math.floor(dt/16);
-            return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-        });
-        return uuid;
-    }
+    // // UUID 생성기
+    // function create_UUID(){
+    //     var dt = new Date().getTime();
+    //     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    //         var r = (dt + Math.random()*16)%16 | 0;
+    //         dt = Math.floor(dt/16);
+    //         return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    //     });
+    //     return uuid;
+    // }
 
     function insertMindAndNodeData(mindmind) {
-
         let query = {
             mindLabel : $('#modal__title-add').val(),
             url: $('#modal__book_link-add').val(),
@@ -402,12 +410,6 @@
             bookLink: $('#modal__book_link-add').val(),
             mindContents: $('#modal__content-add').val()
         }
-
-        console.log("query",query);
-        console.log(query);
-        console.log("mindmind:"+mindmind);
-        console.log(mindmind);
-
         $.ajax({
             url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+mindmind,
             type: "post",
@@ -417,6 +419,29 @@
                     cy.nodes().forEach(node => {
                         node.lock();
                     });
+                    node_data.nodes.push(
+                        {
+                            data:
+                                {
+                                    "id": data.nodeMindId,
+                                    "label": data.mindLabel
+                                }
+                        }
+                    );
+                    console.log("node_data.nodes.push")
+                    console.log(node_data);
+                    node_data.edges.push(
+                        {
+                            data:
+                                {
+                                    "id": data.edgeMindId,
+                                    "source": data.source,
+                                    "target": data.target
+                                }
+                        }
+                    );
+                    console.log("node_data.edges.push")
+                    console.log(node_data);
                     cy.add([
                         {
                             group: 'nodes',
@@ -478,6 +503,7 @@
                     for (let d in node_data.nodes) {
                         if (node_data.nodes[d].data.id === mindmind) {
                             node_data.nodes[d].data.label = $('#modal__title-mod').val()
+                            break
                         }
                     }
                     const layout = cy.makeLayout(layoutConfig);
@@ -522,16 +548,9 @@
                 } else {
                     console.log("data 이상")
                 }
-
             }
-
         });
-
-
-
     }
-
-
 
     // }); // on dom ready
 </script>
@@ -541,10 +560,6 @@
     function fnOpenModal(id){
         // $('#m2-o').css("display", "flex");
         $(id).css("display", "flex");
-
-        // if (id==='#m-3') {
-        //     getMindDataByAjax($('modal__mindId').text());
-        // }
     }
     // 모달 종료
     function fnCloseModal(id){
@@ -573,10 +588,6 @@
             }
         });
     }
-
-
-
-
 </script>
 </body>
 </html>

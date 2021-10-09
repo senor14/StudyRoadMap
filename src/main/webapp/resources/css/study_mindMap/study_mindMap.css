@@ -3,7 +3,13 @@
 	 max-width: 700px;
  }
 
-#cy {
+ #mind_map {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+ #cy {
 	height: 100%;
 	width: 100%;
 }
