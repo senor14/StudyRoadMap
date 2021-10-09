@@ -23,7 +23,6 @@ import persistence.mongo.IMongoUserMapper;
 @Component("MongoUserMapper")
 public class MongoUserMapper implements IMongoUserMapper {
 
-	@Autowired
 	private MongoTemplate mongodb;
 
 	private Logger log = Logger.getLogger(this.getClass());
