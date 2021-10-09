@@ -10,34 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_modelmapper_modelmapper_2_4_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/StudyMindData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/domain/StudyMindNodeData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/dto/StudyMindNodeDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jpa/StudyMindNodeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/jpa/StudyMindRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/MyCSRoadMap_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/MyCSRoadMap_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyCSRoadMap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MyCSRoadMap.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudyRoadMap" beforeDir="false" afterPath="$PROJECT_DIR$/StudyRoadMap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudyRoadMap/src/main/java/persistence/mongo/impl/MongoScheduleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudyRoadMap/src/main/java/persistence/mongo/impl/MongoScheduleMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudyRoadMap/src/main/java/persistence/mongo/impl/MongoUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudyRoadMap/src/main/java/persistence/mongo/impl/MongoUserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudyRoadMap/src/main/java/service/impl/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudyRoadMap/src/main/java/service/impl/MailService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudyRoadMap/src/main/java/service/impl/MongoScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudyRoadMap/src/main/java/service/impl/MongoScheduleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/StudyRoadMap/src/main/java/service/impl/MongoUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/StudyRoadMap/src/main/java/service/impl/MongoUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dto/StudyMindDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dto/StudyMindDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/IMongoUserMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/IStudyMindMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/IStudyMindMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoUserMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/StudyMindMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/StudyMindMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/IMongoUserService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/IStudyMindService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IStudyMindService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/MongoUserService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/StudyMindService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/StudyMindService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/util/DateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/util/DateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/dispatcher-servlet.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +201,8 @@
       <workItem from="1632662862516" duration="5854000" />
       <workItem from="1633247686147" duration="67926000" />
       <workItem from="1633586564918" duration="21053000" />
-      <workItem from="1633667037143" duration="10725000" />
+      <workItem from="1633667037143" duration="11676000" />
+      <workItem from="1633694660167" duration="25297000" />
     </task>
     <servers />
   </component>

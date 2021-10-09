@@ -19,12 +19,12 @@ public interface IStudyMindService {
 
     public StudyMindNodeData getMindMapNodeByMindId(String mindId) throws Exception;
 
-    public StudyMindData updateMindData(StudyMindData mindData) throws Exception;
+    public int updateMindData(StudyMindData mindData) throws Exception;
 
-    public StudyMindNodeData updateNodeData(StudyMindNodeData nodeData) throws Exception;
+    public int updateNodeData(StudyMindNodeData nodeData) throws Exception;
 
-    public StudyMindData deleteMindData(String mindId) throws Exception;
+    public int deleteMindData(String mindId) throws Exception;
 
-    public StudyMindNodeData deleteMindNodeData(String mindId) throws Exception;
+    public int deleteMindNodeData(String mindId) throws Exception;
 
 }

@@ -122,7 +122,7 @@ public class StudyMindService implements IStudyMindService {
     }
 
     @Override
-    public StudyMindData updateMindData(StudyMindData mindData) throws Exception {
+    public int updateMindData(StudyMindData mindData) throws Exception {
 
         log.info(this.getClass().getName() + ".updateMindData Start!");
 
@@ -134,16 +134,22 @@ public class StudyMindService implements IStudyMindService {
 
         mapper.map(mindData, result);
 
-        studyMindRepository.save(result);
+        StudyMindData save = studyMindRepository.save(result);
+        int res;
+        if (save!=null) {
+            res = 0;
+        } else {
+            res = 1;
+        }
         log.info("result after: "+result.toString());
 
         log.info(this.getClass().getName() + ".updateMindData End!");
 
-        return result;
+        return res;
     }
 
     @Override
-    public StudyMindNodeData updateNodeData(StudyMindNodeData nodeData) throws Exception {
+    public int updateNodeData(StudyMindNodeData nodeData) throws Exception {
 
         log.info(this.getClass().getName() + ".updateNodeData Start!");
 
@@ -155,30 +161,41 @@ public class StudyMindService implements IStudyMindService {
 
         mapper.map(nodeData, result);
 
-        studyMindNodeRepository.save(result);
+        StudyMindNodeData save = studyMindNodeRepository.save(result);
+        int res;
+        if (save!=null) {
+            res = 0;
+        } else {
+            res = 1;
+        }
         log.info("result after: "+result.toString());
 
         log.info(this.getClass().getName() + ".updateNodeData End!");
 
-        return result;
+        return res;
     }
 
     @Override
-    public StudyMindData deleteMindData(String mindId) throws Exception {
+    public int deleteMindData(String mindId) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteMindData Start!");
 
         StudyMindData mindData = studyMindRepository.deleteByMindId(mindId);
-
+        int res;
+        if (mindData!=null) {
+            res = 0;
+        } else {
+            res = 1;
+        }
         log.info("mindData: "+mindData);
 
         log.info(this.getClass().getName() + ".deleteMindData End!");
 
-        return mindData;
+        return res;
     }
 
     @Override
-    public StudyMindNodeData deleteMindNodeData(String mindId) throws Exception {
+    public int deleteMindNodeData(String mindId) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteMindNodeData Start!");
 
@@ -186,16 +203,23 @@ public class StudyMindService implements IStudyMindService {
 
         List<StudyMindNodeData> deleteNodes = studyMindNodeRepository.findAllBySourceOrTarget(mindId, mindId);
 
+        int res;
+        if (deleteNodes!=null) {
+            res = 0;
+        } else {
+            res = 1;
+        }
         log.info("##########################################################");
         log.info("deleteNodes: "+deleteNodes.toString());
         log.info("##########################################################");
         studyMindNodeRepository.deleteAll(deleteNodes);
 
+
         log.info("nodeData: "+nodeData);
 
         log.info(this.getClass().getName() + ".deleteMindNodeData End!");
 
-        return nodeData;
+        return res;
     }
 
 

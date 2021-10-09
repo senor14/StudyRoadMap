@@ -1,8 +1,12 @@
 package controller;
 
+import static util.CmmUtil.nvl;
+
 import domain.StudyMindData;
 import domain.StudyMindNodeData;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +31,6 @@ public class StudyMindController {
 
     @Resource(name = "StudyMindService")
     IStudyMindService studyMindService;
-
-    @GetMapping("/mindmap")
-    public String mindMap() { return "mindMap";  }
-
 
     // 스터디 로드맵 노드 속의 마인드맵 조회 및 초기 생성
     @GetMapping("/mindmap/{studyRoadNodeId}")
@@ -118,9 +118,8 @@ public class StudyMindController {
     }
 
     // 마인드 id로 마인드맵 정보 조회
-    @ResponseBody
     @GetMapping("/mindmap/{studRoadId}/{mindId}")
-    public String getMindMapByMindId(@PathVariable String studRoadId,
+    public ResponseEntity<StudyMindData> getMindMapByMindId(@PathVariable String studRoadId,
                                      @PathVariable String mindId,
                                      HttpServletRequest request,
                                      HttpServletResponse response,
@@ -134,11 +133,11 @@ public class StudyMindController {
 
         log.info(this.getClass().getName() + ".getMindMapByMindId End!");
 
-        return "Good Lookup!";
+        return ResponseEntity.status(HttpStatus.OK).body(mindMapInfoByMindId);
     }
 
     @PostMapping("/mindmap/{studyRoadNodeId}/{mindId}")
-    public String insertNodeData(@PathVariable String studyRoadNodeId,
+    public ResponseEntity<StudyMindNodeData> insertNodeData(@PathVariable String studyRoadNodeId,
                                  @PathVariable String mindId,
                                  HttpServletRequest request,
                                  HttpServletResponse response,
@@ -146,122 +145,121 @@ public class StudyMindController {
 
         log.info(this.getClass().getName() + ".insertNodeData Start!");
 
-        String msg;
-        String url = "/mindmap/"+studyRoadNodeId;
+        String randomMindId = UUID.randomUUID().toString();
+        log.info("randomMindId: "+randomMindId);
 
         StudyMindData mind = new StudyMindData();
         mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
         mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
         mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-        mind.setMindId("c910c43b-821c-4401-b47e-b42025a78bdb");
-        mind.setMindLabel("Adobe Pro");
-        mind.setMindContents("Adobe Pro 입니다.");
-        mind.setUrl("x");
-        mind.setBookTitle("x");
-        mind.setBookLink("x");
+        mind.setMindId(randomMindId);
+        mind.setMindLabel(nvl(request.getParameter("mindLabel")));
+        mind.setMindContents(nvl(request.getParameter("mindContents")));
+        mind.setUrl(nvl(request.getParameter("url")));
+        mind.setBookTitle(nvl(request.getParameter("bookTitle")));
+        mind.setBookLink(nvl(request.getParameter("bookLink")));
         mind.setCreated(DateUtil.getDateTime());
 
-        int mRes = studyMindService.insertMindData(mind);
+        studyMindService.insertMindData(mind);
+        log.info("mind: "+ mind.toString());
 
-        if (mRes == 0) {
-            msg = "마인드맵 생성중입니다.";
-        } else {
-            msg = "마인드맵 생성 실패.";
-        }
+//        if (mRes == 0) {
+//            msg = "마인드맵 생성중입니다.";
+//        } else {
+//            msg = "마인드맵 생성 실패.";
+//        }
+
 
         StudyMindNodeData node = new StudyMindNodeData();
         node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
         node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
         node.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-        node.setMindId("c910c43b-821c-4401-b47e-b42025a78bdb");
+        node.setMindId(randomMindId);
         node.setGroup("nodes");
-        node.setMindLabel("adobe pro");
+        node.setMindLabel(nvl(request.getParameter("mindLabel")));
 
-        int nRes = studyMindService.insertNodeData(node);
+        studyMindService.insertNodeData(node);
 
-        if (nRes == 0) {
-            msg = "노드 생성중입니다.";
-        } else {
-            msg = "노드 생성 실패.";
-        }
+//        if (nRes == 0) {
+//            msg = "노드 생성중입니다.";
+//        } else {
+//            msg = "노드 생성 실패.";
+//        }
+        String randomEdgeId = UUID.randomUUID().toString();
+        log.info("randomEdgeId: "+randomEdgeId);
 
-        StudyMindNodeData edge1 = new StudyMindNodeData();
-        edge1.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        edge1.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        edge1.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-        edge1.setMindId("2f2f46d2-c4c8-46f6-b93f-d6c789f97534");
-        edge1.setGroup("edges");
-        edge1.setSource("c910c43b-821c-4401-b47e-b42025a78bdb");
-        edge1.setTarget(mindId);
+        StudyMindNodeData edge = new StudyMindNodeData();
+        edge.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
+        edge.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
+        edge.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+        edge.setMindId(randomEdgeId);
+        edge.setGroup("edges");
+        edge.setSource(randomMindId);
+        edge.setTarget(mindId);
 
-        int eRes = studyMindService.insertNodeData(edge1);
+        studyMindService.insertNodeData(edge);
 
-        StudyMindNodeData edge2 = new StudyMindNodeData();
-        edge2.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        edge2.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        edge2.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-        edge2.setMindId("3f2f46d2-c4c8-46f6-b93f-d6c789f97534");
-        edge2.setGroup("edges");
-        edge2.setSource(mindId);
-        edge2.setTarget("c910c43b-821c-4401-b47e-b42025a78bdb");
+//        if (eRes==0 && eRes2==0) {
+//            msg = "엣지 생성중입니다.";
+//        } else {
+//            msg = "엣지 생성 실패.";
+//        }
 
-        int eRes2 = studyMindService.insertNodeData(edge2);
-
-        if (eRes==0 && eRes2==0) {
-            msg = "엣지 생성중입니다.";
-        } else {
-            msg = "엣지 생성 실패.";
-        }
-
-        model.addAttribute("msg", msg);
-        model.addAttribute("url", url);
+//        model.addAttribute("msg", msg);
+//        model.addAttribute("url", url);
 
         log.info(this.getClass().getName() + ".insertNodeData End!");
 
-        return "/redirect";
+        return ResponseEntity.status(HttpStatus.OK).body(edge);
 
     }
 
 
     // 마인드, 노드 데이터 수정
-    @ResponseBody
     @PutMapping("/mindmap/{studyRoadNodeId}/{mindId}")
-    public String updateMindNodeData(@PathVariable String studyRoadNodeId,
+    public ResponseEntity<Integer> updateMindNodeData(@PathVariable String studyRoadNodeId,
                                      @PathVariable String mindId,
+                                     @RequestBody StudyMindData mind,
                                      HttpServletRequest request,
                                      HttpServletResponse response,
                                      ModelMap model) throws Exception {
 
         log.info(this.getClass().getName() + ".updateMindNodeData Start!");
 
+        log.info("mind: "+ mind.toString());
+        log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         StudyMindData mindData = studyMindService.getMindMapInfoByMindId(mindId);
 
-        mindData.setMindLabel("유튜브");
-        mindData.setMindContents("유튜브 입니다.");
-        mindData.setUrl("x");
-        mindData.setBookTitle("x");
-        mindData.setBookLink("x");
+        mindData.setMindLabel(nvl(mind.getMindLabel()));
+        mindData.setMindContents(nvl(mind.getMindContents()));
+        mindData.setUrl(nvl(mind.getUrl()));
+        mindData.setBookTitle(nvl(mind.getBookTitle()));
+        mindData.setBookLink(nvl(mind.getBookLink()));
         mindData.setCreated(DateUtil.getDateTime());
+
+        log.info("mindData: "+mindData.toString());
 
         StudyMindNodeData nodeData = studyMindService.getMindMapNodeByMindId(mindId);
 
-        nodeData.setMindLabel("유튜브");
+        nodeData.setMindLabel(nvl(mind.getMindLabel()));
 
-        StudyMindData studyMindData = studyMindService.updateMindData(mindData);
-        StudyMindNodeData studyMindNodeData = studyMindService.updateNodeData(nodeData);
+        log.info("nodeData: "+nodeData.toString());
 
-        log.info("studyMindData: "+studyMindData);
-        log.info("studyMindNodeData: "+studyMindNodeData);
+        int mRes = studyMindService.updateMindData(mindData);
+        int nRes = studyMindService.updateNodeData(nodeData);
+
+        log.info("mRes: "+mRes);
+        log.info("nRes: "+nRes);
 
         log.info(this.getClass().getName() + ".updateMindNodeData End!");
 
-        return "Good Update!";
+        return ResponseEntity.status(HttpStatus.OK).body(mRes+nRes);
 
     }
 
-    @ResponseBody
+    // 마인드 정보, 노드, 엣지 삭제
     @DeleteMapping("/mindmap/{studyRoadNodeId}/{mindId}")
-    public String deleteMindNodeData(@PathVariable String studyRoadNodeId,
+    public ResponseEntity<Integer> deleteMindNodeData(@PathVariable String studyRoadNodeId,
                                      @PathVariable String mindId,
                                      HttpServletRequest request,
                                      HttpServletResponse response,
@@ -269,15 +267,15 @@ public class StudyMindController {
 
         log.info(this.getClass().getName() + ".deleteMindNodeData Start!");
 
-        StudyMindData mindData = studyMindService.deleteMindData(mindId);
+        int mindData = studyMindService.deleteMindData(mindId);
         log.info("mindData: "+mindData);
 
-        StudyMindNodeData nodeData = studyMindService.deleteMindNodeData(mindId);
+        int nodeData = studyMindService.deleteMindNodeData(mindId);
         log.info("nodeData: "+nodeData);
 
         log.info(this.getClass().getName() + ".deleteMindNodeData End!");
 
-        return "Good Delete!";
+        return ResponseEntity.status(HttpStatus.OK).body(mindData+nodeData);
     }
 
 }
