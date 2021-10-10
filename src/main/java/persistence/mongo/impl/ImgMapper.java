@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 import persistence.mongo.IImgMapper;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Slf4j
 @Component("ImgMapper")
@@ -46,5 +49,47 @@ public class ImgMapper implements IImgMapper {
         log.info(this.getClass().getName() + " insert end");
 
         return res;
+    }
+
+    @Override
+    public List<Map<String, String>> getImgList(Map<String, Object> iMap, String img_colNm) {
+
+        log.info(this.getClass().getName() + "getImgList Start");
+
+        List<Map<String, String>> rList = new LinkedList<>();
+
+        MongoCollection<Document> collection = mongodb.getCollection(img_colNm);
+
+        Document query = new Document(iMap);
+
+        Consumer<Document> processBlock = document -> {
+
+            Map<String, String> rMap = new HashMap<>();
+
+            String ext = document.getString("ext");
+            String saveFileName = document.getString("saveFileName");
+            String userUuid = document.getString("userUuid");
+            String saveFilePath = document.getString("saveFilePath");
+            String orgFileName = document.getString("orgFileName");
+            String createDate = document.getString("createDate");
+
+
+            rMap.put("ext", ext);
+            rMap.put("saveFileName", saveFileName);
+            rMap.put("userUuid", userUuid);
+            rMap.put("saveFilePath", saveFilePath);
+            rMap.put("orgFileName", orgFileName);
+            rMap.put("createDate", createDate);
+
+            rList.add(rMap);
+
+            rMap = null;
+        };
+
+        collection.find(query).forEach(processBlock);
+
+        log.info(this.getClass().getName() + "getImgList end");
+
+        return rList;
     }
 }

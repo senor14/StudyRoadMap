@@ -82,8 +82,8 @@ public class UserController {
             return "/redirect";
         // 조회 결과가 있으면 세션에 올리고 메인페이지로 이동
         } else {
-            session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("user_id")));
-            session.setAttribute("SS_USER_UUID", rList.get(0).get("user_uuid"));
+            session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("userId")));
+            session.setAttribute("SS_USER_UUID", rList.get(0).get("userUuid"));
 
             model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
