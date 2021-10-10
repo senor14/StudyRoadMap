@@ -16,7 +16,7 @@ public interface ICommunityMapper {
 
     boolean insertComment(Map<String, Object> pMap);
 
-    JSONArray getComment(String studyRoad_id);
+    JSONArray getComment(String studyRoadId);
 
-    boolean copyRoadMap(String oldRoad_id, Map<String, Object> pMap);
+    boolean copyRoadMap(String oldRoadId, Map<String, Object> pMap);
 }

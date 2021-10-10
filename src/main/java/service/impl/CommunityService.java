@@ -20,12 +20,12 @@ public class CommunityService implements ICommunityService {
     @Override
     public JSONArray getRoadMap(String category) {
         log.info(this.getClass().getName());
-        return category.equals("road_") ? CommunityMapper.getStudyRoadMap() : CommunityMapper.getCareerRoadMap();
+        return category.equals("road") ? CommunityMapper.getStudyRoadMap() : CommunityMapper.getCareerRoadMap();
     }
 
     @Override
     public JSONArray findRoadMap(String category, String searchType, String keyWord) {
-        return category.equals("road_") ? CommunityMapper.findStudyRoadMap(searchType, keyWord) : CommunityMapper.findCareerRoadMap(keyWord);
+        return category.equals("road") ? CommunityMapper.findStudyRoadMap(searchType, keyWord) : CommunityMapper.findCareerRoadMap(keyWord);
     }
 
     @Override
@@ -34,13 +34,13 @@ public class CommunityService implements ICommunityService {
     }
 
     @Override
-    public JSONArray getComment(String studyRoad_id) {
-        return CommunityMapper.getComment(studyRoad_id);
+    public JSONArray getComment(String studyRoadId) {
+        return CommunityMapper.getComment(studyRoadId);
     }
 
     @Override
-    public boolean copyRoadMap(String oldRoad_id, Map<String, Object> pMap) {
-        return CommunityMapper.copyRoadMap(oldRoad_id,pMap);
+    public boolean copyRoadMap(String oldRoadId, Map<String, Object> pMap) {
+        return CommunityMapper.copyRoadMap(oldRoadId,pMap);
     }
 
 

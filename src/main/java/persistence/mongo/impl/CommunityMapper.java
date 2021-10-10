@@ -22,7 +22,7 @@ public class CommunityMapper implements ICommunityMapper {
     @Autowired
     private MongoTemplate mongodb;
 
-    @Override  //select road_id,road_node.node_category,road_title,user_uuid,created from StudyRoadMap where public ="Y" order by created desc
+    @Override  //select road_id,road_node.node_category,road_title,userUuid,created from StudyRoadMap where public ="Y" order by created desc
     public JSONArray getStudyRoadMap() {
 
         log.info(this.getClass().getName());
@@ -37,12 +37,11 @@ public class CommunityMapper implements ICommunityMapper {
 
             Document projection = new Document();
 
-            projection.append("road_id", "$road_id");
-            projection.append("road_node.node_category", "$road_node.node_category");
-            projection.append("road_title", "$road_title");
-            projection.append("user_uuid", "$user_uuid");
+            projection.append("_id", "$_id");
+            projection.append("roadNodeDataArray.nodeCategory", "$roadNodeDataArray.nodeCategory");
+            projection.append("roadTitle", "$roadTitle");
+            projection.append("userUuid", "$userUuid");
             projection.append("created", "$created");
-            projection.append("_id", 0);
 
             Document sort = new Document();
 
@@ -56,7 +55,7 @@ public class CommunityMapper implements ICommunityMapper {
         return studyRoadMap;
     }
 
-    @Override  //select career_id,career_title,user_uuid,created from CareerRoadMap where public = "Y" order by created desc
+    @Override  //select career_id,careerTitle,userUuid,created from CareerRoadMap where public = "Y" order by created desc
     public JSONArray getCareerRoadMap() {
 
         log.info(this.getClass().getName());
@@ -71,8 +70,8 @@ public class CommunityMapper implements ICommunityMapper {
 
             Document projection = new Document();
 
-            projection.append("career_title", "$career_title");
-            projection.append("user_uuid", "$user_uuid");
+            projection.append("careerTitle", "$careerTitle");
+            projection.append("userUuid", "$userUuid");
             projection.append("created", "$created");
             projection.append("_id", 0);
 
@@ -88,7 +87,7 @@ public class CommunityMapper implements ICommunityMapper {
         return studyRoadMap;
     }
 
-    @Override  //select road_id,road_node.node_category,road_title,user_uuid,created from StudyRoadMap where public ="Y" and road_node.node_category like "%%" order by created desc
+    @Override  //select road_id,road_node.node_category,road_title,userUuid,created from StudyRoadMap where public ="Y" and road_node.node_category like "%%" order by created desc
     public JSONArray findStudyRoadMap(String searchType, String keyWord) {
 
         log.info(this.getClass().getName());
@@ -114,9 +113,9 @@ public class CommunityMapper implements ICommunityMapper {
             Document projection = new Document();
 
             projection.append("road_id", "$road_id");
-            projection.append("road_nodeDataArray.node_category", "$road_nodeDataArray.node_category");
-            projection.append("road_title", "$road_title");
-            projection.append("user_uuid", "$user_uuid");
+            projection.append("roadNodeDataArray.nodeCategory", "$roadNodeDataArray.nodeCategory");
+            projection.append("roadTitle", "$roadTitle");
+            projection.append("userUuid", "$userUuid");
             projection.append("created", "$created");
             projection.append("_id", 0);
 
@@ -133,7 +132,7 @@ public class CommunityMapper implements ICommunityMapper {
         return studyRoadMap;
     }
 
-    @Override  //select career_id,career_title,user_uuid,created from CareerRoadMap where public = "Y" and career_title like "%나의%" order by created desc
+    @Override  //select career_id,careerTitle,userUuid,created from CareerRoadMap where public = "Y" and careerTitle like "%나의%" order by created desc
     public JSONArray findCareerRoadMap(String keyWord) {
         log.info(this.getClass().getName());
 
@@ -150,14 +149,14 @@ public class CommunityMapper implements ICommunityMapper {
 
             conditions.add(new Document().append("public", "Y"));
             for(String word : words){
-                conditions.add(new Document().append("career_title", new BsonRegularExpression("^.*"+word+".*$", "i")));
+                conditions.add(new Document().append("careerTitle", new BsonRegularExpression("^.*"+word+".*$", "i")));
             }
             query.append("$and", conditions);
 
             Document projection = new Document();
 
-            projection.append("career_title", "$career_title");
-            projection.append("user_uuid", "$user_uuid");
+            projection.append("careerTitle", "$careerTitle");
+            projection.append("userUuid", "$userUuid");
             projection.append("created", "$created");
             projection.append("_id", 0);
 
@@ -187,7 +186,7 @@ public class CommunityMapper implements ICommunityMapper {
     }
 
     @Override
-    public JSONArray getComment(String studyRoad_id) {
+    public JSONArray getComment(String studyRoadId) {
         log.info(this.getClass().getName());
 
         JSONArray studyRoadMap = new JSONArray();
@@ -197,12 +196,12 @@ public class CommunityMapper implements ICommunityMapper {
 
             Document query = new Document();
 
-            query.append("studyRoad_id", studyRoad_id);
+            query.append("studyRoadId", studyRoadId);
 
             Document projection = new Document();
 
-            projection.append("comment_contents", "$comment_contents");
-            projection.append("user_id", "$user_id");
+            projection.append("commentContents", "$commentContents");
+            projection.append("userId", "$userId");
             projection.append("created", "$created");
             projection.append("_id", 0);
 
@@ -220,7 +219,7 @@ public class CommunityMapper implements ICommunityMapper {
     }
 
     @Override
-    public boolean copyRoadMap(String oldRoad_id, Map<String, Object> pMap) {
+    public boolean copyRoadMap(String oldRoadId, Map<String, Object> pMap) {
         log.info(this.getClass().getName());
 
         JSONArray oldData = new JSONArray();
@@ -230,20 +229,20 @@ public class CommunityMapper implements ICommunityMapper {
             // 조건 Document 리스트 생성
             Document query = new Document();
 
-            query.append("road_id", oldRoad_id);
+            query.append("road_id", oldRoadId);
             query.append("public", "Y");
 
             Document projection = new Document();
 
-            projection.append("road_node", "$road_node");
-            projection.append("road_diagram", "$road_diagram");
+            projection.append("roadNodeDataArray", "roadNodeDataArray");
+            projection.append("roadDiagram", "roadDiagram");
             projection.append("_id", 0);
 
             collection.find(query).projection(projection).forEach(oldData::add);
             JSONObject jsonObject = new JSONObject((Map) oldData.get(0));
 
-            pMap.put("road_nodeDataArray", jsonObject.get("road_nodeDataArray"));
-            pMap.put("road_diagram", jsonObject.get("road_diagram"));
+            pMap.put("roadNodeDataArray", jsonObject.get("roadNodeDataArray"));
+            pMap.put("roadDiagram", jsonObject.get("roadDiagram"));
 
             collection.insertOne(new Document(pMap));
 

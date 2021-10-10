@@ -19,8 +19,8 @@
 <div class="top">
     <div class="setting">
         <select class="type" id="searchType">
-            <option value="title">타이틀검색</option>
-            <option value="category">카테고리검색</option>
+            <option value="Title">타이틀검색</option>
+            <option value="Category">카테고리검색</option>
         </select>
         <div class="category">
             RoadMap:

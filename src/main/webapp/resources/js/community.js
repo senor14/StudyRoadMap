@@ -10,11 +10,11 @@ function getStudyMap(){
     let searchType = document.querySelector('option[value="category"]')
 
     if(category === "s") {
-        category = "road_"
+        category = "road"
         searchType.disabled = false
     }
     else if(category === "c"){
-        category = "career_"
+        category = "career"
         searchType.disabled = true
         searchType = document.querySelector('option[value="title"]')
         searchType.selected = true
@@ -47,10 +47,10 @@ function findRoadMap(){
     let searchType = document.getElementById("searchType")
     searchType = searchType.options[searchType.selectedIndex].value
 
-    if(category === "s") category = "road_"
-    else if(category === "c") category = "career_"
+    if(category === "s") category = "road"
+    else if(category === "c") category = "career"
 
-    if(category === "road_" && searchType === "category") searchType = "nodeDataArray.node_category"
+    if(category === "road" && searchType === "category") searchType = "NodeDataArray.nodeCategory"
 
     $.ajax({
         url: "/findRoadMap.do",
@@ -96,16 +96,16 @@ function setSlide(category, data){
         slide.className = "swiper-slide"
         container.appendChild(slide)
 
-        if(category === "road_" ){
+        if(category === "road" ){
             slide.setAttribute("road-id",result.road_id)
 
             let setCategory = document.createElement('div')
-            setCategory.textContent = "["+result.road_node.node_category+"]"
+            setCategory.textContent = "["+result.roadNodeDataArray.nodeCategory+"]"
             setCategory.className = "setCategory"
             slide.appendChild(setCategory)
 
             let setTitle = document.createElement('div')
-            setTitle.textContent = ++num+". "+result.road_title
+            setTitle.textContent = ++num+". "+result.roadTitle
             setTitle.className = "title"
             slide.appendChild(setTitle)
 
@@ -115,10 +115,10 @@ function setSlide(category, data){
             slide.appendChild(setCreated)
 
         }else{
-            slide.setAttribute("road-id",result.user_uuid)
+            slide.setAttribute("road-id",result.userUuid)
 
             let setTitle = document.createElement('div')
-            setTitle.textContent = ++num+". "+result.career_title
+            setTitle.textContent = ++num+". "+result.roadTitle
             setTitle.className = "title"
             slide.appendChild(setTitle)
 
