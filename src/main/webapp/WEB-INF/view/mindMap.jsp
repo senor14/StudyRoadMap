@@ -447,7 +447,7 @@
                             group: 'nodes',
                             data: {
                                 id: data.source,
-                                label: $('#modal__title-add').val()
+                                label: data.mindLabel
                             }
                         },
                         {
@@ -474,6 +474,15 @@
                 }
             }
         });
+
+    }
+
+    function clearAddInfo() {
+        $('#modal__title-add').val("");
+        $('#modal__link-add').val("");
+        $('#modal__book__title-add').val("");
+        $('#modal__book_link-add').val("");
+        $('#modal__content-add').val("");
     }
 
     // 마인드 정보, 노드 정보 수정
@@ -565,6 +574,7 @@
     function fnCloseModal(id){
         // $('#m2-o').css("display", "none");
         $(id).css("display", "none");
+        clearAddInfo();
     }
 
     // ajax로 마인드 정보 가져오기

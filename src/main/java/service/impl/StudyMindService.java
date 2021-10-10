@@ -209,9 +209,7 @@ public class StudyMindService implements IStudyMindService {
         } else {
             res = 1;
         }
-        log.info("##########################################################");
-        log.info("deleteNodes: "+deleteNodes.toString());
-        log.info("##########################################################");
+
         studyMindNodeRepository.deleteAll(deleteNodes);
 
 
