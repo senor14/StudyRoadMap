@@ -1,5 +1,15 @@
+<%@ page import="java.util.List" %>
+<%@ page import="domain.*" %>
 <%@page language="java" contentType="text/html; charset=UTF-8"
         pageEncoding="UTF-8" %>
+
+<%
+
+
+    StudyRoadData roadMapInfo = (StudyRoadData)request.getAttribute("roadMapInfo");
+    List<StudyRoadDiagramData> diagramInfo  = (List<StudyRoadDiagramData>)request.getAttribute("diagramInfo");
+    List<StudyRoadNodeData> nodeInfo = (List<StudyRoadNodeData>)request.getAttribute("nodeInfo");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -982,7 +992,6 @@
                             isGroup: true,
                             group: "Pool1",
                             color: "lightblue",
-                            width: "300px",
                         },
                         {
                             key: "Lane2",
@@ -1011,7 +1020,7 @@
                             isGroup: true,
                             group: "Pool1",
                             color: "lightpink",
-                        },
+                        }
                         // { key: "oneA", group: "Lane1" },
                         // { key: "oneB", group: "Lane1" },
                         // { key: "oneC", group: "Lane1" },
@@ -1030,7 +1039,7 @@
                         // { key: "fiveA", group: "Lane5" },
                         // { key: "sixA", group: "Lane6" }
                     ],
-                    [
+                    // [
                         // link data
                         // { from: "oneA", to: "oneB" },
                         // { from: "oneA", to: "oneC" },
@@ -1047,7 +1056,7 @@
                         // { from: "fourA", to: "fourB" },
                         // { from: "fourB", to: "fourC" },
                         // { from: "fourC", to: "fourD" }
-                    ]
+                    // ]
                 );
                 relayoutLanes();
 
@@ -1071,10 +1080,10 @@
                 );
 
                 palette.model.nodeDataArray = [
-                    { category: "Source" },
-                    { category: "DesiredEvent" },
-                    { category: "UndesiredEvent", reasonsList: [{}] },
-                    { category: "Comment" },
+                    { category: "백엔드" },
+                    { category: "프론트엔드" },
+                    { category: "이벤트" },
+                    { category: "코멘트" }
                 ];
 
                 // read in the JSON-format data from the "mySavedModel" element

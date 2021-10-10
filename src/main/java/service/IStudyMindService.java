@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IStudyMindService {
 
-    public List<StudyMindData> getMindMapData(StudyMindData mindeData) throws Exception;
+    public List<StudyMindData> getMindMapData(StudyMindData mindData) throws Exception;
 
     public List<StudyMindNodeData> getMindMapNode(StudyMindNodeData nodeData) throws Exception;
 

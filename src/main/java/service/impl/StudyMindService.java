@@ -1,6 +1,5 @@
 package service.impl;
 
-import com.mongodb.client.result.DeleteResult;
 import domain.StudyMindData;
 import domain.StudyMindNodeData;
 import jpa.StudyMindNodeRepository;
@@ -9,14 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import service.IStudyMindService;
 
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -237,7 +233,6 @@ public class StudyMindService implements IStudyMindService {
         }
 
         studyMindNodeRepository.deleteAll(deleteNodes);
-
 
         log.info("nodeData: "+nodeData);
 
