@@ -61,6 +61,8 @@
         <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
         <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
         <span type="text" hidden id="modal__mindId" ></span>
+        <span type="text" hidden id="node__x" ></span>
+        <span type="text" hidden id="node__y" ></span>
     </div>
 </div>
 <%-- modal 기본 끝 --%>
@@ -118,6 +120,16 @@
 </div>
 <%-- modal 삭제 끝 --%>
 
+<%-- modal 삭제 불가능--%>
+<div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+    <div class="modal">
+        <h1 id="modal__title-del__impossible">루트 노드는 수정/삭제할 수 없습니다.</h1>
+        <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >확인</button>
+        <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
+    </div>
+</div>
+<%-- modal 삭제 불가능 끝 --%>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/study_mindMap/cytoscape.min.js"></script>
 <%--    <script src="https://unpkg.com/webcola@3.4.0/WebCola/cola.min.js"></script>--%>
@@ -147,6 +159,11 @@
                         {
                             "id": "<%=node.getMindId()%>",
                             "label": "<%=node.getMindLabel()%>"
+                        },
+                    renderedPosition:
+                        {
+                            "x": "<%=node.getX()%>",
+                            "y": "<%=node.getY()%>",
                         }
                 }
             );
@@ -180,16 +197,16 @@
     });
     // let pageRank = cy_for_rank.elements().pageRank();
 
-    cytoscape({
-        elements: node_data
-    }).elements().pageRank()
+    // cytoscape({
+    //     elements: node_data
+    // }).elements().pageRank()
 
-    const nodeMaxSize = 80;
+    const nodeMaxSize = 200;
     const nodeMinSize = 40;
-    const nodeActiveSize = 100;
-    const fontMaxSize = 20;
+    const nodeActiveSize = 80;
+    const fontMaxSize = 40;
     const fontMinSize = 15;
-    const fontActiveSize = 23;
+    const fontActiveSize = 25;
 
     const edgeWidth = '6px';
     var edgeActiveWidth = '6px';
@@ -206,7 +223,6 @@
     // 상위 node & edge color
     const predecessorsColor = '#1e90ff';
     // 하위 node & edge color
-
 
     const cy = cytoscape({
         container: document.getElementById('cy'),
@@ -251,35 +267,52 @@
                 }
             }
         ],
-
         layout: {
-            name: 'cola',
+            name: 'preset',
             directed: true,
-            animate: false,
-            gravityRangeCompound: 1.5,
+            animate: true,
+            // gravityRangeCompound: 1.5,
             fit: true,
             tile: true,
-            directed: true
+            avoidOverlap: true
         },
         wheelSensitivity: 0.25
     }); // cy init
 
-
     // 노드 레이아웃 설정
     const layoutConfig = {
-        name: "cola",
-        handleDisconnected: true,
-        animate: true,
+        name: "preset",
+        directed: true,
+        // handleDisconnected: true,
+        animate: false,
         avoidOverlap: true,
-        infinite: false,
-        unconstrIter: 1,
-        userConstIter: 0,
-        allConstIter: 1,
+        fit: true,
+        tile: true,
+        // infinite: false,
+        // unconstrIter: 1,
+        // userConstIter: 0,
+        // allConstIter: 1,
         ready: e => {
             e.cy.fit()
             e.cy.center()
         }
     }
+
+    // 노드 레이아웃 설정
+    // const layoutConfig = {
+    //     name: "cola",
+    //     handleDisconnected: true,
+    //     animate: true,
+    //     avoidOverlap: true,
+    //     infinite: false,
+    //     unconstrIter: 1,
+    //     userConstIter: 0,
+    //     allConstIter: 1,
+    //     ready: e => {
+    //         e.cy.fit()
+    //         e.cy.center()
+    //     }
+    // }
 
     // 클릭시 반응
     cy.on('tap', 'node', evt => {
@@ -288,20 +321,34 @@
             node.lock();
         });
 
+        console.log("줌")
+        console.log(cy.zoom())
+
         const targetId = evt.target.data('id'); //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
+        const xPos = evt.target.renderedPosition('x');
+        const yPos = evt.target.renderedPosition('y');
+
+        console.log("targetId: 노드")
+        console.log(typeof targetId)
+
+        document.getElementById("node__x").innerText = xPos;
+        document.getElementById("node__y").innerText = yPos;
+
+        console.log(document.getElementById("node__x").innerText)
+        console.log(document.getElementById("node__y").innerText)
 
         getMindDataByAjax(targetId)
+
         fnOpenModal('#m2-o');
 
-        const layout = cy.makeLayout(layoutConfig);
-        layout.run();
-
-        layout.on("layoutstop", () => {
+        // const layout = cy.makeLayout(layoutConfig);
+        // layout.run();
+        //
+        // layout.on("layoutstop", () => {
             cy.nodes().forEach(node => {
                 node.unlock();
             })
-        })
-
+        // })
     });
 
     cy.on('tapstart mouseover', 'node', function (e) {
@@ -313,11 +360,18 @@
         });
 
         setFocus(e.target, successorColor, predecessorsColor, edgeActiveWidth, arrowActiveScale);
+
     });
 
     cy.on('tapend mouseout', 'node', function (e) {
+        console.log("tapend or mouseout")
         setResetFocus(e.cy);
     });
+
+    cy.on('tapend', 'node', function (e) {
+        console.log(e.target.renderedPosition())
+        updateNodePosition(e.target.data('id'), e.target.renderedPosition())
+    })
 
     function setDimStyle(target_cy, style) {
         target_cy.nodes().forEach(function (target) {
@@ -371,6 +425,7 @@
     }
 
     function setResetFocus(target_cy) {
+        console.log("setResetFocus Start!")
         target_cy.nodes().forEach(function (target) {
             target.style('background-color', nodeColor);
             var rank = cytoscape({
@@ -389,6 +444,7 @@
             target.style('arrow-scale', arrowScale);
             target.style('opacity', 1);
         });
+        console.log("setResetFocus End!")
     }
 
     // // UUID 생성기
@@ -425,6 +481,11 @@
                                 {
                                     "id": data.nodeMindId,
                                     "label": data.mindLabel
+                                },
+                            renderedPosition:
+                                {
+                                    "x": document.getElementById("node__x").innerText,
+                                    "y": String(Number(document.getElementById("node__y").innerText)+200*cy.zoom())
                                 }
                         }
                     );
@@ -442,12 +503,17 @@
                     );
                     console.log("node_data.edges.push")
                     console.log(node_data);
+                    console.log("렌더드포지션")
                     cy.add([
                         {
                             group: 'nodes',
                             data: {
                                 id: data.source,
                                 label: data.mindLabel
+                            },
+                            renderedPosition: {
+                                x: document.getElementById("node__x").innerText,
+                                y: String(Number(document.getElementById("node__y").innerText)+200*cy.zoom())
                             }
                         },
                         {
@@ -459,14 +525,14 @@
                             }
                         }
                     ]);
-                    const layout = cy.makeLayout(layoutConfig);
-                    layout.run();
-
-                    layout.on("layoutstop", () => {
+                    // const layout = cy.makeLayout(layoutConfig);
+                    // layout.run();
+                    //
+                    // layout.on("layoutstop", () => {
                         cy.nodes().forEach(node => {
                             node.unlock();
                         })
-                    })
+                    // })
                     fnCloseModal('#m3-o');
                     fnCloseModal('#m2-o');
                 } else {
@@ -515,14 +581,14 @@
                             break
                         }
                     }
-                    const layout = cy.makeLayout(layoutConfig);
-                    layout.run();
-
-                    layout.on("layoutstop", () => {
+                    // const layout = cy.makeLayout(layoutConfig);
+                    // layout.run();
+                    //
+                    // layout.on("layoutstop", () => {
                         cy.nodes().forEach(node => {
                             node.unlock();
                         })
-                    })
+                    // })
                     fnCloseModal('#m4-o');
                     fnCloseModal('#m2-o');
                 } else {
@@ -532,8 +598,55 @@
         });
     }
 
+    // 노드 위치 정보 수정
+    function updateNodePosition(mindmind, position) {
+
+        let query = {
+            "x" : position.x,
+            "y": position.y
+        }
+        console.log("##############################")
+        console.log(query)
+
+        $.ajax({
+            url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+mindmind+"/position",
+            type: "put",
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(query),
+            success: function (data) {
+                if (data) {
+                    cy.nodes().forEach(node => {
+                        node.lock();
+                    });
+                    for (let d in node_data.nodes) {
+                        if (node_data.nodes[d].data.id === mindmind) {
+                            node_data.nodes[d].renderedPosition.x = data.x
+                            node_data.nodes[d].renderedPosition.y = data.y
+                            break
+                        }
+                    }
+                    // const layout = cy.makeLayout(layoutConfig);
+                    // layout.run();
+                    //
+                    // layout.on("layoutstop", () => {
+                        cy.nodes().forEach(node => {
+                            node.unlock();
+                        })
+                    // })
+
+                } else {
+                    console.log("data 이상")
+                }
+            }
+        });
+    }
+
     // 마인드 정보, 노드 정보 삭제
     function deleteMindAndNodeData(mindmind) {
+        if (mindmind !== "<%=mindMapInfo.get(0).getStudyRoadNodeId()%>") {
+            return;
+        }
         $.ajax({
             url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+mindmind,
             type: "delete",
@@ -544,14 +657,14 @@
                     });
                     cy.remove(cy.$('#'+mindmind));
 
-                    const layout = cy.makeLayout(layoutConfig);
-                    layout.run();
-
-                    layout.on("layoutstop", () => {
+                    // const layout = cy.makeLayout(layoutConfig);
+                    // layout.run();
+                    //
+                    // layout.on("layoutstop", () => {
                         cy.nodes().forEach(node => {
                             node.unlock();
                         })
-                    })
+                    // })
                     fnCloseModal('#m5-o');
                     fnCloseModal('#m2-o');
                 } else {
@@ -568,6 +681,10 @@
     // 모달 오픈
     function fnOpenModal(id){
         // $('#m2-o').css("display", "flex");
+        if (document.getElementById("modal__mindId").innerText === "<%=mindMapInfo.get(0).getStudyRoadNodeId()%>"
+        && (id === '#m4-o' || id === '#m5-o')) {
+            id = '#m6-o'
+        }
         $(id).css("display", "flex");
     }
     // 모달 종료
