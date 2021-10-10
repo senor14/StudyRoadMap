@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class MainController {
 
-<<<<<<< HEAD
     @GetMapping("/index")
     public String homeTest() {
         return "index";
     }
+
     @GetMapping("/community")
     public String community() {
         return "/community/community";
@@ -21,11 +21,6 @@ public class MainController {
     @GetMapping("/comment")
     public String comment() {
         return "/community/comment";
+
     }
-=======
-    @GetMapping("/")
-    public String homeTest() {
-        return "index";
-    }
->>>>>>> 9767b82f80fdf2faaf74f89e7c13c3663c7ebe71
 }
