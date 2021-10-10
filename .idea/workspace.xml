@@ -9,30 +9,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[ADD] 스케쥴 프로그램 이식">
+    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/domain/StudyMindNodeData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/domain/StudyMindNodeData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/IStudyMindService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IStudyMindService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/StudyMindService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/StudyMindService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vo/ResponseNodeData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vo/ResponseNodeData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/MongoUserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/MailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/MailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/study_roadMap/go.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/study_roadMap/go.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JavaScript File" />
-        <option value="Interface" />
-        <option value="Class" />
-      </list>
-    </option>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="develop" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature/careerRoadmap" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -71,34 +81,58 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CareerRoadMap/StudyRoadMap" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/resources/templates" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2021.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\CSRoadMap\StudyMindMap\src\main\webapp\WEB-INF\view" />
+      <recent name="C:\Example\StudyRoadMap\src\main\webapp\resources\templates" />
+      <recent name="C:\Example\StudyRoadMap\src\main\webapp\WEB-INF\view" />
+      <recent name="C:\Example\StudyRoadMap\src\main\webapp\WEB-INF" />
+      <recent name="C:\Example\StudyRoadMap\src\main\webapp\resources" />
+      <recent name="C:\Example\StudyRoadMap\src\main\resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\CSRoadMap\StudyMindMap\src\main\webapp\resources\js\study_mindMap" />
-      <recent name="E:\CSRoadMap\StudyMindMap\src\main\webapp\resources\js" />
-      <recent name="E:\CSRoadMap\StudyMindMap\src\main\webapp\WEB-INF" />
-      <recent name="E:\CSRoadMap\StudyRoadMap\src\main\webapp\resources" />
-      <recent name="E:\CSRoadMap\StudyRoadMap\src\main\webapp\WEB-INF\view" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="persistence.mongo" />
-      <recent name="persistence.mongo.impl" />
-      <recent name="persistence.mongo.comm" />
-      <recent name="service" />
-      <recent name="service.impl" />
+      <recent name="E:\CSRoadMap\TEST\StudyRoadMap-StudyRoadMap\src\main\webapp\resources\js\study_roadMap" />
+      <recent name="E:\CSRoadMap\TEST\StudyRoadMap-StudyRoadMap\src\main\webapp\resources\js" />
+      <recent name="E:\CSRoadMap\TEST\StudyRoadMap-StudyRoadMap\src\main\webapp\resources\css\study_roadMap" />
+      <recent name="C:\Example\StudyRoadMap\src\main\webapp\WEB-INF\view\assets" />
+      <recent name="C:\Example\StudyRoadMap\src\main\webapp\resources" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean" />
+      <command value="mvn install" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.Tomcat 8.5.57">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in MyCSRoadMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MyCSRoadMap" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 8.5.57" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.57" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9000/" />
       <option name="COMMON_VM_ARGUMENTS" value="-Dfile.encoding=utf-8" />
@@ -191,8 +225,23 @@
         </option>
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.All in MyCSRoadMap" />
+      <item itemvalue="Tomcat Server.Tomcat 8.5.57" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in MyCSRoadMap" />
+        <item itemvalue="JUnit.All in MyCSRoadMap" />
+        <item itemvalue="JUnit.All in MyCSRoadMap" />
+        <item itemvalue="JUnit.All in MyCSRoadMap" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringGeneralSettings">
+    <option name="allowAutoConfigurationMode" value="true" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="" />
@@ -202,13 +251,26 @@
       <updated>1632653658849</updated>
       <workItem from="1632653664939" duration="9088000" />
       <workItem from="1632662862516" duration="5854000" />
-      <workItem from="1633247686147" duration="67926000" />
-      <workItem from="1633586564918" duration="21053000" />
-      <workItem from="1633667037143" duration="11676000" />
-      <workItem from="1633694660167" duration="32714000" />
-      <workItem from="1633782499556" duration="6502000" />
-      <workItem from="1633835154487" duration="19836000" />
+      <workItem from="1633240972730" duration="243000" />
+      <workItem from="1633241380516" duration="6116000" />
+      <workItem from="1633261629472" duration="4732000" />
+      <workItem from="1633326926885" duration="8684000" />
+      <workItem from="1633339192146" duration="4775000" />
+      <workItem from="1633348697318" duration="8382000" />
+      <workItem from="1633535706451" duration="1194000" />
+      <workItem from="1633565047961" duration="5183000" />
+      <workItem from="1633755455552" duration="19264000" />
+      <workItem from="1633831782288" duration="8261000" />
+      <workItem from="1633864605898" duration="677000" />
     </task>
+    <task id="LOCAL-00001" summary="이건미친짓이야">
+      <created>1633791515780</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1633791515780</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,7 +281,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="feature/스터디로드맵" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -227,7 +301,12 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[ADD] 스케쥴 프로그램 이식" />
-    <option name="LAST_COMMIT_MESSAGE" value="[ADD] 스케쥴 프로그램 이식" />
+    <MESSAGE value="Changes" />
+    <MESSAGE value="이건미친짓이야" />
+    <option name="LAST_COMMIT_MESSAGE" value="이건미친짓이야" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

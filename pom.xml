@@ -35,7 +35,7 @@
         </dependency>
 
 
-        <!--        &lt;!&ndash; MongoDB 접속을 위한 드라이버 &ndash;&gt;-->
+<!--                &lt;!&ndash; MongoDB 접속을 위한 드라이버 &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.mongodb</groupId>-->
 <!--            <artifactId>mongo-java-driver</artifactId>-->
@@ -167,11 +167,11 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.tomcat.embed</groupId>-->
-<!--            <artifactId>tomcat-embed-jasper</artifactId>-->
-<!--            <version>10.1.0-M2</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>10.1.0-M2</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
