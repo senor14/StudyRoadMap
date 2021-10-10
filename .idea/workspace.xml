@@ -10,14 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[UPDATE] 만들어져있는 StudyRoadMap를 복사하는 copyRoadMap 추가">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/community/comment.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,9 +25,10 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
-        <option value="Jsp File" />
         <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="jsf" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -249,7 +246,7 @@
       <workItem from="1633184225803" duration="7926000" />
       <workItem from="1633199435337" duration="7065000" />
       <workItem from="1633436043651" duration="2796000" />
-      <workItem from="1633755914979" duration="47651000" />
+      <workItem from="1633755914979" duration="50399000" />
     </task>
     <task id="LOCAL-00001" summary="[UPDATE]">
       <created>1632826950981</created>
@@ -314,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1633865610345</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="[UPDATE] 만들어져있는 StudyRoadMap를 복사하는 copyRoadMap 추가">
+      <created>1633868752958</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1633868752958</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

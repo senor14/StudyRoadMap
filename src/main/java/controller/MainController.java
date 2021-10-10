@@ -16,4 +16,9 @@ public class MainController {
     public String community() {
         return "/community/community";
     }
+
+    @GetMapping("/comment")
+    public String comment() {
+        return "/community/comment";
+    }
 }

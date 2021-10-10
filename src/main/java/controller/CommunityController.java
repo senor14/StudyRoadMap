@@ -47,6 +47,29 @@ public class CommunityController {
     }
 
     @ResponseBody
+    @GetMapping("/copyRoadMap/")
+    public boolean copyRoadMap(HttpServletRequest request, HttpSession session){
+
+        String oldRoad_id = request.getParameter("road_id");
+
+        Map<String, Object> pMap = new HashMap<>();
+
+        String newRoad_id = UUID.randomUUID().toString();
+        String newTitle = "복사된 "+request.getParameter("road_title");
+        String user_uuid = (String) session.getAttribute("SS_USER_ID");
+        String created = DateUtil.getDateTime();
+        String publicise = "N";
+
+        pMap.put("road_id", newRoad_id);
+        pMap.put("road_title", newTitle);
+        pMap.put("user_uuid", user_uuid);
+        pMap.put("created", created);
+        pMap.put("public", publicise);
+
+        return communityService.copyRoadMap(oldRoad_id, pMap);
+    }
+
+    @ResponseBody
     @GetMapping("/insertComment/{roadMapId}")
     public boolean insertComment(HttpServletRequest request, HttpSession session, @PathVariable String roadMapId){
 
@@ -78,27 +101,5 @@ public class CommunityController {
         return communityService.getComment(roadMap_id);
     }
 
-    @ResponseBody
-    @GetMapping("/copyRoadMap/")
-    public boolean copyRoadMap(HttpServletRequest request, HttpSession session){
-
-        String oldRoad_id = request.getParameter("road_id");
-
-        Map<String, Object> pMap = new HashMap<>();
-
-        String newRoad_id = UUID.randomUUID().toString();
-        String newTitle = "복사된 "+request.getParameter("road_title");
-        String user_uuid = (String) session.getAttribute("SS_USER_ID");
-        String created = DateUtil.getDateTime();
-        String publicise = "N";
-
-        pMap.put("road_id", newRoad_id);
-        pMap.put("road_title", newTitle);
-        pMap.put("user_uuid", user_uuid);
-        pMap.put("created", created);
-        pMap.put("public", publicise);
-
-        return communityService.copyRoadMap(oldRoad_id, pMap);
-    }
 
 }
