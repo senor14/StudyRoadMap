@@ -67,7 +67,6 @@
                 </div>
             </header>
 
-
             <!-- 페이지 메인 로고 -->
             <section class="hero-wrap js-fullheight">
                 <div class="container-fluid px-0">
@@ -82,8 +81,6 @@
                     </div>
                 </div>
             </section>
-
-
             <!-- 탭 부분 -->
             <section class="ftco-section ftco-no-pb ftco-no-pt">
                 <div class="container-fluid px-0">
@@ -92,7 +89,6 @@
                             <div class="row no-gutters align-items-center">
                                 <section id="wrapper">
                                     <div class="content">
-                                       
                                         <!-- Tab links -->
                                         <div class="tabs">
                                             <button class="tablinks active" data-country="Schedule">

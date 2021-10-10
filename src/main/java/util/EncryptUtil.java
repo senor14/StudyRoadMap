@@ -1,5 +1,7 @@
 package util;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.MessageDigest;
@@ -14,7 +16,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
+
 
 
 public class EncryptUtil {
@@ -52,7 +54,7 @@ public class EncryptUtil {
 			
 			res = "";			
 		}
-		
+
 		return res;
 	}
 	/**
@@ -93,5 +95,5 @@ public class EncryptUtil {
 		
 		return new String (cipher.doFinal(textBytes), "UTF-8");
 	}
-		
+
 }
