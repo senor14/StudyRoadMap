@@ -75,7 +75,7 @@ public class UserController {
         // 조회 결과가 없으면 안내 메세지를 띄우고 다시 로그인 페이지로 보냄
         if (rList.size() == 0) {
             model.addAttribute("msg", "아이디 비밀번호가 틀렸거나 가입하지 않은 회원입니다.");
-            model.addAttribute("url", "/RoadMap/Login_or_Signup");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
             log.info("RoadMap/LoginProc end");
 
@@ -85,7 +85,7 @@ public class UserController {
             session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("user_id")));
             session.setAttribute("SS_USER_UUID", rList.get(0).get("user_uuid"));
 
-            model.addAttribute("url", "/RoadMap/Login_or_Signup");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
             log.info("RoadMap/LoginProc end");
 
@@ -553,6 +553,25 @@ public class UserController {
         return "/redirect";
     }
 
+    // uuid로 id 조회
+    @ResponseBody
+    @RequestMapping(value = "RoadMap/getId", method = RequestMethod.POST)
+    public String getId(HttpServletRequest request) throws Exception {
+        log.info("getId 시작");
+
+        String user_uuid = request.getParameter("user_uuid");
+
+        Map<String, Object> uMap = new HashMap<>();
+
+        uMap.put("user_uuid", user_uuid);
+
+        List<Map<String, String>> rList = userService.getUserId(uMap);
+
+        String output = EncryptUtil.decAES128CBC(rList.get(0).get("user_id"));
+
+        log.info("getId 시작");
+        return output;
+    }
 
 
 
