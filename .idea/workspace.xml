@@ -10,17 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="이건미친짓이야">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_10_1_0_M2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_10_1_0_M2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_jasper_10_1_0_M2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_10_1_0_M2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jdt_ecj_3_18_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/MyCSRoadMap_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/MyCSRoadMap_war.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/MyCSRoadMap_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/MyCSRoadMap_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyCSRoadMap.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MyCSRoadMap.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/study_roadMap/go.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/study_roadMap/go.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +256,8 @@
       <workItem from="1633535706451" duration="1194000" />
       <workItem from="1633565047961" duration="5183000" />
       <workItem from="1633755455552" duration="19264000" />
-      <workItem from="1633831782288" duration="3070000" />
+      <workItem from="1633831782288" duration="8261000" />
+      <workItem from="1633864605898" duration="677000" />
     </task>
     <task id="LOCAL-00001" summary="이건미친짓이야">
       <created>1633791515780</created>
