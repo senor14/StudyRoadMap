@@ -171,6 +171,8 @@ public class StudyMindController {
         node.setMindId(randomMindId);
         node.setGroup("nodes");
         node.setMindLabel(nvl(request.getParameter("mindLabel")));
+        node.setX(nvl(request.getParameter("x")));
+        node.setY(nvl(request.getParameter("y")));
 
         studyMindService.insertNodeData(node);
 
@@ -243,6 +245,40 @@ public class StudyMindController {
         log.info(this.getClass().getName() + ".updateMindNodeData End!");
 
         return ResponseEntity.status(HttpStatus.OK).body(mRes+nRes);
+
+    }
+
+    // 노드 좌표 데이터 수정
+    @PutMapping("/mindmap/{studyRoadNodeId}/{mindId}/position")
+    public ResponseEntity<ResponseNodeData> updateNodePosition(@PathVariable String studyRoadNodeId,
+                                                      @PathVariable String mindId,
+                                                      @RequestBody StudyMindNodeData position,
+                                                      HttpServletRequest request,
+                                                      HttpServletResponse response,
+                                                      ModelMap model) throws Exception {
+
+        log.info(this.getClass().getName() + ".updateNodePosition Start!");
+
+        log.info("position: "+ position.toString());
+
+        StudyMindNodeData updatedPosition = studyMindService.getMindMapNodeByMindId(mindId);
+
+        updatedPosition.setX(nvl(position.getX()));
+        updatedPosition.setY(nvl(position.getY()));
+
+        log.info("updatedPosition: "+updatedPosition.toString());
+
+        int pRes = studyMindService.updateNodePosition(updatedPosition);
+
+        log.info("pRes: "+pRes);
+
+        ResponseNodeData positionData = new ResponseNodeData();
+        positionData.setX(nvl(position.getX()));
+        positionData.setY(nvl(position.getY()));
+
+        log.info(this.getClass().getName() + ".updateNodePosition End!");
+
+        return ResponseEntity.status(HttpStatus.OK).body(positionData);
 
     }
 

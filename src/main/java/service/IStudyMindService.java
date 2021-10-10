@@ -23,8 +23,11 @@ public interface IStudyMindService {
 
     public int updateNodeData(StudyMindNodeData nodeData) throws Exception;
 
+    public int updateNodePosition(StudyMindNodeData position) throws Exception;
+
     public int deleteMindData(String mindId) throws Exception;
 
     public int deleteMindNodeData(String mindId) throws Exception;
+
 
 }
