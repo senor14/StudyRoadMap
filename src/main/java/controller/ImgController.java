@@ -12,12 +12,19 @@ import org.springframework.web.multipart.MultipartFile;
 import service.IImgService;
 import util.DateUtil;
 import util.FileUtil;
+import util.ImageResizeUtil;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +57,7 @@ public class ImgController {
     // 프로필 이미지파일 업로드 (ajax로 구현)
     @RequestMapping(value = "FileUplod")
     @ResponseBody
-    public Map<String, String> UserFileUpload(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+    public int UserFileUpload(HttpServletRequest request, HttpServletResponse response, ModelMap model,
                                               @RequestParam(value = "fileUplod") MultipartFile mf, HttpSession session) throws Exception {
 
         log.info("FileUplod start");
@@ -66,11 +73,13 @@ public class ImgController {
         String ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1, originalFileName.length())
                 .toLowerCase();
 
+        int res = 0;
+
         // 이미지 파일만 실행되도록 함
         if (ext.equals("jpeg") || ext.equals("jpg") || ext.equals("gif") || ext.equals("png")) {
 
             // 웹서버에 저장되는 파일이름 (영어, 숫자로 파일명 변경)
-            String saveFileName = DateUtil.getDateTime("24hhmmss") + "." + ext;
+            String saveFileName = DateUtil.getDateTime("24hhmmss") + "_" + user_uuid + "." + ext;
 
             // 웹서버에 업로드한 파일 저장하는 물리적 경로
             String saveFilePath = FileUtil.mkdirForDate(USERFILE_UPLOAD_SAVE_PATH);
@@ -103,11 +112,26 @@ public class ImgController {
             iMap.put("create_date", DateUtil.getDateTime("yyyy-MM-dd-hh:mm:ss"));
 
             log.info("imgService start!!");
-            int res = imgService.InsertImage(iMap);
+            res = imgService.InsertImage(iMap);
             log.info("imgService end!!");
 
+            // 이미지 리사이징
+            File file = new File(mf.getOriginalFilename());
+            mf.transferTo(file); // MultipartFile을 File 로 변환
+
+            InputStream inputStream = new FileInputStream(file);
+            Image img = new ImageIcon(file.toString()).getImage(); // 파일정보 추출
+            log.info("사진의 가로길이 : " + img.getWidth(null));
+            log.info("사진의 세로길이 : " + img.getHeight(null));
+
+            int width = 700; // 리사이즈할 가로길이
+            int height = 500; // 리사이즈한 세로길이
+
+            BufferedImage resizedImage = ImageResizeUtil.resize(inputStream, width, height);
+            ImageIO.write(resizedImage, ext, new File(fullFileInfo));
+
         }
-        return rMap;
+        return res;
     }
 
 

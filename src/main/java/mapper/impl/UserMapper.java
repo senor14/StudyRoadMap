@@ -357,4 +357,34 @@ public class UserMapper implements IUserMapper {
 
         return res;
     }
+
+    @Override
+    public List<Map<String, String>> getUserId(Map<String, Object> uMap, String user_colNm) {
+
+        log.info(this.getClass().getName() + "getUserId Start");
+
+        List<Map<String, String>> rList = new LinkedList<>();
+
+        MongoCollection<Document> collection = mongodb.getCollection(user_colNm);
+
+        Document query = new Document(uMap);
+
+        Consumer<Document> processBlock = document -> {
+
+            Map<String, String> rMap = new HashMap<>();
+
+            String user_id = document.getString("user_id");
+
+            rMap.put("user_id", user_id);
+            rList.add(rMap);
+
+            rMap = null;
+        };
+
+        collection.find(query).forEach(processBlock);
+
+        log.info(this.getClass().getName() + "getUserId end");
+
+        return rList;
+    }
 }
