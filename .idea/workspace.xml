@@ -9,10 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출">
+    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="[UPDATE] 만들어져있는 StudyRoadMap를 복사하는 copyRoadMap 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/CommunityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/ICommunityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/persistence/mongo/impl/CommunityMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/ICommunityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/CommunityService.java" afterDir="false" />
     </list>
@@ -26,6 +29,9 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Jsp File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -98,11 +104,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="아티팩트" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -114,7 +121,7 @@
     </key>
   </component>
   <component name="RunManager" selected="애플리케이션.test">
-    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="test" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="controller.test" />
       <module name="MyCSRoadMap" />
       <extension name="coverage">
@@ -129,7 +136,6 @@
     </configuration>
     <configuration name="Tomcat 8.5.57" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.57" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
       <option name="COMMON_VM_ARGUMENTS" value="-Dfile.encoding=utf-8" />
-      <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="MyCSRoadMap:war exploded">
           <settings>
@@ -224,7 +230,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="애플리케이션.test" />
-        <item itemvalue="애플리케이션.test" />
       </list>
     </recent_temporary>
   </component>
@@ -240,7 +245,11 @@
       <workItem from="1632662862516" duration="5854000" />
       <workItem from="1632744800484" duration="9862000" />
       <workItem from="1632824189493" duration="9702000" />
-      <workItem from="1632915884554" duration="44931000" />
+      <workItem from="1632915884554" duration="45202000" />
+      <workItem from="1633184225803" duration="7926000" />
+      <workItem from="1633199435337" duration="7065000" />
+      <workItem from="1633436043651" duration="2796000" />
+      <workItem from="1633755914979" duration="47651000" />
     </task>
     <task id="LOCAL-00001" summary="[UPDATE]">
       <created>1632826950981</created>
@@ -291,7 +300,21 @@
       <option name="project" value="LOCAL" />
       <updated>1633180842805</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="[UPDATE] 메소드 findStudyMap &gt;&gt; findRoadMap 이름 변경">
+      <created>1633183959519</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1633183959519</updated>
+    </task>
+    <task id="LOCAL-00009" summary="[ADD] community jsp, js, css 추가 및 controller 연결">
+      <created>1633865610345</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1633865610345</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -345,7 +368,11 @@
     <MESSAGE value="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성" />
     <MESSAGE value="[UPDATE] findStudyMap &quot; &quot;을 기준으로 단어별 검색 완성" />
     <MESSAGE value="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출" />
-    <option name="LAST_COMMIT_MESSAGE" value="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출" />
+    <MESSAGE value="[UPDATE] 메소드 findStudyMap &gt;&gt; findRoadMap 이름 변경" />
+    <MESSAGE value="[ADD] community jsp, js, css 추가 및 controller 연결 완료" />
+    <MESSAGE value="[ADD] community jsp, js, css 추가 및 controller 연결" />
+    <MESSAGE value="[UPDATE] 만들어져있는 StudyRoadMap를 복사하는 copyRoadMap 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="[UPDATE] 만들어져있는 StudyRoadMap를 복사하는 copyRoadMap 추가" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

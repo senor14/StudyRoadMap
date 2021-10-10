@@ -12,4 +12,8 @@ public class MainController {
     public String homeTest() {
         return "index";
     }
+    @GetMapping("/community")
+    public String community() {
+        return "/community/community";
+    }
 }

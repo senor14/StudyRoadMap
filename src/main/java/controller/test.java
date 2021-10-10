@@ -6,6 +6,9 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.BsonRegularExpression;
 import org.bson.Document;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import util.CmmUtil;
 import util.DateUtil;
 import java.util.*;
 import java.util.function.Consumer;
@@ -16,12 +19,13 @@ public class test {
 
    public static void main(String[] args) {
       test ts = new test();
-      System.out.println(getDateTime());
+//      System.out.println(UUID.randomUUID().toString());
 //      ts.getRoadMap();
-//      ts.findStudyMap("road_category","프로 백");
+//      ts.findStudyMap("road_title","asdad");
 //      ts.insertComment();
 //      ts.getComment();
-      ts.copyRoadMap();
+//      ts.copyRoadMap();
+      ts.findCopyRoadMap("3b357972-3c00-4b00-a3ba-8199065ea1db");
    }
 
    public void getRoadMap() {
@@ -35,12 +39,12 @@ public class test {
 
          Document query = new Document();
 
-         query.append("public", "Y");
+//         query.append("public", "Y");
 
          Document projection = new Document();
 
          projection.append("road_id", "$road_id");
-         projection.append("road_category", "$road_category");
+         projection.append("road_node.node_category", "$road_node.node_category");
          projection.append("road_title", "$road_title");
          projection.append("user_uuid", "$user_uuid");
          projection.append("created", "$created");
@@ -61,7 +65,8 @@ public class test {
    }
 
    public void findStudyMap(String searchType,String keyWord) {
-
+      System.out.println(CmmUtil.nvl(keyWord));
+      keyWord+=" ";
       String[] words = keyWord.split(" ");
       
       JSONArray studyRoadMap = new JSONArray();
@@ -75,8 +80,9 @@ public class test {
 
          // 조건 Document 리스트 생성
          List<Document> conditions= new ArrayList<>();
-         conditions.add(new Document().append("public", "Y"));
+//         conditions.add(new Document().append("public", "Y"));
          for(String word : words){
+            System.out.println(word);
             conditions.add(new Document().append(searchType, new BsonRegularExpression("^.*"+word+".*$", "i")));
          }
 
@@ -89,7 +95,7 @@ public class test {
          Document projection = new Document();
 
          projection.append("road_id", "$road_id");
-         projection.append("road_category", "$road_category");
+         projection.append("road_node.node_category", "$road_node.node_category");
          projection.append("road_title", "$road_title");
          projection.append("user_uuid", "$user_uuid");
          projection.append("created", "$created");
@@ -168,8 +174,48 @@ public class test {
       }
    }
 
-   public void copyRoadMap(){
+   public void findCopyRoadMap(String oldRoad_id) {
+      Map<String, Object> pMap = new HashMap<>();
+      pMap.put("road_id", UUID.randomUUID().toString());
+      pMap.put("road_title", "복사된 웹 프론트엔드");
+      pMap.put("user_uuid", "9db17796-2357-4171-edbe-f4b54b040497");
+      pMap.put("created", DateUtil.getDateTime());
+      pMap.put("public", "N");
+
+      JSONArray oldData = new JSONArray();
+      try (MongoClient client = new MongoClient("52.79.231.216", 21316)) {
+
+         MongoDatabase database = client.getDatabase("RoadMap");
+         MongoCollection<Document> collection = database.getCollection("StudyRoadMap");
+
+         // 조건 Document 리스트 생성
+         Document query = new Document();
+
+         query.append("road_id", oldRoad_id);
+         query.append("public", "Y");
+
+         Document projection = new Document();
+
+         projection.append("road_nodeDataArray", "$road_nodeDataArray");
+         projection.append("road_diagram", "$road_diagram");
+         projection.append("_id", 0);
+
+         collection.find(query).projection(projection).forEach(oldData::add);
+
+         pMap.put("road_nodeDataArray", ((Map<?, ?>) oldData.get(0)).get("road_nodeDataArray"));
+         pMap.put("road_diagram", ((Map<?, ?>) oldData.get(0)).get("road_diagram"));
+
+         collection.insertOne(new Document(pMap));
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+/*      oldData.forEach(data ->{
+         JSONObject jsonObject = new JSONObject((Map) data);
+         System.out.println(((Map<?, ?>) data).get("road_nodeDataArray"));
+         System.out.println(jsonObject.get("road_diagram"));
+      });*/
 
    }
+
 
 }

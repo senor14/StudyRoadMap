@@ -13,4 +13,6 @@ public interface ICommunityService {
     boolean insertComment(Map<String, Object> pMap);
 
     JSONArray getComment(String studyRoad_id);
+
+    boolean copyRoadMap(String oldRoad_id, Map<String, Object> pMap);
 }
