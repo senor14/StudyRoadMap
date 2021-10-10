@@ -5,10 +5,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<script src="../release/go-module.js"></script>
-<script src="../release/go.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/study_roadMap/go-module.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/study_roadMap/go.js"></script>
 <script id="code">
     var MINLENGTH = 200;  // this controls the minimum length of any swimlane
     var MINBREADTH = 20;  // this controls the minimum breadth of any non-collapsed swimlane
@@ -747,6 +747,6 @@
 
 </div>
 </body>
-<script src="../assets/js/goSamples.js"></script>
+<%--<script src="${pageContext.request.contextPath}/assets/js/goSamples.js"></script>--%>
 <!--  This script is part of the gojs.net website, and is not needed to run the sample -->
 </html>
