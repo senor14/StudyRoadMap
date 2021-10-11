@@ -66,8 +66,8 @@ public class UserController {
         // 몽고디비에 도큐먼트 방식으로 사용 하기 위한 <String, Object>형 Map 객체
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_id", encId);
-        uMap.put("user_pwd", HashEnc);
+        uMap.put("userId", encId);
+        uMap.put("userPwd", HashEnc);
 
         // 입력받은 아이디와 비밀번호를 조회하여 유저의 정보를 가져온다.
         List<Map<String,String>> rList = userService.getUserInfo(uMap);
@@ -82,8 +82,8 @@ public class UserController {
             return "/redirect";
         // 조회 결과가 있으면 세션에 올리고 메인페이지로 이동
         } else {
-            session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("user_id")));
-            session.setAttribute("SS_USER_UUID", rList.get(0).get("user_uuid"));
+            session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("userId")));
+            session.setAttribute("SS_USER_UUID", rList.get(0).get("userUuid"));
 
             model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
@@ -126,10 +126,10 @@ public class UserController {
 
         log.info("put 시작");
         Map<String, Object> uMap = new HashMap<>();
-        uMap.put("user_id", encId);
-        uMap.put("user_pwd", HashEnc);
-        uMap.put("user_email", encEmail);
-        uMap.put("user_uuid", user_uuid);
+        uMap.put("userId", encId);
+        uMap.put("userPwd", HashEnc);
+        uMap.put("userEmail", encEmail);
+        uMap.put("userUuid", user_uuid);
         log.info("put 종료");
 
         log.info("UserSignUp 시작");
@@ -147,8 +147,8 @@ public class UserController {
         }
         Map<String, Object> pMap = new HashMap<>();
 
-        pMap.put("user_email", encEmail);
-        pMap.put("auth_num", enc_auth_num);
+        pMap.put("userEmail", encEmail);
+        pMap.put("authNum", enc_auth_num);
 
         int del_res = userService.deleteAuthNum(pMap);
 
@@ -180,8 +180,8 @@ public class UserController {
 
         Map<String, String> uMap = new HashMap<>();
 
-        uMap.put("user_email", user_email);
-        uMap.put("auth_num", auth_num);
+        uMap.put("userEmail", user_email);
+        uMap.put("authNum", auth_num);
 
         int res = MailService.doSendMail(uMap);
 
@@ -195,8 +195,8 @@ public class UserController {
         String enc_auth_num = EncryptUtil.encAES128CBC(auth_num);
         Map<String, Object> pMap = new HashMap<>();
 
-        pMap.put("user_email", enc_email);
-        pMap.put("auth_num", enc_auth_num);
+        pMap.put("userEmail", enc_email);
+        pMap.put("authNum", enc_auth_num);
 
         int result = userService.insertAuthNum(pMap);
 
@@ -223,8 +223,8 @@ public class UserController {
 
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_email", enc_email);
-        uMap.put("auth_num", enc_auth_num);
+        uMap.put("userEmail", enc_email);
+        uMap.put("authNum", enc_auth_num);
 
         log.info("getAuthNum Start");
         int res = userService.getAuthNum(uMap);
@@ -259,7 +259,7 @@ public class UserController {
 
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_email", enc_email);
+        uMap.put("userEmail", enc_email);
 
         int res = userService.getUserEmail(uMap);
 
@@ -293,7 +293,7 @@ public class UserController {
 
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_id", enc_id);
+        uMap.put("userId", enc_id);
 
         log.info("TheService.idCheck 시작");
         int res =  userService.idCheck(uMap);
@@ -333,28 +333,28 @@ public class UserController {
 
         Map<String, Object> beforeMap = new HashMap<>();
 
-        beforeMap.put("user_email", enc_email);
-        beforeMap.put("user_id", enc_id);
+        beforeMap.put("userEmail", enc_email);
+        beforeMap.put("userId", enc_id);
 
         int res = userService.getUserEmail(beforeMap);
 
         if(res == 0) {
             model.addAttribute("msg", "존재하지 않는 이메일 혹은 아이디입니다. 이메일 주소와 아이디를 확인해주세요.");
-            model.addAttribute("url", "/RoadMap/ForgotPassWord.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
             return "/redirect";
         }
 
         Map<String, Object> afterMap = new HashMap<>();
 
-        afterMap.put("user_email", enc_email);
-        afterMap.put("user_pwd", hash_pw);
+        afterMap.put("userEmail", enc_email);
+        afterMap.put("userPwd", hash_pw);
 
         int result = userService.reMakePW(beforeMap, afterMap);
 
         Map<String, String> uMap = new HashMap<>();
 
-        uMap.put("user_email", user_email);
-        uMap.put("user_pwd", random);
+        uMap.put("userEmail", user_email);
+        uMap.put("userPwd", random);
 
         if(result == 1) {
             int mailRes = MailService.doSendPassWordMail(uMap);
@@ -396,7 +396,7 @@ public class UserController {
 
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_email", enc_email);
+        uMap.put("userEmail", enc_email);
 
         // 이메일 주소가 존재하는지 조회
         int res = userService.getUserEmail(uMap);
@@ -404,7 +404,7 @@ public class UserController {
         // 조회 결과가 없으면 안내 메세지를 띄우고 다시 아이디 찾기 페이지로 보냄.
         if(res == 0) {
             model.addAttribute("msg", "존재하지 않는 이메일입니다. 이메일 주소를 확인해주세요.");
-            model.addAttribute("url", "/RoadMap/ForgotID.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
             log.info("RoadMap/SendId 종료");
 
@@ -415,17 +415,17 @@ public class UserController {
 
         Map<String, String> pMap = rList.get(0);
 
-        pMap.replace("user_email", EncryptUtil.decAES128CBC(pMap.get("user_email")));
-        pMap.replace("user_id", EncryptUtil.decAES128CBC(pMap.get("user_id")));
+        pMap.replace("userEmail", EncryptUtil.decAES128CBC(pMap.get("user_email")));
+        pMap.replace("userId", EncryptUtil.decAES128CBC(pMap.get("user_id")));
 
         int email_res = MailService.doSendIdMail(pMap);
 
         if(email_res <= 1) {
             model.addAttribute("msg", "아이디가 가입하신 메일 주소로 전송되었습니다.");
-            model.addAttribute("url", "/RoadMap/Login.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
         } else {
             model.addAttribute("msg", "서버의 오류로 아이디 전송을 실패했습니다. 잠시 후 다시 시도해주세요.");
-            model.addAttribute("url", "/RoadMap/ReMakePW.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
         }
 
         log.info("RoadMap/SendId 종료");
@@ -458,11 +458,11 @@ public class UserController {
 
         Map<String, Object> beforeMap = new HashMap<>();
 
-        beforeMap.put("user_id", enc_id);
+        beforeMap.put("userId", enc_id);
 
         Map<String, Object> afterMap = new HashMap<>();
 
-        afterMap.put("user_pwd", Hash_pwd);
+        afterMap.put("userPwd", Hash_pwd);
 
         int res = userService.passWordChange(beforeMap, afterMap);
 
@@ -471,7 +471,7 @@ public class UserController {
         } else {
             model.addAttribute("msg", "서버의 오류로 인해 비밀번호 변경이 실패했습니다. 잠시 후 다시 시도해주세요. 변경이 계속 실패하는 경우 고객센터에 문의 바랍니다.");
         }
-        model.addAttribute("url", "/RoadMap/PassWordChange");
+        model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
         log.info("PassWordChange 종료");
 
@@ -529,8 +529,8 @@ public class UserController {
 
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_id", enc_id);
-        uMap.put("user_email", enc_email);
+        uMap.put("userId", enc_id);
+        uMap.put("userEmail", enc_email);
 
         List<Map<String, Object>> rList = userService.getDeleteUserInfo(uMap);
 
@@ -563,11 +563,11 @@ public class UserController {
 
         Map<String, Object> uMap = new HashMap<>();
 
-        uMap.put("user_uuid", user_uuid);
+        uMap.put("userUuid", user_uuid);
 
         List<Map<String, String>> rList = userService.getUserId(uMap);
 
-        String output = EncryptUtil.decAES128CBC(rList.get(0).get("user_id"));
+        String output = EncryptUtil.decAES128CBC(rList.get(0).get("userId"));
 
         log.info("getId 시작");
         return output;

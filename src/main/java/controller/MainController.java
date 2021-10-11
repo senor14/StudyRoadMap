@@ -12,6 +12,7 @@ public class MainController {
     public String homeTest() {
         return "index";
     }
+
     @GetMapping("/community")
     public String community() {
         return "/community/community";
@@ -20,6 +21,6 @@ public class MainController {
     @GetMapping("/comment")
     public String comment() {
         return "/community/comment";
-    }
 
+    }
 }
