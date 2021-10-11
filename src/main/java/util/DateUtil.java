@@ -10,7 +10,8 @@ public class DateUtil {
 	/**
 	 * 날짜, 시간 출력하기
 	 * @param fm 날짜 출력 형식
-	 * @return
+	 * @return 날짜 출력
+
 	 */
 	public static String getDateTime(String fm) {
 		
@@ -27,7 +28,8 @@ public class DateUtil {
 	 * @return 기본값은 년, 월, 일
 	 */
 	public static String getDateTime() {
-		
-		return getDateTime("yyyy.MM.dd/HH:mm:ss");
+
+		return getDateTime("yyyy.MM.dd/hh:mm:ss");
+
 	}
 }

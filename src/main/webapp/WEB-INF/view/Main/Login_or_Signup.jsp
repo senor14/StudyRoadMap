@@ -10,6 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login_style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/study_mindMap.css">
+
     <link rel="shortcut icon" href="#">
     <title>Login Template</title>
 </head>
@@ -46,14 +49,46 @@
                 </div>
                     <button type="submit" class="submit-btn">Login</button>
             </form>
-            <a href="/RoadMap/ForgotID" class="link"> Forgot ID? </a><br>
-            <a href="/RoadMap/ForgotPassWord" class="link"> Forgot PassWord? </a><br>
-            <a href="/RoadMap/PassWordChange" class="link"> PassWord Change </a><br>
-            <a href="/RoadMap/userWithdrawal" class="link"> Withdrawal </a>
+            <button type="button" class="lil-btn2" onclick="fnOpenModal('#m2-o')">아이디 찾기</button><br>
+            <button type="button" class="lil-btn2" onclick="fnOpenModal('#m3-o')">비밀번호 찾기</button><br>
         </div>
     </div>
 </div>
+    <%-- modal 기본 --%>
+    <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+        <div class="modal">
+            <h1 class="modal__title" id="modal__title">아이디 찾기</h1>
+            <div>
+                <form action="/RoadMap/SendId" method="post" id="id_find_form">
+                    <span>EMAIL</span>
+                    <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>
+                </form>
+                <button type="button" class="modal__btn" onclick="id_find();">확인</button>
+                <button type="button" class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+            </div>
+            <button class="modal__btn" onclick="fnOpenModal('#m3-o'); fnCloseModal('#m2-o');">비밀번호 찾기</button>
+        </div>
+    </div>
+    <%-- modal 기본 끝 --%>
 
+    <%-- modal 추가 --%>
+    <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+        <div class="modal">
+            <h1 class="modal__title">비밀번호 찾기</h1>
+                <div>
+                    <form action="/RoadMap/ReMakePW" method="post" id="pwd_find_form">
+                        <span>EMAIL:</span>
+                        <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>
+                        <span>ID:</span>
+                        <input type="text" name="userId" placeholder="Type your ID" /><br>
+                    </form>
+                    <button type="button" class="modal__btn" onclick="pwd_find();">확인</button>
+                    <button type="button" class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
+                </div>
+            <button class="modal__btn" onclick="fnOpenModal('#m2-o'); fnCloseModal('#m3-o');">아이디 찾기</button>
+        </div>
+    </div>
+    <%-- modal 추가 끝 --%>
 
 </body>
 
@@ -235,5 +270,34 @@
         }
     }
 </script>
+<%-- 모달 조작 함수 --%>
+<script>
+    // 모달 오픈
+    function fnOpenModal(id){
+        // $('#m2-o').css("display", "flex");
+        if (id === '#m4-o' || id === '#m5-o') {
+            id = '#m6-o'
+        }
+        $(id).css("display", "flex");
+    }
+    // 모달 종료
+    function fnCloseModal(id){
+        //$('#m2-o').css("display", "none");
+        $(id).css("display", "none");
+    }
 
+</script>
+<!--폼 관련 파일-->
+<script>
+    function id_find() {
+
+        document.getElementById('id_find_form').submit();
+
+    }
+    function pwd_find() {
+
+        document.getElementById('pwd_find_form').submit();
+
+    }
+</script>
 </html>

@@ -30,4 +30,6 @@ public interface IUserService {
     int passWordChange(Map<String, Object> beforeMap, Map<String, Object> afterMap);
 
     int deleteAuthNum(Map<String, Object> pMap);
+
+    List<Map<String, String>> getUserId(Map<String, Object> uMap);
 }

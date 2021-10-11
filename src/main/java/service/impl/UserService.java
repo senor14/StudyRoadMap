@@ -100,5 +100,11 @@ public class UserService implements IUserService {
         return userMapper.deleteAuthNum(pMap, auth_colNm);
     }
 
+    @Override
+    public List<Map<String, String>> getUserId(Map<String, Object> uMap) {
+
+        return userMapper.getUserId(uMap, user_colNm);
+    }
+
 
 }

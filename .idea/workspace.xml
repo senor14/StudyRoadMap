@@ -18,8 +18,17 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="jsf" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+        <option value="Jsp File" />
+      </list>
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -30,13 +39,26 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <favorite-branches>
+    <excluded-from-favorite>
       <branch-storage>
         <map>
           <entry type="LOCAL">
             <value>
               <list>
-                <branch-info repo="$PROJECT_DIR$" source="develop" />
+                <branch-info repo="$PROJECT_DIR$" source="master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/feature/커뮤니티" />
               </list>
             </value>
           </entry>
@@ -45,7 +67,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/careerRoadmap" />
+        <entry key="$PROJECT_DIR$" value="d80fc7eae79a7ad7ce7b9d8cbf09b7397d0b9ab5" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -73,7 +95,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1yfroHq5oUX3jIiKpWowVQNNYv9" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -84,7 +108,6 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -96,55 +119,53 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\IntelliJ IDEA 2021.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Example\StudyRoadMap\src\main\webapp\resources\templates" />
-      <recent name="C:\Example\StudyRoadMap\src\main\webapp\WEB-INF\view" />
-      <recent name="C:\Example\StudyRoadMap\src\main\webapp\WEB-INF" />
-      <recent name="C:\Example\StudyRoadMap\src\main\webapp\resources" />
-      <recent name="C:\Example\StudyRoadMap\src\main\resources" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\CSRoadMap\TEST\StudyRoadMap-StudyRoadMap\src\main\webapp\resources\js\study_roadMap" />
-      <recent name="E:\CSRoadMap\TEST\StudyRoadMap-StudyRoadMap\src\main\webapp\resources\js" />
-      <recent name="E:\CSRoadMap\TEST\StudyRoadMap-StudyRoadMap\src\main\webapp\resources\css\study_roadMap" />
-      <recent name="C:\Example\StudyRoadMap\src\main\webapp\WEB-INF\view\assets" />
-      <recent name="C:\Example\StudyRoadMap\src\main\webapp\resources" />
+      <recent name="C:\RoadMapPrj#3\src\main\webapp\WEB-INF" />
+      <recent name="E:\CSRoadMap\StudyRoadMap\src\main\webapp\resources" />
+      <recent name="E:\CSRoadMap\StudyRoadMap\src\main\webapp\WEB-INF\view" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="jpa" />
+      <recent name="domain" />
+      <recent name="service" />
+      <recent name="service.impl" />
+      <recent name="persistence.mongo" />
     </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn install" />
+      <command value="mvn package" />
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 8.5.57">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+  <component name="RunDashboard">
+    <option name="excludedTypes">
+      <set>
+        <option value="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="All in MyCSRoadMap" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MyCSRoadMap" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="Tomcat 8.5.57" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.5.57" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8" nameIsGenerated="true">
-      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:9000/" />
-      <option name="COMMON_VM_ARGUMENTS" value="-Dfile.encoding=utf-8" />
+      <option name="COMMON_VM_ARGUMENTS" value="-Duser.language=en -Duser.region=us" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
@@ -155,17 +176,16 @@
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="4065d812-c2d8-47ee-8f24-672e620a2002" />
-        <option name="HTTP_PORT" value="9000" />
-        <option name="JNDI_PORT" value="10999" />
+        <option name="BASE_DIRECTORY_NAME" value="b503a6ca-c8c8-4f31-8bfd-a308980d75aa" />
+        <option name="HTTP_PORT" value="9001" />
       </server-settings>
-      <log_file alias="Tomcat Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/manager.*" />
-      <log_file alias="Tomcat Host Manager Log" path="%IDEA_RUN:CATALINA_BASE%/logs/host-manager.*" />
-      <log_file alias="Tomcat Localhost Access Log" path="%IDEA_RUN:CATALINA_BASE%/logs/localhost_access_log.*" />
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="14515" />
+        <option name="DEBUG_PORT" value="56085" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -234,23 +254,8 @@
         </option>
       </method>
     </configuration>
-    <list>
-      <item itemvalue="JUnit.All in MyCSRoadMap" />
-      <item itemvalue="Tomcat Server.Tomcat 8.5.57" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.All in MyCSRoadMap" />
-        <item itemvalue="JUnit.All in MyCSRoadMap" />
-        <item itemvalue="JUnit.All in MyCSRoadMap" />
-        <item itemvalue="JUnit.All in MyCSRoadMap" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="SpringGeneralSettings">
-    <option name="allowAutoConfigurationMode" value="true" />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="" />
@@ -275,14 +280,49 @@
       <workItem from="1633915193728" duration="1171000" />
       <workItem from="1633916590319" duration="6487000" />
     </task>
-    <task id="LOCAL-00001" summary="이건미친짓이야">
-      <created>1633791515780</created>
+    <task id="LOCAL-00001" summary="[ADD] 커리어 로드맵 컨트롤러, 서비스, 프론트 추가">
+      <created>1633239962316</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1633791515780</updated>
+      <updated>1633239962317</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="[ADD] modal css 추가 (참고 : https://codepen.io/AbubakerSaeed/pen/eYOvKpY )">
+      <created>1633240007943</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1633240007947</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[ADD] 경력카드 css, 모달 css 추가">
+      <created>1633274788376</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1633274788379</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[UPDATE] 모달 동작 처리 수정">
+      <created>1633275055863</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1633275055864</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[STYLE] bootstrap.min.css와 modal.css의 modal.css의 동시 사용시 오류 발생 =&gt; bootstrap.min.css의 modal 관련 주석처리">
+      <created>1633764754601</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1633764754601</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[STYLE] button 관련 css, js 수정">
+      <created>1633850673723</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1633850673723</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,7 +339,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="feature/스터디로드맵" />
+                        <option value="origin/feature/커뮤니티" />
                       </list>
                     </value>
                   </entry>
@@ -310,12 +350,49 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/feature/커뮤니티" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changes" />
-    <MESSAGE value="이건미친짓이야" />
-    <option name="LAST_COMMIT_MESSAGE" value="이건미친짓이야" />
+    <MESSAGE value="[UPDATE]" />
+    <MESSAGE value="[INITIAL]-test.java file에서 mongodb연결 이슈 null값 반환" />
+    <MESSAGE value="[UPDATE] getStudyRoadMap 날짜 오름차순 정렬 및 JSONArray로 type변경" />
+    <MESSAGE value="[UPDATE] getCareerRoadMap 추가 CareerRoadMap에서 데이터 조회" />
+    <MESSAGE value="[FIX] getCareerRoadMap 삭제" />
+    <MESSAGE value="[UPDATE] 변수 r_mCheck &gt;&gt; category 변경 findStudyMap 메소드 생성" />
+    <MESSAGE value="[UPDATE] findStudyMap &quot; &quot;을 기준으로 단어별 검색 완성" />
+    <MESSAGE value="[UPDATE] insertComment - 코멘트 입력시 mongo에 저장, getComment - roadMap에 들어가면 해당 roadMap에 저장된 코멘트 호출" />
+    <MESSAGE value="[UPDATE] 메소드 findStudyMap &gt;&gt; findRoadMap 이름 변경" />
+    <MESSAGE value="[ADD] community jsp, js, css 추가 및 controller 연결 완료" />
+    <MESSAGE value="[ADD] community jsp, js, css 추가 및 controller 연결" />
+    <MESSAGE value="[UPDATE] 만들어져있는 StudyRoadMap를 복사하는 copyRoadMap 추가" />
+    <MESSAGE value="[ADD] comment jsp js css 추가" />
+    <MESSAGE value="[UPDATE] DB 내용 변경으로 함수명등 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="[UPDATE] DB 내용 변경으로 함수명등 변경" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
