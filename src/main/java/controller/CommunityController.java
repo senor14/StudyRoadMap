@@ -68,35 +68,4 @@ public class CommunityController {
 
         return communityService.copyRoadMap(oldRoad_id, pMap);
     }
-
-    @ResponseBody
-    @GetMapping("/insertComment/{roadMapId}")
-    public boolean insertComment(HttpServletRequest request, HttpSession session, @PathVariable String roadMapId){
-
-        Map<String, Object> pMap = new HashMap<>();
-
-        String studyRoadId = roadMapId;
-        String userId = (String) session.getAttribute("USER_ID");
-        String userUuid = (String) session.getAttribute("SS_USER_ID");
-        String commentId = UUID.randomUUID().toString();
-        String commentContents = CmmUtil.nvl(request.getParameter("comment"));
-        String created = DateUtil.getDateTime();
-
-        pMap.put("studyRoadId",studyRoadId);
-        pMap.put("userId",userId);
-        pMap.put("userUuid",userUuid);
-        pMap.put("commentId",commentId);
-        pMap.put("commentContents",commentContents);
-        pMap.put("created",created);
-
-        return communityService.insertComment(pMap);
-    }
-
-    @ResponseBody
-    @GetMapping("/getComment/{roadMapId}")
-    public JSONArray getComment(@PathVariable String roadMapId){
-        return communityService.getComment(roadMapId);
-    }
-
-
 }
