@@ -24,7 +24,7 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flaticon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
@@ -45,14 +45,49 @@
                             <h1 class="mb-4"><a href="index.jsp" class="logo">Portfolio</a></h1>
                             <ul>
                                 <li class="active"><a href="index.html"><span>Home</span></a></li>
-                                <li><a href="about.html"><span>About</span></a></li>
-                                <li><a href="blog.html"><span>Blog</span></a></li>
-                                <li><a href="contact.html"><span>Contact</span></a></li>
+                                <button type="button" class="lil-btn2" onclick="fnOpenModal('#m2-o')">비밀번호 변경</button><br>
+                                <button type="button" class="lil-btn2" onclick="fnOpenModal('#m3-o')">회원 탈퇴</button><br>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <%-- modal 기본 --%>
+            <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+                <div class="modal">
+                    <h1 class="modal__title" id="modal__title">비밀번호 변경</h1>
+                    <div>
+                        <form action="/RoadMap/PassWordChangeProc" method="post" id="pwd_chg_form" onsubmit="return check();">
+                            <span>PASSWORD</span>
+                            <input type="password" name="pwd" id="newPassWord" placeholder="Type your Password" required/><br>
+                            <span>PASSWROD CHECK</span>
+                            <input type="password" name="pwd2" id="passWordCheck" placeholder="Type your Password Check" required/><br>
+                            <span id="renew"></span><br>
+                        </form>
+                        <button type="button" class="modal__btn" onclick="pwd_chg();">확인</button>
+                        <button type="button" class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+                    </div>
+                </div>
+            </div>
+            <%-- modal 기본 끝 --%>
+
+            <%-- modal 추가 --%>
+            <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+                <div class="modal">
+                    <h1 class="modal__title">회원 탈퇴</h1>
+                    <div>
+                        <form action="/RoadMap/userWithdrawalProc" method="post" onsubmit="return del_check();" id="withdrawal_form">
+                            <span>Withdrawal Check</span><<br>
+                            <span>회원 탈퇴를 누르면 다시 되돌릴 수 없습니다. 탈퇴를 진행하시려면 Account_withdrawal를 입력해주세요.</span><br>
+                            <input type="text" name="DeleteCheck" id="DeleteCheck" placeholder="Account_withdrawal" required/><br>
+                            <span id="id_find"></span><br>
+                        </form>
+                        <button type="button" class="modal__btn" onclick="withdrawal();">탈퇴하기</button>
+                        <button type="button" class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
+                    </div>
+                </div>
+            </div>
+            <%-- modal 추가 끝 --%>
         </nav>
 
         <div id="colorlib-page">
@@ -81,7 +116,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- 탭 부분 -->
             <section class="ftco-section ftco-no-pb ftco-no-pt">
                 <div class="container-fluid px-0">
@@ -248,4 +282,101 @@
     <script src="${pageContext.request.contextPath}/resources/js/google-map.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 
-</body></html>
+</body>
+</html>
+
+<script>
+
+    let pwdCheck = 'N';
+
+    $('#passWordCheck').keyup(function() {
+
+        let pw = document.getElementById("newPassWord").value; //비밀번호
+        let pw2 = document.getElementById("passWordCheck").value; // 확인 비밀번호
+
+        if (pw != "" || pw2 != "") {
+            if (pw == pw2) {
+                $("#renew").text("비밀번호가 일치합니다.");
+                $("#renew").css("color", "#00f");
+                pwdCheck = 'Y';
+            } else {
+                $("#renew").text("비밀번호가 일치하지 않습니다.");
+                $("#renew").css("color", "#f00");
+                pwdCheck = 'N';
+            }
+        }
+
+    })
+    function pwd_chg() {
+
+        document.getElementById('pwd_chg_form').submit();
+
+    }
+    function withdrawal() {
+
+        document.getElementById('withdrawal_form').submit();
+
+    }
+
+
+    function check() {
+        if(pwdCheck == "N"){
+            alert("비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.");
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    let DeleteCheck = 'N';
+
+    $("#DeleteCheck").keyup(function() {
+        let query = {
+            DeleteCheck : $("#DeleteCheck").val()
+        };
+
+        $.ajax({
+            url : "/RoadMap/userWithdrawalCheck",
+            type : "post",
+            data : query,
+            success : function(data) {
+                if (data == 1) {
+                    $("#id_find").text("탈퇴 확인 문자열이 같습니다.");
+                    $("#id_find").attr("style", "color:#00f");
+                    DeleteCheck = 'Y'
+                } else {
+                    $("#id_find").text("탈퇴 확인 문자열이 다릅니다.");
+                    $("#id_find").attr("style", "color:#f00");
+                    DeleteCheck = 'N'
+                }
+            }
+        }); // ajax 끝
+    });
+
+
+    function del_check() {
+        if(idCheck == 'N'){
+            alert("탈퇴 확인 문구가 다릅니다. 탈퇴 확인 문구를 확인해주세요.");
+            return false;
+        } else{
+            return true;
+        }
+    }
+</script>
+<%-- 모달 조작 함수 --%>
+<script>
+    // 모달 오픈
+    function fnOpenModal(id){
+        // $('#m2-o').css("display", "flex");
+        if (id === '#m4-o' || id === '#m5-o') {
+            id = '#m6-o'
+        }
+        $(id).css("display", "flex");
+    }
+    // 모달 종료
+    function fnCloseModal(id){
+        //$('#m2-o').css("display", "none");
+        $(id).css("display", "none");
+    }
+
+</script>

@@ -30,4 +30,6 @@ public interface IUserMapper {
     int passWordChange(Map<String, Object> beforeMap, Map<String, Object> afterMap, String colNm);
 
     int deleteAuthNum(Map<String, Object> pMap, String auth_colNm);
+
+    List<Map<String, String>> getUserId(Map<String, Object> uMap, String user_colNm);
 }

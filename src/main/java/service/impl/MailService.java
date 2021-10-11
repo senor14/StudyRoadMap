@@ -1,7 +1,6 @@
 package service.impl;
 
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -20,6 +19,9 @@ import org.springframework.stereotype.Service;
 import service.IMailService;
 import util.CmmUtil;
 
+import util.EncryptUtil;
+
+
 @Service("MailService")
 public class MailService implements IMailService {
 
@@ -27,6 +29,7 @@ public class MailService implements IMailService {
 	
 	final String host = "smtp.gmail.com";
 	final String user = "newshfkfk@gmail.com"; //보내는 사람 주소
+
 	final String password = "ufrikazlauweveyy"; // 로그인을 위한 비밀번호
 
 	@Override
@@ -36,13 +39,13 @@ public class MailService implements IMailService {
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		// 이메일 객체생성하기
 		int res = 1;
-		
+
 		if(pMap == null) {
 			pMap = new HashMap<>();
 		}
 		
 		String Email = CmmUtil.nvl(pMap.get("user_email"));
-		
+
 		Properties props = new Properties();
 		
 		props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -67,7 +70,7 @@ public class MailService implements IMailService {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(Email));
-			
+
 			message.setSubject("[RoadMap team] 인증코드 안내");
 			message.setText("RoadMap 인증코드는 " + pMap.get("auth_num") + " 입니다.");
 			
@@ -93,13 +96,13 @@ public class MailService implements IMailService {
 		
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		// 이메일 객체생성하기
-		
+
 		if(uMap == null) {
 			uMap = new HashMap<>();
 		}
 		
 		String Email = CmmUtil.nvl(uMap.get("user_email"));
-		
+
 		Properties props = new Properties();
 		
 		props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -123,7 +126,7 @@ public class MailService implements IMailService {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(Email));
-			
+
 			message.setSubject("[RoadMap team] 임시 비밀번호 안내");
 			message.setText("RoadMap 임시 비밀번호는 " + uMap.get("user_pwd") + " 입니다. 보안을 위해 로그인 후 비밀번호를 재설정 해주세요.");
 			

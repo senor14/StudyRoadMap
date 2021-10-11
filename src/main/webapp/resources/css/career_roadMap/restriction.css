@@ -1,0 +1,10 @@
+
+
+.col_content{
+    grid-column: 5/16 !important;
+}
+
+.grid_head .col_center:nth-last-child(1), .grid_head .col_center:nth-last-child(2), .input_container{
+    display : none; !important;
+}
+
