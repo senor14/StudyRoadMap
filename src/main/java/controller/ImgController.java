@@ -4,12 +4,10 @@ package controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import service.IImgService;
+import util.CmmUtil;
 import util.DateUtil;
 import util.FileUtil;
 import util.ImageResizeUtil;
@@ -22,10 +20,13 @@ import javax.servlet.http.HttpSession;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +35,6 @@ import java.util.Map;
  * */
 @Slf4j
 @Controller
-@RequestMapping("/")
 public class ImgController {
 
     @Resource(name = "ImgService")
@@ -64,7 +64,7 @@ public class ImgController {
 
         Map<String, String> rMap = new HashMap<String, String>();
         // 이미지 파일 저장하는 사용자 ID
-        String user_uuid = (String) session.getAttribute("user_uuid");
+        String user_uuid = (String) session.getAttribute("SS_USER_UUID");
 
         // 임의로 정의된 파일명을 원래대로 만들어주기 위한 목적
         String originalFileName = mf.getOriginalFilename();
@@ -104,12 +104,12 @@ public class ImgController {
 
             Map<String, Object> iMap = new HashMap<>();
 
-            iMap.put("save_file_name", saveFileName);
-            iMap.put("save_file_path", saveFilePath);
-            iMap.put("org_file_name", originalFileName);
+            iMap.put("saveFileName", saveFileName);
+            iMap.put("saveFilePath", saveFilePath);
+            iMap.put("orgFileName", originalFileName);
             iMap.put("ext", ext);
-            iMap.put("user_uuid", user_uuid);
-            iMap.put("create_date", DateUtil.getDateTime("yyyy-MM-dd-hh:mm:ss"));
+            iMap.put("userUuid", user_uuid);
+            iMap.put("createDate", DateUtil.getDateTime("yyyy-MM-dd-hh:mm:ss"));
 
             log.info("imgService start!!");
             res = imgService.InsertImage(iMap);
@@ -134,8 +134,94 @@ public class ImgController {
         return res;
     }
 
+    @RequestMapping(value = "getImg")
+    public String getImg(){
 
+        log.info("getImg start");
 
+        log.info("getImg end");
+
+        return "/Main/getImg";
+    }
+
+    @RequestMapping(value = "/getImage", method = RequestMethod.GET)
+    public void getImage(HttpServletRequest request, HttpSession session, HttpServletResponse response) throws Exception {
+
+        String userUuid = (String) session.getAttribute("SS_USER_UUID");
+
+        log.info("userUuid : " + userUuid);
+
+        // 가장 최근에 등록한 프로필 사진 정보가져오기
+        log.info("getImgList start! ");
+
+        Map<String, Object> iMap = new HashMap<>();
+
+        iMap.put("userUuid", userUuid);
+
+        List<Map<String, String>> rList = imgService.getImgList(iMap);
+        log.info("getImgList end! ");
+
+        if (rList == null) {
+            rList = new LinkedList<>();
+        }
+
+        String realFile = CmmUtil.nvl(rList.get(0).get("saveFilePath") + "/"); // 파일이 저장된 경로 : /usr/local/images/userimg/0000/00/00/
+        String fileNm = CmmUtil.nvl(rList.get(0).get("saveFileName")); // 파일명 : 000000.jpg 000000.png
+        String ext = CmmUtil.nvl(rList.get(0).get("ext")); // 파일 확장자
+        log.info("realFile : " + realFile);
+        log.info("fileNm : " + fileNm);
+        log.info("ext : " + ext);
+
+        BufferedOutputStream out = null;
+        InputStream in = null;
+
+        try {
+
+            if (!ext.equals("")) {
+                response.setContentType("image/" + ext);
+                response.setHeader("Content-Disposition", "inline;filename=" + fileNm);
+                File file = new File(realFile + fileNm);
+                log.info("file : " + file);
+
+                in = new FileInputStream(file);
+                out = new BufferedOutputStream(response.getOutputStream());
+                int len;
+                byte[] buf = new byte[1024];
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+            } else {
+                log.info("basicFile start");
+
+                String basicFile = "/img/basicimg.png";
+
+                File file1 = new File(basicFile);
+                log.info("basicFile : " + basicFile);
+                log.info("file1 : " + file1);
+
+                in = new FileInputStream(file1);
+                out = new BufferedOutputStream(response.getOutputStream());
+                int len;
+                byte[] buf = new byte[1024];
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
+
+            }
+        } catch (Exception e) {
+            log.info(String.valueOf(e.getStackTrace()));
+        } finally {
+            if (out != null) {
+                out.flush();
+            }
+            if (out != null) {
+                out.close();
+            }
+            if (in != null) {
+                in.close();
+            }
+        }
+    }
 
 
 

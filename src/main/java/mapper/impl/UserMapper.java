@@ -38,14 +38,14 @@ public class UserMapper implements IUserMapper {
 
             Map<String, String> rMap = new HashMap<>();
 
-            String user_id = document.getString("user_id");
-            String user_email = document.getString("user_email");
-            String user_uuid = document.getString("user_uuid");
+            String user_id = document.getString("userId");
+            String user_email = document.getString("userEmail");
+            String user_uuid = document.getString("userUuid");
 
 
-            rMap.put("user_id", user_id);
-            rMap.put("user_email", user_email);
-            rMap.put("user_uuid", user_uuid);
+            rMap.put("userId", user_id);
+            rMap.put("userEmail", user_email);
+            rMap.put("userUuid", user_uuid);
 
             rList.add(rMap);
 
@@ -183,7 +183,7 @@ public class UserMapper implements IUserMapper {
 
             Map<String, Object> rMap = new HashMap<>();
 
-            rMap.put("user_uuid", document.getString("user_uuid"));
+            rMap.put("userUuid", document.getString("userUuid"));
 
             rList.add(rMap);
 
@@ -373,9 +373,9 @@ public class UserMapper implements IUserMapper {
 
             Map<String, String> rMap = new HashMap<>();
 
-            String user_id = document.getString("user_id");
+            String user_id = document.getString("userId");
 
-            rMap.put("user_id", user_id);
+            rMap.put("userId", user_id);
             rList.add(rMap);
 
             rMap = null;
