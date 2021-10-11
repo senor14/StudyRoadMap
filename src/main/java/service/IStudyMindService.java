@@ -29,5 +29,9 @@ public interface IStudyMindService {
 
     public int deleteMindNodeData(String mindId) throws Exception;
 
+    public List<StudyMindData> getMindDataByRoadNodeId(String roadNodeId) throws Exception;
+
+    public List<StudyMindNodeData> getMindNodeByRoadNodeId(String roadNodeId) throws Exception;
+
 
 }

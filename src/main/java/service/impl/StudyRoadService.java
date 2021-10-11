@@ -1,11 +1,7 @@
 package service.impl;
 
-import domain.StudyRoadData;
-import domain.StudyRoadDiagramData;
-import domain.StudyRoadNodeData;
-import jpa.StudyRoadDiagramRepository;
-import jpa.StudyRoadNodeRepository;
-import jpa.StudyRoadRepository;
+import domain.*;
+import jpa.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -58,7 +54,7 @@ public class StudyRoadService implements IStudyRoadService {
     }
 
     @Override
-    public StudyRoadNodeData getRoadMapNodeDate(String nodeId) throws Exception {
+    public StudyRoadNodeData getRoadMapNodeData(String nodeId) throws Exception {
 
         log.info(this.getClass().getName()+".getRoadMapNodeDate Start!");
 
@@ -173,7 +169,7 @@ public class StudyRoadService implements IStudyRoadService {
     }
 
     @Override
-    public List<StudyRoadNodeData> getRoadMapNode(String roadId) throws Exception {
+    public List<StudyRoadNodeData> getRoadMapNodeByRoadId(String roadId) throws Exception {
 
         log.info(this.getClass().getName()+".getRoadMapNode Start!");
 
@@ -402,4 +398,6 @@ public class StudyRoadService implements IStudyRoadService {
 
         return res;
     }
+
+
 }

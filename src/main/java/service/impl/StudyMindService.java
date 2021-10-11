@@ -241,5 +241,32 @@ public class StudyMindService implements IStudyMindService {
         return res;
     }
 
+    @Override
+    public List<StudyMindData> getMindDataByRoadNodeId(String roadNodeId) throws Exception {
+
+        log.info(this.getClass().getName()+".getMindDataByRoadNodeId Start!");
+
+        List<StudyMindData> studyMindData = studyMindRepository.findStudyMindDataByStudyRoadNodeId(roadNodeId);
+        log.info("studyRoadNodeId: "+roadNodeId);
+        log.info("studyMindData:"+studyMindData);
+
+        log.info(this.getClass().getName()+".getMindDataByRoadNodeId End!");
+
+        return studyMindData;
+    }
+
+    @Override
+    public List<StudyMindNodeData> getMindNodeByRoadNodeId(String roadNodeId) throws Exception {
+
+        log.info(this.getClass().getName()+".getMindNodeByRoadNodeId Start!");
+
+        List<StudyMindNodeData> studyMindNodeData = studyMindNodeRepository.findStudyMindNodeDataByStudyRoadNodeId(roadNodeId);
+
+        log.info("studyMindNodeData: "+ studyMindNodeData);
+
+        log.info(this.getClass().getName()+".getMindNodeByRoadNodeId End!");
+
+        return studyMindNodeData;
+    }
 
 }

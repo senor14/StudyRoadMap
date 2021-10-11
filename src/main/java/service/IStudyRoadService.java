@@ -1,8 +1,6 @@
 package service;
 
-import domain.StudyRoadData;
-import domain.StudyRoadDiagramData;
-import domain.StudyRoadNodeData;
+import domain.*;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ public interface IStudyRoadService {
     public StudyRoadDiagramData getRoadMapDiagramData(String diagramId) throws Exception;
 
     // 노드 id로 로드맵 노드 정보 가져오기
-    public StudyRoadNodeData getRoadMapNodeDate(String nodeId) throws Exception;
+    public StudyRoadNodeData getRoadMapNodeData(String nodeId) throws Exception;
 
     // publicYn이 Y인 목록중에서 StudyRoadData-roadTitle 가 검색한 정보와 일치/포함되는
     // 로드맵데이터 리스트 가져오기
@@ -33,7 +31,7 @@ public interface IStudyRoadService {
     public List<StudyRoadDiagramData> getRoadMapDiagramByRoadId(String roadId) throws Exception;
 
     // 로드 id로 로드노드 리스트 가져오기
-    public List<StudyRoadNodeData> getRoadMapNode(String roadId) throws Exception;
+    public List<StudyRoadNodeData> getRoadMapNodeByRoadId(String roadId) throws Exception;
 
     // 유저 id로 로드맵 리스트 가져오기
     public List<StudyRoadData> getRoadDataByUserUuid(String userUuid) throws Exception;
@@ -64,5 +62,8 @@ public interface IStudyRoadService {
 
     // StudyRoadNodeData 삭제
     public int deleteRoadNode(String nodeId) throws Exception;
+
+
+
 
 }
