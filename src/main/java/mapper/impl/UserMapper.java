@@ -38,14 +38,14 @@ public class UserMapper implements IUserMapper {
 
             Map<String, String> rMap = new HashMap<>();
 
-            String user_id = document.getString("user_id");
-            String user_email = document.getString("user_email");
-            String user_uuid = document.getString("user_uuid");
+            String user_id = document.getString("userId");
+            String user_email = document.getString("userEmail");
+            String user_uuid = document.getString("userUuid");
 
 
-            rMap.put("user_id", user_id);
-            rMap.put("user_email", user_email);
-            rMap.put("user_uuid", user_uuid);
+            rMap.put("userId", user_id);
+            rMap.put("userEmail", user_email);
+            rMap.put("userUuid", user_uuid);
 
             rList.add(rMap);
 
@@ -183,7 +183,7 @@ public class UserMapper implements IUserMapper {
 
             Map<String, Object> rMap = new HashMap<>();
 
-            rMap.put("user_uuid", document.getString("user_uuid"));
+            rMap.put("userUuid", document.getString("userUuid"));
 
             rList.add(rMap);
 
@@ -356,5 +356,35 @@ public class UserMapper implements IUserMapper {
         log.info(this.getClass().getName() + "deleteAuthNum end");
 
         return res;
+    }
+
+    @Override
+    public List<Map<String, String>> getUserId(Map<String, Object> uMap, String user_colNm) {
+
+        log.info(this.getClass().getName() + "getUserId Start");
+
+        List<Map<String, String>> rList = new LinkedList<>();
+
+        MongoCollection<Document> collection = mongodb.getCollection(user_colNm);
+
+        Document query = new Document(uMap);
+
+        Consumer<Document> processBlock = document -> {
+
+            Map<String, String> rMap = new HashMap<>();
+
+            String user_id = document.getString("userId");
+
+            rMap.put("userId", user_id);
+            rList.add(rMap);
+
+            rMap = null;
+        };
+
+        collection.find(query).forEach(processBlock);
+
+        log.info(this.getClass().getName() + "getUserId end");
+
+        return rList;
     }
 }

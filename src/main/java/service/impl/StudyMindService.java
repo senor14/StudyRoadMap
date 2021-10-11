@@ -176,6 +176,32 @@ public class StudyMindService implements IStudyMindService {
     }
 
     @Override
+    public int updateNodePosition(StudyMindNodeData position) throws Exception {
+
+        log.info(this.getClass().getName() + ".updateNodePosition Start!");
+
+        StudyMindNodeData result = studyMindNodeRepository.findByMindId(position.getMindId());
+        log.info("result before: "+ result);
+
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        mapper.map(position, result);
+
+        StudyMindNodeData save = studyMindNodeRepository.save(result);
+        int res;
+        if (save!=null) {
+            res = 0;
+        } else {
+            res = 1;
+        }
+
+        log.info(this.getClass().getName() + ".updateNodePosition End!");
+
+        return res;
+    }
+
+    @Override
     public int deleteMindData(String mindId) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteMindData Start!");
