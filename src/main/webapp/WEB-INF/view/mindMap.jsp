@@ -185,7 +185,7 @@
             }
         }
     %>
-
+    console.log()
 //노드 그리기
 // window.addEventListener('DOMContentLoaded', function(){ // on dom ready
 
@@ -644,7 +644,7 @@
 
     // 마인드 정보, 노드 정보 삭제
     function deleteMindAndNodeData(mindmind) {
-        if (mindmind !== "<%=mindMapInfo.get(0).getStudyRoadNodeId()%>") {
+        if (mindmind === "<%=mindMapInfo.get(0).getStudyRoadNodeId()%>") {
             return;
         }
         $.ajax({

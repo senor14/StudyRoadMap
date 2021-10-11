@@ -11,12 +11,16 @@
   <component name="ChangeListManager">
     <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="이건미친짓이야">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/RoadMapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RoadMapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/IStudyMindService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IStudyMindService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/StudyMindService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/StudyMindService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/domain/StudyRoadNodeData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/domain/StudyRoadNodeData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jpa/StudyRoadDiagramRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jpa/StudyRoadDiagramRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jpa/StudyRoadNodeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jpa/StudyRoadNodeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/jpa/StudyRoadRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/jpa/StudyRoadRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/IStudyRoadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/IStudyRoadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/StudyRoadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/StudyRoadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/bootstrap.min.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,7 +98,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/resources/templates" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -272,7 +276,9 @@
       <workItem from="1633755455552" duration="19264000" />
       <workItem from="1633831782288" duration="8261000" />
       <workItem from="1633864605898" duration="677000" />
-      <workItem from="1633870905631" duration="17644000" />
+      <workItem from="1633870905631" duration="36869000" />
+      <workItem from="1633915193728" duration="1171000" />
+      <workItem from="1633916590319" duration="6487000" />
     </task>
     <task id="LOCAL-00001" summary="이건미친짓이야">
       <created>1633791515780</created>

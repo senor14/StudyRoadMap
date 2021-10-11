@@ -15,6 +15,7 @@ public class StudyRoadNodeData {
     private String nodeText;
     private String nodeLoc;
     private String nodeCategory;
+    private String key;
     private String from;
     private String to;
 }

@@ -9,6 +9,10 @@ import java.util.List;
 @Transactional
 public interface StudyRoadDiagramRepository extends MongoRepository<StudyRoadDiagramData, String> {
 
+
+    StudyRoadDiagramData getStudyRoadDiagramDataByDiagramId(String diagramId);
+
     List<StudyRoadDiagramData> getAllByRoadId(String roadId);
 
+    StudyRoadDiagramData deleteByDiagramId(String diagramId);
 }
