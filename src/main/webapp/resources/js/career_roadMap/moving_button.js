@@ -32,8 +32,6 @@
 
         if($this.hasClass("btn-success")){
 
-          inputNullChk();
-
           let date = $('#new_date').val(); // 날짜
           let dates = date.split("-"); // 날짜 분리
           let content = $('#new_content').val();
@@ -127,18 +125,6 @@ jQuery("[data-event='noicon:animate']").btnInteraction({
 jQuery('#btn-save').on('btn.interaction.done', function(e) {
   alert("저장 되었습니다.");
 });
-
-
-// insert 버튼 null check
-function inputNullChk(){
-  if($('#new_date').val()==null){
-    return false;
-  }
-  if($('#new_content').val()==null || $('#new_content')==''){
-    return false;
-  }
-}
-
 
 // 조회 검색 기능
 function search(type_id){
@@ -248,7 +234,7 @@ function delete_node(nodeId){
   console.log(nodeId);
 
   $.ajax({
-    url : "/roadMap/delete",
+    url : "/career/delete",
     type : "post",
     data : {
       "careerRoadNodeId" : nodeId
