@@ -1,6 +1,5 @@
 package service.impl;
 
-import com.mongodb.client.result.DeleteResult;
 import domain.StudyMindData;
 import domain.StudyMindNodeData;
 import jpa.StudyMindNodeRepository;
@@ -9,14 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import service.IStudyMindService;
 
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -238,7 +234,6 @@ public class StudyMindService implements IStudyMindService {
 
         studyMindNodeRepository.deleteAll(deleteNodes);
 
-
         log.info("nodeData: "+nodeData);
 
         log.info(this.getClass().getName() + ".deleteMindNodeData End!");
@@ -246,5 +241,32 @@ public class StudyMindService implements IStudyMindService {
         return res;
     }
 
+    @Override
+    public List<StudyMindData> getMindDataByRoadNodeId(String roadNodeId) throws Exception {
+
+        log.info(this.getClass().getName()+".getMindDataByRoadNodeId Start!");
+
+        List<StudyMindData> studyMindData = studyMindRepository.findStudyMindDataByStudyRoadNodeId(roadNodeId);
+        log.info("studyRoadNodeId: "+roadNodeId);
+        log.info("studyMindData:"+studyMindData);
+
+        log.info(this.getClass().getName()+".getMindDataByRoadNodeId End!");
+
+        return studyMindData;
+    }
+
+    @Override
+    public List<StudyMindNodeData> getMindNodeByRoadNodeId(String roadNodeId) throws Exception {
+
+        log.info(this.getClass().getName()+".getMindNodeByRoadNodeId Start!");
+
+        List<StudyMindNodeData> studyMindNodeData = studyMindNodeRepository.findStudyMindNodeDataByStudyRoadNodeId(roadNodeId);
+
+        log.info("studyMindNodeData: "+ studyMindNodeData);
+
+        log.info(this.getClass().getName()+".getMindNodeByRoadNodeId End!");
+
+        return studyMindNodeData;
+    }
 
 }

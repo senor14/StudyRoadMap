@@ -9,10 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="">
+    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="이건미친짓이야">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/career_roadMap/career_roadMap.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/career_roadMap/career_roadMap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/career_roadMap/moving_button.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/career_roadMap/moving_button.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/domain/StudyMindNodeData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/domain/StudyMindNodeData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +29,14 @@
         <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="Jsp File" />
+      </list>
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -103,9 +112,13 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CareerRoadMap/StudyRoadMap" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="아티팩트" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
@@ -254,14 +267,20 @@
       <updated>1632653658849</updated>
       <workItem from="1632653664939" duration="9088000" />
       <workItem from="1632662862516" duration="5854000" />
-      <workItem from="1633247686147" duration="67926000" />
-      <workItem from="1633586564918" duration="21053000" />
-      <workItem from="1633667037143" duration="11676000" />
-      <workItem from="1633694660167" duration="32714000" />
-      <workItem from="1633782499556" duration="6502000" />
-      <workItem from="1633865675893" duration="377000" />
-      <workItem from="1633866094110" duration="1325000" />
-      <workItem from="1633867457435" duration="53334000" />
+      <workItem from="1633240972730" duration="243000" />
+      <workItem from="1633241380516" duration="6116000" />
+      <workItem from="1633261629472" duration="4732000" />
+      <workItem from="1633326926885" duration="8684000" />
+      <workItem from="1633339192146" duration="4775000" />
+      <workItem from="1633348697318" duration="8382000" />
+      <workItem from="1633535706451" duration="1194000" />
+      <workItem from="1633565047961" duration="5183000" />
+      <workItem from="1633755455552" duration="19264000" />
+      <workItem from="1633831782288" duration="8261000" />
+      <workItem from="1633864605898" duration="677000" />
+      <workItem from="1633870905631" duration="36869000" />
+      <workItem from="1633915193728" duration="1171000" />
+      <workItem from="1633916590319" duration="6487000" />
     </task>
     <task id="LOCAL-00001" summary="[ADD] 커리어 로드맵 컨트롤러, 서비스, 프론트 추가">
       <created>1633239962316</created>

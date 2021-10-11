@@ -1,7 +1,5 @@
 package controller;
 
-import static util.CmmUtil.nvl;
-
 import domain.StudyMindData;
 import domain.StudyMindNodeData;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +16,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
+
+import static util.CmmUtil.nvl;
 
 /**
  * Developer: 김선열
@@ -45,10 +44,10 @@ public class StudyMindController {
 
         StudyMindData mindData = new StudyMindData();
         StudyMindNodeData nodeData = new StudyMindNodeData();
-        mindData.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        nodeData.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        mindData.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-        nodeData.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+        mindData.setStudyRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
+        nodeData.setStudyRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
+        mindData.setStudyRoadNodeId("0ab61594-714b-43bf-aaa3-fffbdce11108");
+        nodeData.setStudyRoadNodeId("0ab61594-714b-43bf-aaa3-fffbdce11108");
 
         List<StudyMindData> mindMapInfo = studyMindService.getMindMapData(mindData);
         List<StudyMindNodeData> mindMapNode = studyMindService.getMindMapNode(nodeData);
@@ -63,6 +62,10 @@ public class StudyMindController {
             String url = "/mindmap/"+studyRoadNodeId;
 
             StudyMindData mind = new StudyMindData();
+            mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
+            mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
+            mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+            mind.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
             mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
             mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
@@ -87,8 +90,11 @@ public class StudyMindController {
             node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
             node.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+            node.setKey("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setGroup("nodes");
             node.setMindLabel("영상편집");
+            node.setX("0");
+            node.setY("0");
 
             int nRes = studyMindService.insertNodeData(node);
 
@@ -137,8 +143,8 @@ public class StudyMindController {
         return ResponseEntity.status(HttpStatus.OK).body(mindMapInfoByMindId);
     }
 
-    @PostMapping("/mindmap/{studyRoadNodeId}/{mindId}")
-    public ResponseEntity<ResponseNodeData> insertNodeData(@PathVariable String studyRoadNodeId,
+    @PostMapping("/mindmap/{roadNodeId}/{mindId}")
+    public ResponseEntity<ResponseNodeData> insertNodeData(@PathVariable String roadNodeId,
                                                            @PathVariable String mindId,
                                                            HttpServletRequest request,
                                                            HttpServletResponse response,
@@ -147,6 +153,7 @@ public class StudyMindController {
         log.info(this.getClass().getName() + ".insertNodeData Start!");
 
         String randomMindId = UUID.randomUUID().toString();
+        String randomKey = UUID.randomUUID().toString();
         log.info("randomMindId: "+randomMindId);
 
         StudyMindData mind = new StudyMindData();
@@ -169,6 +176,7 @@ public class StudyMindController {
         node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
         node.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
         node.setMindId(randomMindId);
+        node.setKey(randomMindId);
         node.setGroup("nodes");
         node.setMindLabel(nvl(request.getParameter("mindLabel")));
         node.setX(nvl(request.getParameter("x")));
@@ -207,8 +215,8 @@ public class StudyMindController {
 
 
     // 마인드, 노드 데이터 수정
-    @PutMapping("/mindmap/{studyRoadNodeId}/{mindId}")
-    public ResponseEntity<Integer> updateMindNodeData(@PathVariable String studyRoadNodeId,
+    @PutMapping("/mindmap/{roadNodeId}/{mindId}")
+    public ResponseEntity<Integer> updateMindNodeData(@PathVariable String roadNodeId,
                                      @PathVariable String mindId,
                                      @RequestBody StudyMindData mind,
                                      HttpServletRequest request,
@@ -249,8 +257,8 @@ public class StudyMindController {
     }
 
     // 노드 좌표 데이터 수정
-    @PutMapping("/mindmap/{studyRoadNodeId}/{mindId}/position")
-    public ResponseEntity<ResponseNodeData> updateNodePosition(@PathVariable String studyRoadNodeId,
+    @PutMapping("/mindmap/{roadNodeId}/{mindId}/position")
+    public ResponseEntity<ResponseNodeData> updateNodePosition(@PathVariable String roadNodeId,
                                                       @PathVariable String mindId,
                                                       @RequestBody StudyMindNodeData position,
                                                       HttpServletRequest request,
@@ -283,8 +291,8 @@ public class StudyMindController {
     }
 
     // 마인드 정보, 노드, 엣지 삭제
-    @DeleteMapping("/mindmap/{studyRoadNodeId}/{mindId}")
-    public ResponseEntity<Integer> deleteMindNodeData(@PathVariable String studyRoadNodeId,
+    @DeleteMapping("/mindmap/{roadNodeId}/{mindId}")
+    public ResponseEntity<Integer> deleteMindNodeData(@PathVariable String roadNodeId,
                                      @PathVariable String mindId,
                                      HttpServletRequest request,
                                      HttpServletResponse response,

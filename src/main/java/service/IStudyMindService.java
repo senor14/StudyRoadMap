@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IStudyMindService {
 
-    public List<StudyMindData> getMindMapData(StudyMindData mindeData) throws Exception;
+    public List<StudyMindData> getMindMapData(StudyMindData mindData) throws Exception;
 
     public List<StudyMindNodeData> getMindMapNode(StudyMindNodeData nodeData) throws Exception;
 
@@ -28,6 +28,10 @@ public interface IStudyMindService {
     public int deleteMindData(String mindId) throws Exception;
 
     public int deleteMindNodeData(String mindId) throws Exception;
+
+    public List<StudyMindData> getMindDataByRoadNodeId(String roadNodeId) throws Exception;
+
+    public List<StudyMindNodeData> getMindNodeByRoadNodeId(String roadNodeId) throws Exception;
 
 
 }

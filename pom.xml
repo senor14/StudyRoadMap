@@ -33,7 +33,7 @@
             <version>${org.springframework-version}</version>
         </dependency>
 
-        <!--        &lt;!&ndash; MongoDB 접속을 위한 드라이버 &ndash;&gt;-->
+<!--                &lt;!&ndash; MongoDB 접속을 위한 드라이버 &ndash;&gt;-->
 
 <!--        <dependency>-->
 <!--            <groupId>org.mongodb</groupId>-->
