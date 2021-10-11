@@ -44,10 +44,10 @@ public class StudyMindController {
 
         StudyMindData mindData = new StudyMindData();
         StudyMindNodeData nodeData = new StudyMindNodeData();
-        mindData.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        nodeData.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        mindData.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-        nodeData.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+        mindData.setStudyRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
+        nodeData.setStudyRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
+        mindData.setStudyRoadNodeId("0ab61594-714b-43bf-aaa3-fffbdce11108");
+        nodeData.setStudyRoadNodeId("0ab61594-714b-43bf-aaa3-fffbdce11108");
 
         List<StudyMindData> mindMapInfo = studyMindService.getMindMapData(mindData);
         List<StudyMindNodeData> mindMapNode = studyMindService.getMindMapNode(nodeData);
@@ -62,6 +62,10 @@ public class StudyMindController {
             String url = "/mindmap/"+studyRoadNodeId;
 
             StudyMindData mind = new StudyMindData();
+            mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
+            mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
+            mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+            mind.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
             mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
             mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
@@ -86,6 +90,7 @@ public class StudyMindController {
             node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
             node.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+            node.setKey("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setGroup("nodes");
             node.setMindLabel("영상편집");
             node.setX("0");
@@ -148,6 +153,7 @@ public class StudyMindController {
         log.info(this.getClass().getName() + ".insertNodeData Start!");
 
         String randomMindId = UUID.randomUUID().toString();
+        String randomKey = UUID.randomUUID().toString();
         log.info("randomMindId: "+randomMindId);
 
         StudyMindData mind = new StudyMindData();
@@ -170,6 +176,7 @@ public class StudyMindController {
         node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
         node.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
         node.setMindId(randomMindId);
+        node.setKey(randomMindId);
         node.setGroup("nodes");
         node.setMindLabel(nvl(request.getParameter("mindLabel")));
         node.setX(nvl(request.getParameter("x")));

@@ -157,7 +157,7 @@
                 {
                     data:
                         {
-                            "id": "<%=node.getMindId()%>",
+                            "id": "<%=node.getKey()%>",
                             "label": "<%=node.getMindLabel()%>"
                         },
                     renderedPosition:
