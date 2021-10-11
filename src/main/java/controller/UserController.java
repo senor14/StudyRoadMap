@@ -340,7 +340,7 @@ public class UserController {
 
         if(res == 0) {
             model.addAttribute("msg", "존재하지 않는 이메일 혹은 아이디입니다. 이메일 주소와 아이디를 확인해주세요.");
-            model.addAttribute("url", "/RoadMap/ForgotPassWord.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
             return "/redirect";
         }
 
@@ -404,7 +404,7 @@ public class UserController {
         // 조회 결과가 없으면 안내 메세지를 띄우고 다시 아이디 찾기 페이지로 보냄.
         if(res == 0) {
             model.addAttribute("msg", "존재하지 않는 이메일입니다. 이메일 주소를 확인해주세요.");
-            model.addAttribute("url", "/RoadMap/ForgotID.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
             log.info("RoadMap/SendId 종료");
 
@@ -422,10 +422,10 @@ public class UserController {
 
         if(email_res <= 1) {
             model.addAttribute("msg", "아이디가 가입하신 메일 주소로 전송되었습니다.");
-            model.addAttribute("url", "/RoadMap/Login.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
         } else {
             model.addAttribute("msg", "서버의 오류로 아이디 전송을 실패했습니다. 잠시 후 다시 시도해주세요.");
-            model.addAttribute("url", "/RoadMap/ReMakePW.do");
+            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
         }
 
         log.info("RoadMap/SendId 종료");
@@ -471,7 +471,7 @@ public class UserController {
         } else {
             model.addAttribute("msg", "서버의 오류로 인해 비밀번호 변경이 실패했습니다. 잠시 후 다시 시도해주세요. 변경이 계속 실패하는 경우 고객센터에 문의 바랍니다.");
         }
-        model.addAttribute("url", "/RoadMap/PassWordChange");
+        model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
         log.info("PassWordChange 종료");
 
