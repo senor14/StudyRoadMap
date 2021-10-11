@@ -44,10 +44,10 @@ public class StudyMindController {
 
         StudyMindData mindData = new StudyMindData();
         StudyMindNodeData nodeData = new StudyMindNodeData();
-        mindData.setStudyRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
-        nodeData.setStudyRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
-        mindData.setStudyRoadNodeId("0ab61594-714b-43bf-aaa3-fffbdce11108");
-        nodeData.setStudyRoadNodeId("0ab61594-714b-43bf-aaa3-fffbdce11108");
+        mindData.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+        nodeData.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+        mindData.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+        nodeData.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
 
         List<StudyMindData> mindMapInfo = studyMindService.getMindMapData(mindData);
         List<StudyMindNodeData> mindMapNode = studyMindService.getMindMapNode(nodeData);
@@ -63,12 +63,8 @@ public class StudyMindController {
 
             StudyMindData mind = new StudyMindData();
             mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-            mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-            mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-            mind.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-            mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-            mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-            mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+            mind.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+            mind.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
             mind.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             mind.setMindLabel("영상편집");
             mind.setMindContents("영상편집 입니다.");
@@ -87,8 +83,8 @@ public class StudyMindController {
 
             StudyMindNodeData node = new StudyMindNodeData();
             node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-            node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-            node.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+            node.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+            node.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
             node.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setKey("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setGroup("nodes");
@@ -158,8 +154,8 @@ public class StudyMindController {
 
         StudyMindData mind = new StudyMindData();
         mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        mind.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        mind.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+        mind.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+        mind.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
         mind.setMindId(randomMindId);
         mind.setMindLabel(nvl(request.getParameter("mindLabel")));
         mind.setMindContents(nvl(request.getParameter("mindContents")));
@@ -173,8 +169,8 @@ public class StudyMindController {
 
         StudyMindNodeData node = new StudyMindNodeData();
         node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        node.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        node.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+        node.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+        node.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
         node.setMindId(randomMindId);
         node.setKey(randomMindId);
         node.setGroup("nodes");
@@ -189,8 +185,8 @@ public class StudyMindController {
 
         StudyMindNodeData edge = new StudyMindNodeData();
         edge.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        edge.setStudyRoadId("d47203ff-e63c-468c-9eb7-6e576276fb27");
-        edge.setStudyRoadNodeId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
+        edge.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+        edge.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
         edge.setMindId(randomEdgeId);
         edge.setGroup("edges");
         edge.setSource(randomMindId);
