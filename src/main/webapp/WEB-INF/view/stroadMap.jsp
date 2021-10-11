@@ -979,66 +979,40 @@
                 );
                 myDiagram.model = new go.GraphLinksModel(
                     [
+                        // diagram data
+                        <%for (StudyRoadDiagramData s :diagramInfo){ %>
+                            {
+                            key: "<%=s.getKey()%>",
+                            text: "<%=s.getText()%>",
+                            isGroup: true,
+                            group: "Pool1",
+                            color: "<%=s.getColor()%>",
+                            loc: "<%=s.getLoc()%>",
+                            width: "<%=s.getLaneWidth()%>",
+                            size: <%=s.getSize()%>,
+                            },
+                       <%}%>
+
                         // node data
+                       <%for (StudyRoadNodeData s: nodeInfo) {%>
+
+                        <%if(s.getGroup().equals("edges")){%>
+                            {
+                                group: "<%=s.getGroup()%>",
+                                from: "<%=s.getFrom()%>",
+                                to: "<%=s.getTo()%>"
+                            },
+                       <%} else {%>
                         {
-                            key: "Pool1",
-                            text: "Course",
-                            isGroup: true,
-                            category: "Pool",
+                            group: "<%=s.getGroup()%>",
+                            category: "<%=s.getNodeCategory()%>",
+                            loc: "<%=s.getNodeLoc()%>",
+                            text: "<%=s.getNodeText()%>"
                         },
-                        {
-                            key: "Lane1",
-                            text: "1학기",
-                            isGroup: true,
-                            group: "Pool1",
-                            color: "lightblue",
-                        },
-                        {
-                            key: "Lane2",
-                            text: "2학기",
-                            isGroup: true,
-                            group: "Pool1",
-                            color: "lightgreen",
-                        },
-                        {
-                            key: "Lane3",
-                            text: "3학기",
-                            isGroup: true,
-                            group: "Pool1",
-                            color: "lightyellow",
-                        },
-                        {
-                            key: "Lane4",
-                            text: "4학기",
-                            isGroup: true,
-                            group: "Pool1",
-                            color: "orange",
-                        },
-                        {
-                            key: "Lane5",
-                            text: "5학기",
-                            isGroup: true,
-                            group: "Pool1",
-                            color: "lightpink",
-                        }
-                        // { key: "oneA", group: "Lane1" },
-                        // { key: "oneB", group: "Lane1" },
-                        // { key: "oneC", group: "Lane1" },
-                        // { key: "oneD", group: "Lane1" },
-                        // { key: "twoA", group: "Lane2" },
-                        // { key: "twoB", group: "Lane2" },
-                        // { key: "twoC", group: "Lane2" },
-                        // { key: "twoD", group: "Lane2" },
-                        // { key: "twoE", group: "Lane2" },
-                        // { key: "twoF", group: "Lane2" },
-                        // { key: "twoG", group: "Lane2" },
-                        // { key: "fourA", group: "Lane4" },
-                        // { key: "fourB", group: "Lane4" },
-                        // { key: "fourC", group: "Lane4" },
-                        // { key: "fourD", group: "Lane4" },
-                        // { key: "fiveA", group: "Lane5" },
-                        // { key: "sixA", group: "Lane6" }
+                        <%}}%>
+
                     ],
+                    //link(edges) data
                     // [
                         // link data
                         // { from: "oneA", to: "oneB" },
