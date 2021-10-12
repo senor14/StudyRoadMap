@@ -57,7 +57,7 @@
     <mvc:resources mapping="/resources/**" location="/resources/" cache-period="31556926"/>
     <mvc:annotation-driven />
 
-<!--    &lt;!&ndash; 파일업로드 기능 &ndash;&gt;-->
+<!--    &lt;!&ndash; 캡쳐한 사진 업로드 기능 &ndash;&gt;-->
 <!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"-->
 <!--          p:maxUploadSize="104857600" p:maxInMemorySize="104857600" />-->
 

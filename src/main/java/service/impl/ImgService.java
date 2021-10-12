@@ -28,4 +28,10 @@ public class ImgService implements IImgService {
 
         return imgMapper.getImgList(iMap, img_colNm);
     }
+
+    @Override
+    public List<Map<String, String>> deletePastImg(Map<String, Object> dMap) {
+
+        return imgMapper.deletePastImg(dMap, img_colNm);
+    }
 }

@@ -1,6 +1,8 @@
 package persistence.mongo.impl;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.result.DeleteResult;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +10,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 import persistence.mongo.IImgMapper;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Slf4j
@@ -20,7 +19,6 @@ public class ImgMapper implements IImgMapper {
 
     @Autowired
     private MongoTemplate mongodb;
-
 
     @Override
     public int InsertImage(Map<String, Object> iMap, String img_colNm) {
@@ -89,6 +87,55 @@ public class ImgMapper implements IImgMapper {
         collection.find(query).forEach(processBlock);
 
         log.info(this.getClass().getName() + "getImgList end");
+
+        return rList;
+    }
+
+    @Override
+    public List<Map<String, String>> deletePastImg(Map<String, Object> dMap, String img_colNm) {
+
+        log.info(this.getClass().getName() + "deletePastImg Start");
+
+        List<Map<String, String>> rList = new LinkedList<>();
+
+        MongoCollection<Document> collection = mongodb.getCollection(img_colNm);
+
+        Document query = new Document(dMap);
+
+        Consumer<Document> processBlock = document -> {
+
+            Map<String, String> rMap = new HashMap<>();
+
+            String saveFileName = document.getString("saveFileName");
+            String saveFilePath = document.getString("saveFilePath");
+
+            rMap.put("saveFileName", saveFileName);
+            rMap.put("saveFilePath", saveFilePath);
+
+            rList.add(rMap);
+
+            rMap = null;
+        };
+
+        collection.find(query).forEach(processBlock);
+
+        MongoCollection<Document> col = mongodb.getCollection(img_colNm);
+
+        FindIterable<Document> dRs = col.find(new Document(dMap));
+
+        Iterator<Document> cursor = dRs.iterator();
+
+        DeleteResult deleteResult = null;
+
+        if (cursor.hasNext()) {
+
+            while (cursor.hasNext()) {
+                deleteResult = col.deleteOne(cursor.next());
+            }
+
+        }
+
+        log.info(this.getClass().getName() + "deletePastImg end");
 
         return rList;
     }

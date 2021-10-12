@@ -8,6 +8,7 @@
     <title>Title</title>
 </head>
 <body>
-    <img id="preview-image" src="/getImage" class="rounded" width="100%" alt="My Image">
+    <img id="preview-image1" src="/getRoadMapImage" class="rounded" width="100%" alt="My Image">
+    <img id="preview-image2" src="/getMindMapImage" class="rounded" width="100%" alt="My Image">
 </body>
 </html>

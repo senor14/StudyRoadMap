@@ -8,4 +8,6 @@ public interface IImgService {
     int InsertImage(Map<String, Object> iMap);
 
     List<Map<String, String>> getImgList(Map<String, Object> iMap);
+
+    List<Map<String, String>> deletePastImg(Map<String, Object> dMap);
 }
