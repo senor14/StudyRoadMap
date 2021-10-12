@@ -44,10 +44,8 @@
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <h1 class="modal__title" id="modal__title">네트워크</h1>
-<%--        <p class="modal__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis ex dicta maiores libero minus obcaecati iste optio, eius labore repellendus.</p>--%>
         <div>링크: <input type="text" class="modal__link" id="modal__link" readonly></div>
         <div>참고서적 제목:
-<%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
 
             <input type="text" class="modal__book__title" id="modal__book__title" readonly>
         </div>
@@ -132,11 +130,8 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/study_mindMap/cytoscape.min.js"></script>
-<%--    <script src="https://unpkg.com/webcola@3.4.0/WebCola/cola.min.js"></script>--%>
 <script src="http://marvl.infotech.monash.edu/webcola/cola.min.js"></script>
-<%--    <script src="https://unpkg.com/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>--%>
 <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>
-<%--<script type="module" src="${pageContext.request.contextPath}/resources/js/study_mindMap/study_mindMap.js"></script>--%>
 
 <%-- 마인드맵 화면 --%>
 <script>
@@ -185,7 +180,7 @@
             }
         }
     %>
-    console.log()
+
 //노드 그리기
 // window.addEventListener('DOMContentLoaded', function(){ // on dom ready
 
@@ -203,13 +198,13 @@
 
     const nodeMaxSize = 200;
     const nodeMinSize = 40;
-    const nodeActiveSize = 80;
-    const fontMaxSize = 40;
-    const fontMinSize = 15;
-    const fontActiveSize = 25;
+    const nodeActiveSize = 120;
+    const fontMaxSize = 70;
+    const fontMinSize = 40;
+    const fontActiveSize = 60;
 
-    const edgeWidth = '6px';
-    var edgeActiveWidth = '6px';
+    const edgeWidth = '8px';
+    var edgeActiveWidth = '8px';
     const arrowScale = 1;
     const arrowActiveScale = 1.2;
     // edge & arrow 크기값
@@ -259,7 +254,7 @@
             {
                 selector: 'edge',
                 style: {
-                    'width': 6,
+                    'width': 8,
                     'curve-style': 'bezier',
                     'line-color': '#ffaaaa',
                     'source-arrow-color': '#ffaaaa',
@@ -292,10 +287,10 @@
         // unconstrIter: 1,
         // userConstIter: 0,
         // allConstIter: 1,
-        ready: e => {
-            e.cy.fit()
-            e.cy.center()
-        }
+        // ready: e => {
+        //     e.cy.fit()
+        //     e.cy.center()
+        // }
     }
 
     // 노드 레이아웃 설정
@@ -341,8 +336,8 @@
 
         fnOpenModal('#m2-o');
 
-        // const layout = cy.makeLayout(layoutConfig);
-        // layout.run();
+        const layout = cy.makeLayout(layoutConfig);
+        layout.run();
         //
         // layout.on("layoutstop", () => {
             cy.nodes().forEach(node => {
@@ -447,16 +442,7 @@
         console.log("setResetFocus End!")
     }
 
-    // // UUID 생성기
-    // function create_UUID(){
-    //     var dt = new Date().getTime();
-    //     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    //         var r = (dt + Math.random()*16)%16 | 0;
-    //         dt = Math.floor(dt/16);
-    //         return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-    //     });
-    //     return uuid;
-    // }
+
 
     function insertMindAndNodeData(mindmind) {
         let query = {
@@ -525,8 +511,8 @@
                             }
                         }
                     ]);
-                    // const layout = cy.makeLayout(layoutConfig);
-                    // layout.run();
+                    const layout = cy.makeLayout(layoutConfig);
+                    layout.run();
                     //
                     // layout.on("layoutstop", () => {
                         cy.nodes().forEach(node => {
@@ -581,8 +567,8 @@
                             break
                         }
                     }
-                    // const layout = cy.makeLayout(layoutConfig);
-                    // layout.run();
+                    const layout = cy.makeLayout(layoutConfig);
+                    layout.run();
                     //
                     // layout.on("layoutstop", () => {
                         cy.nodes().forEach(node => {
@@ -626,8 +612,8 @@
                             break
                         }
                     }
-                    // const layout = cy.makeLayout(layoutConfig);
-                    // layout.run();
+                    const layout = cy.makeLayout(layoutConfig);
+                    layout.run();
                     //
                     // layout.on("layoutstop", () => {
                         cy.nodes().forEach(node => {
@@ -657,8 +643,8 @@
                     });
                     cy.remove(cy.$('#'+mindmind));
 
-                    // const layout = cy.makeLayout(layoutConfig);
-                    // layout.run();
+                    const layout = cy.makeLayout(layoutConfig);
+                    layout.run();
                     //
                     // layout.on("layoutstop", () => {
                         cy.nodes().forEach(node => {
@@ -715,6 +701,17 @@
             }
         });
     }
+
+    // // UUID 생성기
+    // function create_UUID(){
+    //     var dt = new Date().getTime();
+    //     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    //         var r = (dt + Math.random()*16)%16 | 0;
+    //         dt = Math.floor(dt/16);
+    //         return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    //     });
+    //     return uuid;
+    // }
 </script>
 </body>
 </html>
