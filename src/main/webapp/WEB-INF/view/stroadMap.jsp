@@ -4,8 +4,6 @@
         pageEncoding="UTF-8" %>
 
 <%
-
-
     StudyRoadData roadMapInfo = (StudyRoadData)request.getAttribute("roadMapInfo");
     List<StudyRoadNodeData> nodeInfo = (List<StudyRoadNodeData>)request.getAttribute("nodeInfo");
 %>
@@ -481,6 +479,12 @@
                         if (idx >= 0) document.title = document.title.substr(0, idx);
                     }
                 });
+                // 이벤트 확인
+                myDiagram.addDiagramListener("ObjectSingleClicked", function (e) {
+                    var part = e.subject.part;
+                    if (!(part instanceof go.Link)) console.log("오늘");
+                    console.log(part.ob);
+                });
 
                 var defaultAdornment = $(
                     go.Adornment,
@@ -495,18 +499,20 @@
                         }),
                         $(go.Placeholder)
                     ),
+
+                    // 클릭 모달창 띄우기?
                     // the button to create a "next" node, at the top-right corner
-                    $(
-                        "Button",
-                        {
-                            alignment: go.Spot.TopRight,
-                            click: addNodeAndLink,
-                        }, // this function is defined below
-                        new go.Binding("visible", "", function (a) {
-                            return !a.diagram.isReadOnly;
-                        }).ofObject(),
-                        $(go.Shape, "PlusLine", { desiredSize: new go.Size(6, 6) })
-                    )
+                    // $(
+                    //     "Button",
+                    //     {
+                    //         alignment: go.Spot.TopRight,
+                    //         click: addNodeAndLink,
+                    //     }, // this function is defined below
+                    //     new go.Binding("visible", "", function (a) {
+                    //         return !a.diagram.isReadOnly;
+                    //     }).ofObject(),
+                    //     $(go.Shape, "PlusLine", { desiredSize: new go.Size(6, 6) })
+                    // )
                 );
                 myDiagram.nodeTemplate = $(
                     go.Node,
@@ -752,7 +758,7 @@
                     $(go.Shape, "Rectangle", {
                         fill: yellowgrad,
                         stroke: "black",
-                        portId: "Theory",
+                        portId: "기본",
                         fromLinkable: true,
                         toLinkable: true,
                         cursor: "pointer",
@@ -761,60 +767,40 @@
                     }),
                     $(
                         go.TextBlock,
-                        "Theory",
+                        "기본",
                         { margin: 6, font: bigfont, editable: true },
                         new go.Binding("text", "text").makeTwoWay()
                     )
                 );
-                myDiagram.nodeTemplateMap.add(
-                    "Source",
-                    $(
-                        go.Node,
-                        "Auto",
-                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-                            go.Point.stringify
-                        ),
-                        $(go.Shape, "RoundedRectangle", {
-                            fill: bluegrad,
-                            portId: "Source",
-                            fromLinkable: true,
-                            cursor: "pointer",
-                            toLinkable: true,
-                            fromEndSegmentLength: 40,
-                        }),
+                <%for (StudyRoadNodeData s: nodeInfo) {%>
+                    <%if (s.getCanvasClass().equals("Category")) {%>
+                    myDiagram.nodeTemplateMap.add(
+                        "<%=s.getText()%>",
                         $(
-                            go.TextBlock,
-                            "BackEnd",
-                            textStyle(),
-                            new go.Binding("text", "text").makeTwoWay()
+                            go.Node,
+                            "Auto",
+                            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+                                go.Point.stringify
+                            ),
+                            $(go.Shape, "RoundedRectangle", {
+                                fill: "<%=s.getColor()%>",
+                                portId: "<%=s.getText()%>",
+                                fromLinkable: true,
+                                cursor: "pointer",
+                                toLinkable: true,
+                                fromEndSegmentLength: 40,
+                            }),
+                            $(
+                                go.TextBlock,
+                                "<%=s.getText()%>",
+                                textStyle(),
+                                new go.Binding("text", "text").makeTwoWay()
+                            )
                         )
-                    )
-                );
+                    );
+                    <%}%>
+                <%}%>
 
-                myDiagram.nodeTemplateMap.add(
-                    "DesiredEvent",
-                    $(
-                        go.Node,
-                        "Auto",
-                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-                            go.Point.stringify
-                        ),
-                        $(go.Shape, "RoundedRectangle", {
-                            fill: greengrad,
-                            portId: "DesiredEvent",
-                            fromLinkable: true,
-                            toLinkable: true,
-                            cursor: "pointer",
-                            fromEndSegmentLength: 40,
-                        }),
-                        $(
-                            go.TextBlock,
-                            "FrontEnd",
-                            textStyle(),
-                            new go.Binding("text", "text").makeTwoWay()
-                        )
-                    )
-                );
 
                 // Undesired events have a special adornment that allows adding additional "reasons"
                 var UndesiredEventAdornment = $(
@@ -889,34 +875,34 @@
                 //     )
                 //   ));
 
-                myDiagram.nodeTemplateMap.add(
-                    "Comment",
-                    $(
-                        go.Node,
-                        "Auto",
-                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-                            go.Point.stringify
-                        ),
-                        $(go.Shape, "Rectangle", {
-                            portId: "",
-                            fill: whitegrad,
-                            fromLinkable: true,
-                        }),
-                        $(
-                            go.TextBlock,
-                            "A comment",
-                            {
-                                margin: 9,
-                                maxSize: new go.Size(200, NaN),
-                                wrap: go.TextBlock.WrapFit,
-                                editable: true,
-                                font: smallfont,
-                            },
-                            new go.Binding("text", "text").makeTwoWay()
-                        )
-                        // no ports, because no links are allowed to connect with a comment
-                    )
-                );
+                // myDiagram.nodeTemplateMap.add(
+                //     "Comment",
+                //     $(
+                //         go.Node,
+                //         "Auto",
+                //         new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+                //             go.Point.stringify
+                //         ),
+                //         $(go.Shape, "Rectangle", {
+                //             portId: "",
+                //             fill: whitegrad,
+                //             fromLinkable: true,
+                //         }),
+                //         $(
+                //             go.TextBlock,
+                //             "A comment",
+                //             {
+                //                 margin: 9,
+                //                 maxSize: new go.Size(200, NaN),
+                //                 wrap: go.TextBlock.WrapFit,
+                //                 editable: true,
+                //                 font: smallfont,
+                //             },
+                //             new go.Binding("text", "text").makeTwoWay()
+                //         )
+                //         // no ports, because no links are allowed to connect with a comment
+                //     )
+                // );
 
                 // clicking the button on an UndesiredEvent node inserts a new text object into the panel
                 function addReason(e, obj) {
@@ -931,35 +917,35 @@
 
                 // clicking the button of a default node inserts a new node to the right of the selected node,
                 // and adds a link to that new node
-                function addNodeAndLink(e, obj) {
-                    var adorn = obj.part;
-                    if (adorn === null) return;
-                    e.handled = true;
-                    var diagram = adorn.diagram;
-                    diagram.startTransaction("Add State");
-                    // get the node data for which the user clicked the button
-                    var fromNode = adorn.adornedPart;
-                    var fromData = fromNode.data;
-                    // create a new "State" data object, positioned off to the right of the adorned Node
-                    var toData = { text: "new" };
-                    var p = fromNode.location;
-                    toData.loc = p.x + 200 + " " + p.y; // the "loc" property is a string, not a Point object
-                    // add the new node data to the model
-                    var model = diagram.model;
-                    model.addNodeData(toData);
-                    // create a link data from the old node data to the new node data
-                    var linkdata = {};
-                    linkdata[model.linkFromKeyProperty] =
-                        model.getKeyForNodeData(fromData);
-                    linkdata[model.linkToKeyProperty] =
-                        model.getKeyForNodeData(toData);
-                    // and add the link data to the model
-                    model.addLinkData(linkdata);
-                    // select the new Node
-                    var newnode = diagram.findNodeForData(toData);
-                    diagram.select(newnode);
-                    diagram.commitTransaction("Add State");
-                }
+                // function addNodeAndLink(e, obj) {
+                //     var adorn = obj.part;
+                //     if (adorn === null) return;
+                //     e.handled = true;
+                //     var diagram = adorn.diagram;
+                //     diagram.startTransaction("Add State");
+                //     // get the node data for which the user clicked the button
+                //     var fromNode = adorn.adornedPart;
+                //     var fromData = fromNode.data;
+                //     // create a new "State" data object, positioned off to the right of the adorned Node
+                //     var toData = { text: "new" };
+                //     var p = fromNode.location;
+                //     toData.loc = p.x + 200 + " " + p.y; // the "loc" property is a string, not a Point object
+                //     // add the new node data to the model
+                //     var model = diagram.model;
+                //     model.addNodeData(toData);
+                //     // create a link data from the old node data to the new node data
+                //     var linkdata = {};
+                //     linkdata[model.linkFromKeyProperty] =
+                //         model.getKeyForNodeData(fromData);
+                //     linkdata[model.linkToKeyProperty] =
+                //         model.getKeyForNodeData(toData);
+                //     // and add the link data to the model
+                //     model.addLinkData(linkdata);
+                //     // select the new Node
+                //     var newnode = diagram.findNodeForData(toData);
+                //     diagram.select(newnode);
+                //     diagram.commitTransaction("Add State");
+                // }
 
                 // replace the default Link template in the linkTemplateMap
                 myDiagram.linkTemplate = $(
@@ -977,40 +963,71 @@
                     )
                 );
                 myDiagram.model = new go.GraphLinksModel(
+                        // node data (diagram, lane, node)
                     [
-                        // diagram data
-                        <%for (StudyRoadDiagramData s :diagramInfo){ %>
+                        <%for (StudyRoadNodeData s :nodeInfo){%>
+                            <%if (s.getCanvasClass().equals("Diagram")) {%>
+                                    {
+                                        nodeId: "<%=s.getNodeId()%>",
+                                        canvasClass: "<%=s.getCanvasClass()%>",
+                                        key: "<%=s.getKey()%>",
+                                        text: "<%=s.getText()%>",
+                                        isGroup: "<%=s.getIsGroup()%>",
+                                        category: "<%=s.getCategory()%>",
+                                        <%if (s.getLoc()!=null && s.getLoc()!="") {%>
+                                        loc: "<%=s.getLoc()%>"
+                                        <%}%>
+                                    },
+                            <%}%>
+                            <%if (s.getCanvasClass().equals("Lane")) {%>
+                                    {
+                                        nodeId: "<%=s.getNodeId()%>",
+                                        canvasClass: "<%=s.getCanvasClass()%>",
+                                        key: "<%=s.getKey()%>",
+                                        text: "<%=s.getText()%>",
+                                        isGroup: "<%=s.getIsGroup()%>",
+                                        group: "<%=s.getGroup()%>",
+                                        color: "<%=s.getColor()%>",
+                                        <%if (s.getSize()!=null && s.getSize()!="") {%>
+                                        size: "<%=s.getSize()%>",
+                                        <%}%>
+                                        <%if (s.getLoc()!=null && s.getLoc()!="") {%>
+                                        loc: "<%=s.getLoc()%>",
+                                        <%}%>
+                                    },
+                            <%}%>
+                            <%if (s.getCanvasClass().equals("Node")) {%>
                             {
-                            key: "<%=s.getKey()%>",
-                            text: "<%=s.getText()%>",
-                            isGroup: true,
-                            group: "Pool1",
-                            color: "<%=s.getColor()%>",
-                            loc: "<%=s.getLoc()%>",
-                            width: "<%=s.getLaneWidth()%>",
-                            size: <%=s.getSize()%>,
+                                nodeId: "<%=s.getNodeId()%>",
+                                canvasClass: "<%=s.getCanvasClass()%>",
+                                key: "<%=s.getKey()%>",
+                                text: "<%=s.getText()%>",
+                                category: "<%=s.getCategory()%>",
+                                loc: "<%=s.getLoc()%>"
                             },
-                       <%}%>
-
-                        // node data
-                       <%for (StudyRoadNodeData s: nodeInfo) {%>
-
-                        <%if(s.getGroup().equals("edges")){%>
-                            {
-                                group: "<%=s.getGroup()%>",
-                                from: "<%=s.getFrom()%>",
-                                to: "<%=s.getTo()%>"
-                            },
-                       <%} else {%>
-                        {
-                            group: "<%=s.getGroup()%>",
-                            category: "<%=s.getNodeCategory()%>",
-                            loc: "<%=s.getNodeLoc()%>",
-                            text: "<%=s.getNodeText()%>"
-                        },
-                        <%}}%>
-
+                            <%}%>
+<%--                            <%if (s.getCanvasClass().equals("Category")) {%>--%>
+<%--                            {--%>
+<%--                                nodeId: "<%=s.getNodeId()%>",--%>
+<%--                                canvasClass: "<%=s.getCanvasClass()%>",--%>
+<%--                                text: "<%=s.getText()%>",--%>
+<%--                                color: "<%=s.getColor()%>"--%>
+<%--                            },--%>
+<%--                            <%}%>--%>
+                        <%}%>
                     ],
+                    [
+                        <%for (StudyRoadNodeData s: nodeInfo) {%>
+                            <%if (s.getCanvasClass().equals("Edge")) {%>
+                                {
+                                    nodeId: "<%=s.getNodeId()%>",
+                                    canvasClass: "<%=s.getCanvasClass()%>",
+                                    from: "<%=s.getFrom()%>",
+                                    to: "<%=s.getTo()%>"
+                                }
+                            <%}%>
+                        <%}%>
+                    ]
                     //link(edges) data
                     // [
                         // link data
@@ -1053,10 +1070,15 @@
                 );
 
                 palette.model.nodeDataArray = [
-                    { category: "백엔드" },
-                    { category: "프론트엔드" },
-                    { category: "이벤트" },
-                    { category: "코멘트" }
+                    <%for (StudyRoadNodeData s : nodeInfo) {%>
+                        <%if (s.getCanvasClass().equals("Category")) {%>
+                            { category: "<%=s.getText()%>" },
+                        <%}%>
+                    <%}%>
+                    // { category: "백엔드" },
+                    // { category: "프론트엔드" },
+                    // { category: "이벤트" },
+                    // { category: "코멘트" }
                 ];
 
                 // read in the JSON-format data from the "mySavedModel" element

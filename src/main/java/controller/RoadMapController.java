@@ -68,8 +68,6 @@ public class RoadMapController {
         roadData.setRoadId(roadId);
         nodeData.setRoadId(roadId);
 
-//        StudyRoadData roadMapInfo = studyRoadService.getRoadMapData("44904743-bc65-459d-ab7b-7a632ba02178");
-//        List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
         StudyRoadData roadMapInfo = studyRoadService.getRoadMapData(roadId);
         List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId(roadId);
 
