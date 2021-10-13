@@ -44,10 +44,10 @@ public class StudyMindController {
 
         StudyMindData mindData = new StudyMindData();
         StudyMindNodeData nodeData = new StudyMindNodeData();
-        mindData.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        nodeData.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        mindData.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
-        nodeData.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+        mindData.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
+        nodeData.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
+        mindData.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+        nodeData.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
 
         List<StudyMindData> mindMapInfo = studyMindService.getMindMapData(mindData);
         List<StudyMindNodeData> mindMapNode = studyMindService.getMindMapNode(nodeData);
@@ -62,9 +62,8 @@ public class StudyMindController {
             String url = "/mindmap/"+studyRoadNodeId;
 
             StudyMindData mind = new StudyMindData();
-            mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-            mind.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-            mind.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+            mind.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
+            mind.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
             mind.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             mind.setMindLabel("영상편집");
             mind.setMindContents("영상편집 입니다.");
@@ -82,9 +81,9 @@ public class StudyMindController {
             }
 
             StudyMindNodeData node = new StudyMindNodeData();
-            node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-            node.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-            node.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+//            node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
+            node.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
+            node.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
             node.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setKey("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
             node.setGroup("nodes");
@@ -106,8 +105,8 @@ public class StudyMindController {
             return "/redirect";
         }
 
-        log.info("mindMapInfo: "+ mindMapInfo.toString());
-        log.info("mindMapNode: "+ mindMapNode.toString());
+        log.info("mindMapInfo: "+ mindMapInfo);
+        log.info("mindMapNode: "+ mindMapNode);
 
         model.addAttribute("mindMapInfo", mindMapInfo);
         model.addAttribute("mindMapNode", mindMapNode);
@@ -149,13 +148,12 @@ public class StudyMindController {
         log.info(this.getClass().getName() + ".insertNodeData Start!");
 
         String randomMindId = UUID.randomUUID().toString();
-        String randomKey = UUID.randomUUID().toString();
         log.info("randomMindId: "+randomMindId);
 
         StudyMindData mind = new StudyMindData();
-        mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        mind.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        mind.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+//        mind.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
+        mind.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
+        mind.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
         mind.setMindId(randomMindId);
         mind.setMindLabel(nvl(request.getParameter("mindLabel")));
         mind.setMindContents(nvl(request.getParameter("mindContents")));
@@ -168,9 +166,9 @@ public class StudyMindController {
         log.info("mind: "+ mind.toString());
 
         StudyMindNodeData node = new StudyMindNodeData();
-        node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        node.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        node.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+//        node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
+        node.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
+        node.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
         node.setMindId(randomMindId);
         node.setKey(randomMindId);
         node.setGroup("nodes");
@@ -184,9 +182,9 @@ public class StudyMindController {
         log.info("randomEdgeId: "+randomEdgeId);
 
         StudyMindNodeData edge = new StudyMindNodeData();
-        edge.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-        edge.setStudyRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        edge.setStudyRoadNodeId("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+//        edge.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
+        edge.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
+        edge.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
         edge.setMindId(randomEdgeId);
         edge.setGroup("edges");
         edge.setSource(randomMindId);
@@ -232,13 +230,13 @@ public class StudyMindController {
         mindData.setBookLink(nvl(mind.getBookLink()));
         mindData.setCreated(DateUtil.getDateTime());
 
-        log.info("mindData: "+mindData.toString());
+        log.info("mindData: "+mindData);
 
         StudyMindNodeData nodeData = studyMindService.getMindMapNodeByMindId(mindId);
 
         nodeData.setMindLabel(nvl(mind.getMindLabel()));
 
-        log.info("nodeData: "+nodeData.toString());
+        log.info("nodeData: "+nodeData);
 
         int mRes = studyMindService.updateMindData(mindData);
         int nRes = studyMindService.updateNodeData(nodeData);
@@ -270,7 +268,7 @@ public class StudyMindController {
         updatedPosition.setX(nvl(position.getX()));
         updatedPosition.setY(nvl(position.getY()));
 
-        log.info("updatedPosition: "+updatedPosition.toString());
+        log.info("updatedPosition: "+updatedPosition);
 
         int pRes = studyMindService.updateNodePosition(updatedPosition);
 

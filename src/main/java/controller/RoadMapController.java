@@ -4,6 +4,7 @@ import static util.CmmUtil.nvl;
 
 import domain.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -48,8 +49,7 @@ public class RoadMapController {
 
         log.info(this.getClass().getName()+".getStudyDataByUserUuid Start!");
 
-        List<StudyRoadData> results = studyRoadService.getRoadDataByUserUuid("9db17796-2357-4171-edbe-f4b54b040497");
-//        List<StudyRoadData> results = studyRoadService.getRoadDataByUserUuid(((String)session.getAttribute("SS_USER_ID")));
+        List<StudyRoadData> results = studyRoadService.getRoadDataByUserUuid(((String)session.getAttribute("SS_USER_UUID")));
 
         log.info("results: "+results);
         log.info(this.getClass().getName()+".getStudyDataByUserUuid End!");
@@ -65,19 +65,16 @@ public class RoadMapController {
 
         StudyRoadData roadData = new StudyRoadData();
         StudyRoadNodeData nodeData = new StudyRoadNodeData();
+        roadData.setRoadId(roadId);
+        nodeData.setRoadId(roadId);
 
-        roadData.setRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        nodeData.setRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-//        roadData.setRoadId(roadId);
-//        nodeData.setRoadId(roadId);
+//        StudyRoadData roadMapInfo = studyRoadService.getRoadMapData("44904743-bc65-459d-ab7b-7a632ba02178");
+//        List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId("44904743-bc65-459d-ab7b-7a632ba02178");
+        StudyRoadData roadMapInfo = studyRoadService.getRoadMapData(roadId);
+        List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId(roadId);
 
-        StudyRoadData roadMapInfo = studyRoadService.getRoadMapData("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-//        StudyRoadData roadMapInfo = studyRoadService.getRoadMapData(roadId);
-//        List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId(roadId);
-
-        log.info("roadMapInfo: "+roadMapInfo.toString());
-        log.info("nodeInfo: "+nodeInfo.toString());
+        log.info("roadMapInfo: "+roadMapInfo);
+        log.info("nodeInfo: "+nodeInfo);
 
         model.addAttribute("roadMapInfo",roadMapInfo);
         model.addAttribute("nodeInfo",nodeInfo);
@@ -91,14 +88,14 @@ public class RoadMapController {
     }
 
     // 로드타이틀로 로드맵 검색
-    @GetMapping("/roadmaps/search/roadTitle")
-    public ResponseEntity<List<StudyRoadData>> searchRoadMapByRoadTitle(String roadTitle) throws Exception {
+    @GetMapping("/roadmaps/roadTitle")
+    public ResponseEntity<List<StudyRoadData>> searchRoadMapByRoadTitle(String keyword) throws Exception {
 
         log.info(this.getClass().getName()+".searchRoadMapByRoadTitle Start!");
 
-        List<StudyRoadData> publicRoadTitles = studyRoadService.getPublicRoadTitle(roadTitle);
+        List<StudyRoadData> publicRoadTitles = studyRoadService.getPublicRoadTitle(keyword);
 
-        log.info("publicRoadTitles: "+publicRoadTitles.toString());
+        log.info("publicRoadTitles: "+publicRoadTitles);
 
         log.info(this.getClass().getName()+".searchRoadMapByRoadTitle End!");
 
@@ -106,12 +103,12 @@ public class RoadMapController {
     }
 
     // 카테고리로 로드맵 검색
-    @GetMapping("/roadmaps/search/category")
-    public ResponseEntity<List<StudyRoadData>> searchRoadMapByNodeCategory(String category) throws  Exception {
+    @GetMapping("/roadmaps/category")
+    public ResponseEntity<List<StudyRoadData>> searchRoadMapByNodeCategory(String keyword) throws  Exception {
 
         log.info(this.getClass().getName()+".searchRoadMapByNodeCategory Start!");
 
-        List<String> roadIds = studyRoadService.getRoadIdsByCategory(category);
+        List<String> roadIds = studyRoadService.getRoadIdsByCategory(keyword);
         log.info("roadIds: "+roadIds);
         List<StudyRoadData> results = studyRoadService.getPublicCategory(roadIds);
         log.info("results: "+ results.toString());
@@ -122,28 +119,23 @@ public class RoadMapController {
 
     // 스터디로드 데이터 삽입 / 초기 다이어그램 노드 삽입
     @PostMapping("/roadmaps")
-    public ResponseEntity<Integer> insertStudyRoadData(
+    public String insertDefaultStudyRoadData(
             HttpServletRequest request,
-            HttpSession session) throws Exception {
+            HttpSession session,
+            ModelMap model) throws Exception {
 
-        log.info(this.getClass().getName() + ".insertStudyRoadData Start!");
+        log.info(this.getClass().getName() + ".insertDefaultStudyRoadData Start!");
 
         String randomRoadId = UUID.randomUUID().toString();
         log.info("randomRoadId: "+randomRoadId);
 
         StudyRoadData road = new StudyRoadData();
         road.setRoadId(randomRoadId);
-        road.setUserUuid("9db17796-2357-4171-edbe-f4b54b040497");
-        road.setPublicYn("Y");
-        road.setRoadTitle("그림그리기");
-//        road.setRoadId(nvl(request.getParameter("roadId")));
-//        road.setUserUuid((String)session.getAttribute("SS_USER_ID"));
-//        road.setPublicYn(nvl(request.getParameter("publicYn")));
-//        road.setRoadTitle(nvl(request.getParameter("roadTitle")));
+        road.setUserUuid((String)session.getAttribute("SS_USER_ID"));
+        road.setPublicYn(nvl(request.getParameter("publicYn")));
+        road.setRoadTitle(nvl(request.getParameter("roadTitle")));
 
         road.setCreated(DateUtil.getDateTime());
-
-        log.info("road: "+ road.toString());
 
         studyRoadService.insertRoadData(road);
 
@@ -153,15 +145,10 @@ public class RoadMapController {
         StudyRoadNodeData diagramData = new StudyRoadNodeData();
         diagramData.setNodeId(randomNodeId);
         diagramData.setRoadId(randomRoadId);
-
         diagramData.setCanvasClass("Diagram");
         diagramData.setCategory("Pool");
         diagramData.setKey("Pool");
-        diagramData.setText("영어");
-//        diagramData.setCanvasClass(nvl(request.getParameter("canvasClass")));
-//        diagramData.setCategory(nvl(request.getParameter("category")));
-//        diagramData.setKey(nvl(request.getParameter("key")));
-//        diagramData.setText(nvl(request.getParameter("text")));
+        diagramData.setText(nvl(request.getParameter("roadTitle")));
 
         diagramData.setIsGroup("true");
         // 사이즈랑 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
@@ -170,9 +157,12 @@ public class RoadMapController {
         log.info("diagramData: "+ diagramData);
         studyRoadService.insertRoadNode(diagramData);
 
-        log.info(this.getClass().getName() + ".insertStudyRoadData End!");
+        model.addAttribute("url", "/roadmaps/"+randomRoadId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(0);
+        log.info(this.getClass().getName() + ".insertDefaultStudyRoadData End!");
+
+//        return ResponseEntity.status(HttpStatus.OK).body(0);
+        return "redirect";
     }
 
     // 스터디로드 노드 데이터 삽입
@@ -198,15 +188,10 @@ public class RoadMapController {
             laneData.setRoadId(roadId);
             laneData.setCanvasClass("Lane");
             laneData.setKey(randomNodeId);
-
-            laneData.setText("10학기");
+            laneData.setText(nvl(request.getParameter("text")));
             laneData.setIsGroup("true");
             laneData.setGroup("Pool");
-            laneData.setColor("purple");
-//            laneData.setText(nvl(request.getParameter("text")));
-//            laneData.setIsGroup("true");
-//            laneData.setGroup("Pool");
-//            laneData.setColor(nvl(request.getParameter("color")));
+            laneData.setColor(nvl(request.getParameter("color")));
 
             // 사이즈랑 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
 //            laneData.setSize("110 200");
@@ -223,13 +208,9 @@ public class RoadMapController {
             nodeData.setNodeId(randomNodeId);
             nodeData.setRoadId(roadId);
             nodeData.setCanvasClass("Node");
-
-            nodeData.setCategory("FrontEnd");
+            nodeData.setCategory(nvl(request.getParameter("category")));
             nodeData.setKey(randomNodeId);
-            nodeData.setText("리액트");
-//            nodeData.setCategory(nvl(request.getParameter("category")));
-//            nodeData.setKey(randomNodeId);
-//            nodeData.setText(nvl(request.getParameter("text")));
+            nodeData.setText(nvl(request.getParameter("text")));
 
             // 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
 //            NodeData.setLoc("-162.86665532820518 122.60000347951444");
@@ -246,11 +227,8 @@ public class RoadMapController {
             edgeData.setNodeId(randomNodeId);
             edgeData.setRoadId(roadId);
             edgeData.setCanvasClass("Edge");
-
-            edgeData.setFrom("77424f03-3309-4fa3-8608-a9aa4d83ed7b");
-            edgeData.setTo("78bf3bf5-3a12-4fe0-a270-54aa9217f5e1");
-//            edgeData.setFrom(nvl(request.getParameter("from")));
-//            edgeData.setTo(nvl(request.getParameter("to")));
+            edgeData.setFrom(nvl(request.getParameter("from")));
+            edgeData.setTo(nvl(request.getParameter("to")));
 
             // 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
 //            EdgeData.setLoc("-162.86665532820518 122.60000347951444");
@@ -267,12 +245,8 @@ public class RoadMapController {
             categoryData.setNodeId(randomNodeId);
             categoryData.setRoadId(roadId);
             categoryData.setCanvasClass("Category");
-
-            categoryData.setText("하드웨어");
-            categoryData.setColor("Blue");
-
-//            categoryData.setText(nvl(request.getParameter("text")));
-//            categoryData.setColor(nvl(request.getParameter("color")));
+            categoryData.setText(nvl(request.getParameter("text")));
+            categoryData.setColor(nvl(request.getParameter("color")));
 
             log.info("categoryData: "+ categoryData);
 
@@ -295,16 +269,9 @@ public class RoadMapController {
 
         log.info(this.getClass().getName() + ".updateStudyRoadData Start!");
 
-        StudyRoadData roadData = new StudyRoadData();
+        road.setRoadId(roadId);
 
-        roadData.setRoadId(roadId);
-        roadData.setPublicYn("Y");
-        roadData.setRoadTitle("웹 프로젝트");
-//        roadData.setRoadId(road.getRoadId());
-//        roadData.setPublicYn(road.getPublicYn());
-//        roadData.setRoadTitle(road.getRoadTitle());
-
-        int res = studyRoadService.updateRoadData(roadData);
+        int res = studyRoadService.updateRoadData(road);
 
         log.info(this.getClass().getName() + ".updateStudyRoadData End!");
 
@@ -325,26 +292,21 @@ public class RoadMapController {
         StudyRoadNodeData nodeData = studyRoadService.getRoadMapNodeData(nodeId);
 
         if (nodeData.getCanvasClass().equals("Diagram")) {
-            nodeData.setText("콤퓨타");
-            nodeData.setLoc("-21.76859323036399 29.240612792968747");
-//            nodeData.setText(node.getText());
-//            nodeData.setLoc(node.getLoc());
+            nodeData.setText(node.getText());
+            nodeData.setLoc(node.getLoc());
         } else if (nodeData.getCanvasClass().equals("Lane")) {
-            nodeData.setKey("Lane12345");
-            nodeData.setText("12345학기");
-            nodeData.setColor("pink");
-            nodeData.setSize("250 250");
-            nodeData.setLoc("-171.54195404052734 55.76346029127669");
-//            nodeData.setKey(node.getKey());
-//            nodeData.setText(node.getText());
-//            nodeData.setColor(node.getColor());
-//            nodeData.setSize(node.getSize());
-//            nodeData.setLoc(node.getLoc());
+            nodeData.setKey(node.getKey());
+            nodeData.setText(node.getText());
+            nodeData.setColor(node.getColor());
+            nodeData.setSize(node.getSize());
+            nodeData.setLoc(node.getLoc());
         } else if (nodeData.getCanvasClass().equals("Node")) {
-            nodeData.setText("요리조리");
-            nodeData.setLoc("-36.866655328205184 141.60000347951444");
-//            nodeData.setText(node.getText());
-//            nodeData.setLoc(node.getLoc());
+            nodeData.setText(node.getText());
+            nodeData.setCategory(node.getCategory());
+            nodeData.setLoc(node.getLoc());
+        } else if (nodeData.getCanvasClass().equals("Category")) {
+            nodeData.setText(node.getText());
+            nodeData.setColor(node.getColor());
         }
 
         log.info("nodeData: "+ nodeData);
@@ -397,15 +359,15 @@ public class RoadMapController {
 
         log.info(this.getClass().getName() + ".duplicateStudyRoadMap Start!");
 
-        String newRoadId = "44904743-bc65-459d-ab7b-7a632ba02178";
-        String userUuid = "2033c8ef-4970-4217-b67b-ba6b65a01231";
-//        String newRoadId = UUID.randomUUID().toString();
-//        String userUuid = (String)session.getAttribute("SS_USER_ID");
+        String newRoadId = UUID.randomUUID().toString();
+        String userUuid = (String)session.getAttribute("SS_USER_UUID");
+        log.info("userUuid: "+userUuid);
 
         // 스터디로드 id로 StudyRoadData 데이터 가져오기
         StudyRoadData roadMapData = studyRoadService.getRoadMapData(roadId);
         roadMapData.setUserUuid(userUuid);
         roadMapData.setRoadId(newRoadId);
+        roadMapData.setCreated(DateUtil.getDateTime());
 
         // StudyRoadData 데이터를 유저 UUID, 새로운 스터디로드 id 로 삽입
         int res1 = studyRoadService.insertRoadData(roadMapData);
@@ -428,7 +390,6 @@ public class RoadMapController {
                 String newMindId = UUID.randomUUID().toString();
                 mindIdTemp.add(newMindId);
                 mind.setMindId(newMindId);
-                mind.setUserUuid(userUuid);
                 mind.setStudyRoadId(newRoadId);
                 mind.setStudyRoadNodeId(newRoadNodeId);
                 mind.setCreated(DateUtil.getDateTime());
@@ -448,7 +409,6 @@ public class RoadMapController {
                 } else {
                     node.setMindId(UUID.randomUUID().toString());
                 }
-                node.setUserUuid(userUuid);
                 node.setStudyRoadId(newRoadId);
                 node.setStudyRoadNodeId(newRoadNodeId);
                 res5 += studyMindService.insertNodeData(node);

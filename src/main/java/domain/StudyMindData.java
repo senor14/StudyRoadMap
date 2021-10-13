@@ -14,7 +14,7 @@ public class StudyMindData {
 
     @Id
     private String mindId; // 마인드 아이디
-    private String userUuid; // 유저 UUID
+//    private String userUuid; // 유저 UUID
     private String studyRoadId; // 스터디로드 아이디
     private String studyRoadNodeId; // 스터디로드 노드 아이디
     private String mindLabel; // 마인드 제목

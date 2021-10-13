@@ -15,7 +15,7 @@ public class StudyMindNodeData {
     @Id
     private String mindId; // 마인드 아이디
     private String key; // 노드 키
-    private String userUuid; // 유저 UUID
+//    private String userUuid; // 유저 UUID
     private String studyRoadId; // 스터디로드 아이디
     private String studyRoadNodeId; // 스터디로드 노드 아이디
     private String group; // 노드 or 엣지
