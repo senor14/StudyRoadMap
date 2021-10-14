@@ -26,57 +26,60 @@
     <title>Page Flow</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
-
 <body>
-
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__text" id="modal__node__text">제목</h1>
+            <h1 class="modal__node__text" id="modal__node__text">제목</h1>
         </div>
         <div>
-            카테고리:
-            <select disabled id="modal__node__category">
-                <option value=""></option>
-            </select>
+            카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">마인드맵</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">삭제</button>
+        <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">수정</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
         <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
         <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 끝 --%>
 
+<script>
+    function hrefMindMap() {
+        location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText)+'/nodes/'+(document.getElementById('modal__nodeId').innerText);
+    }
+    function loadNodeInfo() {
+        document.getElementById('modal__node__text').innerText = document.getElementById('modal__text').innerText;
+        document.getElementById('modal__node__category').value = document.getElementById('modal__category').innerText;
+    }
+</script>
+
 <%-- 노드 클릭시 정보 모달 - 수정 (노드) [저장, 취소] {category, text}--%>
 <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__text" id="modal__node__text-mod">제목</h1>
+            제목: <input type="text" class="modal__node__text" id="modal__node__text-mod" />
         </div>
         <div>
-            카테고리:
-            <select disabled id="modal__node__category-mod">
-                <option value=""></option>
-            </select>
+            카테고리:<input type="text" class="modal__node__category" id="modal__node__category-mod" />
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m3-o');">저장</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">취소</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m3-o');">취소</button>
         <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 2 끝 --%>
 
+
 <%-- 노드 클릭시 정보 모달 (다이어그램) [수정, 취소] {text} --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__text" id="modal__diagram__text">제목</h1>
+            <h1 class="modal__diagram__text" id="modal__diagram__text">제목</h1>
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m4-o');">취소</button>
         <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
     </div>
 </div>
@@ -86,11 +89,11 @@
 <div class="modal-container" id="m5-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__text" id="modal__diagram__text-mod">제목</h1>
+            제목:<input type="text" class="modal__diagram__text" id="modal__diagram__text-mod" />
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m4-o');">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
-        <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+        <button class="modal__btn" onclick="fnCloseModal('#m5-o');">취소</button>
+        <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 4 끝 --%>
@@ -99,17 +102,17 @@
 <div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__text" id="modal__lane__text">제목</h1>
+            <h1 class="modal__lane__text" id="modal__lane__text">제목</h1>
         </div>
         <div>
-           표지제목 : <input type="text" class="modal__key" id="modal__lane__key" readonly>
+           표지제목 : <input type="text" class="modal__lane__key" id="modal__lane__key" readonly />
         </div>
         <div>색:
-            <input type="text" class="modal__color" id="modal__lane__color" readonly></textarea>
+            <input type="text" class="modal__lane__color" id="modal__lane__color" readonly />
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >취소</button>
+        <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 5 끝 --%>
@@ -118,17 +121,17 @@
 <div class="modal-container" id="m7-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__text" id="modal__lane__text-mod">제목</h1>
+            제목: <input type="text" class="modal__lane__text" id="modal__lane__text-mod" />
         </div>
         <div>
-            표지제목 : <input type="text" class="modal__key" id="modal__lane__key-mod" readonly>
+            표지제목 : <input type="text" class="modal__lane__key" id="modal__lane__key-mod" />
         </div>
         <div>색:
-            <input type="text" class="modal__color" id="modal__lane__color-mod" readonly></textarea>
+            <input type="text" class="modal__lane__color" id="modal__lane__color-mod" readonly>
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m4-o');">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <button class="modal__btn" onclick="fnCloseModal('#m7-o');" >취소</button>
+        <a onclick="fnCloseModal('#m7-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 6 끝 --%>
@@ -136,13 +139,15 @@
 <%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
 <div class="modal-container" id="m8-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <h1 class="modal__category" id="modal__category__category">카테고리</h1>
+        <div>
+            <h1 class="modal__category__category" id="modal__category__category">카테고리</h1>
+        </div>
         <div>색:
-            <input type="text" class="modal__color" id="modal__category__color" readonly></textarea>
+            <input type="text" class="modal__category__color" id="modal__category__color" readonly>
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');">취소</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <button class="modal__btn" onclick="fnCloseModal('#m8-o');">취소</button>
+        <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 7 끝 --%>
@@ -150,13 +155,15 @@
 <%-- 노드 클릭시 정보 모달 - 수정 (카테고리) [저장, 취소] {category(제목), color} --%>
 <div class="modal-container" id="m9-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <h1 class="modal__category" id="modal__category__category-mod">카테고리</h1>
-        <div>색:
-            <input type="text" class="modal__color" id="modal__category__color-mod" readonly></textarea>
+        <div>
+            카테고리:<input class="modal__category__category" id="modal__category__category-mod"/>
+        </div>
+        <div>
+            색:<input type="text" class="modal__category__color" id="modal__category__color-mod" readonly>
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m4-o');">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');">취소</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <button class="modal__btn" onclick="fnCloseModal('#m9-o');">취소</button>
+        <a onclick="fnCloseModal('#m9-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 8 끝 --%>
@@ -165,87 +172,60 @@
 <div class="modal-container" id="m10-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            제목: <input type="text" class="modal__text" id="modal__node__text-add">
+            제목:<input type="text" id="modal__node__text-add">
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m5-o');">확인</button>
     </div>
 </div>
 <%-- modal 9 끝 --%>
 
-<%--&lt;%&ndash; 노드 추가시 text, key, color (레인) [확인, 취소] {text, key, color} &ndash;%&gt;--%>
-<%--<div class="modal-container" id="m11-o" style="--m-background: hsla(0, 0%, 0%, .4);">--%>
-<%--    <div class="modal">--%>
-<%--        <h1 class="modal__title" id="modal__title">네트워크</h1>--%>
-<%--        <div>링크: <input type="text" class="modal__link" id="modal__link" readonly></div>--%>
-<%--        <div>참고서적 제목:--%>
+<%-- 노드 추가시 text, key, color (레인) [확인, 취소] {text, key, color} --%>
+<div class="modal-container" id="m11-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+    <div class="modal">
+        <div>
+            제목:<input type="text" id="modal__lane__text-add" />
+        </div>
+        <div>
+            표지제목:<input type="text" id="modal__lane__key-add" />
+        </div>
+        <div>
+            색:<input type="text" id="modal__lane__color-add" />
+        </div>
+        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">확인</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m11-o');" >취소</button>
+        <a onclick="fnCloseModal('#m11-o');" class="link-2"></a>
+    </div>
+</div>
+<%-- modal 10 끝--%>
 
-<%--            <input type="text" class="modal__book__title" id="modal__book__title" readonly>--%>
-<%--        </div>--%>
-<%--        <div>--%>
-<%--            참고서적 링크: <input type="text" class="modal__book_link" id="modal__book__link" readonly>--%>
-<%--        </div>--%>
-<%--        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" readonly></textarea></div>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">추가</button>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">삭제</button>--%>
-<%--        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>--%>
-<%--        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>--%>
-<%--        <span type="text" hidden id="modal__mindId" ></span>--%>
-<%--        <span type="text" hidden id="node__x" ></span>--%>
-<%--        <span type="text" hidden id="node__y" ></span>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--&lt;%&ndash; modal 10 끝&ndash;%&gt;--%>
+<%-- 카테고리 추가시 category, color (카테고리) [확인, 취소] {category, color} --%>
+<div class="modal-container" id="m12-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+    <div class="modal">
+        <div>
+            <h1  id="modal__category__category-add">카테고리</h1>
+        </div>
+        <div>
+            색:<input type="text" id="modal__category__color-add" />
+        </div>
+        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">확인</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m12-o');" >취소</button>
+        <a onclick="fnCloseModal('#m12-o');" class="link-2"></a>
+    </div>
+</div>
+<%-- modal 11 끝--%>
 
-<%--&lt;%&ndash; 카테고리 추가시 category, color (카테고리) [확인, 취소] {category, color} &ndash;%&gt;--%>
-<%--<div class="modal-container" id="m12-o" style="--m-background: hsla(0, 0%, 0%, .4);">--%>
-<%--    <div class="modal">--%>
-<%--        <h1 class="modal__title" id="modal__title">네트워크</h1>--%>
-<%--        <div>링크: <input type="text" class="modal__link" id="modal__link" readonly></div>--%>
-<%--        <div>참고서적 제목:--%>
-
-<%--            <input type="text" class="modal__book__title" id="modal__book__title" readonly>--%>
-<%--        </div>--%>
-<%--        <div>--%>
-<%--            참고서적 링크: <input type="text" class="modal__book_link" id="modal__book__link" readonly>--%>
-<%--        </div>--%>
-<%--        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" readonly></textarea></div>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">추가</button>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">삭제</button>--%>
-<%--        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>--%>
-<%--        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>--%>
-<%--        <span type="text" hidden id="modal__mindId" ></span>--%>
-<%--        <span type="text" hidden id="node__x" ></span>--%>
-<%--        <span type="text" hidden id="node__y" ></span>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--&lt;%&ndash; modal 11 끝&ndash;%&gt;--%>
-
-<%--&lt;%&ndash; 노드 클릭시 정보 모달 - 삭제하시겠습니까 [확인, 취소] &ndash;%&gt;--%>
-<%--<div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">--%>
-<%--    <div class="modal">--%>
-<%--        <h1 class="modal__title" id="modal__title">네트워크</h1>--%>
-<%--        <div>링크: <input type="text" class="modal__link" id="modal__link" readonly></div>--%>
-<%--        <div>참고서적 제목:--%>
-
-<%--            <input type="text" class="modal__book__title" id="modal__book__title" readonly>--%>
-<%--        </div>--%>
-<%--        <div>--%>
-<%--            참고서적 링크: <input type="text" class="modal__book_link" id="modal__book__link" readonly>--%>
-<%--        </div>--%>
-<%--        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" readonly></textarea></div>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">추가</button>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>--%>
-<%--        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">삭제</button>--%>
-<%--        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>--%>
-<%--        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>--%>
-<%--        <span type="text" hidden id="modal__mindId" ></span>--%>
-<%--        <span type="text" hidden id="node__x" ></span>--%>
-<%--        <span type="text" hidden id="node__y" ></span>--%>
-<%--    </div>--%>
-<%--</div>--%>
-<%--&lt;%&ndash; modal 12 끝&ndash;%&gt;--%>
+<%-- 노드 클릭시 정보 모달 - 삭제하시겠습니까 [확인, 취소] --%>
+<div class="modal-container" id="m13-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+    <div class="modal">
+        <div>
+            <h1 id="modal__title-del">삭제하시겠습니까?</h1>
+        </div>
+        <button class="modal__btn" onclick="deleteMindAndNodeData(document.getElementById('modal__mindId').innerText);">확인</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m13-o');" >취소</button>
+        <a onclick="fnCloseModal('#m13-o');" class="link-2"></a>
+    </div>
+</div>
+<%-- modal 12 끝--%>
 
 <div id="hidden__box" >
     <span hidden id="modal__nodeId" ></span>
@@ -262,7 +242,6 @@
     <span hidden id="modal__from" ></span>
     <span hidden id="modal__to" ></span>
 </div>
-
 
 <div
         class="
@@ -649,8 +628,15 @@
                 myDiagram.addDiagramListener("ObjectDoubleClicked", function (e) {
                     // 딜리트, 복사, 언두 제거
                     myDiagram.model.isReadOnly = true;
-                    fnOpenModal('#m2-o');
                     let part = e.subject.part;
+                    // console.log(part.ob.canva)
+                    if (part.ob.canvasClass === 'Node') {
+                        fnOpenModal('#m2-o');
+                    } else if (part.ob.canvasClass === 'Diagram') {
+                        fnOpenModal('#m4-o');
+                    } else if (part.ob.canvasClass === 'Lane') {
+                        fnOpenModal('#m6-o');
+                    }
                     console.log("ObjectDoubleClicked");
                     console.log(part.ob);
                     clearAddInfo();
@@ -1222,6 +1208,7 @@
                 palette.addDiagramListener("ObjectDoubleClicked", function (e) {
                     let part = e.subject.part;
                     console.log("ObjectDoubleClicked");
+                    fnOpenModal('m8-o');
                     console.log(part.ob);
                 });
                 //*/
@@ -1292,6 +1279,23 @@
                 if (target.loc) document.getElementById("modal__loc").innerText = target.loc;
                 if (target.from) document.getElementById("modal__from").innerText = target.from;
                 if (target.to) document.getElementById("modal__to").innerText = target.to;
+                console.log(document.querySelectorAll(".modal__node__text").innerText);
+                if (target.canvasClass === 'Node') {
+                    $(".modal__node__text").text(target.text);
+                    $(".modal__node__text").val(target.text);
+                    $(".modal__node__category").val(target.category);
+                } else if (target.canvasClass === 'Diagram') {
+                    $(".modal__node__text").text(target.text);
+                    $(".modal__node__text").val(target.text);
+                } else if (target.canvasClass === 'Lane') {
+                    $(".modal__node__text").text(target.text);
+                    $(".modal__node__text").val(target.text);
+                    $(".modal__lane__key").val(target.key);
+                    $(".modal__lane__color").val(target.color);
+                } else if (target.canvasClass === 'Category') {
+                    $(".modal__category__category").val(target.category);
+                    $(".modal__lane__color").val(target.color);
+                }
             }
 
             function clearAddInfo() {
@@ -1319,6 +1323,7 @@
             function fnCloseModal(id){
                 // $('#m2-o').css("display", "none");
                 $(id).css("display", "none");
+                clearAddInfo();
             }
         </script>
 

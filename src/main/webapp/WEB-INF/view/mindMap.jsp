@@ -46,7 +46,6 @@
         <h1 class="modal__title" id="modal__title">네트워크</h1>
         <div>링크: <input type="text" class="modal__link" id="modal__link" readonly></div>
         <div>참고서적 제목:
-
             <input type="text" class="modal__book__title" id="modal__book__title" readonly>
         </div>
         <div>

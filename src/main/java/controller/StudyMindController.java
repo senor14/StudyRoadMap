@@ -32,9 +32,10 @@ public class StudyMindController {
     @Resource(name = "StudyMindService")
     IStudyMindService studyMindService;
 
-    // 스터디 로드맵 노드 속의 마인드맵 조회 및 초기 생성
-    @GetMapping("/mindmap/{studyRoadNodeId}")
-    public String getMindMap(@PathVariable String studyRoadNodeId,
+    // 스터디 로드맵 노드 속의 마인드맵 조회 ------------------------------및 초기 생성
+    @GetMapping("/roadmaps/{roadId}/nodes/{nodeId}")
+    public String getMindMap(@PathVariable String nodeId,
+                             @PathVariable String roadId,
                              HttpServletRequest request,
                              HttpServletResponse response,
                              ModelMap model
@@ -44,10 +45,10 @@ public class StudyMindController {
 
         StudyMindData mindData = new StudyMindData();
         StudyMindNodeData nodeData = new StudyMindNodeData();
-        mindData.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
-        nodeData.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
-        mindData.setStudyRoadNodeId("e1eb7f52-415f-4482-898f-92f84c586733");
-        nodeData.setStudyRoadNodeId("e1eb7f52-415f-4482-898f-92f84c586733");
+        mindData.setStudyRoadId(roadId);
+        nodeData.setStudyRoadId(roadId);
+        mindData.setStudyRoadNodeId(nodeId);
+        nodeData.setStudyRoadNodeId(nodeId);
 
         List<StudyMindData> mindMapInfo = studyMindService.getMindMapData(mindData);
         List<StudyMindNodeData> mindMapNode = studyMindService.getMindMapNode(nodeData);
@@ -55,55 +56,56 @@ public class StudyMindController {
         log.info("mindMap size: "+ mindMapInfo.size());
         log.info("mindMapNode size: "+ mindMapNode.size());
 
-        // 기존 마인드맵이 존재하지 않을 시 새로 마인드맵 생성 후 재조회
-        if (mindMapInfo.size() == 0) {
-
-            String msg;
-            String url = "/mindmap/"+studyRoadNodeId;
-
-            StudyMindData mind = new StudyMindData();
-            mind.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
-            mind.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
-            mind.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-            mind.setMindLabel("영상편집");
-            mind.setMindContents("영상편집 입니다.");
-            mind.setUrl("x");
-            mind.setBookTitle("x");
-            mind.setBookLink("x");
-            mind.setCreated(DateUtil.getDateTime());
-
-            int mRes = studyMindService.insertMindData(mind);
-
-            if (mRes == 0) {
-                msg = "마인드맵 생성중입니다.";
-            } else {
-                msg = "마인드맵 생성 실패.";
-            }
-
-            StudyMindNodeData node = new StudyMindNodeData();
-//            node.setUserUuid("4548bf57-33cc-4a4b-9b04-89d579a53e3c");
-            node.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
-            node.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
-            node.setMindId("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-            node.setKey("b3e8b0de-f975-42f5-ac85-73ff80cd8c55");
-            node.setGroup("nodes");
-            node.setMindLabel("영상편집");
-            node.setX("0");
-            node.setY("0");
-
-            int nRes = studyMindService.insertNodeData(node);
-
-            if (nRes == 0) {
-                msg = "마인드맵 생성중입니다.";
-            } else {
-                msg = "마인드맵 생성 실패.";
-            }
-
-            model.addAttribute("msg", msg);
-            model.addAttribute("url", url);
-
-            return "/redirect";
-        }
+//        // 기존 마인드맵이 존재하지 않을 시 새로 마인드맵 생성 후 재조회
+//        if (mindMapInfo.size() == 0) {
+//
+//            String msg;
+//            String url = "/roadmaps/"+roadId+"/nodes/"+nodeId;
+//            String randomMindId = UUID.randomUUID().toString();
+//
+//
+//            StudyMindData mind = new StudyMindData();
+//            mind.setStudyRoadId(roadId);
+//            mind.setStudyRoadNodeId(nodeId);
+//            mind.setMindId(randomMindId);
+//            mind.setMindLabel("영상편집");
+//            mind.setMindContents("영상편집 입니다.");
+//            mind.setUrl("x");
+//            mind.setBookTitle("x");
+//            mind.setBookLink("x");
+//            mind.setCreated(DateUtil.getDateTime());
+//
+//            int mRes = studyMindService.insertMindData(mind);
+//
+//            if (mRes == 0) {
+//                msg = "마인드맵 생성중입니다.";
+//            } else {
+//                msg = "마인드맵 생성 실패.";
+//            }
+//
+//            StudyMindNodeData node = new StudyMindNodeData();
+//            node.setStudyRoadId(roadId);
+//            node.setStudyRoadNodeId(nodeId);
+//            node.setMindId(randomMindId);
+//            node.setKey(randomMindId);
+//            node.setGroup("nodes");
+//            node.setMindLabel("영상편집");
+//            node.setX("0");
+//            node.setY("0");
+//
+//            int nRes = studyMindService.insertNodeData(node);
+//
+//            if (nRes == 0) {
+//                msg = "마인드맵 생성중입니다.";
+//            } else {
+//                msg = "마인드맵 생성 실패.";
+//            }
+//
+//            model.addAttribute("msg", msg);
+//            model.addAttribute("url", url);
+//
+//            return "/redirect";
+//        }
 
         log.info("mindMapInfo: "+ mindMapInfo);
         log.info("mindMapNode: "+ mindMapNode);
@@ -119,9 +121,10 @@ public class StudyMindController {
         return "mindMap";
     }
 
+
     // 마인드 id로 마인드맵 정보 조회
-    @GetMapping("/mindmap/{studRoadId}/{mindId}")
-    public ResponseEntity<StudyMindData> getMindMapByMindId(@PathVariable String studRoadId,
+    @GetMapping("/mindmap/{roadNodeId}/{mindId}")
+    public ResponseEntity<StudyMindData> getMindMapByMindId(@PathVariable String roadNodeId,
                                      @PathVariable String mindId,
                                      HttpServletRequest request,
                                      HttpServletResponse response,

@@ -217,6 +217,35 @@ public class RoadMapController {
 
             studyRoadService.insertRoadNode(nodeData);
 
+            String randomMindId = UUID.randomUUID().toString();
+
+            StudyMindData mind = new StudyMindData();
+            mind.setMindId(randomMindId);
+            mind.setStudyRoadId(roadId);
+            mind.setStudyRoadNodeId(randomNodeId);
+            mind.setMindLabel(nvl(request.getParameter("text")));
+            mind.setMindContents(nvl(request.getParameter("text"))+" 입니다.");
+            mind.setUrl("x");
+            mind.setBookTitle("x");
+            mind.setBookLink("x");
+            mind.setCreated(DateUtil.getDateTime());
+            log.info("mind: "+mind);
+            int mRes = studyMindService.insertMindData(mind);
+            log.info("mRes: "+mRes);
+
+            StudyMindNodeData node = new StudyMindNodeData();
+            node.setMindId(randomMindId);
+            node.setStudyRoadId(roadId);
+            node.setStudyRoadNodeId(randomNodeId);
+            node.setKey(randomMindId);
+            node.setGroup("nodes");
+            node.setMindLabel(nvl(request.getParameter("text")));
+            node.setX("0");
+            node.setY("0");
+            log.info("node: "+node);
+            int nRes = studyMindService.insertNodeData(node);
+            log.info("nRes: "+nRes);
+
             result = nodeData;
 
         } else if (canvasClass.equals("Edge")) {
