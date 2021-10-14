@@ -46,8 +46,8 @@ public class StudyMindController {
         StudyMindNodeData nodeData = new StudyMindNodeData();
         mindData.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
         nodeData.setStudyRoadId("a63c5537-4644-42e0-b11d-bf92291de4f5");
-        mindData.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
-        nodeData.setStudyRoadNodeId("be0cabfa-5b94-44b3-dfc2-edadfdf409b3");
+        mindData.setStudyRoadNodeId("e1eb7f52-415f-4482-898f-92f84c586733");
+        nodeData.setStudyRoadNodeId("e1eb7f52-415f-4482-898f-92f84c586733");
 
         List<StudyMindData> mindMapInfo = studyMindService.getMindMapData(mindData);
         List<StudyMindNodeData> mindMapNode = studyMindService.getMindMapNode(nodeData);
