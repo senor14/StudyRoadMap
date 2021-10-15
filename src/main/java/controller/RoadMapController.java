@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import service.IStudyMindService;
 import service.IStudyRoadService;
 import util.DateUtil;
+import vo.RequestNodeData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -308,10 +309,10 @@ public class RoadMapController {
 
     // 스터디 노드 데이터 수정
     @PutMapping("/roadmaps/{roadId}/nodes/{nodeId}")
-    public ResponseEntity<Integer> updateStudyRoadNode (
+    public ResponseEntity<StudyRoadNodeData> updateStudyRoadNode (
             @PathVariable String roadId,
             @PathVariable String nodeId,
-            @RequestBody StudyRoadNodeData node
+            @RequestBody RequestNodeData node
     ) throws Exception {
 
         log.info(this.getClass().getName()+".updateStudyRoadNode Start!");
@@ -319,21 +320,29 @@ public class RoadMapController {
         StudyRoadNodeData nodeData = studyRoadService.getRoadMapNodeData(nodeId);
 
         if (nodeData.getCanvasClass().equals("Diagram")) {
-            nodeData.setText(node.getText());
-            nodeData.setLoc(node.getLoc());
+            nodeData.setText(node.getDiagramText());
+            if (node.getLoc()!=null && !node.getLoc().equals("")) {
+                nodeData.setLoc(node.getLoc());
+            }
         } else if (nodeData.getCanvasClass().equals("Lane")) {
-            nodeData.setKey(node.getKey());
-            nodeData.setText(node.getText());
-            nodeData.setColor(node.getColor());
-            nodeData.setSize(node.getSize());
-            nodeData.setLoc(node.getLoc());
+            nodeData.setKey(node.getLaneKey());
+            nodeData.setText(node.getLaneText());
+            nodeData.setColor(node.getLaneColor());
+            if (node.getSize()!=null && !node.getSize().equals("")) {
+                nodeData.setSize(node.getSize());
+            }
+            if (node.getLoc()!=null && !node.getLoc().equals("")) {
+                nodeData.setLoc(node.getLoc());
+            }
         } else if (nodeData.getCanvasClass().equals("Node")) {
-            nodeData.setText(node.getText());
+            nodeData.setText(node.getNodeText());
             nodeData.setCategory(node.getCategory());
-            nodeData.setLoc(node.getLoc());
+            if (node.getLoc()!=null && !node.getLoc().equals("")) {
+                nodeData.setLoc(node.getLoc());
+            }
         } else if (nodeData.getCanvasClass().equals("Category")) {
-            nodeData.setText(node.getText());
-            nodeData.setColor(node.getColor());
+            nodeData.setText(node.getCategoryText());
+            nodeData.setColor(node.getCategoryColor());
         }
 
         log.info("nodeData: "+ nodeData);
@@ -344,7 +353,7 @@ public class RoadMapController {
 
         log.info(this.getClass().getName()+".updateStudyRoadNode End!");
 
-        return ResponseEntity.status(HttpStatus.OK).body(res);
+        return ResponseEntity.status(HttpStatus.OK).body(nodeData);
     }
 
     // roadId로 로드맵 데이터 삭제

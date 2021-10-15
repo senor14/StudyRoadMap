@@ -64,13 +64,16 @@
         <div>
             카테고리:<input type="text" class="modal__node__category" id="modal__node__category-mod" />
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">저장</button>
+        <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m3-o');">취소</button>
         <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 2 끝 --%>
 
+<script>
+
+</script>
 
 <%-- 노드 클릭시 정보 모달 (다이어그램) [수정, 취소] {text} --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
@@ -78,7 +81,7 @@
         <div>
             <h1 class="modal__diagram__text" id="modal__diagram__text">제목</h1>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">수정</button>
         <button class="modal__btn" onclick="fnCloseModal('#m4-o');">취소</button>
         <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
     </div>
@@ -91,7 +94,7 @@
         <div>
             제목:<input type="text" class="modal__diagram__text" id="modal__diagram__text-mod" />
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">저장</button>
+        <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m5-o');">취소</button>
         <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
     </div>
@@ -102,15 +105,15 @@
 <div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__lane__text" id="modal__lane__text">제목</h1>
+            <h1 class="modal__lane__key" id="modal__lane__key">제목</h1>
         </div>
         <div>
-           표지제목 : <input type="text" class="modal__lane__key" id="modal__lane__key" readonly />
+            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text" readonly />
         </div>
         <div>색:
             <input type="text" class="modal__lane__color" id="modal__lane__color" readonly />
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m7-o');">수정</button>
         <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >취소</button>
         <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
     </div>
@@ -121,15 +124,15 @@
 <div class="modal-container" id="m7-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            제목: <input type="text" class="modal__lane__text" id="modal__lane__text-mod" />
+            제목: <input type="text" class="modal__lane__key" id="modal__lane__key-mod" />
         </div>
         <div>
-            표지제목 : <input type="text" class="modal__lane__key" id="modal__lane__key-mod" />
+            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text-mod" />
         </div>
         <div>색:
-            <input type="text" class="modal__lane__color" id="modal__lane__color-mod" readonly>
+            <input type="text" class="modal__lane__color" id="modal__lane__color-mod">
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">저장</button>
+        <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m7-o');" >취소</button>
         <a onclick="fnCloseModal('#m7-o');" class="link-2"></a>
     </div>
@@ -140,12 +143,12 @@
 <div class="modal-container" id="m8-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1 class="modal__category__category" id="modal__category__category">카테고리</h1>
+            <h1 class="modal__category__text" id="modal__category__text">카테고리 제목</h1>
         </div>
         <div>색:
             <input type="text" class="modal__category__color" id="modal__category__color" readonly>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m9-o');">수정</button>
         <button class="modal__btn" onclick="fnCloseModal('#m8-o');">취소</button>
         <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
     </div>
@@ -156,12 +159,12 @@
 <div class="modal-container" id="m9-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            카테고리:<input class="modal__category__category" id="modal__category__category-mod"/>
+            카테고리 제목:<input class="modal__category__text" id="modal__category__text-mod"/>
         </div>
         <div>
-            색:<input type="text" class="modal__category__color" id="modal__category__color-mod" readonly>
+            색:<input type="text" class="modal__category__color" id="modal__category__color-mod"/>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">저장</button>
+        <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m9-o');">취소</button>
         <a onclick="fnCloseModal('#m9-o');" class="link-2"></a>
     </div>
@@ -202,7 +205,7 @@
 <div class="modal-container" id="m12-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1  id="modal__category__category-add">카테고리</h1>
+            <h1  id="modal__category__text-add">카테고리</h1>
         </div>
         <div>
             색:<input type="text" id="modal__category__color-add" />
@@ -220,7 +223,7 @@
         <div>
             <h1 id="modal__title-del">삭제하시겠습니까?</h1>
         </div>
-        <button class="modal__btn" onclick="deleteMindAndNodeData(document.getElementById('modal__mindId').innerText);">확인</button>
+        <button class="modal__btn" onclick="deleteNode();">확인</button>
         <button class="modal__btn" onclick="fnCloseModal('#m13-o');" >취소</button>
         <a onclick="fnCloseModal('#m13-o');" class="link-2"></a>
     </div>
@@ -536,8 +539,6 @@
                     "undoManager.isEnabled": true,
                 });
 
-
-
                 function stayInGroup(part, pt, gridpt) {
                     // don't constrain top-level nodes
                     var grp = part.containingGroup;
@@ -591,7 +592,6 @@
                   console.log(droppedOb);
                   myDiagram.model.isReadOnly = true;
 
-
                 });
 
                 // 엣지추가시
@@ -616,6 +616,8 @@
                 // 노드, 레인, 다이어그램 클릭시
                 myDiagram.addDiagramListener("ObjectSingleClicked", function (e) {
                     // 딜리트, 복사, 언두 제거
+                    relayoutLanes();
+                    relayoutDiagram();
                     myDiagram.model.isReadOnly = true;
                     let part = e.subject.part;
                     console.log("ObjectSingleClicked");
@@ -624,12 +626,15 @@
                     getNodeDataByAjax(part.ob);
                 });
 
-                // 노드, 레인, 다이어그램 클릭시
+                // 노드, 레인, 다이어그램 더블클릭시
                 myDiagram.addDiagramListener("ObjectDoubleClicked", function (e) {
                     // 딜리트, 복사, 언두 제거
                     myDiagram.model.isReadOnly = true;
                     let part = e.subject.part;
-                    // console.log(part.ob.canva)
+
+                    clearAddInfo();
+                    getNodeDataByAjax(part.ob);
+
                     if (part.ob.canvasClass === 'Node') {
                         fnOpenModal('#m2-o');
                     } else if (part.ob.canvasClass === 'Diagram') {
@@ -639,11 +644,7 @@
                     }
                     console.log("ObjectDoubleClicked");
                     console.log(part.ob);
-                    clearAddInfo();
-                    getNodeDataByAjax(part.ob);
                 });
-
-
 
 
                 var defaultAdornment = $(
@@ -918,6 +919,7 @@
                         new go.Binding("text", "text").makeTwoWay()
                     )
                 );
+                // 카테고리 설정
                 <%for (StudyRoadNodeData s: nodeInfo) {%>
                     <%if (s.getCanvasClass().equals("Category")) {%>
                     myDiagram.nodeTemplateMap.add(
@@ -1108,6 +1110,7 @@
                         { toArrow: "kite", fill: "#2F4F4F", stroke: null, scale: 2 }
                     )
                 );
+                // 다이어그램, 노드, 레인 그리기
                 myDiagram.model = new go.GraphLinksModel(
                         // node data (diagram, lane, node)
                     [
@@ -1200,6 +1203,11 @@
                     let part = e.subject.part;
                     console.log("ObjectSingleClicked");
                     console.log(part.ob);
+                    console.log("palette.model.nodeDataArray");
+                    console.log(palette.model.nodeDataArray);
+                    let pda = palette.model.nodeDataArray;
+                    clearAddInfo();
+                    getNodeDataByAjax(part.ob);
                 });
                 //*/
 
@@ -1208,7 +1216,9 @@
                 palette.addDiagramListener("ObjectDoubleClicked", function (e) {
                     let part = e.subject.part;
                     console.log("ObjectDoubleClicked");
-                    fnOpenModal('m8-o');
+                    clearAddInfo();
+                    getNodeDataByAjax(part.ob);
+                    fnOpenModal('#m8-o');
                     console.log(part.ob);
                 });
                 //*/
@@ -1224,9 +1234,11 @@
                     console.log('GainedFocus');
                     myDiagram.model.isReadOnly = false;
                 })
-                document.create
 
+                //
+                // document.create
 
+                // 카테고리 그리기
                 palette.model.nodeDataArray = [
                     <%for (StudyRoadNodeData s : nodeInfo) {%>
                         <%if (s.getCanvasClass().equals("Category")) {%>
@@ -1243,8 +1255,90 @@
                 ];
 
                 // read in the JSON-format data from the "mySavedModel" element
-                load();
-                layout();
+                // load();
+                // layout();
+                // function savePalette() {
+                //     document.getElementById("mySavedModelPalette").value =
+                //         palette.model.toJson();
+                //     console.log('save');
+                //     console.log(palette.model.nodeDataArray);
+                //     palette.isModified = false;
+                // }
+                // function loadPalette() {
+                //     palette.model = go.Model.fromJson(
+                //         document.getElementById("mySavedModelPalette").value
+                //     );
+                //     palette.delayInitialization(relayoutDiagram);
+                // }
+            }
+
+            myDiagram = $(go.Diagram, "myDiagramDiv", {
+                // use a custom ResizingTool (along with a custom ResizeAdornment on each Group)
+                resizingTool: new LaneResizingTool(),
+                // use a simple layout that ignores links to stack the top-level Pool Groups next to each other
+                layout: $(PoolLayout),
+                // don't allow dropping onto the diagram's background unless they are all Groups (lanes or pools)
+                mouseDragOver: function (e) {
+                    if (
+                        !e.diagram.selection.all(function (n) {
+                            return n instanceof go.Group;
+                        })
+                    ) {
+                        e.diagram.currentCursor = "not-allowed";
+                    }
+                },
+                mouseDrop: function (e) {
+                    if (
+                        !e.diagram.selection.all(function (n) {
+                            return n instanceof go.Group;
+                        })
+                    ) {
+                        e.diagram.currentTool.doCancel();
+                    }
+                },
+
+                // a clipboard copied node is pasted into the original node's group (i.e. lane).
+                "commandHandler.copiesGroupKey": true,
+                // automatically re-layout the swim lanes after dragging the selection
+                SelectionMoved: relayoutDiagram, // this DiagramEvent listener is
+                SelectionCopied: relayoutDiagram, // defined above
+                "animationManager.isEnabled": false,
+                // enable undo & redo
+                "undoManager.isEnabled": true,
+                // have mouse wheel events zoom in and out instead of scroll up and down
+                "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+                initialAutoScale: go.Diagram.Uniform,
+                "linkingTool.direction": go.LinkingTool.ForwardsOnly,
+                layout: $(go.LayeredDigraphLayout, {
+                    isInitial: false,
+                    isOngoing: false,
+                    layerSpacing: 50,
+                }),
+                "undoManager.isEnabled": true,
+            });
+
+            palette = $(
+                go.Palette,
+                "myPaletteDiv", // create a new Palette in the HTML DIV element
+                {
+                    // share the template map with the Palette
+                    nodeTemplateMap: myDiagram.nodeTemplateMap,
+                    autoScale: go.Diagram.Uniform, // everything always fits in viewport
+                }
+            );
+
+            function savePalette() {
+                document.getElementById("mySavedModel").value =
+                    palette.model.toJson();
+                console.log('save');
+                console.log(palette.model.nodeDataArray);
+                palette.isModified = false;
+            }
+            function loadPalette() {
+                palette.model = go.Model.fromJson(
+                    document.getElementById("mySavedModel").value
+                );
+                palette.delayInitialization(relayoutDiagram);
             }
 
             function layout() {
@@ -1265,6 +1359,110 @@
             }
             window.addEventListener("DOMContentLoaded", init);
 
+            // 노드 정보 업데이트
+            function updateNodeData() {
+                console.log("/roadmaps/"+document.getElementById('modal__roadId').innerText+
+                    "/nodes/"+document.getElementById('modal__nodeId').innerText)
+                let query = {
+                    "nodeText": $('#modal__node__text-mod').val(),
+                    "diagramText": $('#modal__diagram__text-mod').val(),
+                    "categoryText": $('#modal__category__text-mod').val(),
+                    "laneText": $('#modal__lane__text-mod').val(),
+                    "category": $('#modal__node__category-mod').val(),
+                    "laneColor": $('#modal__lane__color-mod').val(),
+                    "categoryColor": $('#modal__category__color-mod').val(),
+                    "laneKey": $('#modal__lane__key-mod').val(),
+                    "size": $('#modal__size').text(),
+                    "loc": $('#modal__loc').text()
+                };
+                console.log(query);
+                $.ajax({
+                    url: "/roadmaps/"+document.getElementById('modal__roadId').innerText+
+                        "/nodes/"+document.getElementById('modal__nodeId').innerText,
+                    type: "put",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(query),
+                    success: function (data) {
+                        if (data) {
+                            if (data.canvasClass === "Category") {
+                                console.log("palette.model",palette.model)
+                                for (let d in palette.model.nodeDataArray) {
+                                    console.log("palette.model.nodeDataArray[d].aaa", palette.model.nodeDataArray[d]);
+                                }
+                            } else {
+                                for (let d in myDiagram.model.nodeDataArray) {
+                                    console.log("myDiagram.model.nodeDataArray[d].nodeId", myDiagram.model.nodeDataArray[d].nodeId)
+                                    console.log("document.getElementById('modal__nodeId').innerText", document.getElementById('modal__nodeId').innerText)
+                                    if (myDiagram.model.nodeDataArray[d].nodeId
+                                        === document.getElementById('modal__nodeId').innerText) {
+                                        if (data.canvasClass === 'Node') {
+                                            myDiagram.model.nodeDataArray[d].text = query.nodeText;
+                                            myDiagram.model.nodeDataArray[d].category = query.category;
+                                        } else if (data.canvasClass === "Diagram") {
+                                            myDiagram.model.nodeDataArray[d].text = query.diagramText;
+                                        } else if (data.canvasClass === "Lane") {
+                                            myDiagram.model.nodeDataArray[d].text = query.laneText;
+                                            myDiagram.model.nodeDataArray[d].key = query.laneKey;
+                                            myDiagram.model.nodeDataArray[d].color = query.laneColor;
+                                        } else if (data.canvasClass === "Category") {
+                                            myDiagram.model.nodeDataArray[d].text = query.categoryText;
+                                            myDiagram.model.nodeDataArray[d].color = query.categoryColor;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            save();
+                            load();
+                            fnCloseModal('#m3-o');
+                            fnCloseModal('#m2-o');
+                            fnCloseModal('#m5-o');
+                            fnCloseModal('#m4-o');
+                            fnCloseModal('#m7-o');
+                            fnCloseModal('#m6-o');
+                            fnCloseModal('#m9-o');
+                            fnCloseModal('#m8-o');
+                        } else {
+                            console.log("data 이상")
+                        }
+                    }
+                });
+            }
+
+            function deleteNode() {
+
+                $.ajax({
+                    url: "/roadmaps/"+document.getElementById('modal__roadId').innerText
+                        +"/nodes/"+document.getElementById('modal__nodeId').innerText,
+                    type: "delete",
+                    success: function (data) {
+                        if (data===0) {
+                            for (let d= myDiagram.model.nodeDataArray.length-1; d>=0; d--) {
+                                if (myDiagram.model.nodeDataArray[d].nodeId
+                                    === document.getElementById('modal__nodeId').innerText){
+                                    console.log("삭제")
+                                    console.log(myDiagram.model.nodeDataArray[d])
+                                    myDiagram.model.removeNodeData(myDiagram.model.nodeDataArray[d]);
+                                    console.log(myDiagram.model.nodeDataArray[d]);
+                                    // myDiagram.remove(myDiagram.model.nodeDataArray[d]);
+                                    break;
+                                }
+                            }
+                            save();
+                            load();
+                            // })
+                            fnCloseModal('#m13-o');
+                            fnCloseModal('#m2-o');
+                        } else {
+                            console.log("data 이상")
+                        }
+                    }
+                });
+            }
+
+
+            // 노드 정보 히든에 숨기기
             function getNodeDataByAjax(target) {
                 if (target.nodeId) document.getElementById("modal__nodeId").innerText = target.nodeId;
                 if (target.roadId) document.getElementById("modal__roadId").innerText = target.roadId;
@@ -1279,25 +1477,27 @@
                 if (target.loc) document.getElementById("modal__loc").innerText = target.loc;
                 if (target.from) document.getElementById("modal__from").innerText = target.from;
                 if (target.to) document.getElementById("modal__to").innerText = target.to;
-                console.log(document.querySelectorAll(".modal__node__text").innerText);
+
                 if (target.canvasClass === 'Node') {
                     $(".modal__node__text").text(target.text);
                     $(".modal__node__text").val(target.text);
                     $(".modal__node__category").val(target.category);
                 } else if (target.canvasClass === 'Diagram') {
-                    $(".modal__node__text").text(target.text);
-                    $(".modal__node__text").val(target.text);
+                    $(".modal__diagram__text").text(target.text);
+                    $(".modal__diagram__text").val(target.text);
                 } else if (target.canvasClass === 'Lane') {
-                    $(".modal__node__text").text(target.text);
-                    $(".modal__node__text").val(target.text);
+                    $(".modal__lane__text").text(target.text);
+                    $(".modal__lane__text").val(target.text);
                     $(".modal__lane__key").val(target.key);
                     $(".modal__lane__color").val(target.color);
                 } else if (target.canvasClass === 'Category') {
-                    $(".modal__category__category").val(target.category);
-                    $(".modal__lane__color").val(target.color);
+                    $(".modal__category__text").text(target.category);
+                    $(".modal__category__text").val(target.category);
+                    $(".modal__category__color").val(target.color);
                 }
             }
 
+            // 히든 내용 지우기
             function clearAddInfo() {
                 document.getElementById("modal__nodeId").innerText = "";
                 document.getElementById("modal__roadId").innerText = "";
@@ -1324,7 +1524,9 @@
                 // $('#m2-o').css("display", "none");
                 $(id).css("display", "none");
                 clearAddInfo();
+
             }
+
         </script>
 
         <div id="sample">
@@ -1349,7 +1551,12 @@
             <button id="SaveButton" onclick="save()">Save</button>
             <button onclick="load()">Load</button>
             <button onclick="layout()">Layout</button>
-            <textarea id="mySavedModel" style="width: 100%; height: 300px" />
+<%--            <div>--%>
+<%--                <textarea id="mySavedModelPalette" style="width: 100%; height: 300px" />--%>
+<%--            </div>--%>
+            <div>
+                <textarea id="mySavedModel" style="width: 100%; height: 300px" />
+            </div>
             <br />
         </div>
     </div>
