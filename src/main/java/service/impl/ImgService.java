@@ -34,4 +34,10 @@ public class ImgService implements IImgService {
 
         return imgMapper.deletePastImg(dMap, img_colNm);
     }
+
+    @Override
+    public int imgCheck(Map<String, Object> dMap) {
+
+        return imgMapper.imgCheck(dMap, img_colNm);
+    }
 }

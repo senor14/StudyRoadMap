@@ -10,4 +10,6 @@ public interface IImgService {
     List<Map<String, String>> getImgList(Map<String, Object> iMap);
 
     List<Map<String, String>> deletePastImg(Map<String, Object> dMap);
+
+    int imgCheck(Map<String, Object> dMap);
 }

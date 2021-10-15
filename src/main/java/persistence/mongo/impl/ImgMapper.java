@@ -139,4 +139,19 @@ public class ImgMapper implements IImgMapper {
 
         return rList;
     }
+
+    @Override
+    public int imgCheck(Map<String, Object> dMap, String img_colNm) {
+        log.info("imgCheck start");
+
+        MongoCollection<Document> collection = mongodb.getCollection(img_colNm);
+
+        long count = collection.countDocuments(new Document(dMap));
+
+        int res = Long.valueOf(count).intValue();
+
+        log.info("imgCheck end");
+
+        return res;
+    }
 }

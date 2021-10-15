@@ -54,20 +54,26 @@ public class ImgController {
 
         Map<String, Object> dMap = new HashMap<>();
 
-        dMap.put("userUuid" , userUuid);
-        dMap.put("orgFileName" , "roadMapCapture.png");
+        dMap.put("userUuid", userUuid);
+        dMap.put("orgFileName", "roadMapCapture.png");
 
-        List<Map<String, String>> rList = imgService.deletePastImg(dMap);
+        // 이미지 파일 경로가 데이터베이스에 존재하는지 조회
+        int imgCheck = imgService.imgCheck(dMap);
 
-        File file = new File(rList.get(0).get("saveFilePath") + "/" + rList.get(0).get("saveFileName"));
-        if (file.exists()) {
-            if (file.delete()) {
-                log.info("파일삭제 성공");
+        // 조회 결과에 따라 삭제하거나 넘어감
+        if (imgCheck > 0) {
+            List<Map<String, String>> rList = imgService.deletePastImg(dMap);
+
+            File file = new File(rList.get(0).get("saveFilePath") + "/" + rList.get(0).get("saveFileName"));
+            if (file.exists()) {
+                if (file.delete()) {
+                    log.info("파일삭제 성공");
+                } else {
+                    log.info("파일삭제 실패");
+                }
             } else {
-                log.info("파일삭제 실패");
+                log.info("파일이 존재하지 않습니다.");
             }
-        } else {
-            log.info("파일이 존재하지 않습니다.");
         }
 
         String binaryData = request.getParameter("imgSrc");
@@ -224,20 +230,26 @@ public class ImgController {
 
         Map<String, Object> dMap = new HashMap<>();
 
-        dMap.put("userUuid" , userUuid);
-        dMap.put("orgFileName" , "mindMapCapture.png");
+        dMap.put("userUuid", userUuid);
+        dMap.put("orgFileName", "mindMapCapture.png");
 
-        List<Map<String, String>> rList = imgService.deletePastImg(dMap);
+        // 이미지 파일 경로가 데이터베이스에 존재하는지 조회
+        int imgCheck = imgService.imgCheck(dMap);
 
-        File file = new File(rList.get(0).get("saveFilePath") + "/" + rList.get(0).get("saveFileName"));
-        if (file.exists()) {
-            if (file.delete()) {
-                log.info("파일삭제 성공");
+        // 조회 결과에 따라 삭제하거나 넘어감
+        if (imgCheck > 0) {
+            List<Map<String, String>> rList = imgService.deletePastImg(dMap);
+
+            File file = new File(rList.get(0).get("saveFilePath") + "/" + rList.get(0).get("saveFileName"));
+            if (file.exists()) {
+                if (file.delete()) {
+                    log.info("파일삭제 성공");
+                } else {
+                    log.info("파일삭제 실패");
+                }
             } else {
-                log.info("파일삭제 실패");
+                log.info("파일이 존재하지 않습니다.");
             }
-        } else {
-            log.info("파일이 존재하지 않습니다.");
         }
 
         String binaryData = request.getParameter("imgSrc");
@@ -383,8 +395,8 @@ public class ImgController {
         log.info("getMindMapImage end");
     }
 
-    @RequestMapping(value="getMindImg")
-    public String getMindImg(){
+    @RequestMapping(value = "getMindImg")
+    public String getMindImg() {
 
         return "/Main/getImg";
     }
