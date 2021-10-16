@@ -84,7 +84,8 @@ public class UserController {
         } else {
             session.setAttribute("SS_USER_ID", EncryptUtil.decAES128CBC(rList.get(0).get("userId")));
             session.setAttribute("SS_USER_UUID", rList.get(0).get("userUuid"));
-
+            log.info("session_SS_USER_ID: "+session.getAttribute("SS_USER_ID"));
+            log.info("session_SS_USER_UUID: "+session.getAttribute("SS_USER_UUID"));
             model.addAttribute("url", "/RoadMap/LoginOrSignUp");
 
             log.info("RoadMap/LoginProc end");

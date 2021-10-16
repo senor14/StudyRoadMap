@@ -59,7 +59,7 @@ public class StudyMindService implements IStudyMindService {
 
         StudyMindData save = mongoTemplate.insert(mindData, "StudyMindData");
 
-        log.info("save: " + save.toString());
+        log.info("save: " + save);
         if (save == null || save.equals("")) {
             res = 1;
         }
@@ -79,7 +79,7 @@ public class StudyMindService implements IStudyMindService {
 
         StudyMindNodeData save = mongoTemplate.insert(nodeData, "StudyMindNodeData");
 
-        log.info("save: " + save.toString());
+        log.info("save: " + save);
         if (save == null || save.equals("")) {
             res = 1;
         }

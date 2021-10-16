@@ -1,28 +1,27 @@
-package domain;
+package vo;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 @Data
-@Document(collection = "StudyRoadNodeData")
-public class StudyRoadNodeData {
+public class RequestNodeData {
 
-    @Id
     private String nodeId;
     private String roadId;
     private String canvasClass;
     private String category;
     private String key;
-    private String text;
+    private String laneKey;
+    private String nodeText;
+    private String diagramText;
+    private String categoryText;
+    private String laneText;
     private String isGroup;
     private String group;
-    private String color;
+    private String categoryColor;
+    private String laneColor;
     private String size;
     private String loc;
     private String from;
     private String to;
-
+    private String type;
 }
