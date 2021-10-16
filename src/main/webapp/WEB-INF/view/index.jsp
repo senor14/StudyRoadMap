@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/add_button.css">
 </head>
 
 <body>
@@ -50,8 +51,8 @@
                             <h1 class="mb-4"><a href="index.jsp" class="logo">Portfolio</a></h1>
                             <ul>
                                 <li class="active"><a href="index.html"><span>Home</span></a></li>
-                                <li class="active"><a><span onclick="fnOpenModal('#m2-o');">비밀번호 변경</span></a></li>
-                                <li class="active"><a><span onclick="fnOpenModal('#m3-o');">회원 탈퇴</span></a></li>
+                                <li class="active"><a onclick="fnOpenModal('#m2-o');" style="cursor: pointer"><span >비밀번호 변경</span></a></li>
+                                <li class="active"><a onclick="fnOpenModal('#m3-o');" style="cursor: pointer"><span >회원 탈퇴</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -83,7 +84,6 @@
                     <h1 class="modal__title">회원 탈퇴</h1>
                     <div>
                         <form action="/RoadMap/userWithdrawalProc" method="post" onsubmit="return del_check();" id="withdrawal_form">
-                            <span>Withdrawal Check</span><<br>
                             <span>회원 탈퇴를 누르면 다시 되돌릴 수 없습니다. 탈퇴를 진행하시려면 Account_withdrawal를 입력해주세요.</span><br>
                             <input type="text" name="DeleteCheck" id="DeleteCheck" placeholder="Account_withdrawal" required/><br>
                             <span id="id_find"></span><br>
@@ -117,7 +117,7 @@
                         <div class="col-md-12 ftco-animate text-center">
                             <div class="desc">
                                 <span class="subheading">Study</span>
-                                <h1 style="background-image: url(${pageContext.request.contextPath}/resources/images/bg_1.jpg);">Test</h1>
+                                <h1 style="background-image: url(${pageContext.request.contextPath}/resources/images/bg_1.jpg);">R.M</h1>
                                 <span class="subheading-2">Career</span>
                             </div>
                         </div>
@@ -134,9 +134,6 @@
                         <%--                                                    </a>--%>
                     </div>
                     <%}%>
-                </div>
-                <div>
-                    <button id="roadmap__add" onclick="fnOpenModal('#m4-o')">바톤</button>
                 </div>
                 <div class="container-fluid px-0">
                     <div class="row no-gutters">
@@ -164,13 +161,28 @@
                                         <div class="wrapper_tabcontent">
                                             <div id="Schedule" class="tabcontent active">
                                                 <h3>Schedule</h3>
-                                                <p>London is the capital of Great Britain. It is one of the greatest cities in the world. It is an important business and financial centre. It is an intellectual centre, too. Everywhere in London, there are open spaces: Hyde Park and Regent Park are the largest. The City is the oldest part of London. </p>
+                                                <iframe src="/calendar" style="width:100%; border: 0px; height:620px; overflow:hidden;"></iframe>
                                             </div>
-
                                             <div id="Study_MindMap" class="tabcontent">
                                                 <h3>Study MindMap</h3>
+                                                <%-- 급하게 만들어서 스타일 그대로 넣었으니 클래스로 바꿔서 써주세요 --%>
+                                                <%-- 자신의 기존 스터디 마인드 맵 정보와 신규 스터디 마인드맵 버튼 들어가는 곳 --%>
+                                                <div class=""  style="display:grid; grid-template-columns: repeat(2, 1fr);word-wrap: break-word; height:620px; overflow:auto;">
 
+                                                    <%-- 기존 마인드맵 접속 버튼 --%>
+                                                    <div style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-image: url('http://www.veritas-a.com/news/photo/202009/338933_238918_1356.jpg')">
+                                                        <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">커리어 로드맵 이름</span>
+                                                    </div>
 
+                                                    <%-- 기존거 조회 후 마지막에 이 버튼 추가해 주면 될거 같음 --%>
+                                                    <%-- 신규 마인드맵 버튼 --%>
+                                                    <div style="margin:5%; display: flex;align-items: center;justify-content: center;  border-radius: 5%;height: 200px;border: 3px dashed gray;">
+                                                        <div class="button-container">
+                                                            <a href="javascript:fnOpenModal('#m4-o')" class="btnn"><span>+</span></a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
                                             </div>
 
                                             <div id="Career_RoadMap" class="tabcontent">
@@ -180,7 +192,7 @@
 
                                             <div id="Community" class="tabcontent">
                                                 <h3>Community</h3>
-                                                <p>Madrid is in the middle of Spain, in the Community of Madrid. The Community is a large area that includes the city as well as small towns and villages outside the city. 7 million people live in the Community. More than 3 million live in the city itself.
+                                                <iframe src="/community" style="width:100%; border: 0px; height:620px; overflow:hidden;"></iframe>
                                                 </p>
                                             </div>
                                         </div>
@@ -215,84 +227,6 @@
 
             <footer class="ftco-footer ftco-section img">
                 <div class="overlay"></div>
-                <div class="container">
-                    <div class="row mb-5">
-                        <div class="col-lg-3">
-                            <div class="ftco-footer-widget mb-4">
-                                <h2 class="ftco-heading-2 logo"><a href="index.html">Erase</a></h2>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                                    <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                                    <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="ftco-footer-widget mb-4">
-                                <h2 class="ftco-heading-2">Recent Blog</h2>
-                                <div class="block-21 mb-4 d-flex">
-                                    <a class="blog-img mr-4" style="background-image: url(${pageContext.request.contextPath}/resources/images/image_1.jpg);"></a>
-                                    <div class="text">
-                                        <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
-                                        <div class="meta">
-                                            <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                                            <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                            <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="block-21 mb-4 d-flex">
-                                    <a class="blog-img mr-4" style="background-image: url(${pageContext.request.contextPath}/resources/images/image_2.jpg);"></a>
-                                    <div class="text">
-                                        <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
-                                        <div class="meta">
-                                            <div><a href="#"><span class="icon-calendar"></span> July 12, 2018</a></div>
-                                            <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                            <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="ftco-footer-widget mb-4 ml-md-4">
-                                <h2 class="ftco-heading-2">Site Links</h2>
-                                <ul class="list-unstyled">
-                                    <li><a href="#" class="py-2 d-block">Home</a></li>
-                                    <li><a href="#" class="py-2 d-block">About</a></li>
-                                    <li><a href="#" class="py-2 d-block">Model</a></li>
-                                    <li><a href="#" class="py-2 d-block">Services</a></li>
-                                    <li><a href="#" class="py-2 d-block">Blog</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="ftco-footer-widget mb-4">
-                                <h2 class="ftco-heading-2">Have a Questions?</h2>
-                                <div class="block-23 mb-3">
-                                    <ul>
-                                        <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                        <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                                        <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-
-                            <p>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>
-                                    document.write(new Date().getFullYear());
-                                </script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </p>
-                        </div>
-                    </div>
-                </div>
             </footer>
 
             <!-- loader -->
