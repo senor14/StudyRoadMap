@@ -2,6 +2,7 @@ package controller;
 
 import static util.CmmUtil.nvl;
 
+import com.sun.corba.se.impl.orbutil.graph.NodeData;
 import domain.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,11 +187,11 @@ public class RoadMapController {
             laneData.setNodeId(randomNodeId);
             laneData.setRoadId(roadId);
             laneData.setCanvasClass("Lane");
-            laneData.setKey(randomNodeId);
-            laneData.setText(nvl(request.getParameter("text")));
+            laneData.setKey(nvl(request.getParameter("laneKey")));
+            laneData.setText(nvl(request.getParameter("laneText")));
             laneData.setIsGroup("true");
             laneData.setGroup("Pool");
-            laneData.setColor(nvl(request.getParameter("color")));
+            laneData.setColor(nvl(request.getParameter("laneColor")));
 
             // 사이즈랑 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
 //            laneData.setSize("110 200");
@@ -209,10 +210,10 @@ public class RoadMapController {
             nodeData.setCanvasClass("Node");
             nodeData.setCategory(nvl(request.getParameter("category")));
             nodeData.setKey(randomNodeId);
-            nodeData.setText(nvl(request.getParameter("text")));
+            nodeData.setText(nvl(request.getParameter("nodeText")));
 
             // 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
-//            NodeData.setLoc("-162.86665532820518 122.60000347951444");
+            nodeData.setLoc(nvl(request.getParameter("loc")));
 
             log.info("nodeData: "+ nodeData);
 
@@ -273,8 +274,8 @@ public class RoadMapController {
             categoryData.setNodeId(randomNodeId);
             categoryData.setRoadId(roadId);
             categoryData.setCanvasClass("Category");
-            categoryData.setText(nvl(request.getParameter("text")));
-            categoryData.setColor(nvl(request.getParameter("color")));
+            categoryData.setText(nvl(request.getParameter("categoryText")));
+            categoryData.setColor(nvl(request.getParameter("categoryColor")));
 
             log.info("categoryData: "+ categoryData);
 

@@ -24,7 +24,8 @@
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />--%>
     <!-- Copyright 1998-2021 by Northwoods Software Corporation. -->
     <title>Page Flow</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--%>
+    <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 </head>
 <body>
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
@@ -49,10 +50,6 @@
     function hrefMindMap() {
         location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText)+'/nodes/'+(document.getElementById('modal__nodeId').innerText);
     }
-    function loadNodeInfo() {
-        document.getElementById('modal__node__text').innerText = document.getElementById('modal__text').innerText;
-        document.getElementById('modal__node__category').value = document.getElementById('modal__category').innerText;
-    }
 </script>
 
 <%-- 노드 클릭시 정보 모달 - 수정 (노드) [저장, 취소] {category, text}--%>
@@ -71,9 +68,6 @@
 </div>
 <%-- modal 2 끝 --%>
 
-<script>
-
-</script>
 
 <%-- 노드 클릭시 정보 모달 (다이어그램) [수정, 취소] {text} --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
@@ -101,7 +95,7 @@
 </div>
 <%-- modal 4 끝 --%>
 
-<%-- 노드 클릭시 정보 모달 (레인) [수정, 취소] {key, text, color} --%>
+<%-- 노드 클릭시 정보 모달 (레인) [수정, 삭제, 취소] {key, text, color} --%>
 <div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
@@ -114,6 +108,7 @@
             <input type="text" class="modal__lane__color" id="modal__lane__color" readonly />
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m7-o');">수정</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
         <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >취소</button>
         <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
     </div>
@@ -149,6 +144,7 @@
             <input type="text" class="modal__category__color" id="modal__category__color" readonly>
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m9-o');">수정</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
         <button class="modal__btn" onclick="fnCloseModal('#m8-o');">취소</button>
         <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
     </div>
@@ -175,9 +171,12 @@
 <div class="modal-container" id="m10-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
+            <h1>과목추가</h1>
+        </div>
+        <div>
             제목:<input type="text" id="modal__node__text-add">
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">확인</button>
+        <button class="modal__btn" onclick="insertNodeData('Node');">확인</button>
     </div>
 </div>
 <%-- modal 9 끝 --%>
@@ -194,7 +193,7 @@
         <div>
             색:<input type="text" id="modal__lane__color-add" />
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">확인</button>
+        <button class="modal__btn" onclick="insertNodeData('Lane');">확인</button>
         <button class="modal__btn" onclick="fnCloseModal('#m11-o');" >취소</button>
         <a onclick="fnCloseModal('#m11-o');" class="link-2"></a>
     </div>
@@ -205,12 +204,12 @@
 <div class="modal-container" id="m12-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            <h1  id="modal__category__text-add">카테고리</h1>
+            카테고리 제목:<input type="text"  id="modal__category__text-add"/>
         </div>
         <div>
             색:<input type="text" id="modal__category__color-add" />
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">확인</button>
+        <button class="modal__btn" onclick="insertNodeData('Category');">확인</button>
         <button class="modal__btn" onclick="fnCloseModal('#m12-o');" >취소</button>
         <a onclick="fnCloseModal('#m12-o');" class="link-2"></a>
     </div>
@@ -270,10 +269,11 @@
     <!-- * * * * * * * * * * * * * -->
     <!-- Start of GoJS sample code -->
 
-
-
     <script src="${pageContext.request.contextPath}/resources/js/study_roadMap/go.js"></script>
     <div class="p-4 w-full">
+        <script>
+            document.getElementById('modal__roadId').innerText = "<%=roadMapInfo.getRoadId()%>";
+        </script>
         <script id="code">
             var MINLENGTH = 200; // this controls the minimum length of any swimlane
             var MINBREADTH = 20; // this controls the minimum breadth of any non-collapsed swimlane
@@ -459,6 +459,7 @@
             };
             // end PoolLayout class
 
+            let palette;
             function init() {
                 var $ = go.GraphObject.make; // for conciseness in defining templates
 
@@ -539,6 +540,8 @@
                     "undoManager.isEnabled": true,
                 });
 
+                myDiagram.model.isReadOnly = true;
+
                 function stayInGroup(part, pt, gridpt) {
                     // don't constrain top-level nodes
                     var grp = part.containingGroup;
@@ -585,13 +588,12 @@
                 // "/roadmaps/{roadId}/nodes/{canvasClass}"
                 // 카테고리 드래그앤드롭시
                 myDiagram.addDiagramListener("ExternalObjectsDropped", function (e) {
-                  clearAddInfo();
+                    clearAddInfo();
                     let droppedOb = e.subject.iterator.tg.af.key.ob;
                     getNodeDataByAjax(droppedOb);
-                  console.log('ExternalObjectsDropped');
-                  console.log(droppedOb);
-                  myDiagram.model.isReadOnly = true;
-
+                    console.log('ExternalObjectsDropped');
+                    myDiagram.model.isReadOnly = true;
+                    fnOpenModal('#m10-o');
                 });
 
                 // 엣지추가시
@@ -611,13 +613,14 @@
                 myDiagram.addDiagramListener("SelectionMoved", function (e) {
                   console.log('SelectionMoved');
                   console.log(e.subject.ga.af.key.ob);
+                  updateNodeData();
                 });
 
                 // 노드, 레인, 다이어그램 클릭시
                 myDiagram.addDiagramListener("ObjectSingleClicked", function (e) {
                     // 딜리트, 복사, 언두 제거
-                    relayoutLanes();
-                    relayoutDiagram();
+                    // relayoutLanes();
+                    // relayoutDiagram();
                     myDiagram.model.isReadOnly = true;
                     let part = e.subject.part;
                     console.log("ObjectSingleClicked");
@@ -951,52 +954,52 @@
 
 
                 // Undesired events have a special adornment that allows adding additional "reasons"
-                var UndesiredEventAdornment = $(
-                    go.Adornment,
-                    "Spot",
-                    $(
-                        go.Panel,
-                        "Auto",
-                        $(go.Shape, {
-                            fill: null,
-                            stroke: "dodgerblue",
-                            strokeWidth: 4,
-                        }),
-                        $(go.Placeholder)
-                    ),
-                    // the button to create a "next" node, at the top-right corner
-                    $(
-                        "Button",
-                        {
-                            alignment: go.Spot.BottomRight,
-                            click: addReason,
-                        }, // this function is defined below
-                        new go.Binding("visible", "", function (a) {
-                            return !a.diagram.isReadOnly;
-                        }).ofObject(),
-                        $(go.Shape, "TriangleDown", {
-                            desiredSize: new go.Size(10, 10),
-                        })
-                    )
-                );
+                // var UndesiredEventAdornment = $(
+                //     go.Adornment,
+                //     "Spot",
+                //     $(
+                //         go.Panel,
+                //         "Auto",
+                //         $(go.Shape, {
+                //             fill: null,
+                //             stroke: "dodgerblue",
+                //             strokeWidth: 4,
+                //         }),
+                //         $(go.Placeholder)
+                //     ),
+                //     // the button to create a "next" node, at the top-right corner
+                //     $(
+                //         "Button",
+                //         {
+                //             alignment: go.Spot.BottomRight,
+                //             click: addReason,
+                //         }, // this function is defined below
+                //         new go.Binding("visible", "", function (a) {
+                //             return !a.diagram.isReadOnly;
+                //         }).ofObject(),
+                //         $(go.Shape, "TriangleDown", {
+                //             desiredSize: new go.Size(10, 10),
+                //         })
+                //     )
+                // );
 
-                var reasonTemplate = $(
-                    go.Panel,
-                    "Horizontal",
-                    $(
-                        go.TextBlock,
-                        "",
-                        {
-                            margin: new go.Margin(4, 0, 0, 0),
-                            maxSize: new go.Size(200, NaN),
-                            wrap: go.TextBlock.WrapFit,
-                            stroke: "whitesmoke",
-                            editable: false,
-                            font: smallfont,
-                        },
-                        new go.Binding("text", "text").makeTwoWay()
-                    )
-                );
+                // var reasonTemplate = $(
+                //     go.Panel,
+                //     "Horizontal",
+                //     $(
+                //         go.TextBlock,
+                //         "",
+                //         {
+                //             margin: new go.Margin(4, 0, 0, 0),
+                //             maxSize: new go.Size(200, NaN),
+                //             wrap: go.TextBlock.WrapFit,
+                //             stroke: "whitesmoke",
+                //             editable: false,
+                //             font: smallfont,
+                //         },
+                //         new go.Binding("text", "text").makeTwoWay()
+                //     )
+                // );
 
                 // myDiagram.nodeTemplateMap.add("UndesiredEvent",
                 //   $(go.Node, "Auto",
@@ -1174,7 +1177,6 @@
 <%--                        <%}%>--%>
                     ]
                 );
-                // myDiagram.model.isReadOnly = true;
 
                 relayoutLanes();
 
@@ -1187,7 +1189,9 @@
                     )
                 );
 
-                var palette = $(
+                myDiagram.model.isReadOnly = true;
+
+                palette = $(
                     go.Palette,
                     "myPaletteDiv", // create a new Palette in the HTML DIV element
                     {
@@ -1198,18 +1202,24 @@
                 );
 
                 // 카테고리 노드 클릭시
-                ///*
+
                 palette.addDiagramListener("ObjectSingleClicked", function (e) {
                     let part = e.subject.part;
                     console.log("ObjectSingleClicked");
                     console.log(part.ob);
                     console.log("palette.model.nodeDataArray");
                     console.log(palette.model.nodeDataArray);
-                    let pda = palette.model.nodeDataArray;
+                    // let pda = palette.model.nodeDataArray;
+                    // pda.push({
+                    //     key: "key"
+                    // })
+                    // console.log(pda);
+                    // savePalette();
+                    // loadPalette();
                     clearAddInfo();
                     getNodeDataByAjax(part.ob);
                 });
-                //*/
+
 
                 // 카테고리 노드 더블클릭시
                 ///*
@@ -1227,6 +1237,7 @@
                 palette.addDiagramListener("SelectionMoved", function (e) {
                     console.log('SelectionMoved');
                     console.log(e.subject.ga.af.key.ob);
+                    up
                 });
 
                 // 팔레트에 포커스를 얻었을 때 다이어그램 읽기전용 해제
@@ -1247,6 +1258,7 @@
                                 roadId: "<%=s.getRoadId()%>",
                                 canvasClass: "<%=s.getCanvasClass()%>",
                                 category: "<%=s.getText()%>",
+                                text: "<%=s.getText()%>",
                                 key: "<%=s.getNodeId()%>",
                                 color: "<%=s.getColor()%>",
                             },
@@ -1255,21 +1267,21 @@
                 ];
 
                 // read in the JSON-format data from the "mySavedModel" element
-                // load();
-                // layout();
-                // function savePalette() {
-                //     document.getElementById("mySavedModelPalette").value =
-                //         palette.model.toJson();
-                //     console.log('save');
-                //     console.log(palette.model.nodeDataArray);
-                //     palette.isModified = false;
-                // }
-                // function loadPalette() {
-                //     palette.model = go.Model.fromJson(
-                //         document.getElementById("mySavedModelPalette").value
-                //     );
-                //     palette.delayInitialization(relayoutDiagram);
-                // }
+                load();
+                layout();
+                function savePalette() {
+                    document.getElementById("mySavedModelPalette").value =
+                        palette.model.toJson();
+                    console.log('save');
+                    console.log(palette.model.nodeDataArray);
+                    palette.isModified = false;
+                }
+                function loadPalette() {
+                    palette.model = go.Model.fromJson(
+                        document.getElementById("mySavedModelPalette").value
+                    );
+                    palette.delayInitialization(relayoutDiagram);
+                }
             }
 
             myDiagram = $(go.Diagram, "myDiagramDiv", {
@@ -1298,13 +1310,13 @@
                 },
 
                 // a clipboard copied node is pasted into the original node's group (i.e. lane).
-                "commandHandler.copiesGroupKey": true,
+                "commandHandler.copiesGroupKey": false,
                 // automatically re-layout the swim lanes after dragging the selection
                 SelectionMoved: relayoutDiagram, // this DiagramEvent listener is
                 SelectionCopied: relayoutDiagram, // defined above
                 "animationManager.isEnabled": false,
                 // enable undo & redo
-                "undoManager.isEnabled": true,
+                "undoManager.isEnabled": false,
                 // have mouse wheel events zoom in and out instead of scroll up and down
                 "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
                 initialAutoScale: go.Diagram.Uniform,
@@ -1314,7 +1326,7 @@
                     isOngoing: false,
                     layerSpacing: 50,
                 }),
-                "undoManager.isEnabled": true,
+                // "undoManager.isEnabled": true,
             });
 
             palette = $(
@@ -1335,9 +1347,11 @@
                 palette.isModified = false;
             }
             function loadPalette() {
+                console.log("로드")
                 palette.model = go.Model.fromJson(
                     document.getElementById("mySavedModel").value
                 );
+                console.log('로드2')
                 palette.delayInitialization(relayoutDiagram);
             }
 
@@ -1358,6 +1372,120 @@
                 myDiagram.delayInitialization(relayoutDiagram);
             }
             window.addEventListener("DOMContentLoaded", init);
+
+            // 노드 추가
+            function insertNodeData(canvasClass) {
+                let query = {
+                    "nodeText": $('#modal__node__text-add').val(),
+                    "laneText": $('#modal__lane__text-add').val(),
+                    "laneKey": $('#modal__lane__key-add').val(),
+                    "laneColor": $('#modal__lane__color-add').val(),
+                    "categoryText": $('#modal__category__text-add').val(),
+                    "categoryColor": $('#modal__category__color-add').val(),
+                    "loc": $('#modal__loc').text(),
+                    "category": $('#modal__category').text()
+                };
+                console.log("nodeText:",query.nodeText);
+                $.ajax({
+                    url: "/roadmaps/"+document.getElementById('modal__roadId').innerText
+                        +"/nodes/"+canvasClass,
+                    type: "post",
+                    data: query,
+                    success: function (data) {
+                        if (data) {
+                            if (data.canvasClass === "Category") {
+
+                                myDiagram.nodeTemplateMap.add(
+                                    data.text,
+                                    $(
+                                        go.Node,
+                                        "Auto",
+                                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+                                            go.Point.stringify
+                                        ),
+                                        $(go.Shape, "RoundedRectangle", {
+                                            fill: data.color,
+                                            portId: data.text,
+                                            fromLinkable: true,
+                                            cursor: "pointer",
+                                            toLinkable: true,
+                                            fromEndSegmentLength: 40,
+                                        }),
+                                        $(
+                                            go.TextBlock,
+                                            data.text,
+                                            textStyle(),
+                                            new go.Binding("text", "text").makeTwoWay()
+                                        )
+                                    )
+                                );
+                                palette.startTransaction();
+                                palette.model.nodeDataArray.push({
+                                    nodeId: data.nodeId,
+                                    roadId: data.roadId,
+                                    canvasClass: data.canvasClass,
+                                    category: data.text,
+                                    text: data.text,
+                                    key: data.key,
+                                    color: data.color
+                                })
+                                palette.commitTransaction();
+                                location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText);
+                            } else if (data.canvasClass === "Node") {
+                                for (let d in myDiagram.model.nodeDataArray) {
+                                    if (myDiagram.model.nodeDataArray[d].nodeId
+                                        === document.getElementById('modal__nodeId').innerText) {
+
+                                        myDiagram.model.nodeDataArray[d].text = query.nodeText;
+                                        myDiagram.model.nodeDataArray[d].canvasClass = canvasClass;
+                                        myDiagram.model.nodeDataArray[d].category = query.category;
+                                        myDiagram.model.nodeDataArray[d].key = data.key;
+                                        myDiagram.model.nodeDataArray[d].nodeId = data.nodeId;
+
+                                        break;
+                                    }
+                                }
+                            } else if (data.canvasClass === "Lane") {
+                                myDiagram.model.nodeDataArray.push({
+                                    nodeId: data.nodeId,
+                                    roadId: data.roadId,
+                                    canvasClass: data.canvasClass,
+                                    key: data.key,
+                                    text: data.text,
+                                    isGroup: "true",
+                                    group: data.group,
+                                    color: data.color,
+                                    size: data.size,
+                                    loc: data.loc
+                                });
+                            }
+                            save();
+                            load();
+                            // savePalette();
+                            // loadPalette();
+                            fnCloseModal('#m10-o');
+                            fnCloseModal('#m11-o');
+                            fnCloseModal('#m12-o');
+
+                        } else {
+                            console.log("data 이상");
+                        }
+                    }
+                });
+            }
+
+            var bigfont = "bold 13pt Helvetica, Arial, sans-serif";
+            var smallfont = "bold 11pt Helvetica, Arial, sans-serif";
+
+            function textStyle() {
+                return {
+                    margin: 6,
+                    wrap: go.TextBlock.WrapFit,
+                    textAlign: "center",
+                    editable: false,
+                    font: bigfont,
+                };
+            }
 
             // 노드 정보 업데이트
             function updateNodeData() {
@@ -1387,9 +1515,47 @@
                         if (data) {
                             if (data.canvasClass === "Category") {
                                 console.log("palette.model",palette.model)
+
+                                myDiagram.nodeTemplateMap.add(
+                                    data.text,
+                                    $(
+                                        go.Node,
+                                        "Auto",
+                                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
+                                            go.Point.stringify
+                                        ),
+                                        $(go.Shape, "RoundedRectangle", {
+                                            fill: data.color,
+                                            portId: data.text,
+                                            fromLinkable: true,
+                                            cursor: "pointer",
+                                            toLinkable: true,
+                                            fromEndSegmentLength: 40,
+                                        }),
+                                        $(
+                                            go.TextBlock,
+                                            data.text,
+                                            textStyle(),
+                                            new go.Binding("text", "text").makeTwoWay()
+                                        )
+                                    )
+                                );
+
+                                palette.startTransaction();
                                 for (let d in palette.model.nodeDataArray) {
                                     console.log("palette.model.nodeDataArray[d].aaa", palette.model.nodeDataArray[d]);
+                                    if (palette.model.nodeDataArray[d].nodeId
+                                        === document.getElementById('modal__nodeId').innerText) {
+                                        console.log("찾았다.")
+                                        palette.model.nodeDataArray[d].category = query.categoryText;
+                                        palette.model.nodeDataArray[d].color = query.categoryColor;
+                                        palette.model.nodeDataArray[d].text = query.categoryText;
+                                        break;
+                                    }
                                 }
+                                palette.commitTransaction();
+                                location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText);
+
                             } else {
                                 for (let d in myDiagram.model.nodeDataArray) {
                                     console.log("myDiagram.model.nodeDataArray[d].nodeId", myDiagram.model.nodeDataArray[d].nodeId)
@@ -1405,16 +1571,16 @@
                                             myDiagram.model.nodeDataArray[d].text = query.laneText;
                                             myDiagram.model.nodeDataArray[d].key = query.laneKey;
                                             myDiagram.model.nodeDataArray[d].color = query.laneColor;
-                                        } else if (data.canvasClass === "Category") {
-                                            myDiagram.model.nodeDataArray[d].text = query.categoryText;
-                                            myDiagram.model.nodeDataArray[d].color = query.categoryColor;
                                         }
                                         break;
                                     }
                                 }
+
                             }
                             save();
                             load();
+                            // savePalette();
+                            // loadPalette();
                             fnCloseModal('#m3-o');
                             fnCloseModal('#m2-o');
                             fnCloseModal('#m5-o');
@@ -1438,6 +1604,7 @@
                     type: "delete",
                     success: function (data) {
                         if (data===0) {
+                            if(document.getElementById('modal__canvasClass')==='Category') palette.startTransaction();
                             for (let d= myDiagram.model.nodeDataArray.length-1; d>=0; d--) {
                                 if (myDiagram.model.nodeDataArray[d].nodeId
                                     === document.getElementById('modal__nodeId').innerText){
@@ -1449,18 +1616,22 @@
                                     break;
                                 }
                             }
+                            if(document.getElementById('modal__canvasClass')==='Category') {
+                                palette.commitTransaction();
+                                location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText);
+                            }
                             save();
                             load();
-                            // })
                             fnCloseModal('#m13-o');
                             fnCloseModal('#m2-o');
+                            fnCloseModal('#m6-o');
+                            fnCloseModal('#m8-o');
                         } else {
                             console.log("data 이상")
                         }
                     }
                 });
             }
-
 
             // 노드 정보 히든에 숨기기
             function getNodeDataByAjax(target) {
@@ -1500,7 +1671,7 @@
             // 히든 내용 지우기
             function clearAddInfo() {
                 document.getElementById("modal__nodeId").innerText = "";
-                document.getElementById("modal__roadId").innerText = "";
+                // document.getElementById("modal__roadId").innerText = "";
                 document.getElementById("modal__canvasClass").innerText = "";
                 document.getElementById("modal__category").innerText = "";
                 document.getElementById("modal__key").innerText = "";
@@ -1516,7 +1687,6 @@
             // 모달 오픈
             function fnOpenModal(id){
                 // $('#m2-o').css("display", "flex");
-                console.log(id);
                 $(id).css("display", "flex");
             }
             // 모달 종료
@@ -1524,7 +1694,6 @@
                 // $('#m2-o').css("display", "none");
                 $(id).css("display", "none");
                 clearAddInfo();
-
             }
 
         </script>
@@ -1549,11 +1718,10 @@
             </div>
             <br />
             <button id="SaveButton" onclick="save()">Save</button>
+            <button onclick="fnOpenModal('#m12-o')">카테고리추가</button>
             <button onclick="load()">Load</button>
             <button onclick="layout()">Layout</button>
-<%--            <div>--%>
-<%--                <textarea id="mySavedModelPalette" style="width: 100%; height: 300px" />--%>
-<%--            </div>--%>
+            <button onclick="fnOpenModal('#m11-o')">레인추가</button>
             <div>
                 <textarea id="mySavedModel" style="width: 100%; height: 300px" />
             </div>
