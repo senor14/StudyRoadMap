@@ -23,4 +23,5 @@ public class RequestNodeData {
     private String loc;
     private String from;
     private String to;
+    private String type;
 }
