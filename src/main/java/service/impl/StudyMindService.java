@@ -46,7 +46,6 @@ public class StudyMindService implements IStudyMindService {
         log.info("results: "+results.toString());
         log.info(this.getClass().getName()+".getMindMapNode End!");
 
-
         return results;
     }
 

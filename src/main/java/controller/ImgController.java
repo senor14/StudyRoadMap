@@ -1,5 +1,6 @@
 package controller;
 
+import static util.CmmUtil.nvl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -50,7 +51,8 @@ public class ImgController {
         log.info("FileUpload start");
 
         // 이미지 파일 저장하는 사용자 UUID
-        String userUuid = (String) session.getAttribute("SS_USER_UUID");
+//        String userUuid = (String) session.getAttribute("SS_USER_UUID");
+        String userUuid = nvl(request.getParameter("roadId"));
 
         Map<String, Object> dMap = new HashMap<>();
 
@@ -126,7 +128,7 @@ public class ImgController {
         // 이미지 리사이징
         InputStream inputStream = new ByteArrayInputStream(inputFile);
 
-        int width = 500; // 리사이즈할 가로길이
+        int width = 1300; // 리사이즈할 가로길이
         int height = 500; // 리사이즈한 세로길이
 
         BufferedImage resizedImage = ImageResizeUtil.resize(inputStream, width, height);
@@ -227,6 +229,7 @@ public class ImgController {
 
         // 이미지 파일 저장하는 사용자 UUID
         String userUuid = (String) session.getAttribute("SS_USER_UUID");
+
 
         Map<String, Object> dMap = new HashMap<>();
 

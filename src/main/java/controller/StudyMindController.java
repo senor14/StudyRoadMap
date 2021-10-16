@@ -142,14 +142,6 @@ public class StudyMindController {
 
         log.info(this.getClass().getName() + ".insertNodeData Start!");
 
-        log.info("nvl(request.getParameter(\"roadId\")): "+nvl(request.getParameter("roadId")));
-        log.info("nvl(request.getParameter(\"nodeId\"))"+nvl(request.getParameter("nodeId")));
-        log.info("nvl(request.getParameter(\"mindLabel\"))"+nvl(request.getParameter("mindLabel")));
-        log.info("nvl(request.getParameter(\"mindContents\"))"+nvl(request.getParameter("mindContents")));
-        log.info("nvl(request.getParameter(\"url\"))"+nvl(request.getParameter("url")));
-        log.info("nvl(request.getParameter(\"bookTitle\"))"+nvl(request.getParameter("bookTitle")));
-        log.info("nvl(request.getParameter(\"bookLink\"))"+nvl(request.getParameter("bookLink")));
-        log.info("nvl(request.getParameter(\"key\"))"+nvl(request.getParameter("key")));
         String randomMindId = UUID.randomUUID().toString();
         log.info("randomMindId: "+randomMindId);
 

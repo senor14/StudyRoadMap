@@ -322,6 +322,8 @@ public class RoadMapController {
 
         if (node.getType().equals("loc")) {
             nodeData.setLoc(node.getLoc());
+        } else if (node.getType().equals("size")) {
+            nodeData.setSize(node.getSize());
         } else {
             if (nodeData.getCanvasClass().equals("Diagram")) {
                 nodeData.setText(node.getDiagramText());
