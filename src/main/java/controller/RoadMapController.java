@@ -131,7 +131,7 @@ public class RoadMapController {
 
         StudyRoadData road = new StudyRoadData();
         road.setRoadId(randomRoadId);
-        road.setUserUuid((String)session.getAttribute("SS_USER_ID"));
+        road.setUserUuid((String)session.getAttribute("SS_USER_UUID"));
         road.setPublicYn(nvl(request.getParameter("publicYn")));
         road.setRoadTitle(nvl(request.getParameter("roadTitle")));
 
@@ -225,8 +225,8 @@ public class RoadMapController {
             mind.setMindId(randomMindId);
             mind.setStudyRoadId(roadId);
             mind.setStudyRoadNodeId(randomNodeId);
-            mind.setMindLabel(nvl(request.getParameter("text")));
-            mind.setMindContents(nvl(request.getParameter("text"))+" 입니다.");
+            mind.setMindLabel(nvl(request.getParameter("nodeText")));
+            mind.setMindContents(nvl(request.getParameter("nodeText"))+" 입니다.");
             mind.setUrl("x");
             mind.setBookTitle("x");
             mind.setBookLink("x");
@@ -241,7 +241,7 @@ public class RoadMapController {
             node.setStudyRoadNodeId(randomNodeId);
             node.setKey(randomMindId);
             node.setGroup("nodes");
-            node.setMindLabel(nvl(request.getParameter("text")));
+            node.setMindLabel(nvl(request.getParameter("nodeText")));
             node.setX("0");
             node.setY("0");
             log.info("node: "+node);

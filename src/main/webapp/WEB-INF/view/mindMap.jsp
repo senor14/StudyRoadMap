@@ -147,7 +147,6 @@
 <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
-
 <%-- 마인드맵 화면 --%>
 <script>
     // cytoscape.use( cola );
@@ -338,10 +337,9 @@
             node.lock();
         });
 
-
-
         console.log("줌")
 
+        console.log(evt.target)
         console.log(evt.target._private)
 
         const target = evt.target._private; //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
@@ -354,6 +352,7 @@
 
         console.log(document.getElementById("modal__x").innerText)
         console.log(document.getElementById("modal__y").innerText)
+        console.log(target.data)
 
         clearNodeInfo();
         getMindDataByAjax(target);
@@ -362,7 +361,7 @@
 
         const layout = cy.makeLayout(layoutConfig);
         layout.run();
-        //
+
         // layout.on("layoutstop", () => {
             cy.nodes().forEach(node => {
                 node.unlock();
@@ -735,12 +734,12 @@
 
         console.log("target.data.group: ",target.data.group)
         if (target.data.group === 'nodes') {
-            $(".modal__title").text(target.data.mindLabel);
-            $(".modal__title").val(target.data.mindLabel);
-            $(".modal__link").val(target.data.url);
-            $(".modal__book__title").val(target.bookTitle);
-            $(".modal__book_link").val(target.bookLink);
-            $(".modal__content").val(target.mindContents);
+            // $(".modal__title").text(target.data.mindLabel);
+            // $(".modal__title").val(target.data.mindLabel);
+            // $(".modal__link").val(target.data.url);
+            // $(".modal__book__title").val(target.bookTitle);
+            // $(".modal__book_link").val(target.bookLink);
+            // $(".modal__content").val(target.mindContents);
             $.ajax({
                 url: "/mindmaps/"+target.data.mindId,
                 type: "get",

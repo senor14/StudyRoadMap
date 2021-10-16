@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import domain.StudyRoadData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import service.IMailService;
+import service.IStudyRoadService;
 import service.IUserService;
 import util.EncryptUtil;
 import util.RandomUtil;
@@ -39,6 +41,9 @@ public class UserController {
     // mail 서비스에 연결하기 위한 객체
     @Resource(name = "MailService")
     IMailService MailService;
+
+    @Resource(name = "StudyRoadService")
+    IStudyRoadService studyRoadService;
 
     // 로그인 페이지
     @RequestMapping(value = "RoadMap/LoginOrSignUp")
@@ -86,7 +91,15 @@ public class UserController {
             session.setAttribute("SS_USER_UUID", rList.get(0).get("userUuid"));
             log.info("session_SS_USER_ID: "+session.getAttribute("SS_USER_ID"));
             log.info("session_SS_USER_UUID: "+session.getAttribute("SS_USER_UUID"));
-            model.addAttribute("url", "/RoadMap/LoginOrSignUp");
+
+            List<StudyRoadData> roadDataInfo = studyRoadService.getRoadDataByUserUuid((String) session.getAttribute("SS_USER_UUID"));
+
+
+            log.info("##################################################");
+            log.info("roadDataInfo: "+roadDataInfo);
+            log.info("##################################################");
+
+            model.addAttribute("url", "/index");
 
             log.info("RoadMap/LoginProc end");
 

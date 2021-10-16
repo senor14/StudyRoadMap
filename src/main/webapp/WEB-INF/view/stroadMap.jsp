@@ -21,6 +21,34 @@
     />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_roadMap/study_roadMap.css">
+
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/animate.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/aos.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flaticon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
+
+
+
+
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />--%>
     <!-- Copyright 1998-2021 by Northwoods Software Corporation. -->
     <title>Page Flow</title>
@@ -1448,6 +1476,23 @@
                                         break;
                                     }
                                 }
+                                // $.ajax({
+                                //     url: "/mindmaps",
+                                //     type: "post",
+                                //     data: {
+                                //         roadId: data.roadId,
+                                //         nodeId: data.nodeId,
+                                //         mindLabel: $('#modal__node__text-add').val(),
+                                //         type: "initial"
+                                //     },
+                                //     success: function (data) {
+                                //         if (data) {
+                                //             console.log("마인드 정보, 노드 생성 완료");
+                                //         } else {
+                                //             console.log("data 이상");
+                                //         }
+                                //     }
+                                // })
                             } else if (data.canvasClass === "Lane") {
                                 myDiagram.model.nodeDataArray.push({
                                     nodeId: data.nodeId,

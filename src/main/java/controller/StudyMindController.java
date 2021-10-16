@@ -53,60 +53,6 @@ public class StudyMindController {
         List<StudyMindData> mindMapInfo = studyMindService.getMindMapData(mindData);
         List<StudyMindNodeData> mindMapNode = studyMindService.getMindMapNode(nodeData);
 
-        log.info("mindMap size: "+ mindMapInfo.size());
-        log.info("mindMapNode size: "+ mindMapNode.size());
-
-//        // 기존 마인드맵이 존재하지 않을 시 새로 마인드맵 생성 후 재조회
-//        if (mindMapInfo.size() == 0) {
-//
-//            String msg;
-//            String url = "/roadmaps/"+roadId+"/nodes/"+nodeId;
-//            String randomMindId = UUID.randomUUID().toString();
-//
-//
-//            StudyMindData mind = new StudyMindData();
-//            mind.setStudyRoadId(roadId);
-//            mind.setStudyRoadNodeId(nodeId);
-//            mind.setMindId(randomMindId);
-//            mind.setMindLabel("영상편집");
-//            mind.setMindContents("영상편집 입니다.");
-//            mind.setUrl("x");
-//            mind.setBookTitle("x");
-//            mind.setBookLink("x");
-//            mind.setCreated(DateUtil.getDateTime());
-//
-//            int mRes = studyMindService.insertMindData(mind);
-//
-//            if (mRes == 0) {
-//                msg = "마인드맵 생성중입니다.";
-//            } else {
-//                msg = "마인드맵 생성 실패.";
-//            }
-//
-//            StudyMindNodeData node = new StudyMindNodeData();
-//            node.setStudyRoadId(roadId);
-//            node.setStudyRoadNodeId(nodeId);
-//            node.setMindId(randomMindId);
-//            node.setKey(randomMindId);
-//            node.setGroup("nodes");
-//            node.setMindLabel("영상편집");
-//            node.setX("0");
-//            node.setY("0");
-//
-//            int nRes = studyMindService.insertNodeData(node);
-//
-//            if (nRes == 0) {
-//                msg = "마인드맵 생성중입니다.";
-//            } else {
-//                msg = "마인드맵 생성 실패.";
-//            }
-//
-//            model.addAttribute("msg", msg);
-//            model.addAttribute("url", url);
-//
-//            return "/redirect";
-//        }
-
         log.info("mindMapInfo: "+ mindMapInfo);
         log.info("mindMapNode: "+ mindMapNode);
 
@@ -151,9 +97,9 @@ public class StudyMindController {
         mind.setMindId(randomMindId);
         mind.setMindLabel(nvl(request.getParameter("mindLabel")));
         mind.setMindContents(nvl(request.getParameter("mindContents")));
-        mind.setUrl(nvl(request.getParameter("url")));
-        mind.setBookTitle(nvl(request.getParameter("bookTitle")));
-        mind.setBookLink(nvl(request.getParameter("bookLink")));
+        mind.setUrl("x");
+        mind.setBookTitle("x");
+        mind.setBookLink("x");
         mind.setCreated(DateUtil.getDateTime());
 
         studyMindService.insertMindData(mind);
@@ -166,10 +112,24 @@ public class StudyMindController {
         node.setKey(randomMindId);
         node.setGroup("nodes");
         node.setMindLabel(nvl(request.getParameter("mindLabel")));
-        node.setX(nvl(request.getParameter("x")));
-        node.setY(nvl(request.getParameter("y")));
+        node.setX("0");
+        node.setY("0");
 
         studyMindService.insertNodeData(node);
+
+        // 처음 생성일 시
+        if (nvl(request.getParameter("type")).equals("initial")) {
+            log.info(this.getClass().getName() + ".insertInitialNodeData End!");
+
+            ResponseNodeData nodeData = new ResponseNodeData();
+            nodeData.setNodeMindId(randomMindId);
+            nodeData.setRoadId(nvl(request.getParameter("roadId")));
+            nodeData.setNodeId(nvl(request.getParameter("nodeId")));
+            nodeData.setMindLabel(nvl(request.getParameter("mindLabel")));
+
+            return ResponseEntity.status(HttpStatus.OK).body(nodeData);
+        }
+
 
         String randomEdgeId = UUID.randomUUID().toString();
         log.info("randomEdgeId: "+randomEdgeId);
