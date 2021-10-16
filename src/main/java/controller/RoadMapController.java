@@ -320,30 +320,34 @@ public class RoadMapController {
 
         StudyRoadNodeData nodeData = studyRoadService.getRoadMapNodeData(nodeId);
 
-        if (nodeData.getCanvasClass().equals("Diagram")) {
-            nodeData.setText(node.getDiagramText());
-            if (node.getLoc()!=null && !node.getLoc().equals("")) {
-                nodeData.setLoc(node.getLoc());
+        if (node.getType().equals("loc")) {
+            nodeData.setLoc(node.getLoc());
+        } else {
+            if (nodeData.getCanvasClass().equals("Diagram")) {
+                nodeData.setText(node.getDiagramText());
+                if (node.getLoc() != null && !node.getLoc().equals("")) {
+                    nodeData.setLoc(node.getLoc());
+                }
+            } else if (nodeData.getCanvasClass().equals("Lane")) {
+                nodeData.setKey(node.getLaneKey());
+                nodeData.setText(node.getLaneText());
+                nodeData.setColor(node.getLaneColor());
+                if (node.getSize() != null && !node.getSize().equals("")) {
+                    nodeData.setSize(node.getSize());
+                }
+                if (node.getLoc() != null && !node.getLoc().equals("")) {
+                    nodeData.setLoc(node.getLoc());
+                }
+            } else if (nodeData.getCanvasClass().equals("Node")) {
+                nodeData.setText(node.getNodeText());
+                nodeData.setCategory(node.getCategory());
+                if (node.getLoc() != null && !node.getLoc().equals("")) {
+                    nodeData.setLoc(node.getLoc());
+                }
+            } else if (nodeData.getCanvasClass().equals("Category")) {
+                nodeData.setText(node.getCategoryText());
+                nodeData.setColor(node.getCategoryColor());
             }
-        } else if (nodeData.getCanvasClass().equals("Lane")) {
-            nodeData.setKey(node.getLaneKey());
-            nodeData.setText(node.getLaneText());
-            nodeData.setColor(node.getLaneColor());
-            if (node.getSize()!=null && !node.getSize().equals("")) {
-                nodeData.setSize(node.getSize());
-            }
-            if (node.getLoc()!=null && !node.getLoc().equals("")) {
-                nodeData.setLoc(node.getLoc());
-            }
-        } else if (nodeData.getCanvasClass().equals("Node")) {
-            nodeData.setText(node.getNodeText());
-            nodeData.setCategory(node.getCategory());
-            if (node.getLoc()!=null && !node.getLoc().equals("")) {
-                nodeData.setLoc(node.getLoc());
-            }
-        } else if (nodeData.getCanvasClass().equals("Category")) {
-            nodeData.setText(node.getCategoryText());
-            nodeData.setColor(node.getCategoryColor());
         }
 
         log.info("nodeData: "+ nodeData);

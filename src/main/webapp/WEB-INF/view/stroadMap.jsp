@@ -613,7 +613,10 @@
                 myDiagram.addDiagramListener("SelectionMoved", function (e) {
                   console.log('SelectionMoved');
                   console.log(e.subject.ga.af.key.ob);
-                  updateNodeData();
+                  clearAddInfo();
+                  getNodeDataByAjax(e.subject.ga.af.key.ob);
+                  console.log("roadId");
+                  updateLoc();
                 });
 
                 // 노드, 레인, 다이어그램 클릭시
@@ -1487,6 +1490,31 @@
                 };
             }
 
+            function updateLoc() {
+                let query = {
+                    "nodeId": $('#modal__nodeId').text(),
+                    "roadId": $('#modal__roadId').text(),
+                    "canvasClass": $('#modal__canvasClass').text(),
+                    "type": "loc",
+                    "loc": $('#modal__loc').text(),
+                };
+                console.log(query)
+                $.ajax({
+                    url: "/roadmaps/"+query.roadId+"/nodes/"+query.nodeId,
+                    type: "put",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(query),
+                    success: function (data) {
+                        if (data) {
+                            console.log("이동완료");
+                        } else {
+                            console.log("data 이상");
+                        }
+                    }
+                })
+            }
+
             // 노드 정보 업데이트
             function updateNodeData() {
                 console.log("/roadmaps/"+document.getElementById('modal__roadId').innerText+
@@ -1575,7 +1603,6 @@
                                         break;
                                     }
                                 }
-
                             }
                             save();
                             load();
