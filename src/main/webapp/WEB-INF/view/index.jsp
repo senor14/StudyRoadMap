@@ -1,6 +1,11 @@
+<%@ page import="domain.StudyMindData" %>
+<%@ page import="java.util.List" %>
+<%@ page import="domain.StudyRoadData" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-
+<%
+    List<StudyRoadData> roadDataInfo = (List<StudyRoadData>) request.getAttribute("roadDataInfo");
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +13,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
 
@@ -24,7 +31,6 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flaticon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
@@ -33,7 +39,6 @@
 </head>
 
 <body>
-
     <div class="page">
         <nav id="colorlib-main-nav" role="navigation">
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle active"><i></i></a>
@@ -45,13 +50,14 @@
                             <h1 class="mb-4"><a href="index.jsp" class="logo">Portfolio</a></h1>
                             <ul>
                                 <li class="active"><a href="index.html"><span>Home</span></a></li>
-                                <button type="button" class="lil-btn2" onclick="fnOpenModal('#m2-o')">비밀번호 변경</button><br>
-                                <button type="button" class="lil-btn2" onclick="fnOpenModal('#m3-o')">회원 탈퇴</button><br>
+                                <li class="active"><a><span onclick="fnOpenModal('#m2-o');">비밀번호 변경</span></a></li>
+                                <li class="active"><a><span onclick="fnOpenModal('#m3-o');">회원 탈퇴</span></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+<%--        </nav>--%>
             <%-- modal 기본 --%>
             <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
                 <div class="modal">
@@ -88,6 +94,8 @@
                 </div>
             </div>
             <%-- modal 추가 끝 --%>
+
+
         </nav>
 
         <div id="colorlib-page">
@@ -118,6 +126,18 @@
             </section>
             <!-- 탭 부분 -->
             <section class="ftco-section ftco-no-pb ftco-no-pt">
+                <div>
+                    <% for (StudyRoadData roadData : roadDataInfo) { %>
+                    <div style="border: 3px solid black; z-index: 10000; background-color: white;" onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" >
+                        <%--                                                    <a href="/roadmaps/<%=roadData.getRoadId()%>" style="z-index: 10000">--%>
+                        "<%=roadData.getRoadTitle()%>"
+                        <%--                                                    </a>--%>
+                    </div>
+                    <%}%>
+                </div>
+                <div>
+                    <button id="roadmap__add" onclick="fnOpenModal('#m4-o')">바톤</button>
+                </div>
                 <div class="container-fluid px-0">
                     <div class="row no-gutters">
                         <div class="col-md-12 blog-wrap">
@@ -149,7 +169,8 @@
 
                                             <div id="Study_MindMap" class="tabcontent">
                                                 <h3>Study MindMap</h3>
-                                                <p>Paris is in the Paris department of the Paris-Isle-of-France region The French historic, political and economic capital, with a population of only 2.5 million is located in the northern part of France. One of the most beautiful cities in the world. Home to historical monuments such as Notre Dame, the Eiffel tower (320m), Bastille, Louvre and many more. </p>
+
+
                                             </div>
 
                                             <div id="Career_RoadMap" class="tabcontent">
@@ -171,6 +192,25 @@
                     </div>
                 </div>
             </section>
+
+            <%-- modal 기본 --%>
+            <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+                <div class="modal">
+                    <div>
+                        로드맵 제목: <input type="text" class="modal__title" id="modal__title-add"/>
+                    </div>
+                    <div>
+                        <label for="publicYn">공개여부:</label>
+                        <select name="publicYn" id="publicYn">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+                    <button class="modal__btn" onclick="addStudyRoadmap();">확인</button>
+                    <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+                </div>
+            </div>
+            <%-- modal 기본 끝 --%>
 
 
             <footer class="ftco-footer ftco-section img">
@@ -264,7 +304,27 @@
         </div>
     </div>
 
+    <script>
+        function addStudyRoadmap() {
+            $.ajax({
+                url: "/roadmaps",
+                type: "post",
+                data: {
+                    publicYn: document.getElementById("publicYn").value,
+                    roadTitle: document.getElementById("modal__title-add").value
+                },
+                success: function (data) {
+                    if (data) {
+                        console.log("생성 완료");
+                        location.href = "/index"
+                    } else {
+                        console.log("데이터 이상")
+                    }
+                }
 
+            })
+        }
+    </script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery-migrate-3.0.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
@@ -368,9 +428,6 @@
     // 모달 오픈
     function fnOpenModal(id){
         // $('#m2-o').css("display", "flex");
-        if (id === '#m4-o' || id === '#m5-o') {
-            id = '#m6-o'
-        }
         $(id).css("display", "flex");
     }
     // 모달 종료
