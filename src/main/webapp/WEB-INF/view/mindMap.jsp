@@ -783,6 +783,11 @@
         $("#modal__book__title").val("");
         $("#modal__book_link").val("");
         $("#modal__content").val("");
+        $("#modal__title-add").val("");
+        $("#modal__link-add").val("");
+        $("#modal__book_title-add").val("");
+        $("#modal__book_link-add").val("");
+        $("#modal__content-add").val("");
     }
 
     // // UUID 생성기

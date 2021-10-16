@@ -26,6 +26,7 @@
     <title>Page Flow</title>
 <%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--%>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -110,7 +111,7 @@
             표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text" readonly />
         </div>
         <div>색:
-            <input type="text" class="modal__lane__color" id="modal__lane__color" readonly />
+            <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m7-o');">수정</button>
         <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
@@ -130,7 +131,7 @@
             표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text-mod" />
         </div>
         <div>색:
-            <input type="text" class="modal__lane__color" id="modal__lane__color-mod">
+            <input type="color" class="modal__lane__color" id="modal__lane__color-mod">
         </div>
         <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m7-o');" >취소</button>
@@ -146,7 +147,7 @@
             <h1 class="modal__category__text" id="modal__category__text">카테고리 제목</h1>
         </div>
         <div>색:
-            <input type="text" class="modal__category__color" id="modal__category__color" readonly>
+            <input type="color" class="modal__category__color" id="modal__category__color" disabled>
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m9-o');">수정</button>
         <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
@@ -163,7 +164,7 @@
             카테고리 제목:<input class="modal__category__text" id="modal__category__text-mod"/>
         </div>
         <div>
-            색:<input type="text" class="modal__category__color" id="modal__category__color-mod"/>
+            색:<input type="color" class="modal__category__color" id="modal__category__color-mod"/>
         </div>
         <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m9-o');">취소</button>
@@ -196,7 +197,7 @@
             표지제목:<input type="text" id="modal__lane__key-add" />
         </div>
         <div>
-            색:<input type="text" id="modal__lane__color-add" />
+            색:<input type="color" id="modal__lane__color-add"/>
         </div>
         <button class="modal__btn" onclick="insertNodeData('Lane');">확인</button>
         <button class="modal__btn" onclick="fnCloseModal('#m11-o');" >취소</button>
@@ -212,7 +213,7 @@
             카테고리 제목:<input type="text"  id="modal__category__text-add"/>
         </div>
         <div>
-            색:<input type="text" id="modal__category__color-add" />
+            색:<input type="color" id="modal__category__color-add" />
         </div>
         <button class="modal__btn" onclick="insertNodeData('Category');">확인</button>
         <button class="modal__btn" onclick="fnCloseModal('#m12-o');" >취소</button>
@@ -540,7 +541,7 @@
                     layout: $(go.LayeredDigraphLayout, {
                         isInitial: false,
                         isOngoing: false,
-                        layerSpacing: 50,
+                        layerSpacing: 500,
                     }),
                     "undoManager.isEnabled": true,
                 });
@@ -612,6 +613,9 @@
                   let part = e.subject.part;
                   console.log('PartResized');
                   console.log(part.ob);
+                  clearAddInfo();
+                  getNodeDataByAjax(part.ob);
+                  updateSize();
                 });
 
                 // 드래그해서 객체 이동시
@@ -1215,15 +1219,9 @@
                     let part = e.subject.part;
                     console.log("ObjectSingleClicked");
                     console.log(part.ob);
-                    console.log("palette.model.nodeDataArray");
-                    console.log(palette.model.nodeDataArray);
-                    // let pda = palette.model.nodeDataArray;
-                    // pda.push({
-                    //     key: "key"
-                    // })
-                    // console.log(pda);
-                    // savePalette();
-                    // loadPalette();
+                    // console.log("palette.model.nodeDataArray");
+                    // console.log(palette.model.nodeDataArray);
+
                     clearAddInfo();
                     getNodeDataByAjax(part.ob);
                 });
@@ -1245,7 +1243,7 @@
                 palette.addDiagramListener("SelectionMoved", function (e) {
                     console.log('SelectionMoved');
                     console.log(e.subject.ga.af.key.ob);
-                    up
+
                 });
 
                 // 팔레트에 포커스를 얻었을 때 다이어그램 읽기전용 해제
@@ -1253,9 +1251,6 @@
                     console.log('GainedFocus');
                     myDiagram.model.isReadOnly = false;
                 })
-
-                //
-                // document.create
 
                 // 카테고리 그리기
                 palette.model.nodeDataArray = [
@@ -1277,19 +1272,19 @@
                 // read in the JSON-format data from the "mySavedModel" element
                 load();
                 layout();
-                function savePalette() {
-                    document.getElementById("mySavedModelPalette").value =
-                        palette.model.toJson();
-                    console.log('save');
-                    console.log(palette.model.nodeDataArray);
-                    palette.isModified = false;
-                }
-                function loadPalette() {
-                    palette.model = go.Model.fromJson(
-                        document.getElementById("mySavedModelPalette").value
-                    );
-                    palette.delayInitialization(relayoutDiagram);
-                }
+                // function savePalette() {
+                //     document.getElementById("mySavedModelPalette").value =
+                //         palette.model.toJson();
+                //     console.log('save');
+                //     console.log(palette.model.nodeDataArray);
+                //     palette.isModified = false;
+                // }
+                // function loadPalette() {
+                //     palette.model = go.Model.fromJson(
+                //         document.getElementById("mySavedModelPalette").value
+                //     );
+                //     palette.delayInitialization(relayoutDiagram);
+                // }
             }
 
             myDiagram = $(go.Diagram, "myDiagramDiv", {
@@ -1332,7 +1327,7 @@
                 layout: $(go.LayeredDigraphLayout, {
                     isInitial: false,
                     isOngoing: false,
-                    layerSpacing: 50,
+                    layerSpacing: 500,
                 }),
                 // "undoManager.isEnabled": true,
             });
@@ -1474,6 +1469,7 @@
                             fnCloseModal('#m10-o');
                             fnCloseModal('#m11-o');
                             fnCloseModal('#m12-o');
+                            screenShot($("#myDiagramDiv"));
 
                         } else {
                             console.log("data 이상");
@@ -1518,7 +1514,35 @@
                         }
                     }
                 })
+                screenShot($("#myDiagramDiv"));
             }
+
+            function updateSize() {
+                let query = {
+                    "nodeId": $('#modal__nodeId').text(),
+                    "roadId": $('#modal__roadId').text(),
+                    "canvasClass": $('#modal__canvasClass').text(),
+                    "type": "size",
+                    "size": $('#modal__size').text()
+                };
+                console.log(query)
+                $.ajax({
+                    url: "/roadmaps/"+query.roadId+"/nodes/"+query.nodeId,
+                    type: "put",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(query),
+                    success: function (data) {
+                        if (data) {
+                            console.log("사이즈 조절 완료");
+                        } else {
+                            console.log("data 이상");
+                        }
+                    }
+                })
+                screenShot($("#myDiagramDiv"));
+            }
+
 
             // 노드 정보 업데이트
             function updateNodeData() {
@@ -1534,7 +1558,8 @@
                     "categoryColor": $('#modal__category__color-mod').val(),
                     "laneKey": $('#modal__lane__key-mod').val(),
                     "size": $('#modal__size').text(),
-                    "loc": $('#modal__loc').text()
+                    "loc": $('#modal__loc').text(),
+                    "type": "nodeUpdate"
                 };
                 console.log(query);
                 $.ajax({
@@ -1621,6 +1646,7 @@
                             fnCloseModal('#m6-o');
                             fnCloseModal('#m9-o');
                             fnCloseModal('#m8-o');
+                            screenShot($("#myDiagramDiv"));
                         } else {
                             console.log("data 이상")
                         }
@@ -1636,7 +1662,7 @@
                     type: "delete",
                     success: function (data) {
                         if (data===0) {
-                            if(document.getElementById('modal__canvasClass')==='Category') palette.startTransaction();
+                            if(document.getElementById('modal__canvasClass').innerText==='Category') palette.startTransaction();
                             for (let d= myDiagram.model.nodeDataArray.length-1; d>=0; d--) {
                                 if (myDiagram.model.nodeDataArray[d].nodeId
                                     === document.getElementById('modal__nodeId').innerText){
@@ -1648,16 +1674,21 @@
                                     break;
                                 }
                             }
-                            if(document.getElementById('modal__canvasClass')==='Category') {
+                            console.log("222")
+
+                            if(document.getElementById('modal__canvasClass').innerText==='Category') {
+                                console.log("333")
                                 palette.commitTransaction();
                                 location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText);
                             }
+
                             save();
                             load();
                             fnCloseModal('#m13-o');
                             fnCloseModal('#m2-o');
                             fnCloseModal('#m6-o');
                             fnCloseModal('#m8-o');
+                            screenShot($("#myDiagramDiv"));
                         } else {
                             console.log("data 이상")
                         }
@@ -1714,6 +1745,10 @@
                 document.getElementById("modal__size").innerText = "";
                 document.getElementById("modal__loc").innerText = "";
                 document.getElementById("modal__from").innerText = "";
+                document.getElementById("modal__lane__text-add").value = "";
+                document.getElementById("modal__lane__color-add").value = "";
+                document.getElementById("modal__lane__key-add").value = "";
+                document.getElementById("modal__node__text-add").value = "";
             }
 
             // 모달 오픈
@@ -1726,6 +1761,40 @@
                 // $('#m2-o').css("display", "none");
                 $(id).css("display", "none");
                 clearAddInfo();
+            }
+
+            window.onload = function () {
+                console.log("onload 함수 진입")
+                screenShot($("#myDiagramDiv"));
+            };
+            function screenShot(target) {
+                if (target != null && target.length > 0) {
+                    let t = target[0];
+                    html2canvas(t).then(function(canvas) {
+                        let myImg = canvas.toDataURL("image/png");
+                        myImg = myImg.replace("data:image/png;base64,", "");
+
+                        $.ajax({
+                            type : "POST",
+                            data : {
+                                "imgSrc" : myImg,
+                                "roadId" : document.getElementById('modal__roadId').innerText
+                            },
+                            dataType : "text",
+                            url : "/roadMapFileUpload",
+                            success : function(data) {
+                                if(data == 1){
+                                    console.log("저장 성공!");
+                                } else {
+                                    console.log("저장 실패!");
+                                }
+                            },
+                            error : function(a, b, c) {
+                                alert("에러 발생!");
+                            }
+                        });
+                    });
+                }
             }
 
         </script>
@@ -1771,39 +1840,8 @@
 <script src="${pageContext.request.contextPath}/resources/js/study_roadMap/goSamples.js"></script>
 
 <%--화면캡쳐 후 저장 함수--%>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<script type="text/javascript">
-    window.onload = function () {
-        console.log("onload 함수 진입")
-        screenShot($("#myDiagramDiv"));
-    };
-    function screenShot(target) {
-        if (target != null && target.length > 0) {
-            let t = target[0];
-            html2canvas(t).then(function(canvas) {
-                let myImg = canvas.toDataURL("image/png");
-                myImg = myImg.replace("data:image/png;base64,", "");
 
-                $.ajax({
-                    type : "POST",
-                    data : {
-                        "imgSrc" : myImg
-                    },
-                    dataType : "text",
-                    url : "/roadMapFileUpload",
-                    success : function(data) {
-                        if(data == 1){
-                            console.log("저장 성공!");
-                        } else {
-                            console.log("저장 실패!");
-                        }
-                    },
-                    error : function(a, b, c) {
-                        alert("에러 발생!");
-                    }
-                });
-            });
-        }
-    }
+<script type="text/javascript">
+
 </script>
 </html>
