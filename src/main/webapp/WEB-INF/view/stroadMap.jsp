@@ -28,6 +28,11 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 </head>
 <body>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="file" name="fileUpload" style="display:none"/>
+</form>
+
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
@@ -1758,7 +1763,47 @@
     <!-- * * * * * * * * * * * * * -->
     <!--  End of GoJS sample code  -->
 </div>
+
+
+
 </body>
 <!--  This script is part of the gojs.net website, and is not needed to run the sample -->
 <script src="${pageContext.request.contextPath}/resources/js/study_roadMap/goSamples.js"></script>
+
+<%--화면캡쳐 후 저장 함수--%>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        console.log("onload 함수 진입")
+        screenShot($("#myDiagramDiv"));
+    };
+    function screenShot(target) {
+        if (target != null && target.length > 0) {
+            let t = target[0];
+            html2canvas(t).then(function(canvas) {
+                let myImg = canvas.toDataURL("image/png");
+                myImg = myImg.replace("data:image/png;base64,", "");
+
+                $.ajax({
+                    type : "POST",
+                    data : {
+                        "imgSrc" : myImg
+                    },
+                    dataType : "text",
+                    url : "/roadMapFileUpload",
+                    success : function(data) {
+                        if(data == 1){
+                            console.log("저장 성공!");
+                        } else {
+                            console.log("저장 실패!");
+                        }
+                    },
+                    error : function(a, b, c) {
+                        alert("에러 발생!");
+                    }
+                });
+            });
+        }
+    }
+</script>
 </html>

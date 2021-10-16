@@ -124,6 +124,10 @@
 </div>
 <%-- modal 삭제 불가능 끝 --%>
 
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="file" name="fileUpload" style="display:none"/>
+</form>
+
 <div id="hidden__box" >
     <span hidden id="modal__mindId" ></span>
     <span hidden id="modal__key" ></span>
@@ -141,6 +145,8 @@
 <script src="${pageContext.request.contextPath}/resources/js/study_mindMap/cytoscape.min.js"></script>
 <script src="http://marvl.infotech.monash.edu/webcola/cola.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 
 <%-- 마인드맵 화면 --%>
 <script>
@@ -790,5 +796,42 @@
     //     return uuid;
     // }
 </script>
+
+<%--화면캡쳐 후 저장 함수--%>
+<script type="text/javascript">
+    window.onload = function () {
+        console.log("onload 함수 진입")
+        screenShot($("#cy"));
+    };
+    function screenShot(target) {
+        if (target != null && target.length > 0) {
+            let t = target[0];
+            html2canvas(t).then(function(canvas) {
+                let myImg = canvas.toDataURL("image/png");
+                myImg = myImg.replace("data:image/png;base64,", "");
+
+                $.ajax({
+                    type : "POST",
+                    data : {
+                        "imgSrc" : myImg
+                    },
+                    dataType : "text",
+                    url : "/mindMapFileUpload",
+                    success : function(data) {
+                        if(data == 1){
+                            console.log("저장 성공!");
+                        } else {
+                            console.log("저장 실패!");
+                        }
+                    },
+                    error : function(a, b, c) {
+                        alert("에러 발생!");
+                    }
+                });
+            });
+        }
+    }
+</script>
+
 </body>
 </html>
