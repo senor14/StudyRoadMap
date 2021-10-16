@@ -1,7 +1,11 @@
 package controller;
 
+import static util.CmmUtil.nvl;
+
+import com.sun.corba.se.impl.orbutil.graph.NodeData;
 import domain.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import service.IStudyMindService;
 import service.IStudyRoadService;
 import util.DateUtil;
+import vo.RequestNodeData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +44,19 @@ public class RoadMapController {
     public String stroadMap() {
         return "stroadMap";
     }
+    
+    // 유저 Uuid 로 스터디로드 데이터 리스트 가져오기
+    @GetMapping("/roadmaps")
+    public ResponseEntity<List<StudyRoadData>> getStudyDataByUserUuid(HttpSession session) throws Exception {
 
+        log.info(this.getClass().getName()+".getStudyDataByUserUuid Start!");
+
+        List<StudyRoadData> results = studyRoadService.getRoadDataByUserUuid(((String)session.getAttribute("SS_USER_UUID")));
+
+        log.info("results: "+results);
+        log.info(this.getClass().getName()+".getStudyDataByUserUuid End!");
+        return ResponseEntity.status(HttpStatus.OK).body(results);
+    }
 
     // 스터디 로드맵 상세보기
     @GetMapping("/roadmaps/{roadId}")
@@ -48,27 +66,20 @@ public class RoadMapController {
         log.info(this.getClass().getName() + ".getRoadMap Start!");
 
         StudyRoadData roadData = new StudyRoadData();
-        StudyRoadDiagramData diagramData = new StudyRoadDiagramData();
         StudyRoadNodeData nodeData = new StudyRoadNodeData();
-        roadData.setRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        diagramData.setRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        nodeData.setRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+        roadData.setRoadId(roadId);
+        nodeData.setRoadId(roadId);
 
-        StudyRoadData roadMapInfo = studyRoadService.getRoadMapData("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        List<StudyRoadDiagramData> diagramInfo = studyRoadService.getRoadMapDiagramByRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
-        List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId("f63c5537-4644-42e0-b11d-bf92291de4f5");
+        StudyRoadData roadMapInfo = studyRoadService.getRoadMapData(roadId);
+        List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId(roadId);
 
-
-        log.info("roadMapInfo: "+roadMapInfo.toString());
-        log.info("diagramInfo: "+diagramInfo.toString());
-        log.info("nodeInfo: "+nodeInfo.toString());
+        log.info("roadMapInfo: "+roadMapInfo);
+        log.info("nodeInfo: "+nodeInfo);
 
         model.addAttribute("roadMapInfo",roadMapInfo);
-        model.addAttribute("diagramInfo",diagramInfo);
         model.addAttribute("nodeInfo",nodeInfo);
 
         roadMapInfo = null;
-        diagramInfo = null;
         nodeInfo = null;
 
         log.info(this.getClass().getName() + ".getRoadMap End!");
@@ -77,14 +88,14 @@ public class RoadMapController {
     }
 
     // 로드타이틀로 로드맵 검색
-    @GetMapping("/roadmaps/search/roadTitle")
-    public ResponseEntity<List<StudyRoadData>> searchRoadMapByRoadTitle(String roadTitle) throws Exception {
+    @GetMapping("/roadmaps/roadTitle")
+    public ResponseEntity<List<StudyRoadData>> searchRoadMapByRoadTitle(String keyword) throws Exception {
 
         log.info(this.getClass().getName()+".searchRoadMapByRoadTitle Start!");
 
-        List<StudyRoadData> publicRoadTitles = studyRoadService.getPublicRoadTitle(roadTitle);
+        List<StudyRoadData> publicRoadTitles = studyRoadService.getPublicRoadTitle(keyword);
 
-        log.info("publicRoadTitles: "+publicRoadTitles.toString());
+        log.info("publicRoadTitles: "+publicRoadTitles);
 
         log.info(this.getClass().getName()+".searchRoadMapByRoadTitle End!");
 
@@ -92,150 +103,204 @@ public class RoadMapController {
     }
 
     // 카테고리로 로드맵 검색
-    @GetMapping("/roadmaps/search/category")
-    public ResponseEntity<List<StudyRoadData>> searchRoadMapByNodeCategory(String category) throws  Exception {
+    @GetMapping("/roadmaps/category")
+    public ResponseEntity<List<StudyRoadData>> searchRoadMapByNodeCategory(String keyword) throws  Exception {
 
         log.info(this.getClass().getName()+".searchRoadMapByNodeCategory Start!");
 
-        List<String> roadIds = studyRoadService.getRoadIdsByNodeCategory(category);
+        List<String> roadIds = studyRoadService.getRoadIdsByCategory(keyword);
         log.info("roadIds: "+roadIds);
-        List<StudyRoadData> results = studyRoadService.getPublicNodeCategory(roadIds);
+        List<StudyRoadData> results = studyRoadService.getPublicCategory(roadIds);
         log.info("results: "+ results.toString());
         log.info(this.getClass().getName()+".searchRoadMapByNodeCategory End!");
 
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
+    // 스터디로드 데이터 삽입 / 초기 다이어그램 노드 삽입
+    @PostMapping("/roadmaps")
+    public String insertDefaultStudyRoadData(
+            HttpServletRequest request,
+            HttpSession session,
+            ModelMap model) throws Exception {
 
-    // 유저 Uuid 로 스터디로드 데이터 리스트 가져오기
-    @GetMapping("/roadmaps/user")
-    public ResponseEntity<List<StudyRoadData>> getStudyDataByUserUuid() throws Exception {
-
-        log.info(this.getClass().getName()+".getStudyDataByUserUuid Start!");
-
-        List<StudyRoadData> results = studyRoadService.getRoadDataByUserUuid("9db17796-2357-4171-edbe-f4b54b040497");
-
-        log.info("results: "+results);
-        log.info(this.getClass().getName()+".getStudyDataByUserUuid End!");
-        return ResponseEntity.status(HttpStatus.OK).body(results);
-    }
-
-    // 스터디로드 데이터 삽입
-    @PostMapping("/roadmaps/{roadId}")
-    public ResponseEntity<Integer> insertStudyRoadData(
-                                    @PathVariable String roadId,
-                                    HttpServletRequest request) throws Exception {
-
-        log.info(this.getClass().getName() + ".insertStudyRoadData Start!");
+        log.info(this.getClass().getName() + ".insertDefaultStudyRoadData Start!");
 
         String randomRoadId = UUID.randomUUID().toString();
         log.info("randomRoadId: "+randomRoadId);
 
         StudyRoadData road = new StudyRoadData();
         road.setRoadId(randomRoadId);
-        road.setUserUuid("9db17796-2357-4171-edbe-f4b54b040497");
-        road.setPublicYn("Y");
-        road.setRoadTitle("그림그리기");
-        road.setCreated(DateUtil.getDateTime());
+        road.setUserUuid((String)session.getAttribute("SS_USER_ID"));
+        road.setPublicYn(nvl(request.getParameter("publicYn")));
+        road.setRoadTitle(nvl(request.getParameter("roadTitle")));
 
-        log.info("road: "+ road.toString());
+        road.setCreated(DateUtil.getDateTime());
 
         studyRoadService.insertRoadData(road);
 
-        log.info(this.getClass().getName() + ".insertStudyRoadData End!");
+        String randomNodeId = UUID.randomUUID().toString();
 
-        return ResponseEntity.status(HttpStatus.OK).body(0);
-    }
+        // 초기 다이어그램 노드 생성
+        StudyRoadNodeData diagramData = new StudyRoadNodeData();
+        diagramData.setNodeId(randomNodeId);
+        diagramData.setRoadId(randomRoadId);
+        diagramData.setCanvasClass("Diagram");
+        diagramData.setCategory("Pool");
+        diagramData.setKey("Pool");
+        diagramData.setText(nvl(request.getParameter("roadTitle")));
 
-    // 스터디로드 다이어그램 데이터 삽입
-    @PostMapping("/roadmaps/{roadId}/diagram")
-    public ResponseEntity<StudyRoadDiagramData> insertStudyRoadDiagram(
-            @PathVariable String roadId,
-            HttpServletRequest request) throws Exception {
+        diagramData.setIsGroup("true");
+        // 사이즈랑 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
+//        diagramData.setLoc("-171.54195404052734 29.240612792968747");
 
-        log.info(this.getClass().getName() + ".insertStudyRoadDiagram Start!");
+        log.info("diagramData: "+ diagramData);
+        studyRoadService.insertRoadNode(diagramData);
 
-        String randomDiagramId = UUID.randomUUID().toString();
-        log.info("randomDiagramId: "+randomDiagramId);
+        model.addAttribute("url", "/roadmaps/"+randomRoadId);
 
-        StudyRoadDiagramData diagramData = new StudyRoadDiagramData();
-        diagramData.setDiagramId(randomDiagramId);
-        diagramData.setRoadId(roadId);
-        diagramData.setLaneWidth("100px");
-        diagramData.setKey("lane000");
-        diagramData.setColor("green");
-        diagramData.setSize("210");
-        diagramData.setLoc("-157.54195404052734 75.76346029127669");
-        diagramData.setCreated(DateUtil.getDateTime());
+        log.info(this.getClass().getName() + ".insertDefaultStudyRoadData End!");
 
-        log.info("diagramData: "+ diagramData.toString());
-
-        studyRoadService.insertRoadDiagram(diagramData);
-
-        log.info(this.getClass().getName() + ".insertStudyRoadDiagram End!");
-
-        return ResponseEntity.status(HttpStatus.OK).body(diagramData);
+//        return ResponseEntity.status(HttpStatus.OK).body(0);
+        return "redirect";
     }
 
     // 스터디로드 노드 데이터 삽입
-    @PostMapping("/roadmaps/{roadId}/node")
-    public ResponseEntity<List<StudyRoadNodeData>> insertStudyRoadNode(
+    @PostMapping("/roadmaps/{roadId}/nodes/{canvasClass}")
+    public ResponseEntity<StudyRoadNodeData> insertStudyRoadNode(
             @PathVariable String roadId,
+            @PathVariable String canvasClass,
             HttpServletRequest request) throws Exception {
 
-        List<StudyRoadNodeData> rList = new ArrayList<>();
 
-        log.info(this.getClass().getName() + ".insertStudyRoadDiagram Start!");
+        log.info(this.getClass().getName() + ".insertStudyRoadNode Start!");
 
         String randomNodeId = UUID.randomUUID().toString();
-        String randomEdgeId = UUID.randomUUID().toString();
+
         log.info("randomNodeId: "+randomNodeId);
-        log.info("randomEdgeId: "+randomEdgeId);
 
-        StudyRoadNodeData nodeData = new StudyRoadNodeData();
-        nodeData.setNodeId(randomNodeId);
-        nodeData.setRoadId(roadId);
-        nodeData.setGroup("nodes");
-        nodeData.setKey(randomNodeId);
-        nodeData.setNodeText("리액트");
-        nodeData.setNodeLoc("250 350");
-        nodeData.setNodeCategory("FrontEnd");
+        StudyRoadNodeData result = new StudyRoadNodeData();
 
-        rList.add(nodeData);
-        log.info("nodeData: "+ nodeData.toString());
-        studyRoadService.insertRoadNode(nodeData);
+        if (canvasClass.equals("Lane")) {
 
-        StudyRoadNodeData edgeData = new StudyRoadNodeData();
-        edgeData.setNodeId(randomEdgeId);
-        edgeData.setRoadId(roadId);
-        edgeData.setGroup("edges");
-        edgeData.setFrom("ae0cabfa-5b94-44b3-dfc2-edadfdf409b3");
-        edgeData.setTo(randomNodeId);
+            StudyRoadNodeData laneData = new StudyRoadNodeData();
+            laneData.setNodeId(randomNodeId);
+            laneData.setRoadId(roadId);
+            laneData.setCanvasClass("Lane");
+            laneData.setKey(nvl(request.getParameter("laneKey")));
+            laneData.setText(nvl(request.getParameter("laneText")));
+            laneData.setIsGroup("true");
+            laneData.setGroup("Pool");
+            laneData.setColor(nvl(request.getParameter("laneColor")));
 
-        rList.add(edgeData);
-        studyRoadService.insertRoadNode(edgeData);
-        log.info("edgeData: "+ edgeData.toString());
+            // 사이즈랑 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
+//            laneData.setSize("110 200");
+//            laneData.setLoc("250 350");
 
-        log.info(this.getClass().getName() + ".insertStudyRoadDiagram End!");
+            log.info("laneData: "+ laneData);
 
-        return ResponseEntity.status(HttpStatus.OK).body(rList);
+            studyRoadService.insertRoadNode(laneData);
+
+            result = laneData;
+        } else if (canvasClass.equals("Node")) {
+
+            StudyRoadNodeData nodeData = new StudyRoadNodeData();
+            nodeData.setNodeId(randomNodeId);
+            nodeData.setRoadId(roadId);
+            nodeData.setCanvasClass("Node");
+            nodeData.setCategory(nvl(request.getParameter("category")));
+            nodeData.setKey(randomNodeId);
+            nodeData.setText(nvl(request.getParameter("nodeText")));
+
+            // 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
+            nodeData.setLoc(nvl(request.getParameter("loc")));
+
+            log.info("nodeData: "+ nodeData);
+
+            studyRoadService.insertRoadNode(nodeData);
+
+            String randomMindId = UUID.randomUUID().toString();
+
+            StudyMindData mind = new StudyMindData();
+            mind.setMindId(randomMindId);
+            mind.setStudyRoadId(roadId);
+            mind.setStudyRoadNodeId(randomNodeId);
+            mind.setMindLabel(nvl(request.getParameter("text")));
+            mind.setMindContents(nvl(request.getParameter("text"))+" 입니다.");
+            mind.setUrl("x");
+            mind.setBookTitle("x");
+            mind.setBookLink("x");
+            mind.setCreated(DateUtil.getDateTime());
+            log.info("mind: "+mind);
+            int mRes = studyMindService.insertMindData(mind);
+            log.info("mRes: "+mRes);
+
+            StudyMindNodeData node = new StudyMindNodeData();
+            node.setMindId(randomMindId);
+            node.setStudyRoadId(roadId);
+            node.setStudyRoadNodeId(randomNodeId);
+            node.setKey(randomMindId);
+            node.setGroup("nodes");
+            node.setMindLabel(nvl(request.getParameter("text")));
+            node.setX("0");
+            node.setY("0");
+            log.info("node: "+node);
+            int nRes = studyMindService.insertNodeData(node);
+            log.info("nRes: "+nRes);
+
+            result = nodeData;
+
+        } else if (canvasClass.equals("Edge")) {
+
+            StudyRoadNodeData edgeData = new StudyRoadNodeData();
+            edgeData.setNodeId(randomNodeId);
+            edgeData.setRoadId(roadId);
+            edgeData.setCanvasClass("Edge");
+            edgeData.setFrom(nvl(request.getParameter("from")));
+            edgeData.setTo(nvl(request.getParameter("to")));
+
+            // 좌표는 생성시는 넣지 않아도 됨 -> 랜더링시 자동생성
+//            EdgeData.setLoc("-162.86665532820518 122.60000347951444");
+
+            log.info("edgeData: "+ edgeData);
+
+            studyRoadService.insertRoadNode(edgeData);
+
+            result = edgeData;
+
+        } else if (canvasClass.equals("Category")) {
+
+            StudyRoadNodeData categoryData = new StudyRoadNodeData();
+            categoryData.setNodeId(randomNodeId);
+            categoryData.setRoadId(roadId);
+            categoryData.setCanvasClass("Category");
+            categoryData.setText(nvl(request.getParameter("categoryText")));
+            categoryData.setColor(nvl(request.getParameter("categoryColor")));
+
+            log.info("categoryData: "+ categoryData);
+
+            studyRoadService.insertRoadNode(categoryData);
+
+            result = categoryData;
+
+        }
+
+        log.info(this.getClass().getName() + ".insertStudyRoadNode End!");
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     // 스터디로드 데이터 수정
     @PutMapping("/roadmaps/{roadId}")
     public ResponseEntity<Integer> updateStudyRoadData(
                                     @PathVariable String roadId,
-                                    @RequestBody StudyRoadData road,
-                                    HttpServletRequest request) throws Exception {
+                                    @RequestBody StudyRoadData road) throws Exception {
 
         log.info(this.getClass().getName() + ".updateStudyRoadData Start!");
 
-        StudyRoadData roadData = new StudyRoadData();
-        roadData.setRoadId(roadId);
-        roadData.setPublicYn("Y");
-        roadData.setRoadTitle("웹 프로젝트");
+        road.setRoadId(roadId);
 
-        int res = studyRoadService.updateRoadData(roadData);
+        int res = studyRoadService.updateRoadData(road);
 
         log.info(this.getClass().getName() + ".updateStudyRoadData End!");
 
@@ -243,55 +308,45 @@ public class RoadMapController {
 
     }
 
-    // 스터디 다이어그램 데이터 수정
-    @PutMapping("/roadmaps/{roadId}/diagrams/{diagramId}")
-    public ResponseEntity<Integer> updateStudyRoadDiagram (
-                                        @PathVariable String roadId,
-                                        @PathVariable String diagramId,
-                                        @RequestBody StudyRoadDiagramData diagram
-                                        ) throws Exception {
-
-        log.info(this.getClass().getName()+".updateStudyRoadDiagram Start!");
-
-        StudyRoadDiagramData diagramData = studyRoadService.getRoadMapDiagramData(diagramId);
-
-        diagramData.setLaneWidth("100px");
-        diagramData.setKey("lane0000");
-        diagramData.setText("10학기");
-        diagramData.setColor("yellow");
-        diagramData.setSize("215");
-        diagramData.setLoc("-182.54195404052734 60.76346029127669");
-
-        log.info("diagramData: "+ diagramData.toString());
-
-        int res = studyRoadService.updateRoadDiagramData(diagramData);
-
-        log.info("res: "+ res);
-
-        log.info(this.getClass().getName()+".updateStudyRoadDiagram End!");
-
-        return ResponseEntity.status(HttpStatus.OK).body(res);
-    }
-
     // 스터디 노드 데이터 수정
     @PutMapping("/roadmaps/{roadId}/nodes/{nodeId}")
-    public ResponseEntity<Integer> updateStudyRoadNode (
+    public ResponseEntity<StudyRoadNodeData> updateStudyRoadNode (
             @PathVariable String roadId,
             @PathVariable String nodeId,
-            @RequestBody StudyRoadNodeData node
+            @RequestBody RequestNodeData node
     ) throws Exception {
 
         log.info(this.getClass().getName()+".updateStudyRoadNode Start!");
 
         StudyRoadNodeData nodeData = studyRoadService.getRoadMapNodeData(nodeId);
 
-        if (nodeData.getGroup().equals("nodes")) {
-            nodeData.setNodeText("타입스크립트");
-            nodeData.setNodeLoc("250 350");
-            nodeData.setNodeCategory("DevOps");
+        if (nodeData.getCanvasClass().equals("Diagram")) {
+            nodeData.setText(node.getDiagramText());
+            if (node.getLoc()!=null && !node.getLoc().equals("")) {
+                nodeData.setLoc(node.getLoc());
+            }
+        } else if (nodeData.getCanvasClass().equals("Lane")) {
+            nodeData.setKey(node.getLaneKey());
+            nodeData.setText(node.getLaneText());
+            nodeData.setColor(node.getLaneColor());
+            if (node.getSize()!=null && !node.getSize().equals("")) {
+                nodeData.setSize(node.getSize());
+            }
+            if (node.getLoc()!=null && !node.getLoc().equals("")) {
+                nodeData.setLoc(node.getLoc());
+            }
+        } else if (nodeData.getCanvasClass().equals("Node")) {
+            nodeData.setText(node.getNodeText());
+            nodeData.setCategory(node.getCategory());
+            if (node.getLoc()!=null && !node.getLoc().equals("")) {
+                nodeData.setLoc(node.getLoc());
+            }
+        } else if (nodeData.getCanvasClass().equals("Category")) {
+            nodeData.setText(node.getCategoryText());
+            nodeData.setColor(node.getCategoryColor());
         }
 
-        log.info("nodeData: "+ nodeData.toString());
+        log.info("nodeData: "+ nodeData);
 
         int res = studyRoadService.updateRoadNodeData(nodeData);
 
@@ -299,41 +354,25 @@ public class RoadMapController {
 
         log.info(this.getClass().getName()+".updateStudyRoadNode End!");
 
-        return ResponseEntity.status(HttpStatus.OK).body(res);
+        return ResponseEntity.status(HttpStatus.OK).body(nodeData);
     }
 
-    // 로드 id로 다이어그램 데이터 삭제
+    // roadId로 로드맵 데이터 삭제
     @DeleteMapping("/roadmaps/{roadId}")
-    public ResponseEntity<Integer> deleteRoadMapData(
-                                    @PathVariable String roadId) throws Exception {
+    public ResponseEntity<Integer> deleteStudyRoadData(
+            @PathVariable String roadId) throws Exception {
 
-        log.info(this.getClass().getName() + ".deleteRoadMapData Start!");
+        log.info(this.getClass().getName() + ".deleteStudyRoadData Start!");
 
         int roadData = studyRoadService.deleteRoadData(roadId);
         log.info("roadData: "+roadData);
 
-        log.info(this.getClass().getName() + ".deleteRoadMapData End!");
+        log.info(this.getClass().getName() + ".deleteStudyRoadData End!");
 
         return ResponseEntity.status(HttpStatus.OK).body(roadData);
     }
 
-    // 다이어그램 id로 다이어그램 데이터 삭제
-    @DeleteMapping("/roadmaps/{roadId}/diagrams/{diagramId}")
-    public ResponseEntity<Integer> deleteStudyRoadDiagram(
-            @PathVariable String roadId,
-            @PathVariable String diagramId) throws Exception {
-
-        log.info(this.getClass().getName() + ".deleteStudyRoadDiagram Start!");
-
-        int diagramData = studyRoadService.deleteRoadDiagram(diagramId);
-        log.info("diagramId: "+diagramId);
-
-        log.info(this.getClass().getName() + ".deleteStudyRoadDiagram End!");
-
-        return ResponseEntity.status(HttpStatus.OK).body(diagramData);
-    }
-
-    // 노드 id로 노드 데이터 삭제
+    // nodeId로 노드 데이터 삭제
     @DeleteMapping("/roadmaps/{roadId}/nodes/{nodeId}")
     public ResponseEntity<Integer> deleteStudyRoadNode(
             @PathVariable String roadId,
@@ -352,64 +391,53 @@ public class RoadMapController {
     // 스터디 로드맵 복제
     @PostMapping("/roadmaps/{roadId}/duplicate")
     public ResponseEntity<Integer> duplicateStudyRoadMap(
-            @PathVariable String roadId) throws Exception {
+            @PathVariable String roadId,
+            HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".duplicateStudyRoadMap Start!");
 
-//        String newRoadId = UUID.randomUUID().toString();
-        String newRoadId = "44904743-bc65-459d-ab7b-7a632ba02178";
-        String userUuid = "2033c8ef-4970-4217-b67b-ba6b65a01231";
+        String newRoadId = UUID.randomUUID().toString();
+        String userUuid = (String)session.getAttribute("SS_USER_UUID");
+        log.info("userUuid: "+userUuid);
 
         // 스터디로드 id로 StudyRoadData 데이터 가져오기
         StudyRoadData roadMapData = studyRoadService.getRoadMapData(roadId);
         roadMapData.setUserUuid(userUuid);
         roadMapData.setRoadId(newRoadId);
+        roadMapData.setCreated(DateUtil.getDateTime());
 
         // StudyRoadData 데이터를 유저 UUID, 새로운 스터디로드 id 로 삽입
         int res1 = studyRoadService.insertRoadData(roadMapData);
         log.info("roadMapData: "+res1);
 
-        // 스터디로드 id로 StudyRoadDiagramData 데이터 리스트 가져오기
-        List<StudyRoadDiagramData> roadDiagramData = studyRoadService.getRoadMapDiagramByRoadId(roadId);
-        int res2 = 0;
-
-        // StudyRoadDiagramData 리스트를 각각 새로운 스터디로드 id 로 삽입
-        for (StudyRoadDiagramData diagramData : roadDiagramData) {
-            diagramData.setDiagramId(UUID.randomUUID().toString());
-            diagramData.setRoadId(newRoadId);
-            res2 += studyRoadService.insertRoadDiagram(diagramData);
-        }
-        log.info("roadDiagramData: "+res2);
-
         // 스터디로드 id로 StudyRoadNodeData 데이터 리스트 가져오기
         List<StudyRoadNodeData> roadNodeData = studyRoadService.getRoadMapNodeByRoadId(roadId);
+        int res2 = 0;
         int res3 = 0;
-        int res4 = 0;
         // StudyRoadNodeData 리스트를 각각 새로운 스터디로드 id 로 삽입
         for (StudyRoadNodeData nodeData : roadNodeData) {
             String newRoadNodeId = UUID.randomUUID().toString();
 
             // 스터디로드노드 id로 StudyMindData 데이터 리스트 가져오기
             List<StudyMindData> mindData =studyMindService.getMindDataByRoadNodeId(nodeData.getNodeId());
-            int res5 = 0;
+            int res4 = 0;
             List<String> mindIdTemp = new LinkedList<>();
             // StudyMindData 리스트를 각각 유저 UUID, 새로운 스터디로드 id  로 삽입
             for (StudyMindData mind : mindData) {
                 String newMindId = UUID.randomUUID().toString();
                 mindIdTemp.add(newMindId);
                 mind.setMindId(newMindId);
-                mind.setUserUuid(userUuid);
                 mind.setStudyRoadId(newRoadId);
                 mind.setStudyRoadNodeId(newRoadNodeId);
                 mind.setCreated(DateUtil.getDateTime());
-                res5 += studyMindService.insertMindData(mind);
-                res4 += res5;
+                res4 += studyMindService.insertMindData(mind);
+                res3 += res4;
             }
-            log.info("res5: "+res5);
+            log.info("mindData: "+res4);
 
             // 스터디로드노드 id로 StudyMindNodeData 데이터 리스트 가져오기
             List<StudyMindNodeData> mindNode = studyMindService.getMindNodeByRoadNodeId(nodeData.getNodeId());
-            int res6 = 0;
+            int res5 = 0;
             int i = 0;
             // StudyMindNodeData 리스트를 각각 유저 UUID, 새로운 스터디로드 id로 삽입
             for (StudyMindNodeData node : mindNode) {
@@ -418,28 +446,25 @@ public class RoadMapController {
                 } else {
                     node.setMindId(UUID.randomUUID().toString());
                 }
-                node.setUserUuid(userUuid);
                 node.setStudyRoadId(newRoadId);
                 node.setStudyRoadNodeId(newRoadNodeId);
-                res6 += studyMindService.insertNodeData(node);
-                res4 += res6;
+                res5 += studyMindService.insertNodeData(node);
+                res3 += res5;
             }
-            log.info("mindNode: "+res6);
+            log.info("mindNode: "+res5);
 
             nodeData.setNodeId(newRoadNodeId);
-            nodeData.setKey(newRoadNodeId);
             nodeData.setRoadId(newRoadId);
-            res3 += studyRoadService.insertRoadNode(nodeData);
+            res2 += studyRoadService.insertRoadNode(nodeData);
 
             mindIdTemp = null;
         }
-        log.info("roadNodeData: "+res3);
-        log.info("mindData+mindNode: "+res4);
+        log.info("roadNodeData: "+res2);
+        log.info("mindData+mindNode: "+res3);
 
         log.info(this.getClass().getName() + ".duplicateStudyRoadMap End!");
 
-        return ResponseEntity.status(HttpStatus.OK).body(res1+res2+res3+res4);
+        return ResponseEntity.status(HttpStatus.OK).body(res1+res2+res3);
     }
-
 
 }

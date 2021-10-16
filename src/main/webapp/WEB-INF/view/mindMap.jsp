@@ -46,7 +46,6 @@
         <h1 class="modal__title" id="modal__title">네트워크</h1>
         <div>링크: <input type="text" class="modal__link" id="modal__link" readonly></div>
         <div>참고서적 제목:
-
             <input type="text" class="modal__book__title" id="modal__book__title" readonly>
         </div>
         <div>
@@ -58,9 +57,6 @@
         <button class="modal__btn" onclick="fnOpenModal('#m5-o');">삭제</button>
         <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
         <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
-        <span type="text" hidden id="modal__mindId" ></span>
-        <span type="text" hidden id="node__x" ></span>
-        <span type="text" hidden id="node__y" ></span>
     </div>
 </div>
 <%-- modal 기본 끝 --%>
@@ -128,6 +124,19 @@
 </div>
 <%-- modal 삭제 불가능 끝 --%>
 
+<div id="hidden__box" >
+    <span hidden id="modal__mindId" ></span>
+    <span hidden id="modal__key" ></span>
+    <span hidden id="modal__roadId" ></span>
+    <span hidden id="modal__nodeId" ></span>
+    <span hidden id="modal__group" ></span>
+    <span hidden id="modal__mindLabel" ></span>
+    <span hidden id="modal__x" ></span>
+    <span hidden id="modal__y" ></span>
+    <span hidden id="modal__source" ></span>
+    <span hidden id="modal__target" ></span>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/study_mindMap/cytoscape.min.js"></script>
 <script src="http://marvl.infotech.monash.edu/webcola/cola.min.js"></script>
@@ -152,7 +161,11 @@
                 {
                     data:
                         {
+                            "mindId": "<%=node.getMindId()%>",
                             "id": "<%=node.getKey()%>",
+                            "roadId": "<%=node.getStudyRoadId()%>",
+                            "nodeId": "<%=node.getStudyRoadNodeId()%>",
+                            "group": "<%=node.getGroup()%>",
                             "label": "<%=node.getMindLabel()%>"
                         },
                     renderedPosition:
@@ -171,6 +184,9 @@
                         data:
                             {
                                 "id": "<%=node.getMindId()%>",
+                                "roadId": "<%=node.getStudyRoadId()%>",
+                                "nodeId": "<%=node.getStudyRoadNodeId()%>",
+                                "group": "<%=node.getGroup()%>",
                                 "source": "<%=node.getSource()%>",
                                 "target": "<%=node.getTarget()%>"
                             }
@@ -316,23 +332,25 @@
             node.lock();
         });
 
+
+
         console.log("줌")
-        console.log(cy.zoom())
 
-        const targetId = evt.target.data('id'); //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
-        const xPos = evt.target.renderedPosition('x');
-        const yPos = evt.target.renderedPosition('y');
+        console.log(evt.target._private)
 
-        console.log("targetId: 노드")
-        console.log(typeof targetId)
+        const target = evt.target._private; //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
+        // const xPos = evt.target.renderedPosition('x');
+        // const yPos = evt.target.renderedPosition('y');
+        //
+        //
+        // document.getElementById("modal__x").innerText = xPos;
+        // document.getElementById("modal__y").innerText = yPos;
 
-        document.getElementById("node__x").innerText = xPos;
-        document.getElementById("node__y").innerText = yPos;
+        console.log(document.getElementById("modal__x").innerText)
+        console.log(document.getElementById("modal__y").innerText)
 
-        console.log(document.getElementById("node__x").innerText)
-        console.log(document.getElementById("node__y").innerText)
-
-        getMindDataByAjax(targetId)
+        clearNodeInfo();
+        getMindDataByAjax(target);
 
         fnOpenModal('#m2-o');
 
@@ -364,7 +382,10 @@
     });
 
     cy.on('tapend', 'node', function (e) {
-        console.log(e.target.renderedPosition())
+        console.log(e.target.renderedPosition('x'))
+        console.log(e.target.renderedPosition('y'))
+        document.getElementById("modal__x").innerText = e.target.renderedPosition('x');
+        document.getElementById("modal__y").innerText = e.target.renderedPosition('y');
         updateNodePosition(e.target.data('id'), e.target.renderedPosition())
     })
 
@@ -442,21 +463,34 @@
         console.log("setResetFocus End!")
     }
 
-
-
     function insertMindAndNodeData(mindmind) {
         let query = {
+            mindId : $('#modal__mindId').text(),
+            key : $('#modal__key').text(),
+            roadId : $('#modal__roadId').text(),
+            nodeId : $('#modal__nodeId').text(),
+            group: $('#modal__group').text(),
             mindLabel : $('#modal__title-add').val(),
             url: $('#modal__book_link-add').val(),
             bookTitle: $('#modal__book__title-add').val(),
             bookLink: $('#modal__book_link-add').val(),
-            mindContents: $('#modal__content-add').val()
+            mindContents: $('#modal__content-add').val(),
+            x: $('#modal__x').text(),
+            y: $('#modal__y').text()
         }
         $.ajax({
-            url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+mindmind,
+            url: "/mindmaps/",
             type: "post",
             data: query,
             success: function (data) {
+                console.log("data.nodeMindId:",data.nodeMindId);
+                console.log("data.key:",data.key);
+                console.log("data.roadId:",data.roadId);
+                console.log("data.nodeId:",data.nodeId);
+                console.log("data.mindLabel:",data.mindLabel);
+                console.log("data.edgeMindId:",data.edgeMindId);
+                console.log("data.source:",data.source);
+                console.log("data.target:",data.target);
                 if (data) {
                     cy.nodes().forEach(node => {
                         node.lock();
@@ -465,13 +499,17 @@
                         {
                             data:
                                 {
+                                    "mindId": data.nodeMindId,
                                     "id": data.nodeMindId,
+                                    "roadId": data.roadId,
+                                    "nodeId": data.nodeId,
+                                    "group": "nodes",
                                     "label": data.mindLabel
                                 },
                             renderedPosition:
                                 {
-                                    "x": document.getElementById("node__x").innerText,
-                                    "y": String(Number(document.getElementById("node__y").innerText)+200*cy.zoom())
+                                    "x": document.getElementById("modal__x").innerText,
+                                    "y": String(Number(document.getElementById("modal__y").innerText)+200*cy.zoom())
                                 }
                         }
                     );
@@ -482,7 +520,10 @@
                             data:
                                 {
                                     "id": data.edgeMindId,
-                                    "source": data.source,
+                                    "roadId": data.roadId,
+                                    "nodeId": data.nodeId,
+                                    "group": "edges",
+                                    "source": data.nodeMindId,
                                     "target": data.target
                                 }
                         }
@@ -498,8 +539,8 @@
                                 label: data.mindLabel
                             },
                             renderedPosition: {
-                                x: document.getElementById("node__x").innerText,
-                                y: String(Number(document.getElementById("node__y").innerText)+200*cy.zoom())
+                                x: document.getElementById("modal__x").innerText,
+                                y: String(Number(document.getElementById("modal__y").innerText)+200*cy.zoom())
                             }
                         },
                         {
@@ -529,14 +570,6 @@
 
     }
 
-    function clearAddInfo() {
-        $('#modal__title-add').val("");
-        $('#modal__link-add').val("");
-        $('#modal__book__title-add').val("");
-        $('#modal__book_link-add').val("");
-        $('#modal__content-add').val("");
-    }
-
     // 마인드 정보, 노드 정보 수정
     function updateMindAndNodeData(mindmind) {
 
@@ -547,11 +580,10 @@
             "bookLink": $('#modal__book_link-mod').val(),
             "mindContents": $('#modal__content-mod').val()
         }
-        console.log("##############################")
         console.log(query)
 
         $.ajax({
-            url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+mindmind,
+            url: "/mindmaps/"+mindmind,
             type: "put",
             dataType: "json",
             contentType: "application/json;charset=utf-8",
@@ -595,7 +627,7 @@
         console.log(query)
 
         $.ajax({
-            url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+mindmind+"/position",
+            url: "/mindmaps/"+mindmind+"/position",
             type: "put",
             dataType: "json",
             contentType: "application/json;charset=utf-8",
@@ -620,7 +652,6 @@
                             node.unlock();
                         })
                     // })
-
                 } else {
                     console.log("data 이상")
                 }
@@ -634,7 +665,7 @@
             return;
         }
         $.ajax({
-            url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+mindmind,
+            url: "/mindmaps/"+mindmind,
             type: "delete",
             success: function (data) {
                 if (data===0) {
@@ -677,29 +708,75 @@
     function fnCloseModal(id){
         // $('#m2-o').css("display", "none");
         $(id).css("display", "none");
-        clearAddInfo();
+        if (id === '#m2-o') {
+            clearAddInfo();
+        }
     }
 
     // ajax로 마인드 정보 가져오기
-    function getMindDataByAjax(targetId) {
-        $.ajax({
-            url: "/mindmap/"+"<%=mindMapInfo.get(0).getStudyRoadNodeId()%>/"+targetId,
-            type: "get",
-            success: (data) => {
-                console.log(data);
-                if (data) {
-                    $(".modal__title").text(data.mindLabel);
-                    $(".modal__title").val(data.mindLabel);
-                    $(".modal__link").val(data.url);
-                    $(".modal__book__title").val(data.bookTitle);
-                    $(".modal__book_link").val(data.bookLink);
-                    $(".modal__content").val(data.mindContents);
-                    $("#modal__mindId").text(targetId);
-                } else {
-                    console.log("data 이상");
+    function getMindDataByAjax(target) {
+
+        if (target.data.mindId) document.getElementById("modal__mindId").innerText = target.data.mindId;
+        if (target.data.roadId) document.getElementById("modal__roadId").innerText = target.data.roadId;
+        if (target.data.nodeId) document.getElementById("modal__nodeId").innerText = target.data.nodeId;
+        if (target.data.label) document.getElementById("modal__mindLabel").innerText = target.data.label;
+        if (target.data.group) document.getElementById("modal__group").innerText = target.data.group;
+        if (target.data.id) document.getElementById("modal__key").innerText = target.data.id;
+        if (target.position.x) document.getElementById("modal__x").innerText = target.position.x;
+        if (target.position.y) document.getElementById("modal__y").innerText = target.position.y;
+        if (target.data.source) document.getElementById("modal__source").innerText = target.data.source;
+        if (target.data.target) document.getElementById("modal__target").innerText = target.data.target;
+
+        console.log("target.data.group: ",target.data.group)
+        if (target.data.group === 'nodes') {
+            $(".modal__title").text(target.data.mindLabel);
+            $(".modal__title").val(target.data.mindLabel);
+            $(".modal__link").val(target.data.url);
+            $(".modal__book__title").val(target.bookTitle);
+            $(".modal__book_link").val(target.bookLink);
+            $(".modal__content").val(target.mindContents);
+            $.ajax({
+                url: "/mindmaps/"+target.data.mindId,
+                type: "get",
+                success: (data) => {
+                    console.log(data);
+                    if (data) {
+                        $(".modal__title").text(data.mindLabel);
+                        $(".modal__title").val(data.mindLabel);
+                        $(".modal__link").val(data.url);
+                        $(".modal__book__title").val(data.bookTitle);
+                        $(".modal__book_link").val(data.bookLink);
+                        $(".modal__content").val(data.mindContents);
+                    } else {
+                        console.log("data 이상");
+                    }
                 }
-            }
-        });
+            });
+        }
+
+    }
+
+    // 히든 내용 지우기
+    function clearNodeInfo() {
+        document.getElementById("modal__mindId").innerText = "";
+        document.getElementById("modal__roadId").innerText = "";
+        document.getElementById("modal__nodeId").innerText = "";
+        document.getElementById("modal__key").innerText = "";
+        document.getElementById("modal__group").innerText = "";
+        document.getElementById("modal__mindLabel").innerText = "";
+        document.getElementById("modal__x").innerText = "";
+        document.getElementById("modal__y").innerText = "";
+        document.getElementById("modal__source").innerText = "";
+        document.getElementById("modal__target").innerText = "";
+    }
+
+    function clearAddInfo() {
+        $("#modal__title").text("");
+        $("#modal__title").val("");
+        $("#modal__link").val("");
+        $("#modal__book__title").val("");
+        $("#modal__book_link").val("");
+        $("#modal__content").val("");
     }
 
     // // UUID 생성기

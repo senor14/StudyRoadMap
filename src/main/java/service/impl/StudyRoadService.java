@@ -25,32 +25,24 @@ public class StudyRoadService implements IStudyRoadService {
     private final MongoTemplate mongoTemplate;
     private final StudyRoadRepository studyRoadRepository;
     private final StudyRoadNodeRepository studyRoadNodeRepository;
-    private final StudyRoadDiagramRepository studyRoadDiagramRepository;
 
     @Override
-    public StudyRoadData getRoadMapData(String roadId) throws Exception {
+    public StudyRoadData getRoadMapData(String roadId) {
 
         log.info(this.getClass().getName()+".getRoadMapData Start!");
 
-        StudyRoadData roadData = studyRoadRepository.findByRoadId(roadId);
+        StudyRoadData roadData;
+        try {
+            roadData = studyRoadRepository.findByRoadId(roadId);
+        } catch (Exception e) {
+            e.getStackTrace();
+            roadData = new StudyRoadData();
+        }
 
-        log.info("roadData: "+roadData.toString());
+        log.info("roadData: "+roadData);
         log.info(this.getClass().getName()+".getRoadMapData End!");
 
         return roadData;
-    }
-
-    @Override
-    public StudyRoadDiagramData getRoadMapDiagramData(String diagramId) throws Exception {
-
-        log.info(this.getClass().getName()+".getRoadMapDiagramData Start!");
-
-        StudyRoadDiagramData diagramData = studyRoadDiagramRepository.getStudyRoadDiagramDataByDiagramId(diagramId);
-
-        log.info("diagramData: "+diagramData.toString());
-        log.info(this.getClass().getName()+".getRoadMapDiagramData End!");
-
-        return diagramData;
     }
 
     @Override
@@ -58,9 +50,16 @@ public class StudyRoadService implements IStudyRoadService {
 
         log.info(this.getClass().getName()+".getRoadMapNodeDate Start!");
 
-        StudyRoadNodeData nodeData = studyRoadNodeRepository.getStudyRoadNodeDataByNodeId(nodeId);
+        StudyRoadNodeData nodeData;
+        try {
+            nodeData = studyRoadNodeRepository.getStudyRoadNodeDataByNodeId(nodeId);
+        } catch (Exception e) {
+            e.getStackTrace();
+            nodeData = new StudyRoadNodeData();
+        }
 
-        log.info("nodeData: "+nodeData.toString());
+        log.info("nodeData: "+nodeData);
+
         log.info(this.getClass().getName()+".getRoadMapNodeDate End!");
 
         return nodeData;
@@ -72,38 +71,47 @@ public class StudyRoadService implements IStudyRoadService {
         log.info(this.getClass().getName()+".getPublicRoadTitle Start!");
 
         Query query = new Query();
-        Criteria criteria = new Criteria();
-        Criteria criteria2 = new Criteria();
 
-        criteria = Criteria.where("roadTitle").regex(roadTitle);
-        criteria2 = Criteria.where("publicYn").is("Y");
+        Criteria criteria = Criteria.where("roadTitle").regex(roadTitle, "i");
+        Criteria criteria2 = Criteria.where("publicYn").is("Y");
 
         query.addCriteria(criteria.andOperator(criteria2));
 
-        List<StudyRoadData> results = mongoTemplate.find(query, StudyRoadData.class, "StudyRoadData");
+        List<StudyRoadData> results;
+        try {
+            results = mongoTemplate.find(query, StudyRoadData.class, "StudyRoadData");
+        } catch (Exception e) {
+            e.getStackTrace();
+            results = new ArrayList<>();
+        }
 
-        log.info("results: "+ results.toString());
+        log.info("results: "+ results);
+
         log.info(this.getClass().getName()+".getPublicRoadTitle End!");
 
         return results;
     }
 
     @Override
-    public List<String> getRoadIdsByNodeCategory(String nodeCategory) throws Exception {
+    public List<String> getRoadIdsByCategory(String nodeCategory) throws Exception {
 
-        log.info(this.getClass().getName()+".getRoadIdsByNodeCategory Start!");
+        log.info(this.getClass().getName()+".getRoadIdsByCategory Start!");
 
         Query query = new Query();
-        Criteria criteria = new Criteria();
 
-        criteria = Criteria.where("nodeCategory").regex(nodeCategory);
+        Criteria criteria = Criteria.where("category").regex(nodeCategory, "i");
 
         query.addCriteria(criteria);
-//        query.fields().include("roadId");
 
-        List<StudyRoadNodeData> results = mongoTemplate.find(query, StudyRoadNodeData.class, "StudyRoadNodeData");
+        List<StudyRoadNodeData> results;
+        try {
+            results = mongoTemplate.find(query, StudyRoadNodeData.class, "StudyRoadNodeData");
+        } catch (Exception e) {
+            e.getStackTrace();
+            results = new ArrayList<>();
+        }
 
-        log.info("results: "+ results.toString());
+        log.info("results: "+ results);
 
         Set<StudyRoadNodeData> set = new HashSet<>(results);
         List<StudyRoadNodeData> finalResults = new ArrayList<>(set);
@@ -115,55 +123,39 @@ public class StudyRoadService implements IStudyRoadService {
         }
 
         log.info("rList: "+ rList);
-        log.info(this.getClass().getName()+".getRoadIdsByNodeCategory End!");
+        log.info(this.getClass().getName()+".getRoadIdsByCategory End!");
 
         return rList;
     }
 
     @Override
-    public List<StudyRoadData> getPublicNodeCategory(List<String> roadIds) throws Exception {
+    public List<StudyRoadData> getPublicCategory(List<String> roadIds) throws Exception {
 
-        log.info(this.getClass().getName()+".getPublicNodeCategory Start!");
+        log.info(this.getClass().getName()+".getPublicCategory Start!");
         if (roadIds.size() == 0) {
             return new ArrayList<StudyRoadData>();
         }
-        log.info("roadIds: "+roadIds.toString());
-//        Query query = new Query();
-//        Criteria criteria = new Criteria();
-//
-//        Criteria[] criteria_arr = new Criteria[nodeIds.size()];
+        log.info("roadIds: "+roadIds);
+
         List<StudyRoadData> results = new ArrayList<>();
         for (String roadId : roadIds) {
             log.info("roadId: "+roadId);
-            results.add(studyRoadRepository.findByRoadId(roadId));
+            StudyRoadData roadData;
+            try {
+                roadData = studyRoadRepository.findByRoadId(roadId);
+            } catch (Exception e) {
+                e.getStackTrace();
+                roadData = new StudyRoadData();
+            }
+
+            if (roadData.getPublicYn().equals("Y")) {
+                results.add(roadData);
+            }
+            roadData = null;
         }
-        log.info("results: "+ results.toString());
-//        int i = 0;
-//        for (String nodeId : nodeIds) {
-//            String question = nodeId;
-//            criteria_arr[i++] = Criteria.where("nodeId").is(question);
-//            log.info((i-1)+"");
-//        }
-//        query.addCriteria(criteria.orOperator(criteria_arr));
+        log.info("results: "+ results);
 
-
-//        log.info("query: "+query.toString());
-//        List<StudyRoadData> results = mongoTemplate.find(query, StudyRoadData.class, "StudyRoadData");
-
-        log.info(this.getClass().getName()+".getPublicNodeCategory End!");
-
-        return results;
-    }
-
-    @Override
-    public List<StudyRoadDiagramData> getRoadMapDiagramByRoadId(String roadId) throws Exception {
-
-        log.info(this.getClass().getName()+".getRoadMapDiagram Start!");
-
-        List<StudyRoadDiagramData> results = studyRoadDiagramRepository.getAllByRoadId(roadId);
-
-        log.info("results: "+results);
-        log.info(this.getClass().getName()+".getRoadMapDiagram End!");
+        log.info(this.getClass().getName()+".getPublicCategory End!");
 
         return results;
     }
@@ -173,9 +165,16 @@ public class StudyRoadService implements IStudyRoadService {
 
         log.info(this.getClass().getName()+".getRoadMapNode Start!");
 
-        List<StudyRoadNodeData> results = studyRoadNodeRepository.getAllByRoadId(roadId);
+        List<StudyRoadNodeData> results;
+        try {
+            results = studyRoadNodeRepository.getAllByRoadId(roadId);
+        } catch (Exception e) {
+            e.getStackTrace();
+            results = new ArrayList<>();
+        }
 
         log.info("results: "+results);
+
         log.info(this.getClass().getName()+".getRoadMapNode End!");
         return results;
     }
@@ -185,8 +184,14 @@ public class StudyRoadService implements IStudyRoadService {
 
         log.info(this.getClass().getName()+".getRoadDataByUserUuid Start!");
 
-        List<StudyRoadData> roadData = studyRoadRepository.findAllByUserUuid(userUuid);
+        List<StudyRoadData> roadData;
 
+        try {
+            roadData = studyRoadRepository.findAllByUserUuid(userUuid);
+        } catch (Exception e) {
+            e.getStackTrace();
+            roadData = new ArrayList<>();
+        }
         log.info("roadData: "+ roadData);
 
         log.info(this.getClass().getName()+".getRoadDataByUserUuid End!");
@@ -201,36 +206,20 @@ public class StudyRoadService implements IStudyRoadService {
 
         int res = 0;
 
-        StudyRoadData studyRoadData = mongoTemplate.save(roadData, "StudyRoadData");
+        StudyRoadData studyRoadData;
+        try {
+            studyRoadData = mongoTemplate.save(roadData, "StudyRoadData");
+        } catch (Exception e) {
+            studyRoadData = new StudyRoadData();
+        }
 
-        log.info("studyRoadData: "+ studyRoadData.toString());
+        log.info("studyRoadData: " + studyRoadData);
 
         if (studyRoadData == null || studyRoadData.equals("")) {
             res = 1;
         }
-        log.info("res: "+ res);
+        log.info("res: " + res);
         log.info(this.getClass().getName() + ".insertRoadData End!");
-
-        return res;
-    }
-
-    @Override
-    public int insertRoadDiagram(StudyRoadDiagramData diagramData) throws Exception {
-
-        log.info(this.getClass().getName()+".insertRoadDiagram Start!");
-
-        int res = 0;
-
-        StudyRoadDiagramData studyRoadDiagramData = mongoTemplate.save(diagramData, "StudyRoadDiagramData");
-
-        log.info("studyRoadDiagramData "+ studyRoadDiagramData.toString());
-
-        if (studyRoadDiagramData.equals("") || studyRoadDiagramData==null) {
-            res = 1;
-        }
-        log.info("res "+ res);
-
-        log.info(this.getClass().getName()+".insertRoadDiagram End!");
 
         return res;
     }
@@ -242,11 +231,16 @@ public class StudyRoadService implements IStudyRoadService {
 
         int res = 0;
 
-        StudyRoadNodeData studyRoadDiagramData = mongoTemplate.save(nodeData, "StudyRoadNodeData");
+        StudyRoadNodeData studyRoadNodeData;
+        try {
+            studyRoadNodeData = mongoTemplate.save(nodeData, "StudyRoadNodeData");
+        } catch (Exception e) {
+            studyRoadNodeData = new StudyRoadNodeData();
+        }
 
-        log.info("studyRoadDiagramData "+ studyRoadDiagramData.toString());
+        log.info("studyRoadNodeData "+ studyRoadNodeData);
 
-        if (studyRoadDiagramData.equals("") || studyRoadDiagramData==null) {
+        if (studyRoadNodeData.equals("") || studyRoadNodeData==null) {
             res = 1;
         }
         log.info("res "+ res);
@@ -260,55 +254,32 @@ public class StudyRoadService implements IStudyRoadService {
     public int updateRoadData(StudyRoadData roadData) throws Exception {
 
         log.info(this.getClass().getName()+".updateRoadData Start!");
+        int res = 0;
+        StudyRoadData result;
+        try {
+            result = studyRoadRepository.findByRoadId(roadData.getRoadId());
+            log.info("result before: "+ result);
+            result.setPublicYn(roadData.getPublicYn());
+            result.setRoadTitle(roadData.getRoadTitle());
 
-        StudyRoadData result = studyRoadRepository.findByRoadId(roadData.getRoadId());
-        log.info("result before: "+ result);
+            StudyRoadData save;
+            try {
+                save = studyRoadRepository.save(result);
+            } catch (Exception e) {
+                e.getStackTrace();
+                save = new StudyRoadData();
+                res = 1;
+            }
+            log.info("save: "+ save);
 
-        result.setPublicYn(roadData.getPublicYn());
-//        result.setPublicYn("N");
-        result.setRoadTitle(roadData.getRoadTitle());
-//        result.setRoadTitle("웹 프로그래밍");
-
-        StudyRoadData save = studyRoadRepository.save(result);
-        int res;
-        if (save!=null) {
-            res = 0;
-        } else {
+        } catch (Exception e) {
+            e.getStackTrace();
+            result = new StudyRoadData();
             res = 1;
         }
-
-        log.info("result after: "+ result.toString());
+        log.info("result after: "+ result);
 
         log.info(this.getClass().getName()+".updateRoadData End!");
-
-        return res;
-    }
-
-    @Override
-    public int updateRoadDiagramData(StudyRoadDiagramData diagramData) throws Exception {
-
-        log.info(this.getClass().getName()+".updateRoadDiagramDate Start!");
-
-        StudyRoadDiagramData result = studyRoadDiagramRepository.getStudyRoadDiagramDataByDiagramId(diagramData.getDiagramId());
-        log.info("result before: "+ result.toString());
-
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
-        mapper.map(diagramData, result);
-
-        StudyRoadDiagramData save = studyRoadDiagramRepository.save(result);
-
-        int res;
-        if (save!=null) {
-            res = 0;
-        } else {
-            res = 1;
-        }
-
-        log.info("result after: "+ result.toString());
-
-        log.info(this.getClass().getName()+".updateRoadDiagramDate End!");
 
         return res;
     }
@@ -317,24 +288,34 @@ public class StudyRoadService implements IStudyRoadService {
     public int updateRoadNodeData(StudyRoadNodeData nodeData) throws Exception {
 
         log.info(this.getClass().getName()+".updateRoadNodeData Start!");
-        StudyRoadNodeData result = studyRoadNodeRepository.getStudyRoadNodeDataByNodeId(nodeData.getNodeId());
-        log.info("result before: "+ result.toString());
 
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        int res = 0;
+        StudyRoadNodeData result;
+        try {
+            result = studyRoadNodeRepository.getStudyRoadNodeDataByNodeId(nodeData.getNodeId());
+            log.info("result before: "+ result);
 
-        mapper.map(nodeData, result);
+            ModelMapper mapper = new ModelMapper();
+            mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        StudyRoadNodeData save = studyRoadNodeRepository.save(result);
+            mapper.map(nodeData, result);
 
-        int res;
-        if (save!=null) {
-            res = 0;
-        } else {
+            StudyRoadNodeData save;
+            try {
+                save = studyRoadNodeRepository.save(result);
+            } catch (Exception e) {
+                e.getStackTrace();
+                save = new StudyRoadNodeData();
+                res = 1;
+            }
+            log.info("save: "+save);
+        } catch (Exception e) {
+            e.getStackTrace();
+            result = new StudyRoadNodeData();
             res = 1;
         }
 
-        log.info("result after: "+ result.toString());
+        log.info("result after: "+ result);
 
         log.info(this.getClass().getName()+".updateRoadNodeData End!");
 
@@ -345,36 +326,20 @@ public class StudyRoadService implements IStudyRoadService {
     public int deleteRoadData(String roadId) throws Exception {
 
         log.info(this.getClass().getName()+".deleteRoadData Start!");
-
-        StudyRoadData roadData = studyRoadRepository.deleteByRoadId(roadId);
-        int res;
-        if (roadData!=null) {
-            res = 0;
-        } else {
-            res = 1;
+        int res=0;
+        StudyRoadData roadData;
+        try {
+            roadData = studyRoadRepository.deleteByRoadId(roadId);
+            log.info("roadData: "+roadData);
+        } catch (Exception e) {
+            e.getStackTrace();
+            roadData = new StudyRoadData();
+            res=1;
         }
+
         log.info("roadData: "+roadData);
 
         log.info(this.getClass().getName()+".deleteRoadData End!");
-
-        return res;
-    }
-
-    @Override
-    public int deleteRoadDiagram(String diagramId) throws Exception {
-
-        log.info(this.getClass().getName()+".deleteRoadDiagram Start!");
-
-        StudyRoadDiagramData diagramData = studyRoadDiagramRepository.deleteByDiagramId(diagramId);
-        int res;
-        if (diagramData!=null) {
-            res = 0;
-        } else {
-            res = 1;
-        }
-        log.info("diagramData: "+diagramData);
-
-        log.info(this.getClass().getName()+".deleteRoadDiagram End!");
 
         return res;
     }
@@ -384,17 +349,20 @@ public class StudyRoadService implements IStudyRoadService {
 
         log.info(this.getClass().getName()+".deleteRoadNode Start!");
 
-        StudyRoadNodeData nodeData = studyRoadNodeRepository.deleteByNodeId(nodeId);
-        int res;
-        if (nodeData!=null) {
-            res = 0;
-        } else {
-            res = 1;
+        int res=0;
+        StudyRoadNodeData nodeData;
+        try {
+            nodeData = studyRoadNodeRepository.deleteByNodeId(nodeId);
+            log.info("nodeData: "+nodeData);
+        } catch (Exception e) {
+            e.getStackTrace();
+            nodeData = new StudyRoadNodeData();
+            res=1;
         }
+
         log.info("nodeData: "+nodeData);
 
         log.info(this.getClass().getName()+".deleteRoadNode End!");
-
 
         return res;
     }
