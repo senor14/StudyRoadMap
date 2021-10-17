@@ -3,7 +3,7 @@
     
 <%
     String pageId = (String)request.getAttribute("pageId");
-    String userUuid = (String)session.getAttribute("SS_USER_ID");
+    String userUuid = (String)session.getAttribute("SS_USER_UUID");
     String careerTitle = (String)request.getAttribute("careerTitle");
 %>
 
