@@ -37,9 +37,9 @@ public class CareerRoadController {
         log.info(this.getClass().getName() + ".getMindMap Start!");
 
         //세션 NULL CHECK
-        if(CmmUtil.nvl((String)session.getAttribute("SS_USER_ID")).equals("")){
+        if(CmmUtil.nvl((String)session.getAttribute("SS_USER_UUID")).equals("")){
             //임시 세션 로그인 셋팅
-            session.setAttribute("SS_USER_ID","Kim");
+            session.setAttribute("SS_USER_UUID","Kim");
         }
 
         CareerRoadMap node = new CareerRoadMap();
@@ -64,9 +64,9 @@ public class CareerRoadController {
 
         log.info(this.getClass().getName() + ".insertNodeData Start!");
 
-        String SS_USER_ID = session.getAttribute("SS_USER_ID").toString();
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
 
-        if(SS_USER_ID==null){
+        if(SS_USER_UUID==null){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("UUID가 없음");
         }
 
@@ -89,7 +89,7 @@ public class CareerRoadController {
         node.setNodeYear(year);
         node.setNodeMonth(month);
         node.setNodeDay(day);
-        node.setUserUuid(SS_USER_ID);
+        node.setUserUuid(SS_USER_UUID);
         node.setNodeType(nodeType);
         node.setImportance(importance);
         node.setDate(date);
@@ -135,9 +135,9 @@ public class CareerRoadController {
                                                                ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".deleteNodeData End!");
 
-        String SS_USER_ID = session.getAttribute("SS_USER_ID").toString();
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
 
-        if(SS_USER_ID==null){
+        if(SS_USER_UUID==null){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("UUID가 없음");
         }
 
@@ -145,7 +145,7 @@ public class CareerRoadController {
 
         CareerRoadData node = new CareerRoadData();
 
-        node.setUserUuid(SS_USER_ID);
+        node.setUserUuid(SS_USER_UUID);
         node.setCareerRoadNodeId(nodeId);
 
         int nRes = careerRoadService.deleteNodeData(node);
@@ -169,9 +169,9 @@ public class CareerRoadController {
                                                  ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".chkUpdateNodeData End!");
 
-        String SS_USER_ID = session.getAttribute("SS_USER_ID").toString();
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
 
-        if(SS_USER_ID==null){
+        if(SS_USER_UUID==null){
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("UUID가 없음");
         }
 
@@ -184,7 +184,7 @@ public class CareerRoadController {
 
         CareerRoadData node = new CareerRoadData();
 
-        node.setUserUuid(SS_USER_ID);
+        node.setUserUuid(SS_USER_UUID);
         node.setCareerRoadNodeId(nodeId);
         node.setImportance(importance);
 
