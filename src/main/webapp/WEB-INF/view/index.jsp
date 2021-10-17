@@ -5,6 +5,7 @@
          pageEncoding="UTF-8"%>
 <%
     List<StudyRoadData> roadDataInfo = (List<StudyRoadData>) request.getAttribute("roadDataInfo");
+    String SS_USER_UUID = (String)session.getAttribute("SS_USER_UUID");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +38,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/add_button.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/next_button.css">
 </head>
 
 <body>
@@ -167,7 +169,6 @@
                                                 <%-- 자신의 기존 스터디 마인드 맵 정보와 신규 스터디 마인드맵 버튼 들어가는 곳 --%>
                                                 <div class=""  style="display:grid; grid-template-columns: repeat(2, 1fr);word-wrap: break-word; height:620px; overflow:auto;">
 
-                                                    <%-- 기존 마인드맵 접속 버튼 --%>
                                                     <% for (StudyRoadData roadData : roadDataInfo) { %>
                                                     <a href="/roadmaps/<%=roadData.getRoadId()%>" style="z-index: 10000">
                                                         <div style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-image: url('http://www.veritas-a.com/news/photo/202009/338933_238918_1356.jpg')">
@@ -176,8 +177,7 @@
                                                     </a>
                                                     <%}%>
 
-                                                    <%-- 기존거 조회 후 마지막에 이 버튼 추가해 주면 될거 같음 --%>
-                                                    <%-- 신규 마인드맵 버튼 --%>
+                                                    <%-- 신규 스터디 로드맵 버튼 --%>
                                                     <div style="margin:5%; display: flex;align-items: center;justify-content: center;  border-radius: 5%;height: 200px;border: 3px dashed gray;">
                                                         <div class="button-container">
                                                             <a href="javascript:fnOpenModal('#m4-o')" class="btnn"><span>+</span></a>
@@ -188,7 +188,39 @@
                                             </div>
                                             <div id="Career_RoadMap" class="tabcontent">
                                                 <h3>Career RoadMap</h3>
-                                                <p>Barcelona has been an urban laboratory since the high Medieval Ages. A place of diversity, a backdrop for a multiplicity of social and cultural processes on multiple scales that reflect different ways of constructing the future, a city with a long experience of urban life and social innovations. </p>
+                                                <%--  커리어 로드맵 존재하면 조회해서 접근 버튼 생성, 없을 경우 신규 생성 버튼 보여주기 --%>
+                                                <div style="width:100%; border: 0px; height:620px; overflow:hidden;">
+                                                    <%-- 커리어 로드맵 없을 시 --%>
+                                                    <div id="no_career">
+                                                        <div style="position:absolute; width:100%; text-align: center; top:35%">
+                                                            <h2 style="color: gray;display: inline-block;">there's nothing here yet,<br>
+                                                                add something to get started</h2>
+                                                        </div>
+                                                        <div class="button-container" style="position: absolute;top: 50%;left: 45%;">
+                                                            <a href="javascript:fnOpenModal('#m5-o')" class="btnn"><span>+</span></a>
+                                                        </div>
+                                                    </div>
+
+                                                    <%-- 커리어 로드맵 존재 할 경우 --%>
+                                                    <div id="yes_career" style="position:absolute;  width:100%; top:35% ">
+                                                        <div class="wrapper">
+                                                            <a class="cta" id="my_career" href="/career/<%=SS_USER_UUID%>">
+                                                                <span>CareerRoadMap</span>
+                                                                <span>
+                                                              <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                                <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                  <path class="one" d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z" fill="#FFFFFF"></path>
+                                                                  <path class="two" d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z" fill="#FFFFFF"></path>
+                                                                  <path class="three" d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z" fill="#FFFFFF"></path>
+                                                                </g>
+                                                              </svg>
+                                                            </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
                                             </div>
 
                                             <div id="Community" class="tabcontent">
@@ -205,15 +237,15 @@
                 </div>
             </section>
 
-            <%-- modal 기본 --%>
+            <%-- 스터디 로드맵 신규 modal 시작 --%>
             <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
                 <div class="modal">
                     <div>
-                        로드맵 제목: <input type="text" class="modal__title" id="modal__title-add"/>
+                        로드맵 제목: <input type="text" class="modal__title" id="study__title-add"/>
                     </div>
                     <div>
-                        <label for="publicYn">공개여부:</label>
-                        <select name="publicYn" id="publicYn">
+                        <label for="StudypublicYn">공개여부:</label>
+                        <select name="StudypublicYn" id="StudypublicYn">
                             <option value="Y">Y</option>
                             <option value="N">N</option>
                         </select>
@@ -222,7 +254,26 @@
                     <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
                 </div>
             </div>
-            <%-- modal 기본 끝 --%>
+            <%-- 스터디 로드맵 신규 modal 끝 --%>
+
+            <%-- 커리어 로드맵 신규 modal 시작 --%>
+            <div class="modal-container" id="m5-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+                <div class="modal">
+                    <div>
+                        로드맵 제목: <input type="text" class="career__title-add" id="career__title-add"/>
+                    </div>
+                    <div>
+                        <label for="careerPublicYn">공개여부:</label>
+                        <select name="careerPublicYn" id="careerPublicYn">
+                            <option value="Y">Y</option>
+                            <option value="N">N</option>
+                        </select>
+                    </div>
+                    <button class="modal__btn" onclick="addCareerRoadmap();">확인</button>
+                    <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
+                </div>
+            </div>
+            <%-- 커리어 로드맵 신규 modal 끝 --%>
 
             <footer class="ftco-footer ftco-section img">
                 <div class="overlay"></div>
@@ -232,19 +283,20 @@
             <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
                     <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
                     <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
-                </svg></div>
+            </svg></div>
 
         </div>
     </div>
 
     <script>
+        <%--    스터디 로드맵 신규 생성    --%>
         function addStudyRoadmap() {
             $.ajax({
                 url: "/roadmaps",
                 type: "post",
                 data: {
-                    publicYn: document.getElementById("publicYn").value,
-                    roadTitle: document.getElementById("modal__title-add").value
+                    publicYn: document.getElementById("studyPublicYn").value,
+                    roadTitle: document.getElementById("study__title-add").value
                 },
                 success: function (data) {
                     if (data) {
@@ -257,6 +309,28 @@
 
             })
         }
+
+        <%--    커리어 로드맵 신규 생성    --%>
+        function addCareerRoadmap() {
+            $.ajax({
+                url: "/career/new",
+                type: "post",
+                data: {
+                    publicYn: document.getElementById("careerPublicYn").value,
+                    roadTitle: document.getElementById("career__title-add").value
+                },
+                success: function (data) {
+                    if (data=="성공") {
+                        location.href = "/career/<%=SS_USER_UUID%>"
+                    } else {
+                        console.log("데이터 이상")
+                    }
+                }
+
+            })
+        }
+
+
     </script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery-migrate-3.0.1.min.js"></script>
@@ -369,4 +443,29 @@
         $(id).css("display", "none");
     }
 
+</script>
+
+
+<script>
+    /* 커리어 로드맵 존재 체크 */
+    window.onload = function() {
+        console.log("대박")
+        $.ajax({
+            url: "/career/chk",
+            type: "post",
+            data: {
+            },
+            success: function (data) {
+                console.log(data);
+                if (data=="Y") {
+                    console.log("있음")
+                    $('#no_career').css("display", "none");
+                } else {
+                    console.log("데이터 이상")
+                    $('#yes_career').css("display", "none");
+                }
+            }
+
+        })
+    }
 </script>
