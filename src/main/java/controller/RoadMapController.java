@@ -119,7 +119,7 @@ public class RoadMapController {
 
     // 스터디로드 데이터 삽입 / 초기 다이어그램 노드 삽입
     @PostMapping("/roadmaps")
-    public String insertDefaultStudyRoadData(
+    public ResponseEntity<String> insertDefaultStudyRoadData(
             HttpServletRequest request,
             HttpSession session,
             ModelMap model) throws Exception {
@@ -157,12 +157,12 @@ public class RoadMapController {
         log.info("diagramData: "+ diagramData);
         studyRoadService.insertRoadNode(diagramData);
 
-        model.addAttribute("url", "/roadmaps/"+randomRoadId);
+//        model.addAttribute("url", "/roadmaps/"+randomRoadId);
 
         log.info(this.getClass().getName() + ".insertDefaultStudyRoadData End!");
 
 //        return ResponseEntity.status(HttpStatus.OK).body(0);
-        return "redirect";
+        return ResponseEntity.status(HttpStatus.OK).body("/roadmaps/"+randomRoadId);
     }
 
     // 스터디로드 노드 데이터 삽입
