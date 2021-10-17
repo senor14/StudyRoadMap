@@ -259,9 +259,13 @@ public class StudyRoadService implements IStudyRoadService {
         try {
             result = studyRoadRepository.findByRoadId(roadData.getRoadId());
             log.info("result before: "+ result);
-            result.setPublicYn(roadData.getPublicYn());
-            result.setRoadTitle(roadData.getRoadTitle());
-
+            if (roadData.getPublicYn()!=null && !roadData.getPublicYn().equals("")) {
+                result.setPublicYn(roadData.getPublicYn());
+            }
+            if (roadData.getRoadTitle()!=null && !roadData.getRoadTitle().equals("")) {
+                result.setRoadTitle(roadData.getRoadTitle());
+            }
+            log.info("result: "+ result);
             StudyRoadData save;
             try {
                 save = studyRoadRepository.save(result);

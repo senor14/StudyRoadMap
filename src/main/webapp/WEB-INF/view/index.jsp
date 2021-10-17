@@ -5,6 +5,7 @@
          pageEncoding="UTF-8"%>
 <%
     List<StudyRoadData> roadDataInfo = (List<StudyRoadData>) request.getAttribute("roadDataInfo");
+    String userUuid = (String)session.getAttribute("SS_USER_UUID");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,13 +162,13 @@
 
                                                     <%-- 기존 마인드맵 접속 버튼 --%>
                                                     <% for (StudyRoadData roadData : roadDataInfo) { %>
-                                                    <a href="/roadmaps/<%=roadData.getRoadId()%>" style="z-index: 10000">
-                                                        <div style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-image: url('http://www.veritas-a.com/news/photo/202009/338933_238918_1356.jpg')" onclick="">
-                                                            <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">"<%=roadData.getRoadTitle()%>"</span>
-                                                            <span class="road__title" hidden>"<%=roadData.getRoadTitle()%>"</span>
-                                                            <span class="road__publicYn" hidden>"<%=roadData.getPublicYn()%>"</span>
+                                                        <div onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-size: cover; background-image: url('http://localhost:9000/getRoadMapImage?roadId=<%=roadData.getRoadId()%>')">
+                                                            <div >
+                                                                <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">"<%=roadData.getRoadTitle()%>"</span>
+                                                                <span class="road__title" hidden>"<%=roadData.getRoadTitle()%>"</span>
+                                                            </div>
                                                         </div>
-<%--                                                    </a>--%>
+                                                        <span class="">공개여부: <input type="checkbox" class="road__publicYn" value="<%=roadData.getPublicYn()%>" onclick="checkbox_chk(this, '<%=roadData.getRoadId()%>')"></span>
                                                     <%}%>
 
                                                     <%-- 기존거 조회 후 마지막에 이 버튼 추가해 주면 될거 같음 --%>
@@ -266,7 +267,6 @@
                     <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
                     <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
                 </svg></div>
-
         </div>
     </div>
 
@@ -309,7 +309,37 @@
 
 </body>
 </html>
+<script>
+    let publics = document.querySelectorAll(".road__publicYn")
+    console.log(publics)
+    for (let i=0; i<publics.length; i++) {
+        console.log("publics["+i+"].value: "+publics[i].value);
+        if (publics[i].value === "Y") {
+            publics[i].setAttribute("checked", "checked");
+        }
+    }
 
+    function checkbox_chk(target, roadId) {
+        let publicYn = 'N';
+        if (target.checked) {
+            publicYn = 'Y';
+        }
+        console.log("checked: "+publicYn);
+        console.log("roadId: "+roadId)
+
+        $.ajax({
+            url: "/roadmaps/"+roadId,
+            type: "put",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                "publicYn": publicYn
+            }),
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    }
+</script>
 <script>
 
     let pwdCheck = 'N';
