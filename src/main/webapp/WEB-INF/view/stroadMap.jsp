@@ -61,8 +61,8 @@
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" id="file" name="fileUpload" style="display:none"/>
 </form>
-<h1><%=roadMapInfo.getRoadTitle()%></h1>
-<h2><%=userId%></h2>
+<h1 style="color:white;"><%=roadMapInfo.getRoadTitle()%></h1>
+<h2 style="color:white;"><%=userId%></h2>
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
