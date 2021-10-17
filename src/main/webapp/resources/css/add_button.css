@@ -1,0 +1,94 @@
+@keyframes pulse {
+    0% {
+        tranform: translate3d(0, 0, 0) scale(1);
+        opacity: 1;
+    }
+    70% {
+        transform: translate3d(0, 0, 0) scale(1.3);
+        opacity: 0.6;
+    }
+    80% {
+        transform: translate3d(0, 0, 0) scale(1.4);
+        opacity: 0.3;
+    }
+    90% {
+        transform: translate3d(0, 0, 0) scale(1.5);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1.6);
+        opacity: 0;
+    }
+}
+@keyframes pulse-steps {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
+}
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+.button-container {
+    /*position: absolute;*/
+    /*top: 50%;*/
+    /*left: 50%;*/
+    transform: translate(0%, 0%);
+    text-align: center;
+}
+.btnn:link, .btnn:visited {
+    display: table;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    width: 100px;
+    height: 100px;
+    background-image: linear-gradient(-225deg, #473b7b 0%, #3584a7 51%, #30d2be 100%);
+    border-radius: 100px;
+    transition: all 0.2s ease-in;
+}
+.btnn:link span, .btnn:visited span {
+    display: table-cell;
+    vertical-align: middle;
+}
+.btnn:link::after, .btnn:visited::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+    background-image: linear-gradient(-225deg, #473b7b 0%, #3584a7 51%, #30d2be 100%);
+    z-index: -1;
+    transition: all 0.2s ease-out;
+    animation: pulse-steps 1s ease-out infinite;
+}
+.btnn:link:hover, .btnn:visited:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+.btnn:link:hover::after, .btnn:visited:hover::after {
+    animation: none;
+}
+.btnn:link:active, .btnn:visited:active {
+    transform: scale(1.1) translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
