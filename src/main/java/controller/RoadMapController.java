@@ -466,6 +466,10 @@ public class RoadMapController {
         String userUuid = (String)session.getAttribute("SS_USER_UUID");
         log.info("userUuid: "+userUuid);
 
+        if(userUuid==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(1);
+        }
+
         // 스터디로드 id로 StudyRoadData 데이터 가져오기
         StudyRoadData roadMapData = studyRoadService.getRoadMapData(roadId);
         roadMapData.setUserUuid(userUuid);

@@ -125,6 +125,19 @@
 </div>
 <%-- modal 7 끝 --%>
 
+<%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
+<div class="modal-container" id="m14-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+    <div class="modal">
+        <div>
+            <h1 class="modal__category__text" id="modal__duplicate__text" style="color:white;">내 로드맵으로 복제하시겠습니까?</h1>
+        </div>
+        <button class="modal__btn" onclick="duplicateStudyRoadmap();">확인</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m14-o');">취소</button>
+        <a onclick="fnCloseModal('#m14-o');" class="link-2"></a>
+    </div>
+</div>
+<%-- modal 7 끝 --%>
+
 <div id="hidden__box" >
     <span hidden id="modal__nodeId" ></span>
     <span hidden id="modal__roadId" ></span>
@@ -1150,6 +1163,23 @@
                 clearAddInfo();
             }
 
+            function duplicateStudyRoadmap() {
+                $.ajax({
+                    url: "/roadmaps/"+"<%=roadMapInfo.getRoadId()%>"+"/duplicate",
+                    type: "post",
+                    success: function (data) {
+                        if (data===1) {
+                            alert("로그인을 해주세요.");
+                        } else if (data===0) {
+                            alert("복제완료되었습니다.");
+                            location.href="/index";
+                        } else {
+                            console.log("data 이상!");
+                        }
+                    }
+                })
+            }
+
         </script>
 
         <div id="sample">
@@ -1171,7 +1201,7 @@
                 ></div>
             </div>
             <br />
-
+            <button onclick="fnOpenModal('#m14-o')">복제하기</button>
             <div hidden>
                 <textarea id="mySavedModel" style="width: 100%; height: 300px" />
             </div>
