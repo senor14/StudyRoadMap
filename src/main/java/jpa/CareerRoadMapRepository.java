@@ -12,6 +12,6 @@ import java.util.List;
 public interface CareerRoadMapRepository extends MongoRepository<CareerRoadMap, String> {
 
     CareerRoadMap findByUserUuid(String userUuid);
-
+    boolean existsByUserUuid(String userUuid);
 }
 

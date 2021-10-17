@@ -31,6 +31,64 @@ public class CareerRoadController {
     @Resource(name = "CareerRoadService")
     ICareerRoadService careerRoadService;
 
+
+    @PostMapping("career/chk")
+    public ResponseEntity<String> CareerChk(HttpSession session,HttpServletRequest request,
+                                            HttpServletResponse response, ModelMap model)throws Exception{
+        log.info(this.getClass().getName() + ".CareerChk Start!");
+
+        //세션 NULL CHECK
+        if(CmmUtil.nvl((String)session.getAttribute("SS_USER_UUID")).equals("")){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("세션 UUID 없음");
+        }
+
+        CareerRoadMap node = new CareerRoadMap();
+        node.setUserUuid((String)session.getAttribute("SS_USER_UUID"));
+
+        int result = careerRoadService.chkCareerRoadMap(node);
+
+        log.info("결과 : " + result);
+        log.info(this.getClass().getName() + ".CareerChk End!");
+
+        if(result==0){
+            return ResponseEntity.status(HttpStatus.OK).body("Y");
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("N");
+        }
+    }
+
+    @PostMapping("career/new")
+    public ResponseEntity<String> newCareer(HttpSession session,HttpServletRequest request,
+                         HttpServletResponse response, ModelMap model)throws Exception{
+        log.info(this.getClass().getName() + ".newCareer Start!");
+
+        //세션 NULL CHECK
+        if(CmmUtil.nvl((String)session.getAttribute("SS_USER_UUID")).equals("")){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("실패");
+        }
+
+        String publicYn = request.getParameter("publicYn");
+        String careerTitle = request.getParameter("roadTitle");
+
+        CareerRoadMap node = new CareerRoadMap();
+        node.setUserUuid((String)session.getAttribute("SS_USER_UUID"));
+        node.setCreated(util.DateUtil.getDateTime());
+        node.setPublicYn(publicYn);
+        node.setCareerTitle(careerTitle);
+
+        int result = careerRoadService.makeCareerRoadMap(node);
+
+        log.info("결과 : " + result);
+        log.info(this.getClass().getName() + ".newCareer End!");
+
+        if(result==0){
+            return ResponseEntity.status(HttpStatus.OK).body("성공");
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("실패");
+        }
+    }
+
+
     @GetMapping("career/{userUuid}")
     public String roadMap(@PathVariable String userUuid,  HttpSession session,HttpServletRequest request,
                           HttpServletResponse response, ModelMap model) throws Exception {
