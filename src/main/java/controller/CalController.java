@@ -31,9 +31,9 @@ public class CalController {
 	public String calendar(HttpSession session) {
 
 		//세션 NULL CHECK
-		if(CmmUtil.nvl((String)session.getAttribute("SS_USER_ID")).equals("")){
+		if(CmmUtil.nvl((String)session.getAttribute("SS_USER_UUID")).equals("")){
 			//임시 세션 로그인 셋팅
-			session.setAttribute("SS_USER_ID","KIM");
+			session.setAttribute("SS_USER_UUID","KIM");
 		}
 
 		return "calendar";
@@ -46,7 +46,7 @@ public class CalController {
 		
 		String title = request.getParameter("title");
 		String date = request.getParameter("date");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		log.info(title);
 		log.info(date);
 		log.info(User_id);
@@ -75,7 +75,7 @@ public class CalController {
 		
 		log.info(this.getClass().getName() + ".getdday start");
 		
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		log.info(User_id);
 		
 		List<Map<String, String>> rList = new LinkedList<Map<String, String>>();
@@ -100,7 +100,7 @@ public class CalController {
 		log.info(this.getClass().getName() + ".deldday start");
 		
 		String id = (String) request.getParameter("id");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		log.info(User_id);
 		log.info(id);
 		
@@ -126,7 +126,7 @@ public class CalController {
 		
 		String title = request.getParameter("title");
 		String desc = request.getParameter("desc");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		log.info(title);
 		log.info(desc);
 		log.info(User_id);
@@ -155,7 +155,7 @@ public class CalController {
 		
 		log.info(this.getClass().getName() + ".getmemo start");
 		
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		log.info(User_id);
 		
 		List<Map<String, String>> rList = new LinkedList<Map<String, String>>();
@@ -180,7 +180,7 @@ public class CalController {
 		log.info(this.getClass().getName() + ".delmemo start");
 		
 		String id = (String) request.getParameter("id");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		log.info(User_id);
 		
 		if(User_id==null || id==null) {
@@ -206,7 +206,7 @@ public class CalController {
 		
 		log.info(this.getClass().getName() + ".getSchedule start");
 		
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		log.info(User_id);
 		
 		List<Map<String, Object>> rList = new LinkedList<Map<String, Object>>();
@@ -235,7 +235,7 @@ public class CalController {
 		log.info(this.getClass().getName() + ".delSchedule start");
 		
 		String id = (String) request.getParameter("id");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		
 		
 		if(User_id==null || id == null) {
@@ -269,7 +269,7 @@ public class CalController {
 		String type = (String) request.getParameter("type");
 		String backgroundColor = (String) request.getParameter("backgroundColor");
 		String description = (String) request.getParameter("description");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		
 		if(User_id==null || _id == null) {
 			return 0;
@@ -307,7 +307,7 @@ public class CalController {
 		String _id = (String) request.getParameter("_id");
 		String start = (String) request.getParameter("start");
 		String end = (String) request.getParameter("end");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 		
 		if(User_id==null || _id == null) {
 			return 0;
@@ -343,7 +343,7 @@ public class CalController {
 		String type = (String) request.getParameter("type");
 		String backgroundColor = (String) request.getParameter("backgroundColor");
 		String description = (String) request.getParameter("description");
-		String User_id =(String) session.getAttribute("SS_USER_ID");
+		String User_id =(String) session.getAttribute("SS_USER_UUID");
 
 		log.info(allDay);
 		log.info(title);

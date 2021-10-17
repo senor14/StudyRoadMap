@@ -2,7 +2,7 @@
 		 pageEncoding="UTF-8"%>
 
 <%
-	String SS_USER_ID = (String)session.getAttribute("SS_USER_ID");
+	String SS_USER_ID = (String)session.getAttribute("SS_USER_UUID");
 %>
 <!DOCTYPE html>
 
