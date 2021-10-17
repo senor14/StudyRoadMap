@@ -23,6 +23,12 @@ public class MainController {
     @GetMapping("/index")
     public String homeTest(HttpSession session, ModelMap model) throws Exception {
 
+        String userUuid = (String) session.getAttribute("SS_USER_ID");
+
+        if(userUuid == null) {
+            return "/Main/Login_or_Signup";
+        }
+
         List<StudyRoadData> roadDataInfo = studyRoadService.getRoadDataByUserUuid((String) session.getAttribute("SS_USER_UUID"));
 
         log.info("roadDataInfo: "+roadDataInfo);

@@ -53,6 +53,7 @@
                                 <li class="active"><a href="index.html"><span>Home</span></a></li>
                                 <li class="active"><a onclick="fnOpenModal('#m2-o');" style="cursor: pointer"><span >비밀번호 변경</span></a></li>
                                 <li class="active"><a onclick="fnOpenModal('#m3-o');" style="cursor: pointer"><span >회원 탈퇴</span></a></li>
+                                <li class="active"><a href="/RoadMap/Logout"><span>로그아웃</span></a></li>
                             </ul>
                         </div>
                     </div>
