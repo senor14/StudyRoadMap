@@ -161,7 +161,7 @@
 
                                                     <%-- 기존 마인드맵 접속 버튼 --%>
                                                     <% for (StudyRoadData roadData : roadDataInfo) { %>
-<%--                                                    <a href="/roadmaps/<%=roadData.getRoadId()%>" style="z-index: 10000">--%>
+                                                    <a href="/roadmaps/<%=roadData.getRoadId()%>" style="z-index: 10000">
                                                         <div style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-image: url('http://www.veritas-a.com/news/photo/202009/338933_238918_1356.jpg')" onclick="">
                                                             <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">"<%=roadData.getRoadTitle()%>"</span>
                                                             <span class="road__title" hidden>"<%=roadData.getRoadTitle()%>"</span>
