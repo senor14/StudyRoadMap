@@ -47,16 +47,18 @@ public class UserController {
 
     // 로그인 페이지
     @RequestMapping(value = "RoadMap/LoginOrSignUp")
-    public String Login() {
+    public String Login(HttpSession session) {
 
         log.info("Login 시작");
-        // 로그인 페이지 접속 시 로그인 상태 지우기 위해 invalidate 실행
-        // 테스트를 용이하게 하기 위해서 잠시 주석으로 가려놓았습니다. 테스트 이후에는 다시 주석을 해제해야 합니다.
-        //session.invalidate();
 
-        log.info("Login 종료");
+        if((String) session.getAttribute("SS_USER_ID") == null){
+            log.info("Login 종료");
+            return "/Main/Login_or_Signup";
+        } else {
+            log.info("Login 종료");
+            return "/index";
+        }
 
-        return "/Main/Login_or_Signup";
     }
 
     // 로그인 처리
