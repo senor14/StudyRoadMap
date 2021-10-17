@@ -10,11 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="이건미친짓이야">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMapGuest.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMapGuest.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ImgController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ImgController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/RoadMapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/RoadMapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/StudyRoadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/StudyRoadService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/career.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/career.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/StudyMindController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/mindMap.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +112,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/WEB-INF/view" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -117,11 +121,12 @@
     <property name="project.structure.last.edited" value="Facets" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="Console" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\CSRoadMap\TEST\StudyRoadMap-StudyRoadMap_NOW5\src\main\webapp\WEB-INF\view" />
       <recent name="C:\Users\wleo5\Desktop\프론트 리얼\StudyRoadMap\src\main\webapp\WEB-INF" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -287,7 +292,7 @@
       <workItem from="1634367028629" duration="7554000" />
       <workItem from="1634375309285" duration="21065000" />
       <workItem from="1634452609963" duration="672000" />
-      <workItem from="1634454357674" duration="16161000" />
+      <workItem from="1634454357674" duration="25711000" />
     </task>
     <task id="LOCAL-00001" summary="[ADD] 커리어 로드맵 컨트롤러, 서비스, 프론트 추가">
       <created>1633239962316</created>

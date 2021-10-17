@@ -2,6 +2,8 @@ package controller;
 
 import domain.StudyMindData;
 import domain.StudyMindNodeData;
+import domain.StudyRoadData;
+import domain.StudyRoadNodeData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +11,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import service.IStudyMindService;
+import service.IStudyRoadService;
+import service.IUserService;
 import util.DateUtil;
+import util.EncryptUtil;
 import vo.ResponseNodeData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static util.CmmUtil.nvl;
@@ -32,16 +40,31 @@ public class StudyMindController {
     @Resource(name = "StudyMindService")
     IStudyMindService studyMindService;
 
-    // 스터디 로드맵 노드 속의 마인드맵 조회 ------------------------------및 초기 생성
+    @Resource(name = "UserService")
+    IUserService userService;
+
+    @Resource(name = "StudyRoadService")
+    IStudyRoadService studyRoadService;
+
+    // 스터디 로드맵 노드 속의 마인드맵 조회
     @GetMapping("/roadmaps/{roadId}/nodes/{nodeId}")
     public String getMindMap(@PathVariable String nodeId,
                              @PathVariable String roadId,
-                             HttpServletRequest request,
-                             HttpServletResponse response,
-                             ModelMap model
+                             ModelMap model,
+                             HttpSession session
                              ) throws Exception {
 
         log.info(this.getClass().getName() + ".getMindMap Start!");
+
+        StudyRoadData roadMapData = studyRoadService.getRoadMapData(roadId);
+        String writerUserUuid = roadMapData.getUserUuid();
+        Map<String, Object> uMap = new HashMap<>();
+        uMap.put("userUuid", roadMapData.getUserUuid());
+        List<Map<String, String>> rList = userService.getUserId(uMap);
+
+        String userId = EncryptUtil.decAES128CBC(rList.get(0).get("userId"));
+
+        StudyRoadNodeData roadMapNodeData = studyRoadService.getRoadMapNodeData(nodeId);
 
         StudyMindData mindData = new StudyMindData();
         StudyMindNodeData nodeData = new StudyMindNodeData();
@@ -55,12 +78,20 @@ public class StudyMindController {
 
         log.info("mindMapInfo: "+ mindMapInfo);
         log.info("mindMapNode: "+ mindMapNode);
+        log.info("roadMapNodeData: "+ roadMapNodeData);
 
         model.addAttribute("mindMapInfo", mindMapInfo);
         model.addAttribute("mindMapNode", mindMapNode);
+        model.addAttribute("title", roadMapNodeData.getText());
+        model.addAttribute("userId", userId);
+
+        if (!((String)session.getAttribute("SS_USER_UUID")).equals(writerUserUuid)) {
+            return "mindMapGuest";
+        }
 
         mindMapInfo = null;
         mindMapNode = null;
+        roadMapNodeData = null;
 
         log.info(this.getClass().getName() + ".getMindMap End!");
 

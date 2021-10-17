@@ -57,6 +57,7 @@ public class ImgController {
         Map<String, Object> dMap = new HashMap<>();
 
         dMap.put("userUuid", userUuid);
+        dMap.put("roadId", roadId);
         dMap.put("orgFileName", "roadMapCapture.png");
 
         // 이미지 파일 경로가 데이터베이스에 존재하는지 조회

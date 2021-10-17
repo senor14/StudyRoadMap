@@ -13,18 +13,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import service.IStudyMindService;
 import service.IStudyRoadService;
+import service.IUserService;
 import util.CmmUtil;
 import util.DateUtil;
+import util.EncryptUtil;
 import vo.RequestNodeData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -36,6 +35,9 @@ public class RoadMapController {
 
     @Resource(name = "StudyMindService")
     IStudyMindService studyMindService;
+
+    @Resource(name = "UserService")
+    IUserService userService;
 
     @GetMapping("/roadMap")
     public String roadMap() {
@@ -63,7 +65,8 @@ public class RoadMapController {
     // 스터디 로드맵 상세보기
     @GetMapping("/roadmaps/{roadId}")
     public String getRoadMap(@PathVariable String roadId,
-                             ModelMap model) throws Exception {
+                             ModelMap model,
+                             HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".getRoadMap Start!");
 
@@ -73,6 +76,13 @@ public class RoadMapController {
         nodeData.setRoadId(roadId);
 
         StudyRoadData roadMapInfo = studyRoadService.getRoadMapData(roadId);
+        String writerUserUuid = roadMapInfo.getUserUuid();
+        Map<String, Object> uMap = new HashMap<>();
+        uMap.put("userUuid", roadMapInfo.getUserUuid());
+        List<Map<String, String>> rList = userService.getUserId(uMap);
+
+        String userId = EncryptUtil.decAES128CBC(rList.get(0).get("userId"));
+
         List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId(roadId);
 
         log.info("roadMapInfo: "+roadMapInfo);
@@ -80,6 +90,12 @@ public class RoadMapController {
 
         model.addAttribute("roadMapInfo",roadMapInfo);
         model.addAttribute("nodeInfo",nodeInfo);
+        model.addAttribute("userId",userId);
+
+        if (!((String)session.getAttribute("SS_USER_UUID")).equals(writerUserUuid)) {
+            return "stroadMapGuest";
+        }
+
 
         roadMapInfo = null;
         nodeInfo = null;
@@ -330,45 +346,6 @@ public class RoadMapController {
         return ResponseEntity.status(HttpStatus.OK).body(res);
 
     }
-
-//    // 스터디 노드 공개여부 변경
-//    @PostMapping("/roadmaps")
-//    public ResponseEntity<String> chkUpdateNodeData(HttpSession session,
-//                                                    HttpServletRequest request,
-//                                                    HttpServletResponse response,
-//                                                    ModelMap model) throws Exception {
-//        log.info(this.getClass().getName() + ".chkUpdateNodeData End!");
-//
-//        String SS_USER_ID = session.getAttribute("SS_USER_ID").toString();
-//
-//        if(SS_USER_ID==null){
-//            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("UUID가 없음");
-//        }
-//
-//        String nodeId = CmmUtil.nvl(request.getParameter("careerRoadNodeId").trim());
-//        boolean importance = false;
-//        if(CmmUtil.nvl(request.getParameter("importance")).equals("true")){
-//            importance = true;
-//        }
-//
-//
-//        CareerRoadData node = new CareerRoadData();
-//
-//        node.setUserUuid(SS_USER_ID);
-//        node.setCareerRoadNodeId(nodeId);
-//        node.setImportance(importance);
-//
-//        int nRes = careerRoadService.chkUpdateNodeData(node);
-//
-//        if (nRes == 0) {
-//            log.info("성공");
-//        } else {
-//            log.info("실패");
-//        }
-//
-//        log.info(this.getClass().getName() + ".chkUpdateNodeData End!");
-//        return ResponseEntity.status(HttpStatus.OK).body("성공");
-//    }
 
     // 스터디 노드 데이터 수정
     @PutMapping("/roadmaps/{roadId}/nodes/{nodeId}")
