@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-<%--        </nav>--%>
+        </nav>
             <%-- modal 기본 --%>
             <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
                 <div class="modal">
@@ -94,8 +94,6 @@
                 </div>
             </div>
             <%-- modal 추가 끝 --%>
-
-
         </nav>
 
         <div id="colorlib-page">
@@ -136,7 +134,10 @@
                     <%}%>
                 </div>
                 <div>
-                    <button id="roadmap__add" onclick="fnOpenModal('#m4-o')">바톤</button>
+                    <button id="roadmap__add" onclick="fnOpenModal('#m4-o')">스터디로드맵바톤</button>
+                </div>
+                <div>
+                    <button id="community__info" onclick="location.href='/community'">커뮤니티이동바톤</button>
                 </div>
                 <div class="container-fluid px-0">
                     <div class="row no-gutters">
@@ -169,10 +170,7 @@
 
                                             <div id="Study_MindMap" class="tabcontent">
                                                 <h3>Study MindMap</h3>
-
-
                                             </div>
-
                                             <div id="Career_RoadMap" class="tabcontent">
                                                 <h3>Career RoadMap</h3>
                                                 <p>Barcelona has been an urban laboratory since the high Medieval Ages. A place of diversity, a backdrop for a multiplicity of social and cultural processes on multiple scales that reflect different ways of constructing the future, a city with a long experience of urban life and social innovations. </p>
@@ -186,7 +184,6 @@
                                         </div>
                                     </div>
                                 </section>
-
                             </div>
                         </div>
                     </div>
@@ -211,7 +208,6 @@
                 </div>
             </div>
             <%-- modal 기본 끝 --%>
-
 
             <footer class="ftco-footer ftco-section img">
                 <div class="overlay"></div>

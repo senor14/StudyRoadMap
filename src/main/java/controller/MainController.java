@@ -25,9 +25,7 @@ public class MainController {
 
         List<StudyRoadData> roadDataInfo = studyRoadService.getRoadDataByUserUuid((String) session.getAttribute("SS_USER_UUID"));
 
-        log.info("##################################################");
         log.info("roadDataInfo: "+roadDataInfo);
-        log.info("##################################################");
 
         model.addAttribute("roadDataInfo", roadDataInfo);
 
@@ -41,7 +39,7 @@ public class MainController {
 
     @GetMapping("/comment")
     public String comment() {
-        return "/community/comment";
+        return "/comment/comment";
 
     }
 }

@@ -87,7 +87,7 @@ public class CareerRoadService implements ICareerRoadService {
 
     @Override
     public List<CareerRoadData> getImportanceNode(CareerRoadData node) throws Exception {
-        log.info(this.getClass().getName()+".getImportanceNode End!");
+        log.info(this.getClass().getName()+".getImportanceNode Start!");
 
         Sort sort = sortByvDate();
         List<CareerRoadData> result = careerRoadRepository.findAllByUserUuidAndImportance(node.getUserUuid(), node.getImportance(), sort);
@@ -105,8 +105,7 @@ public class CareerRoadService implements ICareerRoadService {
 
     @Override
     public CareerRoadMap getCareerRoadMapInfo(CareerRoadMap node) throws Exception {
-        log.info(this.getClass().getName()+".getCareerRoadMapInfo End!");
-
+        log.info(this.getClass().getName()+".getCareerRoadMapInfo Start!");
 
         log.info(node.getUserUuid());
         CareerRoadMap result = careerRoadMapRepository.findByUserUuid(node.getUserUuid());
@@ -124,7 +123,7 @@ public class CareerRoadService implements ICareerRoadService {
 
     @Override
     public List<CareerRoadData> getCareerNodeByNodeTypeAndUserUuid(CareerRoadData node) throws Exception {
-        log.info(this.getClass().getName()+".getCareerNodeByNodeTypeAndUserUuid End!");
+        log.info(this.getClass().getName()+".getCareerNodeByNodeTypeAndUserUuid Start!");
 
         Sort sort = sortByvDate();
         List<CareerRoadData> result = careerRoadRepository.findAllByNodeTypeAndUserUuid(node.getNodeType(), node.getUserUuid(), sort);
@@ -134,8 +133,6 @@ public class CareerRoadService implements ICareerRoadService {
 
         return result;
     }
-
-
 
     /* sort */
     private Sort sortByvDate() {
