@@ -1476,23 +1476,7 @@
                                         break;
                                     }
                                 }
-                                // $.ajax({
-                                //     url: "/mindmaps",
-                                //     type: "post",
-                                //     data: {
-                                //         roadId: data.roadId,
-                                //         nodeId: data.nodeId,
-                                //         mindLabel: $('#modal__node__text-add').val(),
-                                //         type: "initial"
-                                //     },
-                                //     success: function (data) {
-                                //         if (data) {
-                                //             console.log("마인드 정보, 노드 생성 완료");
-                                //         } else {
-                                //             console.log("data 이상");
-                                //         }
-                                //     }
-                                // })
+
                             } else if (data.canvasClass === "Lane") {
                                 myDiagram.model.nodeDataArray.push({
                                     nodeId: data.nodeId,
@@ -1509,8 +1493,6 @@
                             }
                             save();
                             load();
-                            // savePalette();
-                            // loadPalette();
                             fnCloseModal('#m10-o');
                             fnCloseModal('#m11-o');
                             fnCloseModal('#m12-o');
@@ -1681,8 +1663,6 @@
                             }
                             save();
                             load();
-                            // savePalette();
-                            // loadPalette();
                             fnCloseModal('#m3-o');
                             fnCloseModal('#m2-o');
                             fnCloseModal('#m5-o');
@@ -1715,7 +1695,6 @@
                                     console.log(myDiagram.model.nodeDataArray[d])
                                     myDiagram.model.removeNodeData(myDiagram.model.nodeDataArray[d]);
                                     console.log(myDiagram.model.nodeDataArray[d]);
-                                    // myDiagram.remove(myDiagram.model.nodeDataArray[d]);
                                     break;
                                 }
                             }
@@ -1863,12 +1842,12 @@
                 ></div>
             </div>
             <br />
-            <button id="SaveButton" onclick="save()">Save</button>
+            <button id="SaveButton" onclick="save()" hidden>Save</button>
             <button onclick="fnOpenModal('#m12-o')">카테고리추가</button>
-            <button onclick="load()">Load</button>
-            <button onclick="layout()">Layout</button>
+            <button onclick="load()" hidden>Load</button>
+            <button onclick="layout()" hidden>Layout</button>
             <button onclick="fnOpenModal('#m11-o')">레인추가</button>
-            <div>
+            <div hidden>
                 <textarea id="mySavedModel" style="width: 100%; height: 300px" />
             </div>
             <br />
