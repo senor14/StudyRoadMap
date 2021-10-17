@@ -1,14 +1,21 @@
 let container
 $(document).ready(function(){
     container = document.getElementsByClassName("swiper-wrapper")[0]
-    getStudyMap()
+    // getStudyMap()
 })
 
 function getStudyMap(){
     $(".swiper-wrapper").empty();
     let category = document.querySelector('input[name="category"]:checked').value
-    let searchType = document.querySelector('option[value="category"]')
+    let searchType = document.getElementById('searchType').value
+    let searchTypeTitle = document.querySelector('option[value="title"]')
+    let searchTypeCategory = document.querySelector('option[value="category"]')
+    let keyword = document.getElementById('keyword').value;
 
+    console.log("searchType: ", searchType);
+    console.log("searchTypeTitle: ", searchTypeTitle);
+    console.log("searchTypeCategory: ", searchTypeCategory);
+    console.log("category: ", category);
     if(category === "s") {
         category = "road"
         searchType.disabled = false
@@ -21,24 +28,45 @@ function getStudyMap(){
     }
     else return alert("카테고리를 설정해 주세요")
 
-    $.ajax({
-        url: "/getStudyMap.do",
-        type:"GET",
-        dataType : "json",
-        data : {category : category},
-        success : function(data) {
-            if(JSON.stringify(data) === "[]") noResult("검색결과가 없습니다.")
-            else{
-                setSlide(category, data)
-                setSwiper()
+    if (searchType==="title") {
+        $.ajax({
+            url: "/roadmaps/roadTitle",
+            type: "GET",
+            dataType: "json",
+            data: "&name="+keyword,
+            success: function (data) {
+                if (JSON.stringify(data) === "[]") noResult("검색결과가 없습니다.")
+                else {
+                    setSlide(category, data)
+                    setSwiper()
+                }
+                console.log("실행 완료 data length-", data.length);
+            },
+            error: function (err) {
+                noResult("오류가 발생하였습니다.")
+                console.log("실행중 오류가 발생하였습니다. 에러:", err);
             }
-            console.log("실행 완료 data length-",data.length);
-        },
-        error : function(err) {
-            noResult("오류가 발생하였습니다.")
-            console.log("실행중 오류가 발생하였습니다. 에러:",err);
-        }
-    })
+        })
+    } else {
+        $.ajax({
+            url: "/roadmaps/category",
+            type: "GET",
+            dataType: "json",
+            data: "&name="+keyword,
+            success: function (data) {
+                if (JSON.stringify(data) === "[]") noResult("검색결과가 없습니다.")
+                else {
+                    setSlide(category, data)
+                    setSwiper()
+                }
+                console.log("실행 완료 data length-", data.length);
+            },
+            error: function (err) {
+                noResult("오류가 발생하였습니다.")
+                console.log("실행중 오류가 발생하였습니다. 에러:", err);
+            }
+        })
+    }
 }
 
 function findRoadMap(){
@@ -99,10 +127,12 @@ function setSlide(category, data){
         if(category === "road" ){
             slide.setAttribute("road-id",result.road_id)
 
-            let setCategory = document.createElement('div')
-            setCategory.textContent = "["+result.roadNodeDataArray.nodeCategory+"]"
-            setCategory.className = "setCategory"
-            slide.appendChild(setCategory)
+            // let setCategory = document.createElement('div')
+            console.log("result: ",result)
+
+            // setCategory.textContent = "["+result.roadNodeDataArray.nodeCategory+"]"
+            // setCategory.className = "setCategory"
+            // slide.appendChild(setCategory)
 
             let setTitle = document.createElement('div')
             setTitle.textContent = ++num+". "+result.roadTitle

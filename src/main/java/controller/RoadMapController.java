@@ -89,11 +89,11 @@ public class RoadMapController {
 
     // 로드타이틀로 로드맵 검색
     @GetMapping("/roadmaps/roadTitle")
-    public ResponseEntity<List<StudyRoadData>> searchRoadMapByRoadTitle(String keyword) throws Exception {
+    public ResponseEntity<List<StudyRoadData>> searchRoadMapByRoadTitle(HttpServletRequest request) throws Exception {
 
         log.info(this.getClass().getName()+".searchRoadMapByRoadTitle Start!");
-
-        List<StudyRoadData> publicRoadTitles = studyRoadService.getPublicRoadTitle(keyword);
+        log.info("keyword: "+nvl(request.getParameter("name")));
+        List<StudyRoadData> publicRoadTitles = studyRoadService.getPublicRoadTitle(nvl(request.getParameter("name")));
 
         log.info("publicRoadTitles: "+publicRoadTitles);
 
@@ -104,11 +104,11 @@ public class RoadMapController {
 
     // 카테고리로 로드맵 검색
     @GetMapping("/roadmaps/category")
-    public ResponseEntity<List<StudyRoadData>> searchRoadMapByNodeCategory(String keyword) throws  Exception {
+    public ResponseEntity<List<StudyRoadData>> searchRoadMapByNodeCategory(HttpServletRequest request) throws  Exception {
 
         log.info(this.getClass().getName()+".searchRoadMapByNodeCategory Start!");
-
-        List<String> roadIds = studyRoadService.getRoadIdsByCategory(keyword);
+        log.info("keyword: "+nvl(request.getParameter("name")));
+        List<String> roadIds = studyRoadService.getRoadIdsByCategory(nvl(request.getParameter("name")));
         log.info("roadIds: "+roadIds);
         List<StudyRoadData> results = studyRoadService.getPublicCategory(roadIds);
         log.info("results: "+ results.toString());

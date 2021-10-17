@@ -82,7 +82,6 @@ function getComment(myComments){
                         }
 
                     })
-
                 }else{
 
                 }
@@ -136,7 +135,9 @@ function insertComment(){
             console.log("실행중 오류가 발생하였습니다. 에러:",err);
         }
     })
-    getComment()
+    getComment();
+    document.querySelector(".comment").value = "";
+
 }
 
 function deleteComment(li){

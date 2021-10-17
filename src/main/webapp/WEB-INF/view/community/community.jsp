@@ -19,8 +19,8 @@
 <div class="top">
     <div class="setting">
         <select class="type" id="searchType">
-            <option value="Title">타이틀검색</option>
-            <option value="Category">카테고리검색</option>
+            <option value="title">타이틀검색</option>
+            <option value="category">카테고리검색</option>
         </select>
         <div class="category">
             RoadMap:
@@ -33,7 +33,8 @@
                         <input type="search" class="testinput" name="test" placeholder="Search" onclick="">
                         <div class="icon"></div>
                     </div> -->
-        <input type="search" class="search" name="keyWord" placeholder="Search" onKeyDown="javascript: if (event.keyCode == 13) {findRoadMap()}">
+<%--        <input type="search" class="search" name="keyWord" placeholder="Search" onKeyDown="javascript: if (event.keyCode == 13) {findRoadMap()}">--%>
+        <input type="search" id="keyword" class="search" name="keyWord" placeholder="Search" onKeyDown="javascript: if (event.keyCode == 13) {getStudyMap()}">
     </div>
 </div>
 <div class="middle">
@@ -45,5 +46,8 @@
         <div class="swiper-pagination"></div>
     </div>
 </div>
+<%--<script>--%>
+<%--    getStudyMap();--%>
+<%--</script>--%>
 </body>
 </html>
