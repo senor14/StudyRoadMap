@@ -13,11 +13,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import service.IStudyMindService;
 import service.IStudyRoadService;
+import util.CmmUtil;
 import util.DateUtil;
 import vo.RequestNodeData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -126,6 +128,12 @@ public class RoadMapController {
 
         log.info(this.getClass().getName() + ".insertDefaultStudyRoadData Start!");
 
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("UUID가 없음");
+        }
+
         String randomRoadId = UUID.randomUUID().toString();
         log.info("randomRoadId: "+randomRoadId);
 
@@ -170,10 +178,17 @@ public class RoadMapController {
     public ResponseEntity<StudyRoadNodeData> insertStudyRoadNode(
             @PathVariable String roadId,
             @PathVariable String canvasClass,
+            HttpSession session,
             HttpServletRequest request) throws Exception {
 
 
         log.info(this.getClass().getName() + ".insertStudyRoadNode Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new StudyRoadNodeData());
+        }
 
         String randomNodeId = UUID.randomUUID().toString();
 
@@ -294,11 +309,19 @@ public class RoadMapController {
     @PutMapping("/roadmaps/{roadId}")
     public ResponseEntity<Integer> updateStudyRoadData(
                                     @PathVariable String roadId,
+                                    HttpSession session,
                                     @RequestBody StudyRoadData road) throws Exception {
 
         log.info(this.getClass().getName() + ".updateStudyRoadData Start!");
+        log.info("road: "+road);
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(0);
+        }
 
         road.setRoadId(roadId);
+
 
         int res = studyRoadService.updateRoadData(road);
 
@@ -308,15 +331,61 @@ public class RoadMapController {
 
     }
 
+//    // 스터디 노드 공개여부 변경
+//    @PostMapping("/roadmaps")
+//    public ResponseEntity<String> chkUpdateNodeData(HttpSession session,
+//                                                    HttpServletRequest request,
+//                                                    HttpServletResponse response,
+//                                                    ModelMap model) throws Exception {
+//        log.info(this.getClass().getName() + ".chkUpdateNodeData End!");
+//
+//        String SS_USER_ID = session.getAttribute("SS_USER_ID").toString();
+//
+//        if(SS_USER_ID==null){
+//            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("UUID가 없음");
+//        }
+//
+//        String nodeId = CmmUtil.nvl(request.getParameter("careerRoadNodeId").trim());
+//        boolean importance = false;
+//        if(CmmUtil.nvl(request.getParameter("importance")).equals("true")){
+//            importance = true;
+//        }
+//
+//
+//        CareerRoadData node = new CareerRoadData();
+//
+//        node.setUserUuid(SS_USER_ID);
+//        node.setCareerRoadNodeId(nodeId);
+//        node.setImportance(importance);
+//
+//        int nRes = careerRoadService.chkUpdateNodeData(node);
+//
+//        if (nRes == 0) {
+//            log.info("성공");
+//        } else {
+//            log.info("실패");
+//        }
+//
+//        log.info(this.getClass().getName() + ".chkUpdateNodeData End!");
+//        return ResponseEntity.status(HttpStatus.OK).body("성공");
+//    }
+
     // 스터디 노드 데이터 수정
     @PutMapping("/roadmaps/{roadId}/nodes/{nodeId}")
     public ResponseEntity<StudyRoadNodeData> updateStudyRoadNode (
             @PathVariable String roadId,
             @PathVariable String nodeId,
-            @RequestBody RequestNodeData node
+            @RequestBody RequestNodeData node,
+            HttpSession session
     ) throws Exception {
 
         log.info(this.getClass().getName()+".updateStudyRoadNode Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new StudyRoadNodeData());
+        }
 
         StudyRoadNodeData nodeData = studyRoadService.getRoadMapNodeData(nodeId);
 
@@ -366,9 +435,16 @@ public class RoadMapController {
     // roadId로 로드맵 데이터 삭제
     @DeleteMapping("/roadmaps/{roadId}")
     public ResponseEntity<Integer> deleteStudyRoadData(
-            @PathVariable String roadId) throws Exception {
+            @PathVariable String roadId,
+            HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteStudyRoadData Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(0);
+        }
 
         int roadData = studyRoadService.deleteRoadData(roadId);
         log.info("roadData: "+roadData);
@@ -382,9 +458,16 @@ public class RoadMapController {
     @DeleteMapping("/roadmaps/{roadId}/nodes/{nodeId}")
     public ResponseEntity<Integer> deleteStudyRoadNode(
             @PathVariable String roadId,
-            @PathVariable String nodeId) throws Exception {
+            @PathVariable String nodeId,
+            HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteStudyRoadNode Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(0);
+        }
 
         int nodeData = studyRoadService.deleteRoadNode(nodeId);
         log.info("nodeData: "+nodeData);
