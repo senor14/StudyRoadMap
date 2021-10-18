@@ -39,7 +39,7 @@ public class CareerRoadController {
 
         //세션 NULL CHECK
         if(CmmUtil.nvl((String)session.getAttribute("SS_USER_UUID")).equals("")){
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("세션 UUID 없음");
+            return ResponseEntity.status(HttpStatus.OK).body("N");
         }
 
         CareerRoadMap node = new CareerRoadMap();
@@ -53,7 +53,7 @@ public class CareerRoadController {
         if(result==0){
             return ResponseEntity.status(HttpStatus.OK).body("Y");
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("N");
+            return ResponseEntity.status(HttpStatus.OK).body("N");
         }
     }
 

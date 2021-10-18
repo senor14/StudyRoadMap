@@ -471,7 +471,6 @@
 <script>
     /* 커리어 로드맵 존재 체크 */
     window.onload = function() {
-        console.log("대박")
         $.ajax({
             url: "/career/chk",
             type: "post",
@@ -480,10 +479,8 @@
             success: function (data) {
                 console.log(data);
                 if (data=="Y") {
-                    console.log("있음")
                     $('#no_career').css("display", "none");
                 } else {
-                    console.log("데이터 이상")
                     $('#yes_career').css("display", "none");
                 }
             }
