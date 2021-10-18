@@ -122,6 +122,43 @@ public class CareerRoadService implements ICareerRoadService {
     }
 
     @Override
+    public int makeCareerRoadMap(CareerRoadMap node) throws Exception {
+        log.info(this.getClass().getName()+".makeCareerRoadMap Start!");
+
+        log.info(node.getUserUuid());
+        CareerRoadMap result = mongoTemplate.insert(node, "CareerRoadMap");
+
+        int res = 0;
+        log.info("result : " + result);
+        if (result!=null) {
+            res = 0;
+        } else {
+            res = 1;
+        }
+        log.info(this.getClass().getName()+".makeCareerRoadMap End!");
+        return res;
+    }
+
+    @Override
+    public int chkCareerRoadMap(CareerRoadMap node) throws Exception {
+        log.info(this.getClass().getName()+".makeCareerRoadMap Start!");
+
+        log.info(node.getUserUuid());
+        boolean result = careerRoadMapRepository.existsByUserUuid(node.getUserUuid());
+
+        int res = 0;
+        log.info("result : " + result);
+        if (result==true) {
+            res = 0;
+        } else {
+            res = 1;
+        }
+
+        log.info(this.getClass().getName()+".makeCareerRoadMap End!");
+        return res;
+    }
+
+    @Override
     public List<CareerRoadData> getCareerNodeByNodeTypeAndUserUuid(CareerRoadData node) throws Exception {
         log.info(this.getClass().getName()+".getCareerNodeByNodeTypeAndUserUuid Start!");
 

@@ -16,6 +16,6 @@ public interface ICareerRoadService {
 
     /* careerRoadMap */
     public CareerRoadMap getCareerRoadMapInfo(CareerRoadMap node)throws Exception;
-
-
+    public int makeCareerRoadMap(CareerRoadMap node)throws Exception;
+    public int chkCareerRoadMap(CareerRoadMap node)throws Exception;
 }
