@@ -1850,6 +1850,7 @@
             <button onclick="load()" hidden>Load</button>
             <button onclick="layout()" hidden>Layout</button>
             <button onclick="fnOpenModal('#m11-o')">레인추가</button>
+            <iframe src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
             <div hidden>
                 <textarea id="mySavedModel" style="width: 100%; height: 300px" />
             </div>

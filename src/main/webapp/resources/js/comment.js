@@ -1,9 +1,9 @@
 let container
-let roadMapId
+let roadId
 $(document).ready(function(){
     container = document.getElementsByClassName("user_comment")[0]
     let href = window.location.href.split("/")
-    roadMapId = href[href.length]
+    roadId = href[href.length-1]
     findMyComment()
 })
 
@@ -11,10 +11,11 @@ function getComment(myComments){
 
     $(".user_comment").empty();
     $.ajax({
-        url: "/getComment/"+roadMapId,
+        url: "/getComment/"+roadId,
         type: "GET",
         dataType: "json",
         success : function(data) {
+            console.log(data)
             if(JSON.stringify(data) !== "[]") {
                 if(myComments !== "[]") {
 
@@ -97,7 +98,7 @@ function getComment(myComments){
 
 function findMyComment(){
     $.ajax({
-        url: "/findMyComment/"+roadMapId,
+        url: "/findMyComment/"+roadId,
         type: "GET",
         dataType: "json",
         success : function(data) {
@@ -119,7 +120,7 @@ function findMyComment(){
 
 function insertComment(){
     $.ajax({
-        url: "/insertComment/"+roadMapId,
+        url: "/insertComment/"+roadId,
         type:"GET",
         dataType : "json",
         data : {comment : document.getElementsByClassName("comment")[0].value},
@@ -161,4 +162,5 @@ function deleteComment(li){
             console.log("실행중 오류가 발생하였습니다. 에러:",err);
         }
     })
+    findMyComment()
 }

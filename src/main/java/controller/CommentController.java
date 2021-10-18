@@ -26,32 +26,40 @@ public class CommentController {
     private ICommentService CommentService;
 
     @ResponseBody
-    @GetMapping("/getComment/{roadMapId}")
-    public JSONArray getComment(@PathVariable String roadMapId){
-        return CommentService.getComment(roadMapId);
+    @GetMapping("/getComment/{roadId}")
+    public JSONArray getComment(@PathVariable String roadId){
+
+        log.info(this.getClass().getName() + "roadId: " + roadId);
+        log.info(this.getClass().getName() + "roadId: " + roadId);
+        log.info(this.getClass().getName() + "roadId: " + roadId);
+        log.info(this.getClass().getName() + "roadId: " + roadId);
+        return CommentService.getComment(roadId);
     }
 
     @ResponseBody
-    @GetMapping("/findMyComment/{roadMapId}")
-    public JSONArray findMyComment(@PathVariable String roadMapId, HttpSession session){
-        String userUuid = (String) session.getAttribute("SS_USER_ID");
-        return CommentService.findMyComment(roadMapId,userUuid);
+    @GetMapping("/findMyComment/{roadId}")
+    public JSONArray findMyComment(@PathVariable String roadId, HttpSession session){
+        log.info("findMyComment 시작");
+        String userUuid = (String) session.getAttribute("SS_USER_UUID");
+
+        log.info("userUuid: " + userUuid);
+        return CommentService.findMyComment(roadId,userUuid);
 
     }
 
     @ResponseBody
-    @GetMapping("/insertComment/{roadMapId}")
-    public boolean insertComment(HttpServletRequest request, HttpSession session, @PathVariable String roadMapId){
+    @GetMapping("/insertComment/{roadId}")
+    public boolean insertComment(HttpServletRequest request, HttpSession session, @PathVariable String roadId){
 
         Map<String, Object> pMap = new HashMap<>();
 
-        String userId = (String) session.getAttribute("USER_ID");
-        String userUuid = (String) session.getAttribute("SS_USER_ID");
+        String userId = (String) session.getAttribute("SS_USER_ID");
+        String userUuid = (String) session.getAttribute("SS_USER_UUID");
         String commentId = UUID.randomUUID().toString();
         String commentContents = CmmUtil.nvl(request.getParameter("comment"));
         String created = DateUtil.getDateTime();
 
-        pMap.put("studyRoadId",roadMapId);
+        pMap.put("roadId",roadId);
         pMap.put("userId",userId);
         pMap.put("userUuid",userUuid);
         pMap.put("commentId",commentId);
@@ -66,7 +74,7 @@ public class CommentController {
     public boolean deleteComment(HttpServletRequest request, HttpSession session){
 
         String commentId = CmmUtil.nvl(request.getParameter("commentId"));
-        String userUuid = (String) session.getAttribute("SS_USER_ID");
+        String userUuid = (String) session.getAttribute("SS_USER_UUID");
 
         return  CommentService.deleteComment(commentId, userUuid);
     }
