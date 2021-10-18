@@ -141,7 +141,7 @@
                                                 <p data-title="Schedule">Schedule</p>
                                             </button>
                                             <button class="tablinks" data-country="Study_MindMap">
-                                                <p data-title="Study_MindMap">Study MindMap</p>
+                                                <p data-title="Study_MindMap">Study RoadMap</p>
                                             </button>
                                             <button class="tablinks" data-country="Career_RoadMap">
                                                 <p data-title="Career_RoadMap">Career RoadMap</p>
