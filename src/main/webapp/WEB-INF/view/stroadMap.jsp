@@ -20,6 +20,8 @@
             name="description"
             content="A workflow diagram showing navigation between web pages, with an editable list of comments and to-dos."
     />
+
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_roadMap/study_roadMap.css">
 
@@ -44,7 +46,7 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flaticon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
 
 

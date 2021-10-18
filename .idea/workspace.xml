@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="이건미친짓이야">
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/stroadMap.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/comment.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/comment.js" afterDir="false" />
+    <list default="true" id="1cb9ec9f-733f-4764-8a20-0307e8af8621" name="Changes" comment="이건미친짓이야">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -285,7 +284,8 @@
       <workItem from="1634367028629" duration="7554000" />
       <workItem from="1634375309285" duration="21065000" />
       <workItem from="1634452609963" duration="672000" />
-      <workItem from="1634454357674" duration="28885000" />
+      <workItem from="1634454357674" duration="29134000" />
+      <workItem from="1634493662343" duration="13047000" />
     </task>
     <task id="LOCAL-00001" summary="[ADD] 커리어 로드맵 컨트롤러, 서비스, 프론트 추가">
       <created>1633239962316</created>

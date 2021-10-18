@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_roadMap/study_roadMap.css">
 
-
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flaticon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
 
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />--%>

@@ -253,7 +253,7 @@ public class RoadMapController {
             String randomMindId = UUID.randomUUID().toString();
 
             StudyMindData mind = new StudyMindData();
-            mind.setMindId(randomMindId);
+            mind.setMindId(randomNodeId);
             mind.setStudyRoadId(roadId);
             mind.setStudyRoadNodeId(randomNodeId);
             mind.setMindLabel(nvl(request.getParameter("nodeText")));
@@ -267,10 +267,10 @@ public class RoadMapController {
             log.info("mRes: "+mRes);
 
             StudyMindNodeData node = new StudyMindNodeData();
-            node.setMindId(randomMindId);
+            node.setMindId(randomNodeId);
             node.setStudyRoadId(roadId);
             node.setStudyRoadNodeId(randomNodeId);
-            node.setKey(randomMindId);
+            node.setKey(randomNodeId);
             node.setGroup("nodes");
             node.setMindLabel(nvl(request.getParameter("nodeText")));
             node.setX("0");
