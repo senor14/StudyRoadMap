@@ -5,7 +5,9 @@
          pageEncoding="UTF-8"%>
 <%
     List<StudyRoadData> roadDataInfo = (List<StudyRoadData>) request.getAttribute("roadDataInfo");
+
     String SS_USER_UUID = (String)session.getAttribute("SS_USER_UUID");
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,6 +57,7 @@
                                 <li class="active"><a href="index.html"><span>Home</span></a></li>
                                 <li class="active"><a onclick="fnOpenModal('#m2-o');" style="cursor: pointer"><span >비밀번호 변경</span></a></li>
                                 <li class="active"><a onclick="fnOpenModal('#m3-o');" style="cursor: pointer"><span >회원 탈퇴</span></a></li>
+                                <li class="active"><a href="/RoadMap/Logout"><span>로그아웃</span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -126,15 +129,6 @@
             </section>
             <!-- 탭 부분 -->
             <section class="ftco-section ftco-no-pb ftco-no-pt">
-<%--                <div>--%>
-<%--                    <% for (StudyRoadData roadData : roadDataInfo) { %>--%>
-<%--                    <div style="border: 3px solid black; z-index: 10000; background-color: white;" onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" >--%>
-<%--                        &lt;%&ndash;                                                    <a href="/roadmaps/<%=roadData.getRoadId()%>" style="z-index: 10000">&ndash;%&gt;--%>
-<%--                        "<%=roadData.getRoadTitle()%>"--%>
-<%--                        &lt;%&ndash;                                                    </a>&ndash;%&gt;--%>
-<%--                    </div>--%>
-<%--                    <%}%>--%>
-<%--                </div>--%>
                 <div class="container-fluid px-0">
                     <div class="row no-gutters">
                         <div class="col-md-12 blog-wrap">
@@ -170,11 +164,13 @@
                                                 <div class=""  style="display:grid; grid-template-columns: repeat(2, 1fr);word-wrap: break-word; height:620px; overflow:auto;">
 
                                                     <% for (StudyRoadData roadData : roadDataInfo) { %>
-                                                    <a href="/roadmaps/<%=roadData.getRoadId()%>" style="z-index: 10000">
-                                                        <div style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-image: url('http://www.veritas-a.com/news/photo/202009/338933_238918_1356.jpg')">
-                                                            <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">"<%=roadData.getRoadTitle()%>"</span>
+                                                        <div onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-size: cover; background-image: url('http://localhost:9000/getRoadMapImage?roadId=<%=roadData.getRoadId()%>')">
+                                                            <div >
+                                                                <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">"<%=roadData.getRoadTitle()%>"</span>
+                                                                <span class="road__title" hidden>"<%=roadData.getRoadTitle()%>"</span>
+                                                            </div>
                                                         </div>
-                                                    </a>
+                                                        <span class="">공개여부: <input type="checkbox" class="road__publicYn" value="<%=roadData.getPublicYn()%>" onclick="checkbox_chk(this, '<%=roadData.getRoadId()%>')"></span>
                                                     <%}%>
 
                                                     <%-- 신규 스터디 로드맵 버튼 --%>
@@ -222,7 +218,6 @@
 
                                                 </div>
                                             </div>
-
                                             <div id="Community" class="tabcontent">
                                                 <h3>Community</h3>
                                                 <iframe src="/community" style="width:100%; border: 0px; height:620px; overflow:hidden;"></iframe>
@@ -301,7 +296,7 @@
                 success: function (data) {
                     if (data) {
                         console.log("생성 완료");
-                        location.href = "/index"
+                        location.href = data;
                     } else {
                         console.log("데이터 이상")
                     }
@@ -345,13 +340,41 @@
     <script src="${pageContext.request.contextPath}/resources/js/tab.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.animateNumber.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/scrollax.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/google-map.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 
 </body>
 </html>
+<script>
+    let publics = document.querySelectorAll(".road__publicYn")
+    console.log(publics)
+    for (let i=0; i<publics.length; i++) {
+        console.log("publics["+i+"].value: "+publics[i].value);
+        if (publics[i].value === "Y") {
+            publics[i].setAttribute("checked", "checked");
+        }
+    }
 
+    function checkbox_chk(target, roadId) {
+        let publicYn = 'N';
+        if (target.checked) {
+            publicYn = 'Y';
+        }
+        console.log("checked: "+publicYn);
+        console.log("roadId: "+roadId)
+
+        $.ajax({
+            url: "/roadmaps/"+roadId,
+            type: "put",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                "publicYn": publicYn
+            }),
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    }
+</script>
 <script>
 
     let pwdCheck = 'N';
@@ -419,7 +442,6 @@
             }
         }); // ajax 끝
     });
-
 
     function del_check() {
         if(idCheck == 'N'){

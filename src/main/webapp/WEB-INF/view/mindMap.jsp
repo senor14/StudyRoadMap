@@ -5,11 +5,11 @@
          pageEncoding="UTF-8"%>
     
 <%
-    /* 사용자 영문 이름 */
-    String en_name = " senorKim"; /* (String)request.getAttribute("") */
-
     List<StudyMindData> mindMapInfo = (List<StudyMindData>)request.getAttribute("mindMapInfo");
     List<StudyMindNodeData> mindMapNode = (List<StudyMindNodeData>)request.getAttribute("mindMapNode");
+    String userUuid = (String)session.getAttribute("SS_USER_UUID");
+    String userId = (String) request.getAttribute("userId");
+    String title = (String) request.getAttribute("title");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,17 +24,13 @@
 
 <div class="timeline-container" id="timeline-1">
     <div class="timeline-header">
-        <h2 class="timeline-header__title">스터디로드맵에서 넘어올때 라벨가져옴</h2>
-        <h3 class="timeline-header__subtitle"><%=en_name %></h3>
+        <h2 class="timeline-header__title"><%=title%></h2>
+        <h3 class="timeline-header__subtitle"><%=userId%></h3>
     </div>
     <div id="mind_map">
         <div class="map_box">
             <div id="cy"></div>
         </div>
-    </div>
-    <div class="comment">
-        <input type="text" id="comment_text" name="comment_text" minlength="4" maxlength="8" size="10">
-        <input type="button" id="comment_button" name="comment_button" minlength="4" value="입력">
     </div>
 </div>
 
@@ -44,14 +40,14 @@
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <h1 class="modal__title" id="modal__title">네트워크</h1>
-        <div>링크: <input type="text" class="modal__link" id="modal__link" readonly></div>
+        <div>링크: <a id="modal__link-a"></a></div>
         <div>참고서적 제목:
-            <input type="text" class="modal__book__title" id="modal__book__title" readonly>
+            <input type="text" class="modal__book__title" id="modal__book__title" disabled>
         </div>
         <div>
-            참고서적 링크: <input type="text" class="modal__book_link" id="modal__book__link" readonly>
+            참고서적 링크: <a id="modal__book__link-a"></a>
         </div>
-        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" readonly></textarea></div>
+        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea></div>
         <button class="modal__btn" onclick="fnOpenModal('#m3-o');">추가</button>
         <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
         <button class="modal__btn" onclick="fnOpenModal('#m5-o');">삭제</button>
@@ -69,7 +65,8 @@
         <div>링크: <input type="text" id="modal__link-add"></div>
         <div>참고서적 제목:
             <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text"  id="modal__book__title-add">
+            <input type="text"  id="modal__book__title-add" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}">
+            <button onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button>
         </div>
         <div>
             참고서적 링크: <input type="text" id="modal__book_link-add">
@@ -90,7 +87,8 @@
         <div>링크: <input type="text" class="modal__link" id="modal__link-mod"></div>
         <div>참고서적 제목:
             <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text" class="modal__book__title" id="modal__book__title-mod">
+            <input type="text" class="modal__book__title" id="modal__book__title-mod" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}">
+            <button onclick="searchBook(document.getElementById('modal__book__title-mod').value, this)">검색</button>
         </div>
         <div>
             참고서적 링크: <input type="text" class="modal__book_link" id="modal__book_link-mod">
@@ -124,6 +122,16 @@
 </div>
 <%-- modal 삭제 불가능 끝 --%>
 
+<%-- modal 책 검색 --%>
+<div class="modal-container" id="m7-o" style="--m-background: hsla(0, 0%, 0%, .4); ">
+    <div class="modal" id="modal__search" style="width: 560px; height: 560px; overflow: auto;">
+        <h1 class="modal__book__search" id="modal__booksearch">검색 결과</h1>
+        <hr/>
+        <a onclick="clearSearchList();" class="link-2"></a>
+    </div>
+</div>
+<%-- modal 책 검색 끝 --%>
+
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" id="file" name="fileUpload" style="display:none"/>
 </form>
@@ -146,6 +154,73 @@
 <script src="http://marvl.infotech.monash.edu/webcola/cola.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script>
+    function searchBook(keyword, target) {
+        console.log("keyword: ",keyword)
+        fnOpenModal("#m7-o");
+        let addOrMod;
+        let id = target.parentNode.parentNode.parentNode.id;
+        if (id === 'm4-o') {
+            addOrMod = "mod";
+        } else if (id === 'm3-o') {
+            addOrMod = "add";
+        }
+        $.ajax({
+            url: "https://dapi.kakao.com/v3/search/book?target=title",
+            type: "get",
+            data: {
+                query: keyword
+            },
+            headers: {
+                Authorization: "KakaoAK 15a6456fd0ac32b2bce9d44610d4f72a"
+            },
+        }).done(function (msg) {
+                console.log(msg);
+                for (var i = 0; i < 10; i++){
+                    $("#modal__search").append(
+                        "<div class='search__list' id='"+ addOrMod +"' style='display: flex; padding : 10px;' onclick='insertBookInfo(this)'>" +
+                            "<div><img src='" + msg.documents[i].thumbnail + "'/></div>" +
+                            "<div style='display: flex; flex-direction: column; margin: 10px;'>" +
+                                "<div><h2>" + msg.documents[i].title + "</h2></div>" +
+                                "<div>" + msg.documents[i].authors + "</div>" +
+                                "<div hidden><a href='" + msg.documents[i].url + "'>" + msg.documents[i].url + "</a></div>" +
+                            "</div>" +
+                        "</div>" +
+                        "<hr class='search__list'/>"
+                    );
+                    // $("#modal__search").append("<strong>저자:</strong> " + msg.documents[i].authors + "<br>");
+                    // $("#modal__search").append("<img src='" + msg.documents[i].thumbnail + "'/><br>");
+                    // $("#modal__search").append("<hr/>");
+                }
+            });
+    }
+
+    function insertBookInfo(target) {
+        // console.log("target");
+        // console.log(target);
+        console.log("target: ", target)
+        let bookTitle = target.lastChild.firstChild.textContent;
+        // console.log(target.lastChild.firstChild.textContent)
+        let bookUrl = target.lastChild.lastChild.textContent;
+        // console.log(target.lastChild.lastChild.textContent)
+        if (target.id === "mod") {
+            document.getElementById('modal__book__title-mod').value = bookTitle;
+            document.getElementById('modal__book_link-mod').value = bookUrl;
+        } else if (target.id === "add") {
+            document.getElementById('modal__book__title-add').value = bookTitle;
+            document.getElementById('modal__book_link-add').value = bookUrl;
+        }
+
+
+        clearSearchList();
+    }
+
+    function clearSearchList() {
+        $(".search__list").remove();
+        fnCloseModal('#m7-o');
+    }
+</script>
 
 <%-- 마인드맵 화면 --%>
 <script>
@@ -580,7 +655,7 @@
 
         let query = {
             "mindLabel" : $('#modal__title-mod').val(),
-            "url": $('#modal__book_link-mod').val(),
+            "url": $('#modal__link-mod').val(),
             "bookTitle": $('#modal__book__title-mod').val(),
             "bookLink": $('#modal__book_link-mod').val(),
             "mindContents": $('#modal__content-mod').val()
@@ -734,12 +809,6 @@
 
         console.log("target.data.group: ",target.data.group)
         if (target.data.group === 'nodes') {
-            // $(".modal__title").text(target.data.mindLabel);
-            // $(".modal__title").val(target.data.mindLabel);
-            // $(".modal__link").val(target.data.url);
-            // $(".modal__book__title").val(target.bookTitle);
-            // $(".modal__book_link").val(target.bookLink);
-            // $(".modal__content").val(target.mindContents);
             $.ajax({
                 url: "/mindmaps/"+target.data.mindId,
                 type: "get",
@@ -752,6 +821,10 @@
                         $(".modal__book__title").val(data.bookTitle);
                         $(".modal__book_link").val(data.bookLink);
                         $(".modal__content").val(data.mindContents);
+                        $("#modal__link-a").attr("href", data.url);
+                        $("#modal__link-a").text(data.url);
+                        $("#modal__book__link-a").attr("href", data.bookLink);
+                        $("#modal__book__link-a").text(data.bookLink);
                     } else {
                         console.log("data 이상");
                     }
@@ -778,64 +851,23 @@
     function clearAddInfo() {
         $("#modal__title").text("");
         $("#modal__title").val("");
-        $("#modal__link").val("");
+        // $("#modal__link").val("");
         $("#modal__book__title").val("");
-        $("#modal__book_link").val("");
+        // $("#modal__book_link").val("");
         $("#modal__content").val("");
         $("#modal__title-add").val("");
         $("#modal__link-add").val("");
         $("#modal__book_title-add").val("");
         $("#modal__book_link-add").val("");
         $("#modal__content-add").val("");
+        $("#modal__link-a").removeAttribute("href");
+        $("#modal__link-a").text("");
+        $("#modal__book__link-a").removeAttribute("href");
+        $("#modal__book__link-a").text("");
     }
 
-    // // UUID 생성기
-    // function create_UUID(){
-    //     var dt = new Date().getTime();
-    //     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    //         var r = (dt + Math.random()*16)%16 | 0;
-    //         dt = Math.floor(dt/16);
-    //         return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-    //     });
-    //     return uuid;
-    // }
 </script>
 
-<%--화면캡쳐 후 저장 함수--%>
-<script type="text/javascript">
-    window.onload = function () {
-        console.log("onload 함수 진입")
-        screenShot($("#cy"));
-    };
-    function screenShot(target) {
-        if (target != null && target.length > 0) {
-            let t = target[0];
-            html2canvas(t).then(function(canvas) {
-                let myImg = canvas.toDataURL("image/png");
-                myImg = myImg.replace("data:image/png;base64,", "");
-
-                $.ajax({
-                    type : "POST",
-                    data : {
-                        "imgSrc" : myImg
-                    },
-                    dataType : "text",
-                    url : "/mindMapFileUpload",
-                    success : function(data) {
-                        if(data == 1){
-                            console.log("저장 성공!");
-                        } else {
-                            console.log("저장 실패!");
-                        }
-                    },
-                    error : function(a, b, c) {
-                        alert("에러 발생!");
-                    }
-                });
-            });
-        }
-    }
-</script>
 
 </body>
 </html>

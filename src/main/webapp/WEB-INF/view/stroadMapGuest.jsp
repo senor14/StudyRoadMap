@@ -20,12 +20,10 @@
             name="description"
             content="A workflow diagram showing navigation between web pages, with an editable list of comments and to-dos."
     />
-
-<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_roadMap/study_roadMap.css">
 
-
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
@@ -49,7 +47,6 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
 
-
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />--%>
     <!-- Copyright 1998-2021 by Northwoods Software Corporation. -->
     <title>Page Flow</title>
@@ -59,10 +56,6 @@
 </head>
 <body>
 
-
-<form id="uploadForm" enctype="multipart/form-data">
-    <input type="file" id="file" name="fileUpload" style="display:none"/>
-</form>
 <h1 style="color:white;"><%=roadMapInfo.getRoadTitle()%></h1>
 <h2 style="color:white;"><%=userId%></h2>
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
@@ -75,8 +68,6 @@
             카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>
         </div>
         <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
         <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
         <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
     </div>
@@ -89,48 +80,17 @@
     }
 </script>
 
-<%-- 노드 클릭시 정보 모달 - 수정 (노드) [저장, 취소] {category, text}--%>
-<div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <div>
-            제목: <input type="text" class="modal__node__text" id="modal__node__text-mod" />
-        </div>
-        <div>
-            카테고리:<input type="text" class="modal__node__category" id="modal__node__category-mod" />
-        </div>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m3-o');">취소</button>
-        <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
-    </div>
-</div>
-<%-- modal 2 끝 --%>
-
-
 <%-- 노드 클릭시 정보 모달 (다이어그램) [수정, 취소] {text} --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
             <h1 class="modal__diagram__text" id="modal__diagram__text">제목</h1>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">수정</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m4-o');">취소</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m4-o');">확인</button>
         <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 3 끝 --%>
-
-<%-- 노드 클릭시 정보 모달 (다이어그램) - 수정 [저장, 취소] {text} --%>
-<div class="modal-container" id="m5-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <div>
-            제목:<input type="text" class="modal__diagram__text" id="modal__diagram__text-mod" />
-        </div>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m5-o');">취소</button>
-        <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
-    </div>
-</div>
-<%-- modal 4 끝 --%>
 
 <%-- 노드 클릭시 정보 모달 (레인) [수정, 삭제, 취소] {key, text, color} --%>
 <div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
@@ -144,32 +104,11 @@
         <div>색:
             <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m7-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >취소</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >확인</button>
         <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 5 끝 --%>
-
-<%-- 노드 클릭시 정보 모달 - 수정 (레인) [저장, 취소] {key, text, color} --%>
-<div class="modal-container" id="m7-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <div>
-            제목: <input type="text" class="modal__lane__key" id="modal__lane__key-mod" />
-        </div>
-        <div>
-            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text-mod" />
-        </div>
-        <div>색:
-            <input type="color" class="modal__lane__color" id="modal__lane__color-mod">
-        </div>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m7-o');" >취소</button>
-        <a onclick="fnCloseModal('#m7-o');" class="link-2"></a>
-    </div>
-</div>
-<%-- modal 6 끝 --%>
 
 <%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
 <div class="modal-container" id="m8-o" style="--m-background: hsla(0, 0%, 0%, .4);">
@@ -180,91 +119,24 @@
         <div>색:
             <input type="color" class="modal__category__color" id="modal__category__color" disabled>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m9-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m8-o');">취소</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m8-o');">확인</button>
         <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 7 끝 --%>
 
-<%-- 노드 클릭시 정보 모달 - 수정 (카테고리) [저장, 취소] {category(제목), color} --%>
-<div class="modal-container" id="m9-o" style="--m-background: hsla(0, 0%, 0%, .4);">
+<%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
+<div class="modal-container" id="m14-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div>
-            카테고리 제목:<input class="modal__category__text" id="modal__category__text-mod"/>
+            <h1 class="modal__category__text" id="modal__duplicate__text" style="color:white;">내 로드맵으로 복제하시겠습니까?</h1>
         </div>
-        <div>
-            색:<input type="color" class="modal__category__color" id="modal__category__color-mod"/>
-        </div>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m9-o');">취소</button>
-        <a onclick="fnCloseModal('#m9-o');" class="link-2"></a>
+        <button class="modal__btn" onclick="duplicateStudyRoadmap();">확인</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m14-o');">취소</button>
+        <a onclick="fnCloseModal('#m14-o');" class="link-2"></a>
     </div>
 </div>
-<%-- modal 8 끝 --%>
-
-<%-- 노드 추가시 text 설정 모달 (노드) [확인] {text} --%>
-<div class="modal-container" id="m10-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <div>
-            <h1>과목추가</h1>
-        </div>
-        <div>
-            제목:<input type="text" id="modal__node__text-add">
-        </div>
-        <button class="modal__btn" onclick="insertNodeData('Node');">확인</button>
-    </div>
-</div>
-<%-- modal 9 끝 --%>
-
-<%-- 노드 추가시 text, key, color (레인) [확인, 취소] {text, key, color} --%>
-<div class="modal-container" id="m11-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <div>
-            제목:<input type="text" id="modal__lane__text-add" />
-        </div>
-        <div>
-            표지제목:<input type="text" id="modal__lane__key-add" />
-        </div>
-        <div>
-            색:<input type="color" id="modal__lane__color-add"/>
-        </div>
-        <button class="modal__btn" onclick="insertNodeData('Lane');">확인</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m11-o');" >취소</button>
-        <a onclick="fnCloseModal('#m11-o');" class="link-2"></a>
-    </div>
-</div>
-<%-- modal 10 끝--%>
-
-<%-- 카테고리 추가시 category, color (카테고리) [확인, 취소] {category, color} --%>
-<div class="modal-container" id="m12-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <div>
-            카테고리 제목:<input type="text"  id="modal__category__text-add"/>
-        </div>
-        <div>
-            색:<input type="color" id="modal__category__color-add" />
-        </div>
-        <button class="modal__btn" onclick="insertNodeData('Category');">확인</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m12-o');" >취소</button>
-        <a onclick="fnCloseModal('#m12-o');" class="link-2"></a>
-    </div>
-</div>
-<%-- modal 11 끝--%>
-
-<%-- 노드 클릭시 정보 모달 - 삭제하시겠습니까 [확인, 취소] --%>
-<div class="modal-container" id="m13-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <div>
-            <h1 id="modal__title-del">삭제하시겠습니까?</h1>
-        </div>
-        <button class="modal__btn" onclick="deleteNode();">확인</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m13-o');" >취소</button>
-        <a onclick="fnCloseModal('#m13-o');" class="link-2"></a>
-    </div>
-</div>
-<%-- modal 12 끝--%>
+<%-- modal 7 끝 --%>
 
 <div id="hidden__box" >
     <span hidden id="modal__nodeId" ></span>
@@ -609,17 +481,17 @@
                         (loc.y - b.y);
                     return new go.Point(x, y);
                 }
-                // when the document is modified, add a "*" to the title and enable the "Save" button
-                myDiagram.addDiagramListener("Modified", function (e) {
-                    var button = document.getElementById("SaveButton");
-                    if (button) button.disabled = !myDiagram.isModified;
-                    var idx = document.title.indexOf("*");
-                    if (myDiagram.isModified) {
-                        if (idx < 0) document.title += "*";
-                    } else {
-                        if (idx >= 0) document.title = document.title.substr(0, idx);
-                    }
-                });
+                // // when the document is modified, add a "*" to the title and enable the "Save" button
+                // myDiagram.addDiagramListener("Modified", function (e) {
+                //     var button = document.getElementById("SaveButton");
+                //     if (button) button.disabled = !myDiagram.isModified;
+                //     var idx = document.title.indexOf("*");
+                //     if (myDiagram.isModified) {
+                //         if (idx < 0) document.title += "*";
+                //     } else {
+                //         if (idx >= 0) document.title = document.title.substr(0, idx);
+                //     }
+                // });
 
 
                 // "/roadmaps/{roadId}/nodes/{canvasClass}"
@@ -628,35 +500,22 @@
                     clearAddInfo();
                     let droppedOb = e.subject.iterator.tg.af.key.ob;
                     getNodeDataByAjax(droppedOb);
-                    console.log('ExternalObjectsDropped');
                     myDiagram.model.isReadOnly = true;
-                    fnOpenModal('#m10-o');
                 });
 
-                // 엣지추가시
-                myDiagram.addDiagramListener("LinkDrawn", function (e) {
-                  console.log('LinkDrawn');
-                  console.log(e.subject.ob);
-                });
 
                 // 리사이징시
                 myDiagram.addDiagramListener("PartResized", function (e) {
                   let part = e.subject.part;
-                  console.log('PartResized');
-                  console.log(part.ob);
                   clearAddInfo();
                   getNodeDataByAjax(part.ob);
-                  updateSize();
                 });
 
                 // 드래그해서 객체 이동시
                 myDiagram.addDiagramListener("SelectionMoved", function (e) {
-                  console.log('SelectionMoved');
-                  console.log(e.subject.ga.af.key.ob);
                   clearAddInfo();
                   getNodeDataByAjax(e.subject.ga.af.key.ob);
-                  console.log("roadId");
-                  updateLoc();
+
                 });
 
                 // 노드, 레인, 다이어그램 클릭시
@@ -688,8 +547,6 @@
                     } else if (part.ob.canvasClass === 'Lane') {
                         fnOpenModal('#m6-o');
                     }
-                    console.log("ObjectDoubleClicked");
-                    console.log(part.ob);
                 });
 
 
@@ -995,109 +852,6 @@
                     <%}%>
                 <%}%>
 
-
-                // Undesired events have a special adornment that allows adding additional "reasons"
-                // var UndesiredEventAdornment = $(
-                //     go.Adornment,
-                //     "Spot",
-                //     $(
-                //         go.Panel,
-                //         "Auto",
-                //         $(go.Shape, {
-                //             fill: null,
-                //             stroke: "dodgerblue",
-                //             strokeWidth: 4,
-                //         }),
-                //         $(go.Placeholder)
-                //     ),
-                //     // the button to create a "next" node, at the top-right corner
-                //     $(
-                //         "Button",
-                //         {
-                //             alignment: go.Spot.BottomRight,
-                //             click: addReason,
-                //         }, // this function is defined below
-                //         new go.Binding("visible", "", function (a) {
-                //             return !a.diagram.isReadOnly;
-                //         }).ofObject(),
-                //         $(go.Shape, "TriangleDown", {
-                //             desiredSize: new go.Size(10, 10),
-                //         })
-                //     )
-                // );
-
-                // var reasonTemplate = $(
-                //     go.Panel,
-                //     "Horizontal",
-                //     $(
-                //         go.TextBlock,
-                //         "",
-                //         {
-                //             margin: new go.Margin(4, 0, 0, 0),
-                //             maxSize: new go.Size(200, NaN),
-                //             wrap: go.TextBlock.WrapFit,
-                //             stroke: "whitesmoke",
-                //             editable: false,
-                //             font: smallfont,
-                //         },
-                //         new go.Binding("text", "text").makeTwoWay()
-                //     )
-                // );
-
-                // myDiagram.nodeTemplateMap.add("UndesiredEvent",
-                //   $(go.Node, "Auto",
-                //     new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-                //     { selectionAdornmentTemplate: UndesiredEventAdornment },
-                //     $(go.Shape, "RoundedRectangle",
-                //       { fill: redgrad, portId: "", toLinkable: true, toEndSegmentLength: 50 }),
-                //     $(go.Panel, "Vertical", { defaultAlignment: go.Spot.TopLeft },
-
-                //       $(go.TextBlock, "FrontEnd", textStyle(),
-                //         {
-                //           stroke: "whitesmoke",
-                //           minSize: new go.Size(80, NaN)
-                //         },
-                //         new go.Binding("text", "text").makeTwoWay()),
-
-                //       $(go.Panel, "Vertical",
-                //         {
-                //           defaultAlignment: go.Spot.TopLeft,
-                //           itemTemplate: reasonTemplate
-                //         },
-                //         new go.Binding("itemArray", "reasonsList").makeTwoWay()
-                //       )
-                //     )
-                //   ));
-
-                // myDiagram.nodeTemplateMap.add(
-                //     "Comment",
-                //     $(
-                //         go.Node,
-                //         "Auto",
-                //         new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-                //             go.Point.stringify
-                //         ),
-                //         $(go.Shape, "Rectangle", {
-                //             portId: "",
-                //             fill: whitegrad,
-                //             fromLinkable: true,
-                //         }),
-                //         $(
-                //             go.TextBlock,
-                //             "A comment",
-                //             {
-                //                 margin: 9,
-                //                 maxSize: new go.Size(200, NaN),
-                //                 wrap: go.TextBlock.WrapFit,
-                //                 editable: true,
-                //                 font: smallfont,
-                //             },
-                //             new go.Binding("text", "text").makeTwoWay()
-                //         )
-                //         // no ports, because no links are allowed to connect with a comment
-                //     )
-                // );
-
                 // clicking the button on an UndesiredEvent node inserts a new text object into the panel
                 function addReason(e, obj) {
                     var adorn = obj.part;
@@ -1108,38 +862,6 @@
                     myDiagram.model.addArrayItem(arr, {});
                     myDiagram.commitTransaction("add reason");
                 }
-
-                // clicking the button of a default node inserts a new node to the right of the selected node,
-                // and adds a link to that new node
-                // function addNodeAndLink(e, obj) {
-                //     var adorn = obj.part;
-                //     if (adorn === null) return;
-                //     e.handled = true;
-                //     var diagram = adorn.diagram;
-                //     diagram.startTransaction("Add State");
-                //     // get the node data for which the user clicked the button
-                //     var fromNode = adorn.adornedPart;
-                //     var fromData = fromNode.data;
-                //     // create a new "State" data object, positioned off to the right of the adorned Node
-                //     var toData = { text: "new" };
-                //     var p = fromNode.location;
-                //     toData.loc = p.x + 200 + " " + p.y; // the "loc" property is a string, not a Point object
-                //     // add the new node data to the model
-                //     var model = diagram.model;
-                //     model.addNodeData(toData);
-                //     // create a link data from the old node data to the new node data
-                //     var linkdata = {};
-                //     linkdata[model.linkFromKeyProperty] =
-                //         model.getKeyForNodeData(fromData);
-                //     linkdata[model.linkToKeyProperty] =
-                //         model.getKeyForNodeData(toData);
-                //     // and add the link data to the model
-                //     model.addLinkData(linkdata);
-                //     // select the new Node
-                //     var newnode = diagram.findNodeForData(toData);
-                //     diagram.select(newnode);
-                //     diagram.commitTransaction("Add State");
-                // }
 
                 // replace the default Link template in the linkTemplateMap
                 myDiagram.linkTemplate = $(
@@ -1207,17 +929,6 @@
                         <%}%>
                     ],
                     [
-<%--                        <%for (StudyRoadNodeData s: nodeInfo) {%>--%>
-<%--                            <%if (s.getCanvasClass().equals("Edge")) {%>--%>
-<%--                                {--%>
-<%--                                    nodeId: "<%=s.getNodeId()%>",--%>
-<%--                                    roadId: "<%=s.getRoadId()%>",--%>
-<%--                                    canvasClass: "<%=s.getCanvasClass()%>",--%>
-<%--                                    from: "<%=s.getFrom()%>",--%>
-<%--                                    to: "<%=s.getTo()%>"--%>
-<%--                                }--%>
-<%--                            <%}%>--%>
-<%--                        <%}%>--%>
                     ]
                 );
 
@@ -1248,11 +959,6 @@
 
                 palette.addDiagramListener("ObjectSingleClicked", function (e) {
                     let part = e.subject.part;
-                    console.log("ObjectSingleClicked");
-                    console.log(part.ob);
-                    // console.log("palette.model.nodeDataArray");
-                    // console.log(palette.model.nodeDataArray);
-
                     clearAddInfo();
                     getNodeDataByAjax(part.ob);
                 });
@@ -1262,11 +968,10 @@
                 ///*
                 palette.addDiagramListener("ObjectDoubleClicked", function (e) {
                     let part = e.subject.part;
-                    console.log("ObjectDoubleClicked");
                     clearAddInfo();
                     getNodeDataByAjax(part.ob);
                     fnOpenModal('#m8-o');
-                    console.log(part.ob);
+
                 });
                 //*/
 
@@ -1303,19 +1008,7 @@
                 // read in the JSON-format data from the "mySavedModel" element
                 load();
                 layout();
-                // function savePalette() {
-                //     document.getElementById("mySavedModelPalette").value =
-                //         palette.model.toJson();
-                //     console.log('save');
-                //     console.log(palette.model.nodeDataArray);
-                //     palette.isModified = false;
-                // }
-                // function loadPalette() {
-                //     palette.model = go.Model.fromJson(
-                //         document.getElementById("mySavedModelPalette").value
-                //     );
-                //     palette.delayInitialization(relayoutDiagram);
-                // }
+
             }
 
             myDiagram = $(go.Diagram, "myDiagramDiv", {
@@ -1407,322 +1100,6 @@
             }
             window.addEventListener("DOMContentLoaded", init);
 
-            // 노드 추가
-            function insertNodeData(canvasClass) {
-                let query = {
-                    "nodeText": $('#modal__node__text-add').val(),
-                    "laneText": $('#modal__lane__text-add').val(),
-                    "laneKey": $('#modal__lane__key-add').val(),
-                    "laneColor": $('#modal__lane__color-add').val(),
-                    "categoryText": $('#modal__category__text-add').val(),
-                    "categoryColor": $('#modal__category__color-add').val(),
-                    "loc": $('#modal__loc').text(),
-                    "category": $('#modal__category').text()
-                };
-                console.log("nodeText:",query.nodeText);
-                $.ajax({
-                    url: "/roadmaps/"+document.getElementById('modal__roadId').innerText
-                        +"/nodes/"+canvasClass,
-                    type: "post",
-                    data: query,
-                    success: function (data) {
-                        if (data) {
-                            if (data.canvasClass === "Category") {
-
-                                myDiagram.nodeTemplateMap.add(
-                                    data.text,
-                                    $(
-                                        go.Node,
-                                        "Auto",
-                                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-                                            go.Point.stringify
-                                        ),
-                                        $(go.Shape, "RoundedRectangle", {
-                                            fill: data.color,
-                                            portId: data.text,
-                                            fromLinkable: true,
-                                            cursor: "pointer",
-                                            toLinkable: true,
-                                            fromEndSegmentLength: 40,
-                                        }),
-                                        $(
-                                            go.TextBlock,
-                                            data.text,
-                                            textStyle(),
-                                            new go.Binding("text", "text").makeTwoWay()
-                                        )
-                                    )
-                                );
-                                palette.startTransaction();
-                                palette.model.nodeDataArray.push({
-                                    nodeId: data.nodeId,
-                                    roadId: data.roadId,
-                                    canvasClass: data.canvasClass,
-                                    category: data.text,
-                                    text: data.text,
-                                    key: data.key,
-                                    color: data.color
-                                })
-                                palette.commitTransaction();
-                                location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText);
-                            } else if (data.canvasClass === "Node") {
-                                for (let d in myDiagram.model.nodeDataArray) {
-                                    if (myDiagram.model.nodeDataArray[d].nodeId
-                                        === document.getElementById('modal__nodeId').innerText) {
-
-                                        myDiagram.model.nodeDataArray[d].text = query.nodeText;
-                                        myDiagram.model.nodeDataArray[d].canvasClass = canvasClass;
-                                        myDiagram.model.nodeDataArray[d].category = query.category;
-                                        myDiagram.model.nodeDataArray[d].key = data.key;
-                                        myDiagram.model.nodeDataArray[d].nodeId = data.nodeId;
-
-                                        break;
-                                    }
-                                }
-
-                            } else if (data.canvasClass === "Lane") {
-                                myDiagram.model.nodeDataArray.push({
-                                    nodeId: data.nodeId,
-                                    roadId: data.roadId,
-                                    canvasClass: data.canvasClass,
-                                    key: data.key,
-                                    text: data.text,
-                                    isGroup: "true",
-                                    group: data.group,
-                                    color: data.color,
-                                    size: data.size,
-                                    loc: data.loc
-                                });
-                            }
-                            save();
-                            load();
-                            fnCloseModal('#m10-o');
-                            fnCloseModal('#m11-o');
-                            fnCloseModal('#m12-o');
-                            screenShot($("#myDiagramDiv"));
-
-                        } else {
-                            console.log("data 이상");
-                        }
-                    }
-                });
-            }
-
-            var bigfont = "bold 13pt Helvetica, Arial, sans-serif";
-            var smallfont = "bold 11pt Helvetica, Arial, sans-serif";
-
-            function textStyle() {
-                return {
-                    margin: 6,
-                    wrap: go.TextBlock.WrapFit,
-                    textAlign: "center",
-                    editable: false,
-                    font: bigfont,
-                };
-            }
-
-            function updateLoc() {
-                let query = {
-                    "nodeId": $('#modal__nodeId').text(),
-                    "roadId": $('#modal__roadId').text(),
-                    "canvasClass": $('#modal__canvasClass').text(),
-                    "type": "loc",
-                    "loc": $('#modal__loc').text(),
-                };
-                console.log(query)
-                $.ajax({
-                    url: "/roadmaps/"+query.roadId+"/nodes/"+query.nodeId,
-                    type: "put",
-                    dataType: "json",
-                    contentType: "application/json;charset=utf-8",
-                    data: JSON.stringify(query),
-                    success: function (data) {
-                        if (data) {
-                            console.log("이동완료");
-                        } else {
-                            console.log("data 이상");
-                        }
-                    }
-                })
-                screenShot($("#myDiagramDiv"));
-            }
-
-            function updateSize() {
-                let query = {
-                    "nodeId": $('#modal__nodeId').text(),
-                    "roadId": $('#modal__roadId').text(),
-                    "canvasClass": $('#modal__canvasClass').text(),
-                    "type": "size",
-                    "size": $('#modal__size').text()
-                };
-                console.log(query)
-                $.ajax({
-                    url: "/roadmaps/"+query.roadId+"/nodes/"+query.nodeId,
-                    type: "put",
-                    dataType: "json",
-                    contentType: "application/json;charset=utf-8",
-                    data: JSON.stringify(query),
-                    success: function (data) {
-                        if (data) {
-                            console.log("사이즈 조절 완료");
-                        } else {
-                            console.log("data 이상");
-                        }
-                    }
-                })
-                screenShot($("#myDiagramDiv"));
-            }
-
-
-            // 노드 정보 업데이트
-            function updateNodeData() {
-                console.log("/roadmaps/"+document.getElementById('modal__roadId').innerText+
-                    "/nodes/"+document.getElementById('modal__nodeId').innerText)
-                let query = {
-                    "nodeText": $('#modal__node__text-mod').val(),
-                    "diagramText": $('#modal__diagram__text-mod').val(),
-                    "categoryText": $('#modal__category__text-mod').val(),
-                    "laneText": $('#modal__lane__text-mod').val(),
-                    "category": $('#modal__node__category-mod').val(),
-                    "laneColor": $('#modal__lane__color-mod').val(),
-                    "categoryColor": $('#modal__category__color-mod').val(),
-                    "laneKey": $('#modal__lane__key-mod').val(),
-                    "size": $('#modal__size').text(),
-                    "loc": $('#modal__loc').text(),
-                    "type": "nodeUpdate"
-                };
-                console.log(query);
-                $.ajax({
-                    url: "/roadmaps/"+document.getElementById('modal__roadId').innerText+
-                        "/nodes/"+document.getElementById('modal__nodeId').innerText,
-                    type: "put",
-                    dataType: "json",
-                    contentType: "application/json;charset=utf-8",
-                    data: JSON.stringify(query),
-                    success: function (data) {
-                        if (data) {
-                            if (data.canvasClass === "Category") {
-                                console.log("palette.model",palette.model)
-
-                                myDiagram.nodeTemplateMap.add(
-                                    data.text,
-                                    $(
-                                        go.Node,
-                                        "Auto",
-                                        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-                                            go.Point.stringify
-                                        ),
-                                        $(go.Shape, "RoundedRectangle", {
-                                            fill: data.color,
-                                            portId: data.text,
-                                            fromLinkable: true,
-                                            cursor: "pointer",
-                                            toLinkable: true,
-                                            fromEndSegmentLength: 40,
-                                        }),
-                                        $(
-                                            go.TextBlock,
-                                            data.text,
-                                            textStyle(),
-                                            new go.Binding("text", "text").makeTwoWay()
-                                        )
-                                    )
-                                );
-
-                                palette.startTransaction();
-                                for (let d in palette.model.nodeDataArray) {
-                                    console.log("palette.model.nodeDataArray[d].aaa", palette.model.nodeDataArray[d]);
-                                    if (palette.model.nodeDataArray[d].nodeId
-                                        === document.getElementById('modal__nodeId').innerText) {
-                                        console.log("찾았다.")
-                                        palette.model.nodeDataArray[d].category = query.categoryText;
-                                        palette.model.nodeDataArray[d].color = query.categoryColor;
-                                        palette.model.nodeDataArray[d].text = query.categoryText;
-                                        break;
-                                    }
-                                }
-                                palette.commitTransaction();
-                                location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText);
-
-                            } else {
-                                for (let d in myDiagram.model.nodeDataArray) {
-                                    console.log("myDiagram.model.nodeDataArray[d].nodeId", myDiagram.model.nodeDataArray[d].nodeId)
-                                    console.log("document.getElementById('modal__nodeId').innerText", document.getElementById('modal__nodeId').innerText)
-                                    if (myDiagram.model.nodeDataArray[d].nodeId
-                                        === document.getElementById('modal__nodeId').innerText) {
-                                        if (data.canvasClass === 'Node') {
-                                            myDiagram.model.nodeDataArray[d].text = query.nodeText;
-                                            myDiagram.model.nodeDataArray[d].category = query.category;
-                                        } else if (data.canvasClass === "Diagram") {
-                                            myDiagram.model.nodeDataArray[d].text = query.diagramText;
-                                        } else if (data.canvasClass === "Lane") {
-                                            myDiagram.model.nodeDataArray[d].text = query.laneText;
-                                            myDiagram.model.nodeDataArray[d].key = query.laneKey;
-                                            myDiagram.model.nodeDataArray[d].color = query.laneColor;
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-                            save();
-                            load();
-                            fnCloseModal('#m3-o');
-                            fnCloseModal('#m2-o');
-                            fnCloseModal('#m5-o');
-                            fnCloseModal('#m4-o');
-                            fnCloseModal('#m7-o');
-                            fnCloseModal('#m6-o');
-                            fnCloseModal('#m9-o');
-                            fnCloseModal('#m8-o');
-                            screenShot($("#myDiagramDiv"));
-                        } else {
-                            console.log("data 이상")
-                        }
-                    }
-                });
-            }
-
-            function deleteNode() {
-
-                $.ajax({
-                    url: "/roadmaps/"+document.getElementById('modal__roadId').innerText
-                        +"/nodes/"+document.getElementById('modal__nodeId').innerText,
-                    type: "delete",
-                    success: function (data) {
-                        if (data===0) {
-                            if(document.getElementById('modal__canvasClass').innerText==='Category') palette.startTransaction();
-                            for (let d= myDiagram.model.nodeDataArray.length-1; d>=0; d--) {
-                                if (myDiagram.model.nodeDataArray[d].nodeId
-                                    === document.getElementById('modal__nodeId').innerText){
-                                    console.log("삭제")
-                                    console.log(myDiagram.model.nodeDataArray[d])
-                                    myDiagram.model.removeNodeData(myDiagram.model.nodeDataArray[d]);
-                                    console.log(myDiagram.model.nodeDataArray[d]);
-                                    break;
-                                }
-                            }
-                            console.log("222")
-
-                            if(document.getElementById('modal__canvasClass').innerText==='Category') {
-                                console.log("333")
-                                palette.commitTransaction();
-                                location.href = '/roadmaps/'+(document.getElementById('modal__roadId').innerText);
-                            }
-
-                            save();
-                            load();
-                            fnCloseModal('#m13-o');
-                            fnCloseModal('#m2-o');
-                            fnCloseModal('#m6-o');
-                            fnCloseModal('#m8-o');
-                            screenShot($("#myDiagramDiv"));
-                        } else {
-                            console.log("data 이상")
-                        }
-                    }
-                });
-            }
-
             // 노드 정보 히든에 숨기기
             function getNodeDataByAjax(target) {
                 if (target.nodeId) document.getElementById("modal__nodeId").innerText = target.nodeId;
@@ -1772,10 +1149,6 @@
                 document.getElementById("modal__size").innerText = "";
                 document.getElementById("modal__loc").innerText = "";
                 document.getElementById("modal__from").innerText = "";
-                document.getElementById("modal__lane__text-add").value = "";
-                document.getElementById("modal__lane__color-add").value = "";
-                document.getElementById("modal__lane__key-add").value = "";
-                document.getElementById("modal__node__text-add").value = "";
             }
 
             // 모달 오픈
@@ -1790,38 +1163,21 @@
                 clearAddInfo();
             }
 
-            window.onload = function () {
-                console.log("onload 함수 진입")
-                screenShot($("#myDiagramDiv"));
-            };
-            function screenShot(target) {
-                if (target != null && target.length > 0) {
-                    let t = target[0];
-                    html2canvas(t).then(function(canvas) {
-                        let myImg = canvas.toDataURL("image/png");
-                        myImg = myImg.replace("data:image/png;base64,", "");
-
-                        $.ajax({
-                            type : "POST",
-                            data : {
-                                "imgSrc" : myImg,
-                                "roadId" : document.getElementById('modal__roadId').innerText
-                            },
-                            dataType : "text",
-                            url : "/roadMapFileUpload",
-                            success : function(data) {
-                                if(data == 1){
-                                    console.log("저장 성공!");
-                                } else {
-                                    console.log("저장 실패!");
-                                }
-                            },
-                            error : function(a, b, c) {
-                                alert("에러 발생!");
-                            }
-                        });
-                    });
-                }
+            function duplicateStudyRoadmap() {
+                $.ajax({
+                    url: "/roadmaps/"+"<%=roadMapInfo.getRoadId()%>"+"/duplicate",
+                    type: "post",
+                    success: function (data) {
+                        if (data===1) {
+                            alert("로그인을 해주세요.");
+                        } else if (data===0) {
+                            alert("복제완료되었습니다.");
+                            location.href="/index";
+                        } else {
+                            console.log("data 이상!");
+                        }
+                    }
+                })
             }
 
         </script>
@@ -1845,12 +1201,7 @@
                 ></div>
             </div>
             <br />
-            <button id="SaveButton" onclick="save()" hidden>Save</button>
-            <button onclick="fnOpenModal('#m12-o')">카테고리추가</button>
-            <button onclick="load()" hidden>Load</button>
-            <button onclick="layout()" hidden>Layout</button>
-            <button onclick="fnOpenModal('#m11-o')">레인추가</button>
-            <iframe src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
+            <button onclick="fnOpenModal('#m14-o')">복제하기</button>
             <div hidden>
                 <textarea id="mySavedModel" style="width: 100%; height: 300px" />
             </div>
@@ -1861,15 +1212,8 @@
     <!--  End of GoJS sample code  -->
 </div>
 
-
-
 </body>
 <!--  This script is part of the gojs.net website, and is not needed to run the sample -->
 <script src="${pageContext.request.contextPath}/resources/js/study_roadMap/goSamples.js"></script>
 
-<%--화면캡쳐 후 저장 함수--%>
-
-<script type="text/javascript">
-
-</script>
 </html>

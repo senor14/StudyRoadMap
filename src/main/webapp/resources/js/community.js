@@ -125,7 +125,7 @@ function setSlide(category, data){
         container.appendChild(slide)
 
         if(category === "road" ){
-            slide.setAttribute("road-id",result.road_id)
+            slide.setAttribute("road-id",result.roadId)
 
             // let setCategory = document.createElement('div')
             console.log("result: ",result)
@@ -133,6 +133,8 @@ function setSlide(category, data){
             // setCategory.textContent = "["+result.roadNodeDataArray.nodeCategory+"]"
             // setCategory.className = "setCategory"
             // slide.appendChild(setCategory)
+            slide.setAttribute("onclick","parent.document.location.href='/roadmaps/"+result.roadId+"'")
+
 
             let setTitle = document.createElement('div')
             setTitle.textContent = ++num+". "+result.roadTitle
@@ -145,7 +147,7 @@ function setSlide(category, data){
             slide.appendChild(setCreated)
 
         }else{
-            slide.setAttribute("road-id",result.userUuid)
+            slide.setAttribute("road-id",result.roadId)
 
             let setTitle = document.createElement('div')
             setTitle.textContent = ++num+". "+result.roadTitle

@@ -299,5 +299,21 @@
         document.getElementById('pwd_find_form').submit();
 
     }
+    window.onload = function page_check() {
+        <%int check = 0;
+            if(session.getAttribute("SS_USER_ID") == null){
+            check = 1;
+        }%>
+        let check = <%=check%>;
+        console.log("check: ", check);
+        if (check == 0) {
+            location.href = "/index";
+        }
+    }
+    window.onpageshow = function (event) {
+        if(event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            location.reload()
+        }
+    }
 </script>
 </html>

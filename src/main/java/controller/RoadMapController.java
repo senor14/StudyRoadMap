@@ -13,16 +13,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import service.IStudyMindService;
 import service.IStudyRoadService;
+import service.IUserService;
+import util.CmmUtil;
 import util.DateUtil;
+import util.EncryptUtil;
 import vo.RequestNodeData;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -34,6 +35,9 @@ public class RoadMapController {
 
     @Resource(name = "StudyMindService")
     IStudyMindService studyMindService;
+
+    @Resource(name = "UserService")
+    IUserService userService;
 
     @GetMapping("/roadMap")
     public String roadMap() {
@@ -61,7 +65,8 @@ public class RoadMapController {
     // 스터디 로드맵 상세보기
     @GetMapping("/roadmaps/{roadId}")
     public String getRoadMap(@PathVariable String roadId,
-                             ModelMap model) throws Exception {
+                             ModelMap model,
+                             HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".getRoadMap Start!");
 
@@ -71,6 +76,13 @@ public class RoadMapController {
         nodeData.setRoadId(roadId);
 
         StudyRoadData roadMapInfo = studyRoadService.getRoadMapData(roadId);
+        String writerUserUuid = roadMapInfo.getUserUuid();
+        Map<String, Object> uMap = new HashMap<>();
+        uMap.put("userUuid", roadMapInfo.getUserUuid());
+        List<Map<String, String>> rList = userService.getUserId(uMap);
+
+        String userId = EncryptUtil.decAES128CBC(rList.get(0).get("userId"));
+
         List<StudyRoadNodeData> nodeInfo = studyRoadService.getRoadMapNodeByRoadId(roadId);
 
         log.info("roadMapInfo: "+roadMapInfo);
@@ -78,6 +90,12 @@ public class RoadMapController {
 
         model.addAttribute("roadMapInfo",roadMapInfo);
         model.addAttribute("nodeInfo",nodeInfo);
+        model.addAttribute("userId",userId);
+
+        if (!((String)session.getAttribute("SS_USER_UUID")).equals(writerUserUuid)) {
+            return "stroadMapGuest";
+        }
+
 
         roadMapInfo = null;
         nodeInfo = null;
@@ -119,12 +137,18 @@ public class RoadMapController {
 
     // 스터디로드 데이터 삽입 / 초기 다이어그램 노드 삽입
     @PostMapping("/roadmaps")
-    public String insertDefaultStudyRoadData(
+    public ResponseEntity<String> insertDefaultStudyRoadData(
             HttpServletRequest request,
             HttpSession session,
             ModelMap model) throws Exception {
 
         log.info(this.getClass().getName() + ".insertDefaultStudyRoadData Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("UUID가 없음");
+        }
 
         String randomRoadId = UUID.randomUUID().toString();
         log.info("randomRoadId: "+randomRoadId);
@@ -157,12 +181,12 @@ public class RoadMapController {
         log.info("diagramData: "+ diagramData);
         studyRoadService.insertRoadNode(diagramData);
 
-        model.addAttribute("url", "/roadmaps/"+randomRoadId);
+//        model.addAttribute("url", "/roadmaps/"+randomRoadId);
 
         log.info(this.getClass().getName() + ".insertDefaultStudyRoadData End!");
 
 //        return ResponseEntity.status(HttpStatus.OK).body(0);
-        return "redirect";
+        return ResponseEntity.status(HttpStatus.OK).body("/roadmaps/"+randomRoadId);
     }
 
     // 스터디로드 노드 데이터 삽입
@@ -170,10 +194,17 @@ public class RoadMapController {
     public ResponseEntity<StudyRoadNodeData> insertStudyRoadNode(
             @PathVariable String roadId,
             @PathVariable String canvasClass,
+            HttpSession session,
             HttpServletRequest request) throws Exception {
 
 
         log.info(this.getClass().getName() + ".insertStudyRoadNode Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new StudyRoadNodeData());
+        }
 
         String randomNodeId = UUID.randomUUID().toString();
 
@@ -222,7 +253,7 @@ public class RoadMapController {
             String randomMindId = UUID.randomUUID().toString();
 
             StudyMindData mind = new StudyMindData();
-            mind.setMindId(randomMindId);
+            mind.setMindId(randomNodeId);
             mind.setStudyRoadId(roadId);
             mind.setStudyRoadNodeId(randomNodeId);
             mind.setMindLabel(nvl(request.getParameter("nodeText")));
@@ -236,10 +267,10 @@ public class RoadMapController {
             log.info("mRes: "+mRes);
 
             StudyMindNodeData node = new StudyMindNodeData();
-            node.setMindId(randomMindId);
+            node.setMindId(randomNodeId);
             node.setStudyRoadId(roadId);
             node.setStudyRoadNodeId(randomNodeId);
-            node.setKey(randomMindId);
+            node.setKey(randomNodeId);
             node.setGroup("nodes");
             node.setMindLabel(nvl(request.getParameter("nodeText")));
             node.setX("0");
@@ -294,11 +325,19 @@ public class RoadMapController {
     @PutMapping("/roadmaps/{roadId}")
     public ResponseEntity<Integer> updateStudyRoadData(
                                     @PathVariable String roadId,
+                                    HttpSession session,
                                     @RequestBody StudyRoadData road) throws Exception {
 
         log.info(this.getClass().getName() + ".updateStudyRoadData Start!");
+        log.info("road: "+road);
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(0);
+        }
 
         road.setRoadId(roadId);
+
 
         int res = studyRoadService.updateRoadData(road);
 
@@ -313,10 +352,17 @@ public class RoadMapController {
     public ResponseEntity<StudyRoadNodeData> updateStudyRoadNode (
             @PathVariable String roadId,
             @PathVariable String nodeId,
-            @RequestBody RequestNodeData node
+            @RequestBody RequestNodeData node,
+            HttpSession session
     ) throws Exception {
 
         log.info(this.getClass().getName()+".updateStudyRoadNode Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new StudyRoadNodeData());
+        }
 
         StudyRoadNodeData nodeData = studyRoadService.getRoadMapNodeData(nodeId);
 
@@ -366,9 +412,16 @@ public class RoadMapController {
     // roadId로 로드맵 데이터 삭제
     @DeleteMapping("/roadmaps/{roadId}")
     public ResponseEntity<Integer> deleteStudyRoadData(
-            @PathVariable String roadId) throws Exception {
+            @PathVariable String roadId,
+            HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteStudyRoadData Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(0);
+        }
 
         int roadData = studyRoadService.deleteRoadData(roadId);
         log.info("roadData: "+roadData);
@@ -382,9 +435,16 @@ public class RoadMapController {
     @DeleteMapping("/roadmaps/{roadId}/nodes/{nodeId}")
     public ResponseEntity<Integer> deleteStudyRoadNode(
             @PathVariable String roadId,
-            @PathVariable String nodeId) throws Exception {
+            @PathVariable String nodeId,
+            HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".deleteStudyRoadNode Start!");
+
+        String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
+
+        if(SS_USER_UUID==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(0);
+        }
 
         int nodeData = studyRoadService.deleteRoadNode(nodeId);
         log.info("nodeData: "+nodeData);
@@ -405,6 +465,10 @@ public class RoadMapController {
         String newRoadId = UUID.randomUUID().toString();
         String userUuid = (String)session.getAttribute("SS_USER_UUID");
         log.info("userUuid: "+userUuid);
+
+        if(userUuid==null){
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(1);
+        }
 
         // 스터디로드 id로 StudyRoadData 데이터 가져오기
         StudyRoadData roadMapData = studyRoadService.getRoadMapData(roadId);

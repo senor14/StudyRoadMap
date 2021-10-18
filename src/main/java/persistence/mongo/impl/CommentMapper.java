@@ -34,7 +34,7 @@ public class CommentMapper implements ICommentMapper {
 
             Document query = new Document();
 
-            query.append("studyRoadId", studyRoadId);
+            query.append("roadId", studyRoadId);
 
             Document projection = new Document();
 
@@ -67,7 +67,7 @@ public class CommentMapper implements ICommentMapper {
             MongoCollection<Document> collection = mongodb.getCollection("Comment");
             Document query = new Document();
 
-            query.append("studyRoadId", roadMapId);
+            query.append("roadId", roadMapId);
             query.append("userUuid", userUuid);
 
             Document projection = new Document();
