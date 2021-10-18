@@ -65,7 +65,8 @@
         <div>링크: <input type="text" id="modal__link-add"></div>
         <div>참고서적 제목:
             <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text"  id="modal__book__title-add"><button onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button>
+            <input type="text"  id="modal__book__title-add" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}">
+            <button onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button>
         </div>
         <div>
             참고서적 링크: <input type="text" id="modal__book_link-add">
@@ -86,7 +87,8 @@
         <div>링크: <input type="text" class="modal__link" id="modal__link-mod"></div>
         <div>참고서적 제목:
             <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text" class="modal__book__title" id="modal__book__title-mod" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}"><button onclick="searchBook(document.getElementById('modal__book__title-mod').value, this)">검색</button>
+            <input type="text" class="modal__book__title" id="modal__book__title-mod" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}">
+            <button onclick="searchBook(document.getElementById('modal__book__title-mod').value, this)">검색</button>
         </div>
         <div>
             참고서적 링크: <input type="text" class="modal__book_link" id="modal__book_link-mod">

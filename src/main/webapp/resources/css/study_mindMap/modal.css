@@ -105,6 +105,7 @@ button::-moz-focus-inner {
 
     /* --m-background is set as inline style */
     background: var(--m-background);
+
 }
 
 /* using :target */
