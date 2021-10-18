@@ -32,10 +32,6 @@
             <div id="cy"></div>
         </div>
     </div>
-    <div class="comment">
-        <input type="text" id="comment_text" name="comment_text" minlength="4" maxlength="8" size="10">
-        <input type="button" id="comment_button" name="comment_button" minlength="4" value="입력">
-    </div>
 </div>
 
 <div class="demo-footer"><a href="http://www.turkishnews.com/Ataturk/life.htm" target="_blank">Source/Kaynak</a></div>
@@ -69,7 +65,7 @@
         <div>링크: <input type="text" id="modal__link-add"></div>
         <div>참고서적 제목:
             <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text"  id="modal__book__title-add">
+            <input type="text"  id="modal__book__title-add"><button onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button>
         </div>
         <div>
             참고서적 링크: <input type="text" id="modal__book_link-add">
@@ -90,7 +86,7 @@
         <div>링크: <input type="text" class="modal__link" id="modal__link-mod"></div>
         <div>참고서적 제목:
             <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text" class="modal__book__title" id="modal__book__title-mod">
+            <input type="text" class="modal__book__title" id="modal__book__title-mod" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}"><button onclick="searchBook(document.getElementById('modal__book__title-mod').value, this)">검색</button>
         </div>
         <div>
             참고서적 링크: <input type="text" class="modal__book_link" id="modal__book_link-mod">
@@ -124,6 +120,16 @@
 </div>
 <%-- modal 삭제 불가능 끝 --%>
 
+<%-- modal 책 검색 --%>
+<div class="modal-container" id="m7-o" style="--m-background: hsla(0, 0%, 0%, .4); ">
+    <div class="modal" id="modal__search" style="width: 560px; height: 560px; overflow: auto;">
+        <h1 class="modal__book__search" id="modal__booksearch">검색 결과</h1>
+        <hr/>
+        <a onclick="clearSearchList();" class="link-2"></a>
+    </div>
+</div>
+<%-- modal 책 검색 끝 --%>
+
 <form id="uploadForm" enctype="multipart/form-data">
     <input type="file" id="file" name="fileUpload" style="display:none"/>
 </form>
@@ -146,6 +152,73 @@
 <script src="http://marvl.infotech.monash.edu/webcola/cola.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.3.0/cytoscape-cola.js"></script>
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<script>
+    function searchBook(keyword, target) {
+        console.log("keyword: ",keyword)
+        fnOpenModal("#m7-o");
+        let addOrMod;
+        let id = target.parentNode.parentNode.parentNode.id;
+        if (id === 'm4-o') {
+            addOrMod = "mod";
+        } else if (id === 'm3-o') {
+            addOrMod = "add";
+        }
+        $.ajax({
+            url: "https://dapi.kakao.com/v3/search/book?target=title",
+            type: "get",
+            data: {
+                query: keyword
+            },
+            headers: {
+                Authorization: "KakaoAK 15a6456fd0ac32b2bce9d44610d4f72a"
+            },
+        }).done(function (msg) {
+                console.log(msg);
+                for (var i = 0; i < 10; i++){
+                    $("#modal__search").append(
+                        "<div class='search__list' id='"+ addOrMod +"' style='display: flex; padding : 10px;' onclick='insertBookInfo(this)'>" +
+                            "<div><img src='" + msg.documents[i].thumbnail + "'/></div>" +
+                            "<div style='display: flex; flex-direction: column; margin: 10px;'>" +
+                                "<div><h2>" + msg.documents[i].title + "</h2></div>" +
+                                "<div>" + msg.documents[i].authors + "</div>" +
+                                "<div hidden><a href='" + msg.documents[i].url + "'>" + msg.documents[i].url + "</a></div>" +
+                            "</div>" +
+                        "</div>" +
+                        "<hr class='search__list'/>"
+                    );
+                    // $("#modal__search").append("<strong>저자:</strong> " + msg.documents[i].authors + "<br>");
+                    // $("#modal__search").append("<img src='" + msg.documents[i].thumbnail + "'/><br>");
+                    // $("#modal__search").append("<hr/>");
+                }
+            });
+    }
+
+    function insertBookInfo(target) {
+        // console.log("target");
+        // console.log(target);
+        console.log("target: ", target)
+        let bookTitle = target.lastChild.firstChild.textContent;
+        // console.log(target.lastChild.firstChild.textContent)
+        let bookUrl = target.lastChild.lastChild.textContent;
+        // console.log(target.lastChild.lastChild.textContent)
+        if (target.id === "mod") {
+            document.getElementById('modal__book__title-mod').value = bookTitle;
+            document.getElementById('modal__book_link-mod').value = bookUrl;
+        } else if (target.id === "add") {
+            document.getElementById('modal__book__title-add').value = bookTitle;
+            document.getElementById('modal__book_link-add').value = bookUrl;
+        }
+
+
+        clearSearchList();
+    }
+
+    function clearSearchList() {
+        $(".search__list").remove();
+        fnCloseModal('#m7-o');
+    }
+</script>
 
 <%-- 마인드맵 화면 --%>
 <script>
@@ -580,7 +653,7 @@
 
         let query = {
             "mindLabel" : $('#modal__title-mod').val(),
-            "url": $('#modal__book_link-mod').val(),
+            "url": $('#modal__link-mod').val(),
             "bookTitle": $('#modal__book__title-mod').val(),
             "bookLink": $('#modal__book_link-mod').val(),
             "mindContents": $('#modal__content-mod').val()
