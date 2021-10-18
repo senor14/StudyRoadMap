@@ -20,6 +20,7 @@
             name="description"
             content="A workflow diagram showing navigation between web pages, with an editable list of comments and to-dos."
     />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_roadMap/study_roadMap.css">
 
@@ -56,8 +57,12 @@
 </head>
 <body>
 
-<h1 style="color:white;"><%=roadMapInfo.getRoadTitle()%></h1>
-<h2 style="color:white;"><%=userId%></h2>
+<div style="position: fixed; background-color: black; width: 100%; z-index: 3000">
+    <a href="/index"><i class="fas fa-home" style="position: fixed; margin-left: 10px; margin-top:10px; font-size: 30px; color:white"></i></a>
+    <a href="javascript:history.back();"><i class="far fa-arrow-alt-circle-left" style="position: fixed; margin-left: 50px; margin-top:10px; font-size: 30px; color:white"></i></a>
+    <h1 style="color:white; margin-left: 100px;"><%=roadMapInfo.getRoadTitle()%></h1>
+    <h2 style="color:white; margin-left: 100px;"><%=userId%></h2>
+</div>
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
@@ -1191,13 +1196,14 @@
                         style="
                 width: 100px;
                 margin-right: 2px;
+                margin-top: 50px;
                 background-color: whitesmoke;
                 border: solid 1px black;
               "
                 ></div>
                 <div
                         id="myDiagramDiv"
-                        style="flex-grow: 1; height: 480px; border: solid 1px black"
+                        style="margin-top: 50px; flex-grow: 1; height: 480px; border: solid 1px black"
                 ></div>
             </div>
             <br />

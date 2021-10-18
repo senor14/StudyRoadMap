@@ -27,6 +27,11 @@
 </head>
 <body>
 
+<div style="position: fixed; background-color: darkslategray; width: 100%; z-index: 3000; height:50px">
+    <a href="/index"><i class="fas fa-home" style="position: fixed; margin-left: 10px; margin-top:10px; font-size: 30px; color:white"></i></a>
+    <a href="javascript:history.back();"><i class="far fa-arrow-alt-circle-left" style="position: fixed; margin-left: 50px; margin-top:10px; font-size: 30px; color:white"></i></a>
+</div>
+
 <div class="timeline-container" id="timeline-1">
     <div class="timeline-header">
         <h2 class="timeline-header__title">Career RoadMap</h2>
