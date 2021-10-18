@@ -104,7 +104,6 @@ function findRoadMap(){
     })
 }
 
-function copyStudyMap(){}
 
 function noResult(test){
 
@@ -134,9 +133,15 @@ function setSlide(category, data){
             // setCategory.className = "setCategory"
             // slide.appendChild(setCategory)
             slide.setAttribute("onclick","parent.document.location.href='/roadmaps/"+result.roadId+"'")
-
+            slide.style = "background-position: center;" +
+                "background-repeat: no-repeat; " +
+                "background-size: 400px 400px; " +
+                "background-image: url('http://localhost:9000/getRoadMapImage?roadId="+result.roadId+"')"
 
             let setTitle = document.createElement('div')
+            console.log("setTitle");
+            console.log(setTitle);
+            setTitle.style = "background-image"
             setTitle.textContent = ++num+". "+result.roadTitle
             setTitle.className = "title"
             slide.appendChild(setTitle)
@@ -148,6 +153,12 @@ function setSlide(category, data){
 
         }else{
             slide.setAttribute("road-id",result.roadId)
+
+            slide.setAttribute("onclick","parent.document.location.href='/roadmaps/"+result.roadId+"'")
+            slide.style = "background-position: center;" +
+                "background-repeat: no-repeat; " +
+                "background-size: 400px 400px; " +
+                "background-image: url('http://localhost:9000/getRoadMapImage?roadId="+result.roadId+"')"
 
             let setTitle = document.createElement('div')
             setTitle.textContent = ++num+". "+result.roadTitle

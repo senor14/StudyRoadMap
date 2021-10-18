@@ -11,6 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1cb9ec9f-733f-4764-8a20-0307e8af8621" name="Changes" comment="이건미친짓이야">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/community.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +114,7 @@
     <property name="project.structure.last.edited" value="Facets" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.44894204" />
-    <property name="settings.editor.selected.configurable" value="Console" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -255,7 +256,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="78d17078-5f4a-4e36-baee-ddd998a6b84a" name="Changes" comment="" />
+      <changelist id="1cb9ec9f-733f-4764-8a20-0307e8af8621" name="Changes" comment="이건미친짓이야" />
       <created>1632653658849</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -286,6 +287,7 @@
       <workItem from="1634452609963" duration="672000" />
       <workItem from="1634454357674" duration="29134000" />
       <workItem from="1634493662343" duration="13047000" />
+      <workItem from="1634555919395" duration="2668000" />
     </task>
     <task id="LOCAL-00001" summary="[ADD] 커리어 로드맵 컨트롤러, 서비스, 프론트 추가">
       <created>1633239962316</created>
