@@ -125,28 +125,30 @@
     </div>
 </div>
 
-
+<%-- 중요 체크한  --%>
 <div class="modal-container" id="card" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="team-boxed">
+    <div class="team-boxed" style="width:60%;">
         <a onclick="fnCloseModal('card');" class="link-2"></a>
-        <div class="item">
-            <div class="box">
-                    <div class="user">
-                        <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKHt5PvtslCa0tCgJoB3gMxjLR51dYf7exhA&usqp=CAU">
-                        <h3 class="name">홍기현</h3>
-                        <p class="email">Email : 홍기현@google.com</p>
-                    </div>
-                    <div class="info">
-                        <p class="description">
-                            2012.08.10 : 졸업
-                        </p>
-                        <p class="description">
-                            2012.08.10 : 졸업
-                        </p>
-                        <p class="description">
-                            2012.08.10 : 졸업
-                        </p>
-                    </div>
+        <div style="color: white;font-size: 5em;text-align: center; font-family: Cardo;">
+            <span id="I">MAIN</span>
+            <span id="L">CAREER</span>
+            </div>
+        <div class="main_career">
+            <div class="entries" id="entries">
+<%--                <div class="entry">--%>
+<%--                    <div class="title">2011</div>--%>
+<%--                    <div class="body">--%>
+<%--                        <p>Neque sunt voluptatibus repellat pariatur ut enim. Eveniet rerum suscipit eveniet amet dignissimos. Doloremque et distinctio quod molestiae ut.</p>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--                <div class="entry">--%>
+<%--                    <div class="title big">2013</div>--%>
+<%--                    <div class="body">--%>
+<%--                        <p>Rerum sit libero possimus amet excepturi. Exercitationem enim dolores sunt praesentium dolorum praesentium.</p>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
+
+
             </div>
         </div>
     </div>

@@ -275,6 +275,49 @@ function important_search(){
     dataType : "json",
     success: function (data) {
       console.log(data);
+
+      let one = '<i class="fas fa-user-graduate"></i>';
+      let two = '<i class="fas fa-briefcase"></i>';
+      let three = '<i class="fas fa-certificate"></i>';
+      let four = '<i class="fas fa-award"></i>';
+
+      let icon = "";
+
+      let innerHTML = "";
+      let year = "";
+      $.each(data, function(idx, val) {
+        console.log(val.nodeType);
+        /* 아이콘 값 변경 해주기 */
+        if(val.nodeType==1){
+          icon = one;
+        }else if(val.nodeType==2){
+          icon = two;
+        }else if(val.nodeType==3){
+          icon = three;
+        }else {
+          icon = four;
+        }
+
+        if (year != val.nodeYear) {
+          year = val.nodeYear;
+          if(innerHTML!=""){
+            innerHTML += "</div></div>";
+          }
+          innerHTML += '<div class="entry">';
+          innerHTML += '<div class="title">'+val.nodeYear+'</div>';
+          innerHTML += '<div class="body">';
+          // innerHTML += '<p>'+val.nodeMonth+'/'+val.nodeDay+'&nbsp'+icon+'&nbsp'+val.nodeContent+'</p>';
+          innerHTML += '<p>'+icon+val.nodeMonth+'/'+val.nodeDay+'&nbsp'+'&nbsp'+val.nodeContent+'</p>';
+        }else{
+          // innerHTML += '<p>'+val.nodeMonth+'/'+val.nodeDay+'&nbsp'+icon+'&nbsp'+val.nodeContent+'</p>';
+          innerHTML += '<p>'+icon+val.nodeMonth+'/'+val.nodeDay+'&nbsp'+'&nbsp'+val.nodeContent+'</p>';
+        }
+      })
+      innerHTML +="</div></div>"
+      $('#entries').html(innerHTML);
     }
   })
 }
+/*참고 자료
+*
+* */
