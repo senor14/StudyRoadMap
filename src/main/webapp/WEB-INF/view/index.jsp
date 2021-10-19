@@ -338,148 +338,148 @@
     <script src="${pageContext.request.contextPath}/resources/js/jquery.animateNumber.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/scrollax.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-    <script>
-        let publics = document.querySelectorAll(".road__publicYn")
-        console.log(publics)
-        for (let i=0; i<publics.length; i++) {
-            console.log("publics["+i+"].value: "+publics[i].value);
-            if (publics[i].value === "Y") {
-                publics[i].setAttribute("checked", "checked");
+
+</body>
+</html>
+<script>
+    let publics = document.querySelectorAll(".road__publicYn")
+    console.log(publics)
+    for (let i=0; i<publics.length; i++) {
+        console.log("publics["+i+"].value: "+publics[i].value);
+        if (publics[i].value === "Y") {
+            publics[i].setAttribute("checked", "checked");
+        }
+    }
+
+    function checkbox_chk(target, roadId) {
+        let publicYn = 'N';
+        if (target.checked) {
+            publicYn = 'Y';
+        }
+        console.log("checked: "+publicYn);
+        console.log("roadId: "+roadId)
+
+        $.ajax({
+            url: "/roadmaps/"+roadId,
+            type: "put",
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify({
+                "publicYn": publicYn
+            }),
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    }
+</script>
+<script>
+
+    let pwdCheck = 'N';
+
+    $('#passWordCheck').keyup(function() {
+
+        let pw = document.getElementById("newPassWord").value; //비밀번호
+        let pw2 = document.getElementById("passWordCheck").value; // 확인 비밀번호
+
+        if (pw != "" || pw2 != "") {
+            if (pw == pw2) {
+                $("#renew").text("비밀번호가 일치합니다.");
+                $("#renew").css("color", "#00f");
+                pwdCheck = 'Y';
+            } else {
+                $("#renew").text("비밀번호가 일치하지 않습니다.");
+                $("#renew").css("color", "#f00");
+                pwdCheck = 'N';
             }
         }
 
-        function checkbox_chk(target, roadId) {
-            let publicYn = 'N';
-            if (target.checked) {
-                publicYn = 'Y';
-            }
-            console.log("checked: "+publicYn);
-            console.log("roadId: "+roadId)
+    })
+    function pwd_chg() {
 
-            $.ajax({
-                url: "/roadmaps/"+roadId,
-                type: "put",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({
-                    "publicYn": publicYn
-                }),
-                success: function (data) {
-                    console.log(data);
-                }
-            })
+        document.getElementById('pwd_chg_form').submit();
+
+    }
+    function withdrawal() {
+
+        document.getElementById('withdrawal_form').submit();
+
+    }
+
+
+    function check() {
+        if(pwdCheck == "N"){
+            alert("비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.");
+            return false;
+        } else{
+            return true;
         }
-    </script>
-    <script>
+    }
 
-        let pwdCheck = 'N';
+    let DeleteCheck = 'N';
 
-        $('#passWordCheck').keyup(function() {
+    $("#DeleteCheck").keyup(function() {
+        let query = {
+            DeleteCheck : $("#DeleteCheck").val()
+        };
 
-            let pw = document.getElementById("newPassWord").value; //비밀번호
-            let pw2 = document.getElementById("passWordCheck").value; // 확인 비밀번호
-
-            if (pw != "" || pw2 != "") {
-                if (pw == pw2) {
-                    $("#renew").text("비밀번호가 일치합니다.");
-                    $("#renew").css("color", "#00f");
-                    pwdCheck = 'Y';
+        $.ajax({
+            url : "/RoadMap/userWithdrawalCheck",
+            type : "post",
+            data : query,
+            success : function(data) {
+                if (data == 1) {
+                    $("#id_find").text("탈퇴 확인 문자열이 같습니다.");
+                    $("#id_find").attr("style", "color:#00f");
+                    DeleteCheck = 'Y'
                 } else {
-                    $("#renew").text("비밀번호가 일치하지 않습니다.");
-                    $("#renew").css("color", "#f00");
-                    pwdCheck = 'N';
+                    $("#id_find").text("탈퇴 확인 문자열이 다릅니다.");
+                    $("#id_find").attr("style", "color:#f00");
+                    DeleteCheck = 'N'
+                }
+            }
+        }); // ajax 끝
+    });
+
+    function del_check() {
+        if(idCheck == 'N'){
+            alert("탈퇴 확인 문구가 다릅니다. 탈퇴 확인 문구를 확인해주세요.");
+            return false;
+        } else{
+            return true;
+        }
+    }
+</script>
+<%-- 모달 조작 함수 --%>
+<script>
+    // 모달 오픈
+    function fnOpenModal(id){
+        $(id).css("display", "flex");
+    }
+    // 모달 종료
+    function fnCloseModal(id){
+        $(id).css("display", "none");
+    }
+
+</script>
+
+
+<script>
+    /* 커리어 로드맵 존재 체크 */
+    window.onload = function() {
+        $.ajax({
+            url: "/career/chk",
+            type: "post",
+            data: {
+            },
+            success: function (data) {
+                console.log(data);
+                if (data=="Y") {
+                    $('#no_career').css("display", "none");
+                } else {
+                    $('#yes_career').css("display", "none");
                 }
             }
 
         })
-        function pwd_chg() {
-
-            document.getElementById('pwd_chg_form').submit();
-
-        }
-        function withdrawal() {
-
-            document.getElementById('withdrawal_form').submit();
-
-        }
-
-
-        function check() {
-            if(pwdCheck == "N"){
-                alert("비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.");
-                return false;
-            } else{
-                return true;
-            }
-        }
-
-        let DeleteCheck = 'N';
-
-        $("#DeleteCheck").keyup(function() {
-            let query = {
-                DeleteCheck : $("#DeleteCheck").val()
-            };
-
-            $.ajax({
-                url : "/RoadMap/userWithdrawalCheck",
-                type : "post",
-                data : query,
-                success : function(data) {
-                    if (data == 1) {
-                        $("#id_find").text("탈퇴 확인 문자열이 같습니다.");
-                        $("#id_find").attr("style", "color:#00f");
-                        DeleteCheck = 'Y'
-                    } else {
-                        $("#id_find").text("탈퇴 확인 문자열이 다릅니다.");
-                        $("#id_find").attr("style", "color:#f00");
-                        DeleteCheck = 'N'
-                    }
-                }
-            }); // ajax 끝
-        });
-
-        function del_check() {
-            if(idCheck == 'N'){
-                alert("탈퇴 확인 문구가 다릅니다. 탈퇴 확인 문구를 확인해주세요.");
-                return false;
-            } else{
-                return true;
-            }
-        }
-    </script>
-    <%-- 모달 조작 함수 --%>
-    <script>
-        // 모달 오픈
-        function fnOpenModal(id){
-            $(id).css("display", "flex");
-        }
-        // 모달 종료
-        function fnCloseModal(id){
-            $(id).css("display", "none");
-        }
-
-    </script>
-
-
-    <script>
-        /* 커리어 로드맵 존재 체크 */
-        window.onload = function() {
-            $.ajax({
-                url: "/career/chk",
-                type: "post",
-                data: {
-                },
-                success: function (data) {
-                    console.log(data);
-                    if (data=="Y") {
-                        $('#no_career').css("display", "none");
-                    } else {
-                        $('#yes_career').css("display", "none");
-                    }
-                }
-
-            })
-        }
-    </script>
-
-</body>
-</html>
+    }
+</script>
