@@ -1859,10 +1859,8 @@
             <button id="SaveButton" onclick="save()" hidden>Save</button>
             <button onclick="load()" hidden>Load</button>
             <button onclick="layout()" hidden>Layout</button>
-            <iframe src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
-            <div hidden>
-                <textarea id="mySavedModel" style="width: 100%; height: 300px" />
-            </div>
+            <iframe id="mySavedModel" src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
+<!--             <textarea id="mySavedModel" style="width: 100%; height: 300px" /> -->
             <br />
         </div>
     </div>
