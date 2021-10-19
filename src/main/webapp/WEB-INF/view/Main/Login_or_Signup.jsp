@@ -49,8 +49,14 @@
                 </div>
                     <button type="submit" class="submit-btn">Login</button>
             </form>
-            <button type="button" class="lil-btn2" onclick="fnOpenModal('#m2-o')">아이디 찾기</button><br>
-            <button type="button" class="lil-btn2" onclick="fnOpenModal('#m3-o')">비밀번호 찾기</button><br>
+            <div style="display: flex; justify-content: space-between">
+                <div>
+                    <button type="button" class="lil-btn2" onclick="fnOpenModal('#m2-o')" style="width: 110px;">아이디 찾기</button><br>
+                </div>
+                <div>
+                    <button type="button" class="lil-btn2" onclick="fnOpenModal('#m3-o')" style="width: 110px;">비밀번호 찾기</button><br>
+                </div>
+            </div>
         </div>
     </div>
 </div>
