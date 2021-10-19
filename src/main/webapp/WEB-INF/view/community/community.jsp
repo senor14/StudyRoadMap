@@ -27,6 +27,7 @@
             RoadMap:
             <label><input type="radio" name="category" value="s" onclick="getStudyMap()" checked>Study</label>
 <%--            <label><input type="radio" name="category" value="c" onclick="getStudyMap()">Career</label>--%>
+
         </div>
     </div>
     <div class="searchArea">
