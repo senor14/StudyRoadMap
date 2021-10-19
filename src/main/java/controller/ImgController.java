@@ -39,9 +39,8 @@ public class ImgController {
     IImgService imgService;
 
     // 로드맵 이미지가 저장되는 기본폴더 설정
-    final private String ROADMAP_UPLOAD_SAVE_PATH = "C:\\studyRoadMapImg"; // C:\\studyRoadMapImg 폴더에 저장 /studyRoadMapImg
-    // 마인드맵 이미지가 저장되는 기본폴더 설정
-    final private String MINDMAP_UPLOAD_SAVE_PATH = "C:\\studyMindMapImg"; // C:\\studyMindMapImg 폴더에 저장 /studyMindMapImg
+    //final private String ROADMAP_UPLOAD_SAVE_PATH = "C:\\studyRoadMapImg"; // C:\\studyRoadMapImg 폴더에 저장, 윈도우용 경로
+    final private String ROADMAP_UPLOAD_SAVE_PATH = "/img/studyRoadMapImg"; // /img/studyRoadMapImg 폴더에 저장, 리눅스용 경로
 
     // 로드맵 이미지 캡쳐 저장
     @RequestMapping(value = "roadMapFileUpload")
