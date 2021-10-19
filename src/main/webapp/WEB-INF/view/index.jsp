@@ -164,13 +164,15 @@
                                                 <div class=""  style="display:grid; grid-template-columns: repeat(2, 1fr);word-wrap: break-word; height:800px; overflow:auto;">
 
                                                     <% for (StudyRoadData roadData : roadDataInfo) { %>
-                                                        <div onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-size: cover; background-image: url('http://localhost:9000/getRoadMapImage?roadId=<%=roadData.getRoadId()%>')">
-                                                            <div >
+                                                    <div style="position: relative; margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; ">
+                                                        <span class="position-absolute" style="top:2px; right: 5px; font-size: 13px;">공개여부: <input type="checkbox" class="road__publicYn" value="<%=roadData.getPublicYn()%>" onclick="checkbox_chk(this, '<%=roadData.getRoadId()%>')"></span>
+                                                        <div class="cursor" onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" style="cursor:pointer; width:100%; height:100%;border-radius: 10%; background-size: cover; background-image: url('http://localhost:9000/getRoadMapImage?roadId=<%=roadData.getRoadId()%>')">
+                                                            <div style="margin-top: 150px; text-align: center;">
                                                                 <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">"<%=roadData.getRoadTitle()%>"</span>
                                                                 <span class="road__title" hidden>"<%=roadData.getRoadTitle()%>"</span>
                                                             </div>
                                                         </div>
-                                                        <span class="">공개여부: <input type="checkbox" class="road__publicYn" value="<%=roadData.getPublicYn()%>" onclick="checkbox_chk(this, '<%=roadData.getRoadId()%>')"></span>
+                                                    </div>
                                                     <%}%>
 
                                                     <%-- 신규 스터디 로드맵 버튼 --%>
