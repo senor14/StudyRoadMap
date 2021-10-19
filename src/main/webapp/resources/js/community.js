@@ -107,6 +107,7 @@ function findRoadMap(){
 
 function noResult(test){
 
+    container.style.transform = "translate3d(0px, 0px, 0px)"
     let noResult = document.createElement("div")
     noResult.className = "noResult"
     noResult.textContent = test

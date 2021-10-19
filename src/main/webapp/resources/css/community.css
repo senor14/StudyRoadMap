@@ -23,6 +23,8 @@ option{
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    justify-content: center;
+    align-items: center;
 }
 .searchArea{
     width: 75%;
@@ -34,6 +36,7 @@ option{
     border-radius: 50px;
     text-align: center;
     max-height: 20px;
+    margin-bottom: 10px;
 }
 .category{
     display: flex;
@@ -75,41 +78,6 @@ option{
     background-position: 100% center;
 }
 
-.test{
-    display: flex;
-    padding: 12px 35px 12px 24px;
-    background-color: transparent;
-    transition: transform 250ms ease-in-out;
-
-    border-radius: 50px;
-    border: 1px solid #575756;
-    transition: all 250ms ease-in-out;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-}
-
-text:focus{
-    padding: 12px 25px 12px 7px;
-    border: 1px solid transparent;
-    border-bottom: 1px solid #575756;
-    border-radius: 0;
-}
-.testinput{
-    font-size: 14px;
-    line-height: 18px;
-    color: #575756;
-    border: 0;
-    padding: 0;
-    flex-grow: 1;
-}
-.testinput:focus{
-    outline: 0;
-}
-.testinput::placeholder {
-    color: color(#575756 a(0.8));
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
 .icon{
     display: inline-block;
     width: 18px;
@@ -159,7 +127,7 @@ body {
     flex-direction: column;
 }
 .swiper-slide:hover{
-    background-color: aquamarine;
+    background-color: aquamarine !important;
 }
 .swiper-slide img {
     display: block;
@@ -172,6 +140,7 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 .hide{
     display: none;
@@ -179,9 +148,7 @@ body {
 .setCategory{
     font-family: fantasy;
 }
-.title{
 
-}
 .created{
     font-size: 0.7rem;
 }
