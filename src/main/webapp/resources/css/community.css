@@ -33,6 +33,7 @@ option{
     flex-grow: 1;
 }
 .type{
+    width: 200px;
     border-radius: 50px;
     text-align: center;
     max-height: 20px;
