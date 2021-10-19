@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_roadMap/study_roadMap.css">
 
 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
@@ -1832,7 +1833,7 @@
 
         <div id="sample">
             <div
-                    style="width: 100%; display: flex; justify-content: space-between; t"
+                    style="width: 100%; display: flex; justify-content: space-between;"
             >
                 <div
                         id="myPaletteDiv"
@@ -1847,14 +1848,17 @@
                 <div
                         id="myDiagramDiv"
                         style="margin-top: 50px; flex-grow: 1; height: 480px; border: solid 1px black"
-                ></div>
+                >
+                </div>
+            </div>
+            <div class="button__box" style="display: flex; justify-content: center; align-items: center;">
+                <div class="road__button" id="road__button__category"><span  onclick="fnOpenModal('#m12-o')">Category</span></div>
+                <div class="road__button" id="road__button__lane"><span  onclick="fnOpenModal('#m11-o')">Lane</span></div>
             </div>
             <br />
             <button id="SaveButton" onclick="save()" hidden>Save</button>
-            <button onclick="fnOpenModal('#m12-o')">카테고리추가</button>
             <button onclick="load()" hidden>Load</button>
             <button onclick="layout()" hidden>Layout</button>
-            <button onclick="fnOpenModal('#m11-o')">레인추가</button>
             <iframe src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
             <div hidden>
                 <textarea id="mySavedModel" style="width: 100%; height: 300px" />

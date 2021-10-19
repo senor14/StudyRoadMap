@@ -1207,7 +1207,9 @@
                 ></div>
             </div>
             <br />
-            <button onclick="fnOpenModal('#m14-o')">복제하기</button>
+            <div class="button__box" style="display: flex; justify-content: center; align-items: center;">
+                <div class="road__button" id="road__button__copy"><span onclick="fnOpenModal('#m14-o')"></span></div>
+            </div>
             <div hidden>
                 <textarea id="mySavedModel" style="width: 100%; height: 300px" />
             </div>
