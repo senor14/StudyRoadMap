@@ -89,7 +89,7 @@ public class CareerRoadService implements ICareerRoadService {
     public List<CareerRoadData> getImportanceNode(CareerRoadData node) throws Exception {
         log.info(this.getClass().getName()+".getImportanceNode Start!");
 
-        Sort sort = sortByvDate();
+        Sort sort = sortByDateASD();
         List<CareerRoadData> result = careerRoadRepository.findAllByUserUuidAndImportance(node.getUserUuid(), node.getImportance(), sort);
 
 
@@ -162,7 +162,7 @@ public class CareerRoadService implements ICareerRoadService {
     public List<CareerRoadData> getCareerNodeByNodeTypeAndUserUuid(CareerRoadData node) throws Exception {
         log.info(this.getClass().getName()+".getCareerNodeByNodeTypeAndUserUuid Start!");
 
-        Sort sort = sortByvDate();
+        Sort sort = sortByDateDESC();
         List<CareerRoadData> result = careerRoadRepository.findAllByNodeTypeAndUserUuid(node.getNodeType(), node.getUserUuid(), sort);
 
         log.info("results: "+result.toString());
@@ -172,7 +172,10 @@ public class CareerRoadService implements ICareerRoadService {
     }
 
     /* sort */
-    private Sort sortByvDate() {
+    private Sort sortByDateDESC() {
         return Sort.by(Sort.Direction.DESC, "date");
+    }
+    private Sort sortByDateASD() {
+        return Sort.by(Sort.Direction.ASC, "date");
     }
 }
