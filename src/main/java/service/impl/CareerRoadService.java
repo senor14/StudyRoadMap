@@ -163,6 +163,7 @@ public class CareerRoadService implements ICareerRoadService {
         log.info(this.getClass().getName()+".getCareerNodeByNodeTypeAndUserUuid Start!");
 
         Sort sort = sortByDateDESC();
+        log.info("node: "+node);
         List<CareerRoadData> result = careerRoadRepository.findAllByNodeTypeAndUserUuid(node.getNodeType(), node.getUserUuid(), sort);
 
         log.info("results: "+result.toString());

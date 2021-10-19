@@ -28,7 +28,6 @@
 <script>
 
     function move_main() {
-        console.log("move_main 실행")
         location.href="/RoadMap/Login";
     }
 

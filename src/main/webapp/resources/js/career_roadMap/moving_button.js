@@ -134,7 +134,7 @@ function search(type_id){
   let sessionId = $('#session_id').text();
 
   $.ajax({
-    url : "/career/"+pageId+"/search",
+    url : "/career/"+pageId.trim()+"/search",
     type : "post",
     data : {
       "nodeType":type_id
@@ -268,7 +268,7 @@ function checkbox_chk(chk, nodeId){
 function important_search(){
   let pageId = $('#Career_Id').text();
   $.ajax({
-    url: "/career/"+pageId+"/important_search",
+    url: "/career/"+pageId.trim()+"/important_search",
     type: "post",
     data: {
     },

@@ -25,6 +25,11 @@ public class CommunityController {
     @Resource(name = "CommunityService")
     private ICommunityService communityService;
 
+    @GetMapping("/community")
+    public String community() {
+        return "/community/community";
+    }
+
     @ResponseBody
     @GetMapping("/getStudyMap")
     public JSONArray getRoadMap(HttpServletRequest request){
@@ -68,4 +73,5 @@ public class CommunityController {
 
         return communityService.copyRoadMap(oldRoad_id, pMap);
     }
+
 }

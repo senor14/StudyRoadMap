@@ -71,7 +71,7 @@
         <div>링크: <input type="text" id="modal__link-add"></div>
         <div>참고서적 제목:
             <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text"  id="modal__book__title-add" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}">
+            <input type="text"  id="modal__book__title-add" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-add').value, this)}">
             <button onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button>
         </div>
         <div>
@@ -195,9 +195,6 @@
                         "</div>" +
                         "<hr class='search__list'/>"
                     );
-                    // $("#modal__search").append("<strong>저자:</strong> " + msg.documents[i].authors + "<br>");
-                    // $("#modal__search").append("<img src='" + msg.documents[i].thumbnail + "'/><br>");
-                    // $("#modal__search").append("<hr/>");
                 }
             });
     }
@@ -292,11 +289,6 @@
     let cy_for_rank = cytoscape({
       elements: node_data
     });
-    // let pageRank = cy_for_rank.elements().pageRank();
-
-    // cytoscape({
-    //     elements: node_data
-    // }).elements().pageRank()
 
     const nodeMaxSize = 200;
     const nodeMinSize = 40;
@@ -368,7 +360,6 @@
             name: 'preset',
             directed: true,
             animate: true,
-            // gravityRangeCompound: 1.5,
             fit: true,
             tile: true,
             avoidOverlap: true
@@ -380,36 +371,11 @@
     const layoutConfig = {
         name: "preset",
         directed: true,
-        // handleDisconnected: true,
         animate: false,
         avoidOverlap: true,
         fit: true,
         tile: true,
-        // infinite: false,
-        // unconstrIter: 1,
-        // userConstIter: 0,
-        // allConstIter: 1,
-        // ready: e => {
-        //     e.cy.fit()
-        //     e.cy.center()
-        // }
     }
-
-    // 노드 레이아웃 설정
-    // const layoutConfig = {
-    //     name: "cola",
-    //     handleDisconnected: true,
-    //     animate: true,
-    //     avoidOverlap: true,
-    //     infinite: false,
-    //     unconstrIter: 1,
-    //     userConstIter: 0,
-    //     allConstIter: 1,
-    //     ready: e => {
-    //         e.cy.fit()
-    //         e.cy.center()
-    //     }
-    // }
 
     // 클릭시 반응
     cy.on('tap', 'node', evt => {
@@ -417,23 +383,9 @@
         cy.nodes().forEach(node => {
             node.lock();
         });
-
-        console.log("줌")
-
+        console.log("이벤트")
         console.log(evt.target)
-        console.log(evt.target._private)
-
         const target = evt.target._private; //cy.nodes()[Math.floor(Math.random() * cy.nodes().length)].data('id')
-        // const xPos = evt.target.renderedPosition('x');
-        // const yPos = evt.target.renderedPosition('y');
-        //
-        //
-        // document.getElementById("modal__x").innerText = xPos;
-        // document.getElementById("modal__y").innerText = yPos;
-
-        console.log(document.getElementById("modal__x").innerText)
-        console.log(document.getElementById("modal__y").innerText)
-        console.log(target.data)
 
         clearNodeInfo();
         getMindDataByAjax(target);
@@ -463,13 +415,10 @@
     });
 
     cy.on('tapend mouseout', 'node', function (e) {
-        console.log("tapend or mouseout")
         setResetFocus(e.cy);
     });
 
     cy.on('tapend', 'node', function (e) {
-        console.log(e.target.renderedPosition('x'))
-        console.log(e.target.renderedPosition('y'))
         document.getElementById("modal__x").innerText = e.target.renderedPosition('x');
         document.getElementById("modal__y").innerText = e.target.renderedPosition('y');
         updateNodePosition(e.target.data('id'), e.target.renderedPosition())
@@ -527,7 +476,7 @@
     }
 
     function setResetFocus(target_cy) {
-        console.log("setResetFocus Start!")
+
         target_cy.nodes().forEach(function (target) {
             target.style('background-color', nodeColor);
             var rank = cytoscape({
@@ -546,7 +495,7 @@
             target.style('arrow-scale', arrowScale);
             target.style('opacity', 1);
         });
-        console.log("setResetFocus End!")
+
     }
 
     function insertMindAndNodeData(mindmind) {
@@ -599,8 +548,7 @@
                                 }
                         }
                     );
-                    console.log("node_data.nodes.push")
-                    console.log(node_data);
+
                     node_data.edges.push(
                         {
                             data:
@@ -614,14 +562,16 @@
                                 }
                         }
                     );
-                    console.log("node_data.edges.push")
-                    console.log(node_data);
-                    console.log("렌더드포지션")
+
                     cy.add([
                         {
                             group: 'nodes',
                             data: {
+                                mindId: data.nodeMindId,
                                 id: data.source,
+                                roadId: data.roadId,
+                                nodeId: data.nodeId,
+                                group: "nodes",
                                 label: data.mindLabel
                             },
                             renderedPosition: {
@@ -633,11 +583,17 @@
                             group: 'edges',
                             data: {
                                 id: data.mindId,
+                                roadId: data.roadId,
+                                nodeId: data.nodeId,
+                                group: "edges",
                                 source: data.source,
                                 target: data.target
                             }
                         }
                     ]);
+
+
+
                     const layout = cy.makeLayout(layoutConfig);
                     layout.run();
                     //
@@ -666,7 +622,6 @@
             "bookLink": $('#modal__book_link-mod').val(),
             "mindContents": $('#modal__content-mod').val()
         }
-        console.log(query)
 
         $.ajax({
             url: "/mindmaps/"+mindmind,
@@ -709,8 +664,6 @@
             "x" : position.x,
             "y": position.y
         }
-        console.log("##############################")
-        console.log(query)
 
         $.ajax({
             url: "/mindmaps/"+mindmind+"/position",
@@ -813,13 +766,14 @@
         if (target.data.source) document.getElementById("modal__source").innerText = target.data.source;
         if (target.data.target) document.getElementById("modal__target").innerText = target.data.target;
 
-        console.log("target.data.group: ",target.data.group)
         if (target.data.group === 'nodes') {
             $.ajax({
                 url: "/mindmaps/"+target.data.mindId,
                 type: "get",
                 success: (data) => {
-                    console.log(data);
+
+                    console.log("data:")
+                    console.log(data)
                     if (data) {
                         $(".modal__title").text(data.mindLabel);
                         $(".modal__title").val(data.mindLabel);
@@ -857,18 +811,16 @@
     function clearAddInfo() {
         $("#modal__title").text("");
         $("#modal__title").val("");
-        // $("#modal__link").val("");
         $("#modal__book__title").val("");
-        // $("#modal__book_link").val("");
         $("#modal__content").val("");
         $("#modal__title-add").val("");
         $("#modal__link-add").val("");
         $("#modal__book_title-add").val("");
         $("#modal__book_link-add").val("");
         $("#modal__content-add").val("");
-        $("#modal__link-a").removeAttribute("href");
+        $("#modal__link-a").removeAttr("href");
         $("#modal__link-a").text("");
-        $("#modal__book__link-a").removeAttribute("href");
+        $("#modal__book__link-a").removeAttr("href");
         $("#modal__book__link-a").text("");
     }
 

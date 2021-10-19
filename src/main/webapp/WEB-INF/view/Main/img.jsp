@@ -285,7 +285,6 @@
             // 이미지가 로드가 된 경우
             reader.onload = e => {
                 const previewImage = document.getElementById("preview-image")
-                console.log("previewImage : " + previewImage)
                 previewImage.src = e.target.result
             }
             // reader가 이미지 읽도록 하기

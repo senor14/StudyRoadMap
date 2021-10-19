@@ -38,16 +38,6 @@ public class RoadMapController {
 
     @Resource(name = "UserService")
     IUserService userService;
-
-    @GetMapping("/roadMap")
-    public String roadMap() {
-        return "roadMap";
-    }
-
-    @GetMapping("/stroadMap")
-    public String stroadMap() {
-        return "stroadMap";
-    }
     
     // 유저 Uuid 로 스터디로드 데이터 리스트 가져오기
     @GetMapping("/roadmaps")

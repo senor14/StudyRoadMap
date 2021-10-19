@@ -52,9 +52,9 @@
                 <div class="colorlib-table-cell js-fullheight">
                     <div class="row no-gutters">
                         <div class="col-md-12 text-center">
-                            <h1 class="mb-4"><a href="index.jsp" class="logo">Portfolio</a></h1>
+                            <h1 class="mb-4"><a href="/index" class="logo">Portfolio</a></h1>
                             <ul>
-                                <li class="active"><a href="index.html"><span>Home</span></a></li>
+                                <li class="active"><a href="/index"><span>Home</span></a></li>
                                 <li class="active"><a onclick="fnOpenModal('#m2-o');" style="cursor: pointer"><span >비밀번호 변경</span></a></li>
                                 <li class="active"><a onclick="fnOpenModal('#m3-o');" style="cursor: pointer"><span >회원 탈퇴</span></a></li>
                                 <li class="active"><a href="/RoadMap/Logout"><span>로그아웃</span></a></li>
@@ -214,8 +214,6 @@
                                                             </a>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                             <div id="Community" class="tabcontent">
@@ -290,7 +288,7 @@
                 url: "/roadmaps",
                 type: "post",
                 data: {
-                    publicYn: document.getElementById("studyPublicYn").value,
+                    publicYn: document.getElementById("StudypublicYn").value,
                     roadTitle: document.getElementById("study__title-add").value
                 },
                 success: function (data) {
@@ -324,7 +322,6 @@
 
             })
         }
-
 
     </script>
     <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
@@ -456,12 +453,10 @@
 <script>
     // 모달 오픈
     function fnOpenModal(id){
-        // $('#m2-o').css("display", "flex");
         $(id).css("display", "flex");
     }
     // 모달 종료
     function fnCloseModal(id){
-        //$('#m2-o').css("display", "none");
         $(id).css("display", "none");
     }
 

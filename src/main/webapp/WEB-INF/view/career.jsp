@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+         pageEncoding="UTF-8" %>
+
 <%
-    String pageId = (String)request.getAttribute("pageId");
-    String userUuid = (String)session.getAttribute("SS_USER_UUID");
-    String careerTitle = (String)request.getAttribute("careerTitle");
+    String pageId = (String) request.getAttribute("pageId");
+    String userUuid = (String) session.getAttribute("SS_USER_UUID");
+    String careerTitle = (String) request.getAttribute("careerTitle");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/career_roadMap/moving_button.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/career_roadMap/plus_input.css">
     <%-- font-awesome(아이콘) --%>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+          integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <%-- JQUERY --%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <%-- BOOTSTRAP --%>
@@ -28,56 +29,65 @@
 <body>
 
 <div style="position: fixed; background-color: darkslategray; width: 100%; z-index: 3000; height:50px">
-    <a href="/index"><i class="fas fa-home" style="position: fixed; margin-left: 10px; margin-top:10px; font-size: 30px; color:white"></i></a>
-    <a href="javascript:history.back();"><i class="far fa-arrow-alt-circle-left" style="position: fixed; margin-left: 50px; margin-top:10px; font-size: 30px; color:white"></i></a>
+    <a href="/index"><i class="fas fa-home"
+                        style="position: fixed; margin-left: 10px; margin-top:10px; font-size: 30px; color:white"></i></a>
+    <a href="javascript:history.back();"><i class="far fa-arrow-alt-circle-left"
+                                            style="position: fixed; margin-left: 50px; margin-top:10px; font-size: 30px; color:white"></i></a>
 </div>
 
 <div class="timeline-container" id="timeline-1">
     <div class="timeline-header">
         <h2 class="timeline-header__title">Career RoadMap</h2>
-        <h3 class="timeline-header__subtitle" id="Career_title"><%=careerTitle%></h3>
-        <h5 class="d-none" id="Career_Id"><%=pageId%></h5>
-        <h5 class="d-none" id="session_id"><%=userUuid%></h5>
+        <h3 class="timeline-header__subtitle" id="Career_title"><%=careerTitle%>
+        </h3>
+        <h5 class="d-none" id="Career_Id"><%=pageId%>
+        </h5>
+        <h5 class="d-none" id="session_id"><%=userUuid%>
+        </h5>
     </div>
     <div class="timeline">
 
         <div class="timeline-item" data-text="Career Card">
             <a onclick="fnOpenModal('card','','');">
-                <div class="timeline__content"><img class="timeline__img" src="https://coolessay.s3.amazonaws.com/summarizing.jpg" />
+                <div class="timeline__content"><img class="timeline__img"
+                                                    src="https://coolessay.s3.amazonaws.com/summarizing.jpg"/>
                     <h2 class="timeline__content-title">Career Card</h2>
                 </div>
             </a>
         </div>
 
-
         <div class="timeline-item" data-text="Education">
             <a onclick="fnOpenModal('show','Education','1');">
-            <div class="timeline__content"><img class="timeline__img" src="https://api.time.com/wp-content/uploads/2015/11/151109_col_coverdell.jpg" />
-                <h2 class="timeline__content-title">Education</h2>
-            </div>
+                <div class="timeline__content"><img class="timeline__img"
+                                                    src="https://api.time.com/wp-content/uploads/2015/11/151109_col_coverdell.jpg"/>
+                    <h2 class="timeline__content-title">Education</h2>
+                </div>
             </a>
         </div>
-        <div class="timeline-item" data-text="Work Experience" >
+        <div class="timeline-item" data-text="Work Experience">
             <div class="timeline__content">
                 <a onclick="fnOpenModal('show','Work_experience','2');">
-                <img class="timeline__img" src="https://d3kqdc25i4tl0t.cloudfront.net/articles/content/414_629145_190919resumegraphics_TopResume_hero.jpg" />
-                <h2 class="timeline__content-title">Work Experience</h2>
+                    <img class="timeline__img"
+                         src="https://d3kqdc25i4tl0t.cloudfront.net/articles/content/414_629145_190919resumegraphics_TopResume_hero.jpg"/>
+                    <h2 class="timeline__content-title">Work Experience</h2>
                 </a>
             </div>
         </div>
         <div class="timeline-item" data-text="Certificate">
             <a onclick="fnOpenModal('show','Crtificate','3');">
-                <div class="timeline__content"><img class="timeline__img" src="https://www.worldofpumps.com/certificates/certificate-wall-golden.jpg" />
-                <h2 class="timeline__content-title">Certificate</h2>
-            </div>
+                <div class="timeline__content"><img class="timeline__img"
+                                                    src="https://www.worldofpumps.com/certificates/certificate-wall-golden.jpg"/>
+                    <h2 class="timeline__content-title">Certificate</h2>
+                </div>
             </a>
         </div>
         <div class="timeline-item" data-text="Awards">
-<%--            <a href="#m2-o" &lt;%&ndash;id="m4-c"&ndash;%&gt;>--%>
+            <%--            <a href="#m2-o" &lt;%&ndash;id="m4-c"&ndash;%&gt;>--%>
             <a onclick="fnOpenModal('show','Awards','4');">
-            <div class="timeline__content"><img class="timeline__img" src="https://olc-wordpress-assets.s3.amazonaws.com/uploads/2021/04/OLC-Awards-Thumbnail-1200x800.jpg" />
-                <h2 class="timeline__content-title">Awards</h2>
-            </div>
+                <div class="timeline__content"><img class="timeline__img"
+                                                    src="https://olc-wordpress-assets.s3.amazonaws.com/uploads/2021/04/OLC-Awards-Thumbnail-1200x800.jpg"/>
+                    <h2 class="timeline__content-title">Awards</h2>
+                </div>
             </a>
         </div>
     </div>
@@ -121,7 +131,9 @@
                             <input type="checkbox" id="new_importance">
                         </div>
                         <div class="col-2 col_center">
-                            <button class="btn btn-success btn-lg" style="font-size: 1rem;" node_type="" data-btn-interaction="true" id="btn-save"><i class="fa fa-check"></i> Save</button>
+                            <button class="btn btn-success btn-lg" style="font-size: 1rem;" node_type=""
+                                    data-btn-interaction="true" id="btn-save"><i class="fa fa-check"></i> Save
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -137,22 +149,21 @@
         <div style="color: white;font-size: 5em;text-align: center; font-family: Cardo;">
             <span id="I">MAIN</span>
             <span id="L">CAREER</span>
-            </div>
+        </div>
         <div class="main_career">
             <div class="entries" id="entries">
-<%--                <div class="entry">--%>
-<%--                    <div class="title">2011</div>--%>
-<%--                    <div class="body">--%>
-<%--                        <p>Neque sunt voluptatibus repellat pariatur ut enim. Eveniet rerum suscipit eveniet amet dignissimos. Doloremque et distinctio quod molestiae ut.</p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="entry">--%>
-<%--                    <div class="title big">2013</div>--%>
-<%--                    <div class="body">--%>
-<%--                        <p>Rerum sit libero possimus amet excepturi. Exercitationem enim dolores sunt praesentium dolorum praesentium.</p>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
+                <%--                <div class="entry">--%>
+                <%--                    <div class="title">2011</div>--%>
+                <%--                    <div class="body">--%>
+                <%--                        <p>Neque sunt voluptatibus repellat pariatur ut enim. Eveniet rerum suscipit eveniet amet dignissimos. Doloremque et distinctio quod molestiae ut.</p>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
+                <%--                <div class="entry">--%>
+                <%--                    <div class="title big">2013</div>--%>
+                <%--                    <div class="body">--%>
+                <%--                        <p>Rerum sit libero possimus amet excepturi. Exercitationem enim dolores sunt praesentium dolorum praesentium.</p>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
 
             </div>
         </div>
@@ -165,9 +176,9 @@
 <script src="${pageContext.request.contextPath}/resources/js/career_roadMap/moving_button.js"></script>
 <%-- 커리어 로드맵 작성자 본인 확인 --%>
 <script>
-/*  사용자에 따라 입력 보이는 UI 변경  */
-        window.onload = function() {
-            if("<%=pageId%>"!="<%=userUuid%>"){
+    /*  사용자에 따라 입력 보이는 UI 변경  */
+    window.onload = function () {
+        if ("<%=pageId%>" != "<%=userUuid%>") {
             var link = document.createElement('link');
             link.href = "${pageContext.request.contextPath}/resources/css/career_roadMap/restriction.css";
             link.rel = 'stylesheet';

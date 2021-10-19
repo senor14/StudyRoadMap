@@ -123,30 +123,20 @@ public class StudyMindController {
         log.info("randomMindId: "+randomMindId);
 
         StudyMindData mind = new StudyMindData();
+        StudyMindNodeData node = new StudyMindNodeData();
+
         mind.setStudyRoadId(nvl(request.getParameter("roadId")));
         mind.setStudyRoadNodeId(nvl(request.getParameter("nodeId")));
         mind.setMindId(randomMindId);
         mind.setMindLabel(nvl(request.getParameter("mindLabel")));
-        mind.setMindContents(nvl(request.getParameter("mindContents")));
-        mind.setUrl("x");
-        mind.setBookTitle("x");
-        mind.setBookLink("x");
         mind.setCreated(DateUtil.getDateTime());
 
-        studyMindService.insertMindData(mind);
-        log.info("mind: "+ mind);
-
-        StudyMindNodeData node = new StudyMindNodeData();
         node.setStudyRoadId(nvl(request.getParameter("roadId")));
         node.setStudyRoadNodeId(nvl(request.getParameter("nodeId")));
         node.setMindId(randomMindId);
         node.setKey(randomMindId);
         node.setGroup("nodes");
         node.setMindLabel(nvl(request.getParameter("mindLabel")));
-        node.setX("0");
-        node.setY("0");
-
-        studyMindService.insertNodeData(node);
 
         // 처음 생성일 시
         if (nvl(request.getParameter("type")).equals("initial")) {
@@ -157,10 +147,35 @@ public class StudyMindController {
             nodeData.setRoadId(nvl(request.getParameter("roadId")));
             nodeData.setNodeId(nvl(request.getParameter("nodeId")));
             nodeData.setMindLabel(nvl(request.getParameter("mindLabel")));
+            mind.setMindContents(nvl(request.getParameter("x")));
+            mind.setUrl(nvl(request.getParameter("x")));
+            mind.setBookTitle(nvl(request.getParameter("x")));
+            mind.setBookLink(nvl(request.getParameter("x")));
+
+            node.setX("0");
+            node.setY("0");
+
+            studyMindService.insertMindData(mind);
+            studyMindService.insertNodeData(node);
+            log.info("mind: "+ mind);
+            log.info("node: "+ node);
 
             return ResponseEntity.status(HttpStatus.OK).body(nodeData);
         }
 
+        mind.setMindContents(nvl(request.getParameter("mindContents")));
+        mind.setUrl(nvl(request.getParameter("url")));
+        mind.setBookTitle(nvl(request.getParameter("bookTitle")));
+        mind.setBookLink(nvl(request.getParameter("bookLink")));
+
+        node.setX("0");
+        node.setY("0");
+
+        studyMindService.insertMindData(mind);
+        studyMindService.insertNodeData(node);
+
+        log.info("mind: "+ mind);
+        log.info("node: "+ node);
 
         String randomEdgeId = UUID.randomUUID().toString();
         log.info("randomEdgeId: "+randomEdgeId);

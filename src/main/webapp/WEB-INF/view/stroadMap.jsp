@@ -1000,109 +1000,6 @@
                     <%}%>
                 <%}%>
 
-
-                // Undesired events have a special adornment that allows adding additional "reasons"
-                // var UndesiredEventAdornment = $(
-                //     go.Adornment,
-                //     "Spot",
-                //     $(
-                //         go.Panel,
-                //         "Auto",
-                //         $(go.Shape, {
-                //             fill: null,
-                //             stroke: "dodgerblue",
-                //             strokeWidth: 4,
-                //         }),
-                //         $(go.Placeholder)
-                //     ),
-                //     // the button to create a "next" node, at the top-right corner
-                //     $(
-                //         "Button",
-                //         {
-                //             alignment: go.Spot.BottomRight,
-                //             click: addReason,
-                //         }, // this function is defined below
-                //         new go.Binding("visible", "", function (a) {
-                //             return !a.diagram.isReadOnly;
-                //         }).ofObject(),
-                //         $(go.Shape, "TriangleDown", {
-                //             desiredSize: new go.Size(10, 10),
-                //         })
-                //     )
-                // );
-
-                // var reasonTemplate = $(
-                //     go.Panel,
-                //     "Horizontal",
-                //     $(
-                //         go.TextBlock,
-                //         "",
-                //         {
-                //             margin: new go.Margin(4, 0, 0, 0),
-                //             maxSize: new go.Size(200, NaN),
-                //             wrap: go.TextBlock.WrapFit,
-                //             stroke: "whitesmoke",
-                //             editable: false,
-                //             font: smallfont,
-                //         },
-                //         new go.Binding("text", "text").makeTwoWay()
-                //     )
-                // );
-
-                // myDiagram.nodeTemplateMap.add("UndesiredEvent",
-                //   $(go.Node, "Auto",
-                //     new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-                //     { selectionAdornmentTemplate: UndesiredEventAdornment },
-                //     $(go.Shape, "RoundedRectangle",
-                //       { fill: redgrad, portId: "", toLinkable: true, toEndSegmentLength: 50 }),
-                //     $(go.Panel, "Vertical", { defaultAlignment: go.Spot.TopLeft },
-
-                //       $(go.TextBlock, "FrontEnd", textStyle(),
-                //         {
-                //           stroke: "whitesmoke",
-                //           minSize: new go.Size(80, NaN)
-                //         },
-                //         new go.Binding("text", "text").makeTwoWay()),
-
-                //       $(go.Panel, "Vertical",
-                //         {
-                //           defaultAlignment: go.Spot.TopLeft,
-                //           itemTemplate: reasonTemplate
-                //         },
-                //         new go.Binding("itemArray", "reasonsList").makeTwoWay()
-                //       )
-                //     )
-                //   ));
-
-                // myDiagram.nodeTemplateMap.add(
-                //     "Comment",
-                //     $(
-                //         go.Node,
-                //         "Auto",
-                //         new go.Binding("location", "loc", go.Point.parse).makeTwoWay(
-                //             go.Point.stringify
-                //         ),
-                //         $(go.Shape, "Rectangle", {
-                //             portId: "",
-                //             fill: whitegrad,
-                //             fromLinkable: true,
-                //         }),
-                //         $(
-                //             go.TextBlock,
-                //             "A comment",
-                //             {
-                //                 margin: 9,
-                //                 maxSize: new go.Size(200, NaN),
-                //                 wrap: go.TextBlock.WrapFit,
-                //                 editable: true,
-                //                 font: smallfont,
-                //             },
-                //             new go.Binding("text", "text").makeTwoWay()
-                //         )
-                //         // no ports, because no links are allowed to connect with a comment
-                //     )
-                // );
-
                 // clicking the button on an UndesiredEvent node inserts a new text object into the panel
                 function addReason(e, obj) {
                     var adorn = obj.part;
@@ -1113,38 +1010,6 @@
                     myDiagram.model.addArrayItem(arr, {});
                     myDiagram.commitTransaction("add reason");
                 }
-
-                // clicking the button of a default node inserts a new node to the right of the selected node,
-                // and adds a link to that new node
-                // function addNodeAndLink(e, obj) {
-                //     var adorn = obj.part;
-                //     if (adorn === null) return;
-                //     e.handled = true;
-                //     var diagram = adorn.diagram;
-                //     diagram.startTransaction("Add State");
-                //     // get the node data for which the user clicked the button
-                //     var fromNode = adorn.adornedPart;
-                //     var fromData = fromNode.data;
-                //     // create a new "State" data object, positioned off to the right of the adorned Node
-                //     var toData = { text: "new" };
-                //     var p = fromNode.location;
-                //     toData.loc = p.x + 200 + " " + p.y; // the "loc" property is a string, not a Point object
-                //     // add the new node data to the model
-                //     var model = diagram.model;
-                //     model.addNodeData(toData);
-                //     // create a link data from the old node data to the new node data
-                //     var linkdata = {};
-                //     linkdata[model.linkFromKeyProperty] =
-                //         model.getKeyForNodeData(fromData);
-                //     linkdata[model.linkToKeyProperty] =
-                //         model.getKeyForNodeData(toData);
-                //     // and add the link data to the model
-                //     model.addLinkData(linkdata);
-                //     // select the new Node
-                //     var newnode = diagram.findNodeForData(toData);
-                //     diagram.select(newnode);
-                //     diagram.commitTransaction("Add State");
-                // }
 
                 // replace the default Link template in the linkTemplateMap
                 myDiagram.linkTemplate = $(
@@ -1305,22 +1170,6 @@
                     <%}%>
                 ];
 
-                // read in the JSON-format data from the "mySavedModel" element
-                load();
-                layout();
-                // function savePalette() {
-                //     document.getElementById("mySavedModelPalette").value =
-                //         palette.model.toJson();
-                //     console.log('save');
-                //     console.log(palette.model.nodeDataArray);
-                //     palette.isModified = false;
-                // }
-                // function loadPalette() {
-                //     palette.model = go.Model.fromJson(
-                //         document.getElementById("mySavedModelPalette").value
-                //     );
-                //     palette.delayInitialization(relayoutDiagram);
-                // }
             }
 
             myDiagram = $(go.Diagram, "myDiagramDiv", {
@@ -1378,21 +1227,6 @@
                 }
             );
 
-            function savePalette() {
-                document.getElementById("mySavedModel").value =
-                    palette.model.toJson();
-                console.log('save');
-                console.log(palette.model.nodeDataArray);
-                palette.isModified = false;
-            }
-            function loadPalette() {
-                console.log("로드")
-                palette.model = go.Model.fromJson(
-                    document.getElementById("mySavedModel").value
-                );
-                console.log('로드2')
-                palette.delayInitialization(relayoutDiagram);
-            }
 
             function layout() {
                 myDiagram.layoutDiagram(true);
@@ -1475,17 +1309,26 @@
                                     if (myDiagram.model.nodeDataArray[d].nodeId
                                         === document.getElementById('modal__nodeId').innerText) {
 
+                                        console.log()
+                                        console.log("안녕")
+
+                                        myDiagram.startTransaction();
+
                                         myDiagram.model.nodeDataArray[d].text = query.nodeText;
                                         myDiagram.model.nodeDataArray[d].canvasClass = canvasClass;
                                         myDiagram.model.nodeDataArray[d].category = query.category;
                                         myDiagram.model.nodeDataArray[d].key = data.key;
                                         myDiagram.model.nodeDataArray[d].nodeId = data.nodeId;
 
+                                        myDiagram.commitTransaction();
+
                                         break;
                                     }
                                 }
 
+
                             } else if (data.canvasClass === "Lane") {
+                                myDiagram.startTransaction();
                                 myDiagram.model.nodeDataArray.push({
                                     nodeId: data.nodeId,
                                     roadId: data.roadId,
@@ -1498,7 +1341,9 @@
                                     size: data.size,
                                     loc: data.loc
                                 });
+                                myDiagram.commitTransaction();
                             }
+
                             save();
                             load();
                             fnCloseModal('#m10-o');
@@ -1856,12 +1701,12 @@
                 <div class="road__button" id="road__button__lane"><span  onclick="fnOpenModal('#m11-o')">Lane</span></div>
             </div>
             <br />
-            <button id="SaveButton" onclick="save()" hidden>Save</button>
-            <button onclick="load()" hidden>Load</button>
+<%--            <button id="SaveButton" onclick="save()" >Save</button>--%>
+<%--            <button onclick="load()" >Load</button>--%>
             <button onclick="layout()" hidden>Layout</button>
-            <iframe src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
-            <div hidden>
-                <textarea id="mySavedModel" style="width: 100%; height: 300px" />
+            <div>
+                <iframe id="mySavedModel" src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
+<%--                <textarea id="mySavedModel" style="width: 100%; height: 300px" />--%>
             </div>
             <br />
         </div>

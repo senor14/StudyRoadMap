@@ -1211,10 +1211,8 @@
             <div class="button__box" style="display: flex; justify-content: center; align-items: center;">
                 <div class="road__button" id="road__button__copy"><span onclick="fnOpenModal('#m14-o')"></span></div>
             </div>
-            <iframe src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
-            <div hidden>
-                <textarea id="mySavedModel" style="width: 100%; height: 300px" />
-            </div>
+            <iframe id="mySavedModel" src="/comment/<%=roadMapInfo.getRoadId()%>" style="width: 100%; height:600px; border: 0px; "/>
+<%--            <textarea id="mySavedModel" style="width: 100%; height: 300px" />--%>
             <br />
         </div>
     </div>

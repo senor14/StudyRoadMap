@@ -16,9 +16,9 @@
 
  .map_box {
 	 width: 80%;
-	 height: 700px;
+	 height: 625px;
 	 background-color:whitesmoke;
-	 border: 4px dotted black;
+	 border: 4px double darkgrey;
  }
 
  .timeline {

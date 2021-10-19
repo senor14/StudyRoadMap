@@ -94,12 +94,6 @@ public class CareerRoadController {
                           HttpServletResponse response, ModelMap model) throws Exception {
         log.info(this.getClass().getName() + ".getMindMap Start!");
 
-        //세션 NULL CHECK
-        if(CmmUtil.nvl((String)session.getAttribute("SS_USER_UUID")).equals("")){
-            //임시 세션 로그인 셋팅
-            session.setAttribute("SS_USER_UUID","Kim");
-        }
-
         CareerRoadMap node = new CareerRoadMap();
         node.setUserUuid(userUuid);
 
@@ -179,6 +173,7 @@ public class CareerRoadController {
 
         node.setUserUuid(userUuid);
         node.setNodeType(nodeType);
+        log.info("node: "+ node);
 
         List<CareerRoadData> result = careerRoadService.getCareerNodeByNodeTypeAndUserUuid(node);
 
@@ -191,7 +186,7 @@ public class CareerRoadController {
                                                                HttpServletRequest request,
                                                                HttpServletResponse response,
                                                                ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".deleteNodeData End!");
+        log.info(this.getClass().getName() + ".deleteNodeData Start!");
 
         String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
 
@@ -225,7 +220,7 @@ public class CareerRoadController {
                                                  HttpServletRequest request,
                                                  HttpServletResponse response,
                                                  ModelMap model) throws Exception {
-        log.info(this.getClass().getName() + ".chkUpdateNodeData End!");
+        log.info(this.getClass().getName() + ".chkUpdateNodeData Start!");
 
         String SS_USER_UUID = session.getAttribute("SS_USER_UUID").toString();
 
@@ -264,7 +259,6 @@ public class CareerRoadController {
                                                                HttpServletRequest request,
                                                                HttpServletResponse response,
                                                                ModelMap model) throws Exception {
-
 
         CareerRoadData node = new CareerRoadData();
 

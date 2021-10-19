@@ -239,16 +239,7 @@
             node.lock();
         });
 
-        console.log("줌")
-
-        console.log(evt.target)
-        console.log(evt.target._private)
-
         const target = evt.target._private;
-
-        console.log(document.getElementById("modal__x").innerText)
-        console.log(document.getElementById("modal__y").innerText)
-        console.log(target.data)
 
         clearNodeInfo();
         getMindDataByAjax(target);
@@ -276,7 +267,6 @@
     });
 
     cy.on('tapend mouseout', 'node', function (e) {
-        console.log("tapend or mouseout")
         setResetFocus(e.cy);
     });
 
@@ -333,7 +323,7 @@
     }
 
     function setResetFocus(target_cy) {
-        console.log("setResetFocus Start!")
+
         target_cy.nodes().forEach(function (target) {
             target.style('background-color', nodeColor);
             var rank = cytoscape({
@@ -352,7 +342,7 @@
             target.style('arrow-scale', arrowScale);
             target.style('opacity', 1);
         });
-        console.log("setResetFocus End!")
+
     }
 
     // }); // on dom ready
@@ -391,13 +381,12 @@
         if (target.data.source) document.getElementById("modal__source").innerText = target.data.source;
         if (target.data.target) document.getElementById("modal__target").innerText = target.data.target;
 
-        console.log("target.data.group: ",target.data.group)
         if (target.data.group === 'nodes') {
             $.ajax({
                 url: "/mindmaps/"+target.data.mindId,
                 type: "get",
                 success: (data) => {
-                    console.log(data);
+
                     if (data) {
                         $(".modal__title").text(data.mindLabel);
                         $(".modal__title").val(data.mindLabel);
@@ -435,9 +424,7 @@
     function clearAddInfo() {
         $("#modal__title").text("");
         $("#modal__title").val("");
-        // $("#modal__link").val("");
         $("#modal__book__title").val("");
-        // $("#modal__book_link").val("");
         $("#modal__content").val("");
         $("#modal__title-add").val("");
         $("#modal__link-add").val("");

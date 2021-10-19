@@ -32,25 +32,13 @@
 </head>
 
 <body>
-
-
-
-
-
-<div>
-
-
-
+	<div>
 		<div class="container">
-
 			<div>
-
-
 				<div id="wrapper">
 					<div id="loading"></div>
 					<div id="calendar"></div>
 				</div>
-
 
 				<!-- 일자 클릭시 메뉴오픈 -->
 				<div id="contextMenu" class="dropdown clearfix">
@@ -162,8 +150,6 @@
 			</div>
 			<!-- /.container -->
 
-
-
 		</div>
 	</div>
 
@@ -179,8 +165,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/calendar/editEvent.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/calendar/etcSetting.js"></script>
 
-
-
 <script>
 	function w3_open() {
 		document.getElementById("mySidebar").style.display = "block";
@@ -189,8 +173,6 @@
 		document.getElementById("mySidebar").style.display = "none";
 	}
 </script>
-
-
 
 </body>
 

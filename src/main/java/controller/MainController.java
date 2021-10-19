@@ -39,15 +39,5 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/community")
-    public String community() {
-        return "/community/community";
-    }
 
-    @GetMapping("/comment/{roadId}")
-    public String comment() {
-
-        return "/comment/comment";
-
-    }
 }

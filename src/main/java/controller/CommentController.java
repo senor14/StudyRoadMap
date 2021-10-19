@@ -25,6 +25,13 @@ public class CommentController {
     @Resource(name = "CommentService")
     private ICommentService CommentService;
 
+    @GetMapping("/comment/{roadId}")
+    public String comment() {
+
+        return "/comment/comment";
+
+    }
+
     @ResponseBody
     @GetMapping("/getComment/{roadId}")
     public JSONArray getComment(@PathVariable String roadId){
