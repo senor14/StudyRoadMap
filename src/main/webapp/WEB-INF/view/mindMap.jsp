@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/study_mindMap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/input.css">
 </head>
 <body>
 
@@ -45,19 +46,42 @@
 <%-- modal 기본 --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <h1 class="modal__title" id="modal__title">네트워크</h1>
-        <div>링크: <a id="modal__link-a"></a></div>
-        <div>참고서적 제목:
-            <input type="text" class="modal__book__title" id="modal__book__title" disabled>
+        <div style="text-align: center;">
+            <h1 class="modal__title" id="modal__title">네트워크</h1>
         </div>
-        <div>
-            참고서적 링크: <a id="modal__book__link-a"></a>
+        <div style="display: grid; column-gap: 5px; margin-top: 5em;">
+            <div style="grid-column: 1">링크: <a id="modal__link-a"></a></div>
+            <div class="input_body" style="grid-column: 1">
+                <label for="modal__book__title" class="inp">
+                    <input type="text" class="modal__book__title" id="modal__book__title" disabled placeholder="&nbsp;">
+                    <span class="label">참고서적 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div>
+                참고서적 Link: <a id="modal__book__link-a"></a>
+            </div>
+            <div class="color_body" style="grid-column: 2/4; grid-row:1/4">
+                <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea>
+            </div>
         </div>
-        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea></div>
+<%--        <div>링크: <a id="modal__link-a"></a></div>--%>
+<%--        <div>참고서적 제목:--%>
+<%--            <input type="text" class="modal__book__title" id="modal__book__title" disabled>--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            참고서적 링크: <a id="modal__book__link-a"></a>--%>
+<%--        </div>--%>
+<%--        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea></div>--%>
+
         <button class="modal__btn" onclick="fnOpenModal('#m3-o');">추가</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m4-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">삭제</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+        <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m2-o');" >취소</button>
+        <button class="modal__btn" style="float: right" onclick="fnOpenModal('#m5-o');">삭제</button>
+        <button class="modal__btn" style="float: right" onclick="fnOpenModal('#m4-o');">수정</button>
         <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
     </div>
 </div>
@@ -66,20 +90,68 @@
 <%-- modal 추가 --%>
 <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <h1>추가하기</h1>
-        <div>제목: <input type="text" id="modal__title-add"></div>
-        <div>링크: <input type="text" id="modal__link-add"></div>
-        <div>참고서적 제목:
-            <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
-            <input type="text"  id="modal__book__title-add" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-add').value, this)}">
-            <button onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button>
+        <div class="text-center">
+            <h1>추가</h1>
+        </div>
+        <div class="input_body">
+            <label for="modal__title-add" class="inp" style="max-width: 440px;">
+                <input type="text" id="modal__title-add" placeholder="&nbsp;">
+                <span class="label">Title</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div class="input_body">
+            <label for="modal__link-add" class="inp" style="max-width: 440px;">
+                <input type="text" id="modal__link-add" placeholder="&nbsp;">
+                <span class="label">Link</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div style="display: grid;">
+            <div class="input_body" style="grid-column:1/4">
+                <label for="modal__book__title-add" class="inp">
+                    <input type="text" id="modal__book__title-add" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-add').value, this)}" placeholder="&nbsp;">
+                    <span class="label">참고서적 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+            </div>
+            <div style="grid-column: 4"><button class="modal__btn" onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button></div>
+        </div>
+        <div class="input_body">
+            <label for="modal__book_link-add" class="inp"   style="max-width: 440px;">
+                <input type="text" id="modal__book_link-add" placeholder="&nbsp;">
+                <span class="label">참고서적 Link</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
         </div>
         <div>
-            참고서적 링크: <input type="text" id="modal__book_link-add">
+            <textarea rows="5" cols="33"  id="modal__content-add" placeholder="Contents" ></textarea>
         </div>
-        <div>내용: <textarea rows="5" cols="33"  id="modal__content-add"></textarea></div>
+<%--        <div>제목: <input type="text" id="modal__title-add"></div>--%>
+<%--        <div>링크: <input type="text" id="modal__link-add"></div>--%>
+<%--        <div>참고서적 제목:--%>
+<%--            &lt;%&ndash;            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">&ndash;%&gt;--%>
+<%--            <input type="text"  id="modal__book__title-add" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-add').value, this)}">--%>
+<%--            <button onclick="searchBook(document.getElementById('modal__book__title-add').value, this)">검색</button>--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            참고서적 링크: <input type="text" id="modal__book_link-add">--%>
+<%--        </div>--%>
+<%--        <div>내용: <textarea rows="5" cols="33"  id="modal__content-add"></textarea></div>--%>
         <button class="modal__btn" onclick="insertMindAndNodeData(document.getElementById('modal__mindId').innerText)">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
+        <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m3-o');" >취소</button>
         <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
     </div>
 </div>
@@ -88,11 +160,61 @@
 <%-- modal 수정 --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <h1>수정하기</h1>
+        <div class="text-center">
+            <h1>수정하기</h1>
+        </div>
+        <div class="input_body">
+            <label for="modal__title-mod" class="inp" style="max-width: 440px;">
+                <input type="text" class="modal__title" id="modal__title-mod" placeholder="&nbsp;">
+                <span class="label">Title</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div class="input_body">
+            <label for="modal__link-mod" class="inp" style="max-width: 440px;">
+                <input type="text" class="modal__link" id="modal__link-mod" placeholder="&nbsp;">
+                <span class="label">Link</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div style="display: grid;">
+            <div class="input_body" style="grid-column:1/4">
+                <label for="modal__book__title-mod" class="inp">
+                    <input type="text" class="modal__book__title" id="modal__book__title-mod" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}" placeholder="&nbsp;">
+                    <span class="label">참고서적 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+            </div>
+            <div style="grid-column: 4"><button class="modal__btn" onclick="searchBook(document.getElementById('modal__book__title-mod').value, this)">검색</button></div>
+        </div>
+        <div class="input_body">
+            <label for="modal__book_link-mod" class="inp" style="max-width: 440px;">
+                <input type="text" class="modal__book_link" id="modal__book_link-mod" placeholder="&nbsp;">
+                <span class="label">참고서적 Link</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
+        </div>
+        <div>
+            <textarea rows="5" cols="33" onclick="searchBook(document.getElementById('modal__book__title-mod').value, this)" placeholder="Contents" ></textarea>
+        </div>
+
+        <%--
         <div>제목: <input type="text" class="modal__title" id="modal__title-mod"></div>
         <div>링크: <input type="text" class="modal__link" id="modal__link-mod"></div>
         <div>참고서적 제목:
-            <%--            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">--%>
+            &lt;%&ndash;            <img src="https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1596281%3Ftimestamp%3D20211006162308" alt="x">&ndash;%&gt;
             <input type="text" class="modal__book__title" id="modal__book__title-mod" onKeyDown="javascript: if (event.keyCode == 13) {searchBook(document.getElementById('modal__book__title-mod').value, this)}">
             <button onclick="searchBook(document.getElementById('modal__book__title-mod').value, this)">검색</button>
         </div>
@@ -100,8 +222,9 @@
             참고서적 링크: <input type="text" class="modal__book_link" id="modal__book_link-mod">
         </div>
         <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content-mod"></textarea></div>
+        --%>
         <button class="modal__btn" onclick="updateMindAndNodeData(document.getElementById('modal__mindId').innerText);">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m4-o');" >취소</button>
+        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m4-o');" >취소</button>
         <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
     </div>
 </div>
@@ -109,10 +232,12 @@
 
 <%-- modal 삭제 --%>
 <div class="modal-container" id="m5-o" style="--m-background: hsla(0, 0%, 0%, .4);">
-    <div class="modal">
-        <h1 id="modal__title-del">삭제하시겠습니까?</h1>
+    <div class="modal alert_modal">
+        <div class="text-center">
+            <h1 id="modal__title-del">삭제하시겠습니까?</h1>
+        </div>
         <button class="modal__btn" onclick="deleteMindAndNodeData(document.getElementById('modal__mindId').innerText);">예</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m5-o');" >아니오</button>
+        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m5-o');" >아니오</button>
         <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
     </div>
 </div>

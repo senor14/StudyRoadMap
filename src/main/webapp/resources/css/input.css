@@ -176,3 +176,31 @@ input[type="color"] {
 ::-moz-focus-inner{
     padding: 0;
 }
+
+/* textarea */
+.textarea_body{
+
+}
+
+textarea{
+    resize: none;
+    width: 98.5%;
+    height: 100%;
+    border-radius: 5px;
+    background-color: #DDDDDD;
+    color: #575757;
+    border: 5px solid #A9A9A9;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+textarea:focus{
+    border: 5px solid #575757
+}
+
+.text-center{
+    text-align: center;
+}
+
+.modal a{
+    color:white;
+}
