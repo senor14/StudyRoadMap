@@ -5,7 +5,8 @@
 
 .button__box {
     margin-left: 85px;
-    margin-top: 10px;
+    padding-bottom: 10px;
+    height: 90px;
 }
 
 
@@ -52,7 +53,7 @@
 
 #road__button__copy span:before,
 #road__button__copy span:after{
-    content: "Copy";
+    content: "Copy RoadMap";
 }
 
 .road__button  span:before{

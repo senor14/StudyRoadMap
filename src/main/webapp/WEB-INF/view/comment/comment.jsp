@@ -10,13 +10,17 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="../../../resources/css/comment.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600&display=swap" rel="stylesheet">
     <script src="../../../resources/js/jquery.min.js"></script>
     <script src="../../../resources/js/comment.js"></script>
 </head>
 <body>
 <!-- comments container -->
 <div class="comment_block">
+    <div class="" style="background-color: cadetblue; text-align: center; font-size: 25px; color: white; position: fixed; width: 65%; font-family: 'Montserrat', sans-serif;">
+        Comment
     <!-- new comment -->
+    </div>
     <div class="new_comment">
         <!-- build comment -->
         <ul class="user_comment">

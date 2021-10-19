@@ -192,6 +192,9 @@
             let query = {
                 user_email: $("#userEmail").val()
             };
+
+            console.log("user_email", query.user_email);
+
             $("#email_find").text("인증번호를 이메일로 전송 중입니다.");
             $("#email_find").attr("style", "color:#aaa;font-size: 5px;padding-left:13px;");
             $.ajax({

@@ -194,6 +194,9 @@ public class UserController {
         String user_email = nvl(request.getParameter("user_email"));
         String auth_num = RandomUtil.RandomNum();
 
+        log.info("user_email: "+ user_email);
+        log.info("auth_num: "+ auth_num);
+
         Map<String, String> uMap = new HashMap<>();
 
         uMap.put("userEmail", user_email);

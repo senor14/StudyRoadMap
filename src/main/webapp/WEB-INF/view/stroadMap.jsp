@@ -1851,7 +1851,7 @@
                 >
                 </div>
             </div>
-            <div class="button__box" style="display: flex; justify-content: center; align-items: center;">
+            <div class="button__box" style="margin-top: 20px;display: flex; justify-content: center; align-items: center;">
                 <div class="road__button" id="road__button__category"><span  onclick="fnOpenModal('#m12-o')">Category</span></div>
                 <div class="road__button" id="road__button__lane"><span  onclick="fnOpenModal('#m11-o')">Lane</span></div>
             </div>

@@ -44,7 +44,7 @@ public class MailService implements IMailService {
 			pMap = new HashMap<>();
 		}
 		
-		String Email = CmmUtil.nvl(pMap.get("user_email"));
+		String Email = CmmUtil.nvl(pMap.get("userEmail"));
 
 		Properties props = new Properties();
 		
@@ -72,7 +72,7 @@ public class MailService implements IMailService {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(Email));
 
 			message.setSubject("[RoadMap team] 인증코드 안내");
-			message.setText("RoadMap 인증코드는 " + pMap.get("auth_num") + " 입니다.");
+			message.setText("RoadMap 인증코드는 " + pMap.get("authNum") + " 입니다.");
 			
 			Transport.send(message);
 			
