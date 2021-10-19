@@ -290,7 +290,7 @@
                 url: "/roadmaps",
                 type: "post",
                 data: {
-                    publicYn: document.getElementById("studyPublicYn").value,
+                    publicYn: document.getElementById("StudypublicYn").value,
                     roadTitle: document.getElementById("study__title-add").value
                 },
                 success: function (data) {
