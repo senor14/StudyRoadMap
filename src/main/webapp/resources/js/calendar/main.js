@@ -1,6 +1,11 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
 
+let today = new Date();
+
+let year = today.getFullYear();
+let month = today.getMonth() + 1;
+
 var calendar = $('#calendar').fullCalendar({
 
  /** ******************
@@ -22,7 +27,7 @@ var calendar = $('#calendar').fullCalendar({
                               },
   eventLimitClick           : 'week', //popover
   navLinks                  : true,
-  defaultDate               : moment('2021-06'), //실제 사용시 현재 날짜로 수정
+  defaultDate               : moment(`${year}-${month}`), //실제 사용시 현재 날짜로 수정
   timeFormat                : 'HH:mm',
   defaultTimedEventDuration : '01:00:00',
   editable                  : true,

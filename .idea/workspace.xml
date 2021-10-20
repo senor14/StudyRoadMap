@@ -11,8 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1cb9ec9f-733f-4764-8a20-0307e8af8621" name="Changes" comment="이건미친짓이야">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/community/community.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/view/community/community.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/calendar/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/calendar/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,6 +294,7 @@
       <workItem from="1634647678091" duration="1258000" />
       <workItem from="1634703160948" duration="1437000" />
       <workItem from="1634716060559" duration="949000" />
+      <workItem from="1634731338243" duration="68000" />
     </task>
     <task id="LOCAL-00001" summary="[ADD] 커리어 로드맵 컨트롤러, 서비스, 프론트 추가">
       <created>1633239962316</created>
