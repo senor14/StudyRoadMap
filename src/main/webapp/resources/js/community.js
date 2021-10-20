@@ -4,6 +4,16 @@ $(document).ready(function(){
     // getStudyMap()
 })
 
+function focusSearchbar() {
+    let searchIcon = document.getElementById("search__icon");
+    searchIcon.style.left = "1315px";
+}
+
+function focusoutSearchbar() {
+    let searchIcon = document.getElementById("search__icon");
+    searchIcon.style.left = "1310px";
+}
+
 function getStudyMap(){
     $(".swiper-wrapper").empty();
     let category = document.querySelector('input[name="category"]:checked').value
