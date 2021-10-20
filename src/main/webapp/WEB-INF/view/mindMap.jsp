@@ -291,7 +291,8 @@
         console.log("keyword: ",keyword)
         fnOpenModal("#m7-o");
         let addOrMod;
-        let id = target.parentNode.parentNode.parentNode.id;
+        let id = target.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+
         if (id === 'm4-o') {
             addOrMod = "mod";
         } else if (id === 'm3-o') {
