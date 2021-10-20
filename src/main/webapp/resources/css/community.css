@@ -23,6 +23,8 @@ option{
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    justify-content: center;
+    align-items: center;
 }
 .searchArea{
     width: 75%;
@@ -31,9 +33,11 @@ option{
     flex-grow: 1;
 }
 .type{
+    width: 200px;
     border-radius: 50px;
     text-align: center;
     max-height: 20px;
+    margin-bottom: 10px;
 }
 .category{
     display: flex;
@@ -121,6 +125,7 @@ text:focus{
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
+
 .icon{
     display: inline-block;
     width: 18px;
@@ -170,7 +175,7 @@ body {
     flex-direction: column;
 }
 .swiper-slide:hover{
-    background-color: aquamarine;
+    background-color: aquamarine !important;
 }
 .swiper-slide img {
     display: block;
@@ -183,6 +188,7 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 .hide{
     display: none;
@@ -190,9 +196,7 @@ body {
 .setCategory{
     font-family: fantasy;
 }
-.title{
 
-}
 .created{
     font-size: 0.7rem;
 }

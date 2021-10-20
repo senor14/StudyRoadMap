@@ -48,16 +48,39 @@
 <%-- modal 기본 --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <h1 class="modal__title" id="modal__title">네트워크</h1>
-        <div>링크: <a id="modal__link-a"></a></div>
-        <div>참고서적 제목:
-            <input type="text" class="modal__book__title" id="modal__book__title" disabled>
+        <div style="text-align: center;">
+            <h1 class="modal__title" id="modal__title">네트워크</h1>
         </div>
-        <div>
-            참고서적 링크: <a id="modal__book__link-a"></a>
+        <div style="display: grid; column-gap: 5px; margin-top: 5em;">
+            <div style="grid-column: 1">링크: <a id="modal__link-a"></a></div>
+            <div class="input_body" style="grid-column: 1">
+                <label for="modal__book__title" class="inp">
+                    <input type="text" class="modal__book__title" id="modal__book__title" disabled placeholder="&nbsp;">
+                    <span class="label">참고서적 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div>
+                참고서적 Link: <a id="modal__book__link-a"></a>
+            </div>
+            <div class="color_body" style="grid-column: 2/4; grid-row:1/4">
+                <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea>
+            </div>
         </div>
-        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea></div>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >확인</button>
+        <%--        <div>링크: <a id="modal__link-a"></a></div>--%>
+        <%--        <div>참고서적 제목:--%>
+        <%--            <input type="text" class="modal__book__title" id="modal__book__title" disabled>--%>
+        <%--        </div>--%>
+        <%--        <div>--%>
+        <%--            참고서적 링크: <a id="modal__book__link-a"></a>--%>
+        <%--        </div>--%>
+        <%--        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea></div>--%>
+
+        <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m2-o');" >확인</button>
         <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
     </div>
 </div>
