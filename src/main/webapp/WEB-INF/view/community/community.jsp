@@ -51,5 +51,8 @@
         <div class="swiper-pagination"></div>
     </div>
 </div>
+<script>
+    document.getElementById('keyword').value = "";
+</script>
 </body>
 </html>
