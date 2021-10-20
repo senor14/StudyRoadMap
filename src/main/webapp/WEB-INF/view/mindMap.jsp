@@ -50,8 +50,10 @@
             <h1 class="modal__title" id="modal__title">네트워크</h1>
         </div>
         <div style="display: grid; column-gap: 5px; margin-top: 5em;">
-            <div style="grid-column: 1">링크: <a id="modal__link-a"></a></div>
-            <div class="input_body" style="grid-column: 1">
+            <div style="grid-column: 1; grid-row:1;  max-width:25rem; word-wrap:break-word">
+                    링크: <a id="modal__link-a"></a>
+            </div>
+            <div class="input_body" style="grid-column: 1; grid-row:2;">
                 <label for="modal__book__title" class="inp">
                     <input type="text" class="modal__book__title" id="modal__book__title" disabled placeholder="&nbsp;">
                     <span class="label">참고서적 Title</span>
@@ -62,7 +64,7 @@
                 </label>
 
             </div>
-            <div>
+            <div style="grid-column: 1; grid-row: 3; max-width:25rem; word-wrap:break-word">
                 참고서적 Link: <a id="modal__book__link-a"></a>
             </div>
             <div class="color_body" style="grid-column: 2/4; grid-row:1/4">
