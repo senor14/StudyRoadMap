@@ -145,7 +145,7 @@
 <%-- 중요 체크한  --%>
 <div class="modal-container" id="card" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="team-boxed" style="width:60%;">
-        <a onclick="fnCloseModal('card');" class="link-2"></a>
+        <a onclick="fnCloseModal('card');" class="link-2" style="top:6rem;"></a>
         <div style="color: white;font-size: 5em;text-align: center; font-family: Cardo;">
             <span id="I">MAIN</span>
             <span id="L">CAREER</span>

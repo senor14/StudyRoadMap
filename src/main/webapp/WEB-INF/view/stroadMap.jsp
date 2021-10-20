@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/input.css">
 
 
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />--%>
@@ -73,12 +74,22 @@
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center;">
             <h1 class="modal__node__text" id="modal__node__text">제목</h1>
         </div>
-        <div>
-            카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>
+        <div class="input_body">
+            <label for="modal__node__category" class="inp">
+                <input type="text" class="modal__node__category" id="modal__node__category" readonly placeholder="&nbsp;">
+                <span class="label">Category</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
         </div>
+<%--        <div>--%>
+<%--            카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
         <button class="modal__btn" onclick="fnOpenModal('#m3-o');">수정</button>
         <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
@@ -97,12 +108,33 @@
 <%-- 노드 클릭시 정보 모달 - 수정 (노드) [저장, 취소] {category, text}--%>
 <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
-            제목: <input type="text" class="modal__node__text" id="modal__node__text-mod" />
+        <div class="input_body">
+            <label for="modal__node__text-mod" class="inp">
+                <input type="text"class="modal__node__text" id="modal__node__text-mod" placeholder="&nbsp;">
+                <span class="label">Title</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
         </div>
-        <div>
-            카테고리:<input type="text" class="modal__node__category" id="modal__node__category-mod" />
+        <div class="input_body">
+            <label for="modal__node__category-mod" class="inp">
+                <input type="text"class="modal__node__category" id="modal__node__category-mod"placeholder="&nbsp;">
+                <span class="label">Category</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
         </div>
+
+<%--        <div>--%>
+<%--            제목: <input type="text" class="modal__node__text" id="modal__node__text-mod" />--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            카테고리:<input type="text" class="modal__node__category" id="modal__node__category-mod" />--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m3-o');">취소</button>
         <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
@@ -114,7 +146,7 @@
 <%-- 노드 클릭시 정보 모달 (다이어그램) [수정, 취소] {text} --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center">
             <h1 class="modal__diagram__text" id="modal__diagram__text">제목</h1>
         </div>
         <button class="modal__btn" onclick="fnOpenModal('#m5-o');">수정</button>
@@ -127,8 +159,18 @@
 <%-- 노드 클릭시 정보 모달 (다이어그램) - 수정 [저장, 취소] {text} --%>
 <div class="modal-container" id="m5-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
-            제목:<input type="text" class="modal__diagram__text" id="modal__diagram__text-mod" />
+        <div style="text-align:center;">
+            <div class="input_body">
+                <label for="modal__lane__key-mod" class="inp">
+                    <input type="text"class="modal__diagram__text" id="modal__diagram__text-mod"  placeholder="&nbsp;">
+                    <span class="label">Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+            </div>
+<%--            제목:<input type="text" class="modal__diagram__text" id="modal__diagram__text-mod" />--%>
         </div>
         <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m5-o');">취소</button>
@@ -140,15 +182,37 @@
 <%-- 노드 클릭시 정보 모달 (레인) [수정, 삭제, 취소] {key, text, color} --%>
 <div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center;">
             <h1 class="modal__lane__key" id="modal__lane__key">제목</h1>
         </div>
-        <div>
-            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text" readonly />
+        <div style="display: grid;">
+            <div class="input_body" style="grid-column: 1/3">
+                <label for="modal__lane__text" class="inp">
+                    <input type="text" class="modal__lane__text" id="modal__lane__text" readonly placeholder="&nbsp;">
+                    <span class="label">표지 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div class="color_body" style="grid-column: 3">
+                <div class="swatch">
+                    <input type="color" class="modal__lane__color" id="modal__lane__color" disabled>
+                    <div class="info">
+                        <h1>Lane</h1>
+                        <h2>Color</h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>색:
-            <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />
-        </div>
+<%--        <div>--%>
+<%--            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text" readonly />--%>
+<%--        </div>--%>
+<%--        <div>색:--%>
+<%--            <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="fnOpenModal('#m7-o');">수정</button>
         <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
         <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >취소</button>
@@ -160,15 +224,49 @@
 <%-- 노드 클릭시 정보 모달 - 수정 (레인) [저장, 취소] {key, text, color} --%>
 <div class="modal-container" id="m7-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
-            제목: <input type="text" class="modal__lane__key" id="modal__lane__key-mod" />
+        <div style="display: grid; margin-top: 30px;">
+            <div class="input_body" style="grid-column: 1/3">
+                <label for="modal__lane__key-mod" class="inp">
+                    <input type="text" class="modal__lane__key" id="modal__lane__key-mod" placeholder="&nbsp;">
+                    <span class="label">Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div class="input_body" style="grid-column: 1/3">
+                <label for="modal__lane__text-mod" class="inp">
+                    <input type="text" class="modal__lane__text" id="modal__lane__text-mod" placeholder="&nbsp;">
+                    <span class="label">표지 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div class="color_body" style="grid-column: 3; grid-row: 1/3">
+                <div class="swatch">
+                    <input type="color" class="modal__lane__color" id="modal__lane__color-mod" name="color" >
+                    <div class="info">
+                        <h1>Lane</h1>
+                        <h2>Color</h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text-mod" />
-        </div>
-        <div>색:
-            <input type="color" class="modal__lane__color" id="modal__lane__color-mod">
-        </div>
+
+<%--        <div>--%>
+<%--            제목: <input type="text" class="modal__lane__key" id="modal__lane__key-mod" />--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text-mod" />--%>
+<%--        </div>--%>
+<%--        <div>색:--%>
+<%--            <input type="color" class="modal__lane__color" id="modal__lane__color-mod">--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m7-o');" >취소</button>
         <a onclick="fnCloseModal('#m7-o');" class="link-2"></a>
@@ -179,15 +277,27 @@
 <%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
 <div class="modal-container" id="m8-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center;">
             <h1 class="modal__category__text" id="modal__category__text">카테고리 제목</h1>
         </div>
-        <div>색:
-            <input type="color" class="modal__category__color" id="modal__category__color" disabled>
+        <div class="color_body" style="grid-column: 3">
+            <div class="swatch">
+                <input type="color" class="modal__category__color" id="modal__category__color" disabled>
+                <div class="info">
+                    <h1>Category</h1>
+                    <h2>Color</h2>
+                </div>
+            </div>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m9-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m8-o');">취소</button>
+<%--        <div>--%>
+<%--            <h1 class="modal__category__text" id="modal__category__text">카테고리 제목</h1>--%>
+<%--        </div>--%>
+<%--        <div>색:--%>
+<%--            <input type="color" class="modal__category__color" id="modal__category__color" disabled>--%>
+<%--        </div>--%>
+        <button class="modal__btn" style="float:right;" onclick="fnOpenModal('#m9-o');">수정</button>
+        <button class="modal__btn" style="float:left;" onclick="fnOpenModal('#m13-o');">삭제</button>
+        <button class="modal__btn" style="float:left;" onclick="fnCloseModal('#m8-o');">취소</button>
         <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
     </div>
 </div>
@@ -196,12 +306,34 @@
 <%-- 노드 클릭시 정보 모달 - 수정 (카테고리) [저장, 취소] {category(제목), color} --%>
 <div class="modal-container" id="m9-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
-            카테고리 제목:<input class="modal__category__text" id="modal__category__text-mod"/>
+        <div style="display: grid; margin-top: 30px;">
+            <div class="input_body" style="grid-column: 1/3">
+                <label for="modal__category__text-mod" class="inp">
+                    <input type="text" class="modal__category__text" id="modal__category__text-mod" placeholder="&nbsp;">
+                    <span class="label">Category Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div class="color_body" style="grid-column: 3">
+                <div class="swatch">
+                    <input type="color" class="modal__category__color" id="modal__category__color-mod" name="color">
+                    <div class="info">
+                        <h1>Category</h1>
+                        <h2>Color</h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            색:<input type="color" class="modal__category__color" id="modal__category__color-mod"/>
-        </div>
+<%--        <div>--%>
+<%--            카테고리 제목:<input class="modal__category__text" id="modal__category__text-mod"/>--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            색:<input type="color" class="modal__category__color" id="modal__category__color-mod"/>--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="updateNodeData();">저장</button>
         <button class="modal__btn" onclick="fnCloseModal('#m9-o');">취소</button>
         <a onclick="fnCloseModal('#m9-o');" class="link-2"></a>
@@ -212,12 +344,25 @@
 <%-- 노드 추가시 text 설정 모달 (노드) [확인] {text} --%>
 <div class="modal-container" id="m10-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
-            <h1>과목추가</h1>
+        <div style="text-align: center;">
+            <h1> 과목 추가 </h1>
         </div>
-        <div>
-            제목:<input type="text" id="modal__node__text-add">
+        <div class="input_body" style="margin-top: 30px;">
+            <label for="modal__node__text-add" class="inp">
+                <input type="text" id="modal__node__text-add" placeholder="&nbsp;">
+                <span class="label">과목 Title</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
         </div>
+<%--        <div>--%>
+<%--            <h1>과목추가</h1>--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            제목:<input type="text" id="modal__node__text-add">--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="insertNodeData('Node');">확인</button>
     </div>
 </div>
@@ -226,15 +371,49 @@
 <%-- 노드 추가시 text, key, color (레인) [확인, 취소] {text, key, color} --%>
 <div class="modal-container" id="m11-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
-            제목:<input type="text" id="modal__lane__text-add" />
+        <div style="display: grid; margin-top: 30px;">
+            <div class="input_body" style="grid-column: 1/3">
+                <label for="modal__lane__text-add" class="inp">
+                    <input type="text" id="modal__lane__text-add" placeholder="&nbsp;">
+                    <span class="label">Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div class="input_body" style="grid-column: 1/3">
+                <label for="modal__lane__key-add" class="inp">
+                    <input type="text" id="modal__lane__key-add" placeholder="&nbsp;">
+                    <span class="label">표지 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div class="color_body" style="grid-column: 3; grid-row: 1/3">
+                <div class="swatch">
+                    <input type="color" id="modal__lane__color-add" name="color" value="#FF0000">
+                    <div class="info">
+                        <h1>Lane</h1>
+                        <h2>Color</h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            표지제목:<input type="text" id="modal__lane__key-add" />
-        </div>
-        <div>
-            색:<input type="color" id="modal__lane__color-add"/>
-        </div>
+
+<%--        <div>--%>
+<%--            제목:<input type="text" id="modal__lane__text-add" />--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            표지제목:<input type="text" id="modal__lane__key-add" />--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            색:<input type="color" id="modal__lane__color-add"/>--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="insertNodeData('Lane');">확인</button>
         <button class="modal__btn" onclick="fnCloseModal('#m11-o');" >취소</button>
         <a onclick="fnCloseModal('#m11-o');" class="link-2"></a>
@@ -245,14 +424,36 @@
 <%-- 카테고리 추가시 category, color (카테고리) [확인, 취소] {category, color} --%>
 <div class="modal-container" id="m12-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
-            카테고리 제목:<input type="text"  id="modal__category__text-add"/>
+        <div style="display: grid; margin-top: 30px;">
+        <div class="input_body" style="grid-column: 1/3">
+            <label for="modal__category__text-add" class="inp">
+                <input type="text" id="modal__category__text-add" placeholder="&nbsp;">
+                <span class="label">Category Title</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
+
         </div>
-        <div>
-            색:<input type="color" id="modal__category__color-add" />
+        <div class="color_body" style="grid-column: 3">
+            <div class="swatch">
+                <input type="color" id="modal__category__color-add" name="color" value="#FF0000">
+                <div class="info">
+                    <h1>Category</h1>
+                    <h2>Color</h2>
+                </div>
+            </div>
         </div>
+        </div>
+<%--        <div>--%>
+<%--            카테고리 제목:<input type="text"  id="modal__category__text-add"/>--%>
+<%--        </div>--%>
+<%--        <div>--%>
+<%--            색:<input type="color" id="modal__category__color-add" />--%>
+<%--        </div>--%>
         <button class="modal__btn" onclick="insertNodeData('Category');">확인</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m12-o');" >취소</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m12-o');" style="float:right;">취소</button>
         <a onclick="fnCloseModal('#m12-o');" class="link-2"></a>
     </div>
 </div>

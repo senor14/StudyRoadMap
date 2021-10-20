@@ -155,22 +155,24 @@
                                         <div class="wrapper_tabcontent">
                                             <div id="Schedule" class="tabcontent active">
                                                 <h3>Schedule</h3>
-                                                <iframe src="/calendar" style="width:100%; border: 0px; height:620px; overflow:hidden;"></iframe>
+                                                <iframe src="/calendar" style="width:100%; border: 0px; height:800px; overflow:hidden;"></iframe>
                                             </div>
                                             <div id="Study_MindMap" class="tabcontent">
                                                 <h3>Study MindMap</h3>
                                                 <%-- 급하게 만들어서 스타일 그대로 넣었으니 클래스로 바꿔서 써주세요 --%>
                                                 <%-- 자신의 기존 스터디 마인드 맵 정보와 신규 스터디 마인드맵 버튼 들어가는 곳 --%>
-                                                <div class=""  style="display:grid; grid-template-columns: repeat(2, 1fr);word-wrap: break-word; height:620px; overflow:auto;">
+                                                <div class=""  style="display:grid; grid-template-columns: repeat(2, 1fr);word-wrap: break-word; height:800px; overflow:auto;">
 
                                                     <% for (StudyRoadData roadData : roadDataInfo) { %>
-                                                        <div onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" style="margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; background-size: cover; background-image: url('http://localhost:9000/getRoadMapImage?roadId=<%=roadData.getRoadId()%>')">
-                                                            <div >
+                                                    <div style="position: relative; margin:5%; display: flex;align-items: flex-end;justify-content: center;  border-radius: 5%;height: 200px;border: 3px solid black; ">
+                                                        <span class="position-absolute" style="top:2px; right: 5px; font-size: 13px;">공개여부: <input type="checkbox" class="road__publicYn" value="<%=roadData.getPublicYn()%>" onclick="checkbox_chk(this, '<%=roadData.getRoadId()%>')"></span>
+                                                        <div class="cursor" onclick="location.href='/roadmaps/<%=roadData.getRoadId()%>'" style="cursor:pointer; width:100%; height:100%;border-radius: 10%; background-size: cover; background-image: url('http://localhost:9000/getRoadMapImage?roadId=<%=roadData.getRoadId()%>')">
+                                                            <div style="margin-top: 150px; text-align: center;">
                                                                 <span style="text-shadow: grey 5px 5px, grey 4px 4px, grey 3px 3px, grey 2px 2px, grey 1px 1px; color: white;">"<%=roadData.getRoadTitle()%>"</span>
                                                                 <span class="road__title" hidden>"<%=roadData.getRoadTitle()%>"</span>
                                                             </div>
                                                         </div>
-                                                        <span class="">공개여부: <input type="checkbox" class="road__publicYn" value="<%=roadData.getPublicYn()%>" onclick="checkbox_chk(this, '<%=roadData.getRoadId()%>')"></span>
+                                                    </div>
                                                     <%}%>
 
                                                     <%-- 신규 스터디 로드맵 버튼 --%>
@@ -185,7 +187,7 @@
                                             <div id="Career_RoadMap" class="tabcontent">
                                                 <h3>Career RoadMap</h3>
                                                 <%--  커리어 로드맵 존재하면 조회해서 접근 버튼 생성, 없을 경우 신규 생성 버튼 보여주기 --%>
-                                                <div style="width:100%; border: 0px; height:620px; overflow:hidden;">
+                                                <div style="width:100%; border: 0px; height:800px; overflow:hidden;">
                                                     <%-- 커리어 로드맵 없을 시 --%>
                                                     <div id="no_career">
                                                         <div style="position:absolute; width:100%; text-align: center; top:35%">
@@ -218,7 +220,7 @@
                                             </div>
                                             <div id="Community" class="tabcontent">
                                                 <h3>Community</h3>
-                                                <iframe src="/community" style="width:100%; border: 0px; height:620px; overflow:hidden;"></iframe>
+                                                <iframe src="/community" style="width:100%; border: 0px; height:800px; overflow:hidden;"></iframe>
                                                 </p>
                                             </div>
                                         </div>
