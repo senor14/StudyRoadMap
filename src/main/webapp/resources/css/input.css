@@ -48,6 +48,7 @@
     height: 2px;
     right: 0;
     background: #c8ccd4;
+    border: none; !important;
 }
 .inp input {
     -webkit-appearance: none;
