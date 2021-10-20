@@ -67,13 +67,25 @@
 <%--노드 클릭시 정보 모달 (노드) [마인드맵, 수정, 삭제, 취소] {category, text} --%>
 <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center;">
             <h1 class="modal__node__text" id="modal__node__text">제목</h1>
         </div>
-        <div>
-            카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>
+        <div class="input_body">
+            <label for="modal__node__category" class="inp">
+                <input type="text" class="modal__node__category" id="modal__node__category" readonly placeholder="&nbsp;">
+                <span class="label">Category</span>
+                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                </svg>
+                <span class="border"></span>
+            </label>
         </div>
+        <%--        <div>--%>
+        <%--            카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>--%>
+        <%--        </div>--%>
         <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">수정</button>
+        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
         <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
         <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
     </div>
@@ -89,10 +101,11 @@
 <%-- 노드 클릭시 정보 모달 (다이어그램) [수정, 취소] {text} --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center">
             <h1 class="modal__diagram__text" id="modal__diagram__text">제목</h1>
         </div>
-        <button class="modal__btn" onclick="fnCloseModal('#m4-o');">확인</button>
+        <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
+        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
         <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
     </div>
 </div>
@@ -101,31 +114,66 @@
 <%-- 노드 클릭시 정보 모달 (레인) [수정, 삭제, 취소] {key, text, color} --%>
 <div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center;">
             <h1 class="modal__lane__key" id="modal__lane__key">제목</h1>
         </div>
-        <div>
-            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text" readonly />
+        <div style="display: grid;">
+            <div class="input_body" style="grid-column: 1/3">
+                <label for="modal__lane__text" class="inp">
+                    <input type="text" class="modal__lane__text" id="modal__lane__text" readonly placeholder="&nbsp;">
+                    <span class="label">표지 Title</span>
+                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                    </svg>
+                    <span class="border"></span>
+                </label>
+
+            </div>
+            <div class="color_body" style="grid-column: 3">
+                <div class="swatch">
+                    <input type="color" class="modal__lane__color" id="modal__lane__color" disabled>
+                    <div class="info">
+                        <h1>Lane</h1>
+                        <h2>Color</h2>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>색:
-            <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />
-        </div>
+        <%--        <div>--%>
+        <%--            표지제목 : <input type="text" class="modal__lane__text" id="modal__lane__text" readonly />--%>
+        <%--        </div>--%>
+        <%--        <div>색:--%>
+        <%--            <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />--%>
+        <%--        </div>--%>
         <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >확인</button>
         <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
     </div>
 </div>
 <%-- modal 5 끝 --%>
 
+
 <%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
 <div class="modal-container" id="m8-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center;">
             <h1 class="modal__category__text" id="modal__category__text">카테고리 제목</h1>
         </div>
-        <div>색:
-            <input type="color" class="modal__category__color" id="modal__category__color" disabled>
+        <div class="color_body" style="grid-column: 3">
+            <div class="swatch">
+                <input type="color" class="modal__category__color" id="modal__category__color" disabled>
+                <div class="info">
+                    <h1>Category</h1>
+                    <h2>Color</h2>
+                </div>
+            </div>
         </div>
-        <button class="modal__btn" onclick="fnCloseModal('#m8-o');">확인</button>
+        <%--        <div>--%>
+        <%--            <h1 class="modal__category__text" id="modal__category__text">카테고리 제목</h1>--%>
+        <%--        </div>--%>
+        <%--        <div>색:--%>
+        <%--            <input type="color" class="modal__category__color" id="modal__category__color" disabled>--%>
+        <%--        </div>--%>
+        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m8-o');">확인</button>
         <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
     </div>
 </div>
@@ -134,11 +182,11 @@
 <%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
 <div class="modal-container" id="m14-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
-        <div>
+        <div style="text-align: center;">
             <h1 class="modal__category__text" id="modal__duplicate__text" style="color:white;">내 로드맵으로 복제하시겠습니까?</h1>
         </div>
         <button class="modal__btn" onclick="duplicateStudyRoadmap();">확인</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m14-o');">취소</button>
+        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m14-o');">취소</button>
         <a onclick="fnCloseModal('#m14-o');" class="link-2"></a>
     </div>
 </div>

@@ -235,3 +235,23 @@ when users will click/enter button(link) browser will add a #id in a url and whe
     color: hsla(0, 0%, 1000%, .6);
     font-size: 1.6rem;
 }
+
+/* 스크롤 수정 */
+.modal::-webkit-scrollbar {
+    width: 10px;
+}
+.modal::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+.modal::-webkit-scrollbar-track {
+    background-color: grey;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
+.alert_modal{
+    width:30em;
+}
