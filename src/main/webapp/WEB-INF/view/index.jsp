@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/add_button.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/next_button.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/input.css">
 </head>
 
 <body>
@@ -67,17 +68,39 @@
             <%-- modal 기본 --%>
             <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
                 <div class="modal">
-                    <h1 class="modal__title" id="modal__title">비밀번호 변경</h1>
-                    <div>
+                    <div class="text-center">
+                        <span class="modal__title" id="modal__title">비밀번호 변경</span>
+                    </div>
                         <form action="/RoadMap/PassWordChangeProc" method="post" id="pwd_chg_form" onsubmit="return check();">
-                            <span>PASSWORD</span>
-                            <input type="password" name="pwd" id="newPassWord" placeholder="Type your Password" required/><br>
-                            <span>PASSWROD CHECK</span>
-                            <input type="password" name="pwd2" id="passWordCheck" placeholder="Type your Password Check" required/><br>
-                            <span id="renew"></span><br>
+                            <div class="input_body">
+                                <label for="newPassWord" class="inp">
+                                    <input type="password" name="pwd" id="newPassWord"  placeholder="&nbsp;">
+                                    <span class="label">PASSWORD</span>
+                                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                                    </svg>
+                                    <span class="border"></span>
+                                </label>
+                            </div>
+                            <div class="input_body">
+                                <label for="passWordCheck" class="inp">
+                                    <input type="password" name="pwd2" id="passWordCheck" placeholder="&nbsp;">
+                                    <span class="label">PASSWORD_CHECK</span>
+                                    <svg width="120px" height="26px" viewBox="0 0 120 26">
+                                        <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                                    </svg>
+                                    <span class="border"></span>
+                                </label>
+                            </div>
+<%--                            <span>PASSWORD</span>--%>
+<%--                            <input type="password" name="pwd" id="newPassWord" placeholder="Type your Password" required/><br>--%>
+<%--                            <span>PASSWROD CHECK</span>--%>
+<%--                            <input type="password" name="pwd2" id="passWordCheck" placeholder="Type your Password Check" required/><br>--%>
+<%--                            <span id="renew"></span><br>--%>
                         </form>
-                        <button type="button" class="modal__btn" onclick="pwd_chg();">확인</button>
-                        <button type="button" class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+                    <div class="text-center" style="display:grid; grid-template-columns: repeat(5, 1fr);">
+                        <button type="button" style="grid-column: 2;" class="modal__btn" onclick="pwd_chg();">확인</button>
+                        <button type="button" style="grid-column: 4;" class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
                     </div>
                 </div>
             </div>
@@ -86,15 +109,27 @@
             <%-- modal 추가 --%>
             <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
                 <div class="modal">
-                    <h1 class="modal__title">회원 탈퇴</h1>
-                    <div>
-                        <form action="/RoadMap/userWithdrawalProc" method="post" onsubmit="return del_check();" id="withdrawal_form">
-                            <span>회원 탈퇴를 누르면 다시 되돌릴 수 없습니다. 탈퇴를 진행하시려면 Account_withdrawal를 입력해주세요.</span><br>
-                            <input type="text" name="DeleteCheck" id="DeleteCheck" placeholder="Account_withdrawal" required/><br>
-                            <span id="id_find"></span><br>
-                        </form>
-                        <button type="button" class="modal__btn" onclick="withdrawal();">탈퇴하기</button>
-                        <button type="button" class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
+                    <div class="text-center">
+                        <span class="modal__title">회원 탈퇴</span>
+                    </div>
+                    <form action="/RoadMap/userWithdrawalProc" method="post" onsubmit="return del_check();" style="text-align: center;" id="withdrawal_form">
+                        <span >회원 탈퇴를 누르면 다시 되돌릴 수 없습니다. 탈퇴를 진행하시려면 <b>Account_withdrawal</b>를 입력해주세요.</span>
+                        <div class="input_body">
+                            <label for="DeleteCheck" class="inp">
+                                <input type="text" name="DeleteCheck" id="DeleteCheck" placeholder="&nbsp;">
+                                <span class="label">Account_withdrawal</span>
+                                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                                </svg>
+                                <span class="border"></span>
+                            </label>
+                        </div>
+<%--                        <input type="text" name="DeleteCheck" id="DeleteCheck" placeholder="Account_withdrawal" required/><br>--%>
+                        <span id="id_find"></span><br>
+                    </form>
+                    <div class="text-center" style="display:grid; grid-template-columns: repeat(3, 1fr);">
+                        <button type="button" style="grid-column: 2; grid-row:1" class="modal__btn" onclick="withdrawal();">탈퇴하기</button>
+                        <button type="button" style="grid-column: 3; grid-row:2" class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
                     </div>
                 </div>
             </div>
@@ -202,7 +237,7 @@
                                                         <div class="wrapper">
                                                             <a class="cta" id="my_career" href="/career/<%=SS_USER_UUID%>">
                                                                 <span>CareerRoadMap</span>
-                                                                <span>
+                                                                <span style="width: 20px; margin-left: 30px;">
                                                               <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                                 <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                                   <path class="one" d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z" fill="#FFFFFF"></path>
@@ -233,17 +268,37 @@
             <%-- 스터디 로드맵 신규 modal 시작 --%>
             <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
                 <div class="modal">
-                    <div>
-                        로드맵 제목: <input type="text" class="modal__title" id="study__title-add"/>
+                    <div class="text-center">
+                        <span class="modal__title">NEW STUDY ROADMAP</span>
                     </div>
-                    <div>
-                        <label for="StudypublicYn">공개여부:</label>
-                        <select name="StudypublicYn" id="StudypublicYn">
-                            <option value="Y">Y</option>
-                            <option value="N">N</option>
-                        </select>
+                    <div class="" style="display:grid;">
+                        <div class="input_body col_center" style="grid-column: 1/4">
+                            <label for="study__title-add" class="inp">
+                                <input type="text" class="modal__title" id="study__title-add" placeholder="&nbsp;">
+                                <span class="label">Study_RoadMap_Title</span>
+                                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                                </svg>
+                                <span class="border"></span>
+                            </label>
+                        </div>
+                        <div style="grid-column: 4" class="col_center">
+                            <label for="StudypublicYn">공개여부:</label>
+                        </div>
+                        <div class="col_center" style="grid-column: 5">
+                            <select name="StudypublicYn" id="StudypublicYn">
+                                <option value="Y" selected>Y</option>
+                                <option value="N">N</option>
+                            </select>
+                        </div>
                     </div>
-                    <button class="modal__btn" onclick="addStudyRoadmap();">확인</button>
+
+<%--                    <div>--%>
+<%--                        로드맵 제목: <input type="text" class="modal__title" id="study__title-add"/>--%>
+<%--                    </div>--%>
+                    <div class="text-center">
+                        <button class="modal__btn" onclick="addStudyRoadmap();">확인</button>
+                    </div>
                     <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
                 </div>
             </div>
@@ -252,17 +307,33 @@
             <%-- 커리어 로드맵 신규 modal 시작 --%>
             <div class="modal-container" id="m5-o" style="--m-background: hsla(0, 0%, 0%, .4);">
                 <div class="modal">
-                    <div>
-                        로드맵 제목: <input type="text" class="career__title-add" id="career__title-add"/>
+                    <div class="text-center">
+                        <span class="modal__title">NEW CAREER ROADMAP</span>
                     </div>
-                    <div>
-                        <label for="careerPublicYn">공개여부:</label>
-                        <select name="careerPublicYn" id="careerPublicYn">
-                            <option value="Y">Y</option>
-                            <option value="N">N</option>
-                        </select>
+                    <div class="" style="display:grid;">
+                        <div class="input_body col_center" style="grid-column: 1/4">
+                            <label for="career__title-add" class="inp">
+                                <input type="text" class="career__title-add" id="career__title-add" placeholder="&nbsp;">
+                                <span class="label">Career_RoadMap_Title</span>
+                                <svg width="120px" height="26px" viewBox="0 0 120 26">
+                                    <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                                </svg>
+                                <span class="border"></span>
+                            </label>
+                        </div>
+                        <div style="grid-column: 4" class="col_center">
+                            <label for="StudypublicYn">공개여부:</label>
+                        </div>
+                        <div style="grid-column: 5" class="col_center">
+                            <select name="careerPublicYn" id="careerPublicYn">
+                                <option value="Y" selected>Y</option>
+                                <option value="N">N</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="text-center">
                     <button class="modal__btn" onclick="addCareerRoadmap();">확인</button>
+                    </div>
                     <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
                 </div>
             </div>
@@ -429,11 +500,11 @@
             success : function(data) {
                 if (data == 1) {
                     $("#id_find").text("탈퇴 확인 문자열이 같습니다.");
-                    $("#id_find").attr("style", "color:#00f");
+                    $("#id_find").attr("style", "color:white");
                     DeleteCheck = 'Y'
                 } else {
                     $("#id_find").text("탈퇴 확인 문자열이 다릅니다.");
-                    $("#id_find").attr("style", "color:#f00");
+                    $("#id_find").attr("style", "color:palevioletred");
                     DeleteCheck = 'N'
                 }
             }
@@ -482,4 +553,73 @@
 
         })
     }
+</script>
+
+<%-- select box --%>
+<script>
+    $(document).ready(function (){
+        /* study */
+        $('#StudypublicYn').wrap('<div class="select_wrapper"></div>')
+        $('#StudypublicYn').parent().prepend('<span>'+ $(this).find(':selected').text().charAt(0) +'</span>');
+
+        $('#StudypublicYn').css('display', 'none');
+        $('#StudypublicYn').parent().append('<ul class="select_inner"></ul>');
+        $('#StudypublicYn').children().each(function(){
+            var opttext = $(this).text();
+            var optval = $(this).val();
+            $('#StudypublicYn').parent().children('.select_inner').append('<li id="' + optval + '">' + opttext + '</li>');
+        });
+
+
+
+        $('#StudypublicYn').parent().find('li').on('click', function (){
+            var cur = $(this).attr('id');
+            $('#StudypublicYn').parent().children('span').text($(this).text());
+            $('#StudypublicYn').children().removeAttr('selected');
+            $('#StudypublicYn').children('[value="'+cur+'"]').attr('selected','selected');
+            //console.log($('select').children('[value="'+cur+'"]').text());
+            $('#StudypublicYn').parent().removeClass('openSelect');
+
+            $('#StudypublicYn').parent().find('ul').hide();
+        });
+        $('#StudypublicYn').parent().find('span').on('click', function (){
+            $('#StudypublicYn').parent().find('ul').slideToggle(200);
+
+            $('#StudypublicYn').parent().toggleClass('openSelect');
+
+
+        });
+
+        /* career */
+        $('#careerPublicYn').wrap('<div class="select_wrapper"></div>')
+        $('#careerPublicYn').parent().prepend('<span>'+ $(this).find(':selected').text().charAt(1) +'</span>');
+
+        $('#careerPublicYn').css('display', 'none');
+        $('#careerPublicYn').parent().append('<ul class="select_inner"></ul>');
+        $('#careerPublicYn').children().each(function(){
+            var opttext = $(this).text();
+            var optval = $(this).val();
+            $('#careerPublicYn').parent().children('.select_inner').append('<li id="' + optval + '">' + opttext + '</li>');
+        });
+
+
+
+        $('#careerPublicYn').parent().find('li').on('click', function (){
+            var cur = $(this).attr('id');
+            $('#careerPublicYn').parent().children('span').text($(this).text());
+            $('#careerPublicYn').children().removeAttr('selected');
+            $('#careerPublicYn').children('[value="'+cur+'"]').attr('selected','selected');
+            //console.log($('select').children('[value="'+cur+'"]').text());
+            $('#careerPublicYn').parent().removeClass('openSelect');
+
+            $('#careerPublicYn').parent().find('ul').hide();
+        });
+        $('#careerPublicYn').parent().find('span').on('click', function (){
+            $('#careerPublicYn').parent().find('ul').slideToggle(200);
+
+            $('#careerPublicYn').parent().toggleClass('openSelect');
+
+
+        });
+    });
 </script>

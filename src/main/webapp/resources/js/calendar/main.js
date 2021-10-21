@@ -1,5 +1,8 @@
 var draggedEventIsAllDay;
 var activeInactiveWeekends = true;
+let tdate = new Date();
+let tyear = tdate.getFullYear();
+let tmonth = ('0' + (tdate.getMonth() + 1)).slice(-2);
 
 let today = new Date();
 
