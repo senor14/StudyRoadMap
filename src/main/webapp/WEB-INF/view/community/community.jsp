@@ -36,7 +36,10 @@
                         <div class="icon"></div>
                     </div> -->
 <%--        <input type="search" class="search" name="keyWord" placeholder="Search" onKeyDown="javascript: if (event.keyCode == 13) {findRoadMap()}">--%>
-        <input type="search" id="keyword" class="search" name="keyWord" placeholder="Search" onKeyDown="javascript: if (event.keyCode == 13) {getStudyMap()}">
+        <div>
+            <input type="search" id="keyword" class="search" name="keyWord" placeholder="Search" onKeyDown="javascript: if (event.keyCode == 13) {getStudyMap()}" onfocus="focusSearchbar()" onfocusout="focusoutSearchbar()">
+            <i id="search__icon" class="fas fa-search" onclick="getStudyMap()"></i>
+        </div>
     </div>
 </div>
 <div class="middle">
@@ -48,5 +51,8 @@
         <div class="swiper-pagination"></div>
     </div>
 </div>
+<script>
+    document.getElementById('keyword').value = "";
+</script>
 </body>
 </html>

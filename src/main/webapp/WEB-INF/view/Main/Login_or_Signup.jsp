@@ -18,7 +18,7 @@
     <title>Login Template</title>
 </head>
 
-<body translate="no">
+<body translate="no" onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
     <div class="form-structor">
         <h2 class="main-title">RoadMap</h2>
         <div class="signup"><br>
@@ -64,8 +64,14 @@
     <%-- modal 기본 --%>
     <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
         <div class="modal">
-            <div class="text-center">
-                <h1 class="modal__title" id="modal__title">아이디 찾기</h1>
+            <h1 class="modal__title" id="modal__title">아이디 찾기</h1>
+            <div>
+                <form action="/RoadMap/SendId" method="post" id="id_find_form">
+                    <span>EMAIL</span>
+                    <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>
+                </form>
+                <button type="button" class="modal__btn" onclick="id_find_submit();">확인</button>
+                <button type="button" class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
             </div>
 
             <form action="/RoadMap/SendId" method="post" id="id_find_form">
@@ -97,29 +103,16 @@
     <%-- modal 추가 --%>
     <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
         <div class="modal">
-            <div class="text-center">
-                <h1 class="modal__title">비밀번호 찾기</h1>
-            </div>
-            <form action="/RoadMap/ReMakePW" method="post" id="pwd_find_form">
-                <div class="input_body">
-                    <label for="userEmail" class="inp">
-                        <input type="text" name="userEmail" placeholder="&nbsp;">
-                        <span class="label">EMAIL</span>
-                        <svg width="120px" height="26px" viewBox="0 0 120 26">
-                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
-                        </svg>
-                        <span class="border"></span>
-                    </label>
-                </div>
-                <div class="input_body">
-                    <label for="userId" class="inp">
-                        <input type="text" name="userId" placeholder="&nbsp;">
-                        <span class="label">ID</span>
-                        <svg width="120px" height="26px" viewBox="0 0 120 26">
-                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
-                        </svg>
-                        <span class="border"></span>
-                    </label>
+            <h1 class="modal__title">비밀번호 찾기</h1>
+                <div>
+                    <form action="/RoadMap/ReMakePW" method="post" id="pwd_find_form">
+                        <span>EMAIL:</span>
+                        <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>
+                        <span>ID:</span>
+                        <input type="text" name="userId" placeholder="Type your ID" /><br>
+                    </form>
+                    <button type="button" class="modal__btn" onclick="pwd_find_submit();">확인</button>
+                    <button type="button" class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
                 </div>
 <%--                        <span>EMAIL:</span>--%>
 <%--                        <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>--%>
@@ -205,7 +198,7 @@
         };
 
         $.ajax({
-            url : "/RoadMap/emailCheck.do",
+            url : "/RoadMap/emailCheck",
             type : "post",
             data : query,
             success : function(data) {
@@ -337,31 +330,20 @@
 </script>
 <!--폼 관련 파일-->
 <script>
-    function id_find() {
+    function id_find_submit() {
 
         document.getElementById('id_find_form').submit();
 
     }
-    function pwd_find() {
+    function pwd_find_submit() {
 
         document.getElementById('pwd_find_form').submit();
 
     }
-    window.onload = function page_check() {
-        <%int check = 0;
-            if(session.getAttribute("SS_USER_ID") == null){
-            check = 1;
-        }%>
-        let check = <%=check%>;
-        console.log("check: ", check);
-        if (check == 0) {
-            location.href = "/index";
-        }
-    }
-    window.onpageshow = function (event) {
-        if(event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-            location.reload()
-        }
-    }
 </script>
+<script type="text/javascript">
+    window.history.forward();
+    function noBack(){window.history.forward();}
+</script>
+
 </html>

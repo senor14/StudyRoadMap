@@ -4,6 +4,16 @@ $(document).ready(function(){
     // getStudyMap()
 })
 
+function focusSearchbar() {
+    let searchIcon = document.getElementById("search__icon");
+    searchIcon.style.left = "1315px";
+}
+
+function focusoutSearchbar() {
+    let searchIcon = document.getElementById("search__icon");
+    searchIcon.style.left = "1310px";
+}
+
 function getStudyMap(){
     $(".swiper-wrapper").empty();
     let category = document.querySelector('input[name="category"]:checked').value
@@ -117,6 +127,14 @@ function noResult(test){
     document.getElementsByClassName("swiper-button-prev")[0].classList.add("hide")
 }
 
+function pageMove(roadId) {
+
+    console.log("pageMove")
+    console.log(document.getElementById("keyword"))
+    document.getElementById("keyword").value = "";
+    parent.document.location.href="/roadmaps/"+roadId;
+}
+
 function setSlide(category, data){
     let num = 0;
     data.forEach(result => {
@@ -133,7 +151,7 @@ function setSlide(category, data){
             // setCategory.textContent = "["+result.roadNodeDataArray.nodeCategory+"]"
             // setCategory.className = "setCategory"
             // slide.appendChild(setCategory)
-            slide.setAttribute("onclick","parent.document.location.href='/roadmaps/"+result.roadId+"'")
+            slide.setAttribute("onclick","javascript: pageMove('"+result.roadId+"')")
             slide.style = "background-position: center;" +
                 "background-repeat: no-repeat; " +
                 "background-size: 400px 400px; " +

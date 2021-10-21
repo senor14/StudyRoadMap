@@ -112,15 +112,17 @@ public class UserController {
 
     // 로그아웃
     @RequestMapping(value = "RoadMap/Logout")
-    public String Logout(HttpSession session) {
+    public String Logout(HttpSession session, ModelMap model) {
 
         log.info("/RoadMap/Logout 시작");
 
         session.invalidate();
 
+        model.addAttribute("url", "/RoadMap/LoginOrSignUp");
+
         log.info("/RoadMap/Logout 종료");
 
-        return "/Main/Login_or_Signup";
+        return "/redirectNArt";
     }
 
     /**
@@ -154,7 +156,7 @@ public class UserController {
         log.info("res : " + res);
 
         String msg;
-        String url = "/RoadMap/Login.do";
+        String url = "/RoadMap/LoginOrSignUp";
 
         if (res > 0) {
             msg = "회원가입에 성공했습니다.";
@@ -336,7 +338,7 @@ public class UserController {
     }
 
     /**
-     * Comment: 입력받은 아이디와 이메일을 사용하여 유저가 존재하는지 조회 후 존재하면 랜덤번호를 생성해서 비밀번호로 교체한다.
+     * Comment: 입력받은 아이디와` 이메일을 사용하여 유저가 존재하는지 조회 후 존재하면 랜덤번호를 생성해서 비밀번호로 교체한다.
      * */
     // 비밀번호 찾기 처리
     @RequestMapping(value = "RoadMap/ReMakePW", method = RequestMethod.POST)
@@ -379,10 +381,10 @@ public class UserController {
             int mailRes = MailService.doSendPassWordMail(uMap);
             if(mailRes <= 1) {
                 model.addAttribute("msg", "임시 비밀번호가 가입하신 메일 주소로 전송되었습니다.");
-                model.addAttribute("url", "/RoadMap/Login.do");
+                model.addAttribute("url", "/RoadMap/LoginOrSignUp");
             } else {
                 model.addAttribute("msg", "메일 서버의 오류로 임시 비밀번호 전송을 실패했습니다. 잠시 후 다시 시도해주세요.");
-                model.addAttribute("url", "/RoadMap/ReMakePW.do");
+                model.addAttribute("url", "/RoadMap/LoginOrSignUp");
             }
         }
         log.info("RoadMap/ReMakePW 종료");
@@ -434,8 +436,8 @@ public class UserController {
 
         Map<String, String> pMap = rList.get(0);
 
-        pMap.replace("userEmail", EncryptUtil.decAES128CBC(pMap.get("user_email")));
-        pMap.replace("userId", EncryptUtil.decAES128CBC(pMap.get("user_id")));
+        pMap.replace("userEmail", EncryptUtil.decAES128CBC(pMap.get("userEmail")));
+        pMap.replace("userId", EncryptUtil.decAES128CBC(pMap.get("userId")));
 
         int email_res = MailService.doSendIdMail(pMap);
 
@@ -491,6 +493,8 @@ public class UserController {
             model.addAttribute("msg", "서버의 오류로 인해 비밀번호 변경이 실패했습니다. 잠시 후 다시 시도해주세요. 변경이 계속 실패하는 경우 고객센터에 문의 바랍니다.");
         }
         model.addAttribute("url", "/RoadMap/LoginOrSignUp");
+
+        session.invalidate();
 
         log.info("PassWordChange 종료");
 
@@ -555,14 +559,14 @@ public class UserController {
 
         Map<String, Object> pMap = rList.get(0);
 
-        pMap.put("public", "N");
+        pMap.put("publicYn", "N");
 
         int career_res = userService.deleteCareerRoadMap(pMap);
         int mind_res = userService.deleteStudyMinddMap(pMap);
         int study_res = userService.deleteStudyRoadMap(pMap);
 
         String msg = "회원탈퇴가 완료되었습니다. 이용해주셔서 감사합니다. 비공개 커리어 로드맵 " + career_res + "개, 스터디 마인드맵 " + mind_res + "개, 스터디 로드맵" + study_res + "개가 삭제되었습니다.";
-        String url = "/RoadMap/Login.do";
+        String url = "/RoadMap/LoginOrSignUp";
 
         model.addAttribute("msg", msg);
         model.addAttribute("url", url);

@@ -4,6 +4,11 @@ let tdate = new Date();
 let tyear = tdate.getFullYear();
 let tmonth = ('0' + (tdate.getMonth() + 1)).slice(-2);
 
+let today = new Date();
+
+let year = today.getFullYear();
+let month = today.getMonth() + 1;
+
 var calendar = $('#calendar').fullCalendar({
 
  /** ******************
@@ -25,7 +30,7 @@ var calendar = $('#calendar').fullCalendar({
                               },
   eventLimitClick           : 'week', //popover
   navLinks                  : true,
-  defaultDate               : moment(tyear+'-'+tmonth), //실제 사용시 현재 날짜로 수정
+  defaultDate               : moment(`${year}-${month}`), //실제 사용시 현재 날짜로 수정
   timeFormat                : 'HH:mm',
   defaultTimedEventDuration : '01:00:00',
   editable                  : true,
