@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login_style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/modal.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/study_mindMap/study_mindMap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/input.css">
 
     <link rel="shortcut icon" href="#">
     <title>Login Template</title>
@@ -63,16 +64,32 @@
     <%-- modal 기본 --%>
     <div class="modal-container" id="m2-o" style="--m-background: hsla(0, 0%, 0%, .4);">
         <div class="modal">
-            <h1 class="modal__title" id="modal__title">아이디 찾기</h1>
-            <div>
-                <form action="/RoadMap/SendId" method="post" id="id_find_form">
-                    <span>EMAIL</span>
-                    <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>
-                </form>
-                <button type="button" class="modal__btn" onclick="id_find();">확인</button>
-                <button type="button" class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+            <div class="text-center">
+                <h1 class="modal__title" id="modal__title">아이디 찾기</h1>
             </div>
-            <button class="modal__btn" onclick="fnOpenModal('#m3-o'); fnCloseModal('#m2-o');">비밀번호 찾기</button>
+
+            <form action="/RoadMap/SendId" method="post" id="id_find_form">
+
+                <div class="input_body">
+                    <label for="userEmail" class="inp">
+                        <input type="text" name="userEmail" placeholder="&nbsp;">
+                        <span class="label">EMAIL</span>
+                        <svg width="120px" height="26px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                </div>
+<%--                <span>EMAIL</span>--%>
+<%--                <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>--%>
+            </form>
+            <div class="text-center" style="display:grid; grid-template-columns: repeat(5, 1fr);">
+                <button type="button" class="modal__btn" style="grid-column: 2;" onclick="id_find();">확인</button>
+                <button type="button" class="modal__btn"style="grid-column: 4;"onclick="fnCloseModal('#m2-o');" >취소</button>
+                <button class="modal__btn" style="grid-column: 2/5;" onclick="fnOpenModal('#m3-o'); fnCloseModal('#m2-o');">비밀번호 찾기</button>
+
+            </div>
+
         </div>
     </div>
     <%-- modal 기본 끝 --%>
@@ -80,18 +97,40 @@
     <%-- modal 추가 --%>
     <div class="modal-container" id="m3-o" style="--m-background: hsla(0, 0%, 0%, .4);">
         <div class="modal">
-            <h1 class="modal__title">비밀번호 찾기</h1>
-                <div>
-                    <form action="/RoadMap/ReMakePW" method="post" id="pwd_find_form">
-                        <span>EMAIL:</span>
-                        <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>
-                        <span>ID:</span>
-                        <input type="text" name="userId" placeholder="Type your ID" /><br>
-                    </form>
-                    <button type="button" class="modal__btn" onclick="pwd_find();">확인</button>
-                    <button type="button" class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
+            <div class="text-center">
+                <h1 class="modal__title">비밀번호 찾기</h1>
+            </div>
+            <form action="/RoadMap/ReMakePW" method="post" id="pwd_find_form">
+                <div class="input_body">
+                    <label for="userEmail" class="inp">
+                        <input type="text" name="userEmail" placeholder="&nbsp;">
+                        <span class="label">EMAIL</span>
+                        <svg width="120px" height="26px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
                 </div>
-            <button class="modal__btn" onclick="fnOpenModal('#m2-o'); fnCloseModal('#m3-o');">아이디 찾기</button>
+                <div class="input_body">
+                    <label for="userId" class="inp">
+                        <input type="text" name="userId" placeholder="&nbsp;">
+                        <span class="label">ID</span>
+                        <svg width="120px" height="26px" viewBox="0 0 120 26">
+                            <path d="M0,25 C21,25 46,25 74,25 C102,25 118,25 120,25"></path>
+                        </svg>
+                        <span class="border"></span>
+                    </label>
+                </div>
+<%--                        <span>EMAIL:</span>--%>
+<%--                        <input type="text" name="userEmail" placeholder="Type your EMAIL" /><br>--%>
+<%--                        <span>ID:</span>--%>
+<%--                        <input type="text" name="userId" placeholder="Type your ID" /><br>--%>
+            </form>
+            <div class="text-center" style="display:grid; grid-template-columns: repeat(5, 1fr);">
+                <button type="button" style="grid-column: 2;" class="modal__btn" onclick="pwd_find();">확인</button>
+                <button type="button" style="grid-column: 4;" class="modal__btn" onclick="fnCloseModal('#m3-o');" >취소</button>
+                <button class="modal__btn" style="grid-column: 2/5;" onclick="fnOpenModal('#m2-o'); fnCloseModal('#m3-o');">아이디 찾기</button>
+            </div>
         </div>
     </div>
     <%-- modal 추가 끝 --%>
