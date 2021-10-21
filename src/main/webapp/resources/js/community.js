@@ -6,12 +6,14 @@ $(document).ready(function(){
 
 function focusSearchbar() {
     let searchIcon = document.getElementById("search__icon");
-    searchIcon.style.left = "1315px";
+    searchIcon.style.left = "1305px";
+    console.log("focusSearchbar")
 }
 
 function focusoutSearchbar() {
     let searchIcon = document.getElementById("search__icon");
-    searchIcon.style.left = "1310px";
+    searchIcon.style.left = "1290px";
+    console.log("focusoutSearchbar")
 }
 
 function getStudyMap(){

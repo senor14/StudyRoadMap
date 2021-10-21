@@ -18,14 +18,14 @@
 </head>
 <body>
 <div class="top">
-    <div class="setting">
+    <div class="setting" style="margin-right: 10px">
         <select class="type" id="searchType">
             <option value="title">타이틀검색</option>
             <option value="category">카테고리검색</option>
         </select>
-        <div class="category">
+        <div class="category" style="margin-top:5px">
             RoadMap:
-            <label><input type="radio" name="category" value="s" onclick="getStudyMap()" checked>Study</label>
+            <label style="margin-left:10px;"><input type="radio" name="category" value="s" onclick="getStudyMap()" checked>Study</label>
 <%--            <label><input type="radio" name="category" value="c" onclick="getStudyMap()">Career</label>--%>
 
         </div>
