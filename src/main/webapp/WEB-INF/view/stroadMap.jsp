@@ -67,7 +67,7 @@
 </form>
 <div style="position: fixed; background-color: black; width: 100%; z-index: 3000">
     <a href="/index"><i class="fas fa-home" style="position: fixed; margin-left: 10px; margin-top:10px; font-size: 30px; color:white"></i></a>
-    <a href="javascript:history.back();"><i class="far fa-arrow-alt-circle-left" style="position: fixed; margin-left: 50px; margin-top:10px; font-size: 30px; color:white"></i></a>
+    <a href="/index"><i class="far fa-arrow-alt-circle-left" style="position: fixed; margin-left: 50px; margin-top:10px; font-size: 30px; color:white"></i></a>
     <h1 style="color:white; margin-left: 100px;"><%=roadMapInfo.getRoadTitle()%></h1>
     <h2 style="color:white; margin-left: 100px;"><%=userId%></h2>
 </div>
