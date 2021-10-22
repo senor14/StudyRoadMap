@@ -79,12 +79,13 @@
 <%--            참고서적 링크: <a id="modal__book__link-a"></a>--%>
 <%--        </div>--%>
 <%--        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea></div>--%>
-
-        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">추가</button>
-        <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m2-o');" >취소</button>
-        <button class="modal__btn" style="float: right" onclick="fnOpenModal('#m5-o');">삭제</button>
-        <button class="modal__btn" style="float: right" onclick="fnOpenModal('#m4-o');">수정</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="fnOpenModal('#m3-o');">추가</button>
+            <button class="modal__btn" style="float: right" onclick="fnOpenModal('#m4-o');">수정</button>
+            <button class="modal__btn" style="float: right" onclick="fnOpenModal('#m5-o');">삭제</button>
+            <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m2-o');" >취소</button>
+            <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 기본 끝 --%>
@@ -152,9 +153,11 @@
 <%--            참고서적 링크: <input type="text" id="modal__book_link-add">--%>
 <%--        </div>--%>
 <%--        <div>내용: <textarea rows="5" cols="33"  id="modal__content-add"></textarea></div>--%>
-        <button class="modal__btn" onclick="insertMindAndNodeData(document.getElementById('modal__mindId').innerText)">저장</button>
-        <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m3-o');" >취소</button>
-        <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="insertMindAndNodeData(document.getElementById('modal__mindId').innerText)">저장</button>
+            <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m3-o');" >취소</button>
+            <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 추가 끝 --%>
@@ -225,9 +228,11 @@
         </div>
         <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content-mod"></textarea></div>
         --%>
-        <button class="modal__btn" onclick="updateMindAndNodeData(document.getElementById('modal__mindId').innerText);">저장</button>
-        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m4-o');" >취소</button>
-        <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="updateMindAndNodeData(document.getElementById('modal__mindId').innerText);">저장</button>
+            <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m4-o');" >취소</button>
+            <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 수정 끝 --%>
@@ -238,9 +243,11 @@
         <div class="text-center">
             <h1 id="modal__title-del">삭제하시겠습니까?</h1>
         </div>
-        <button class="modal__btn" onclick="deleteMindAndNodeData(document.getElementById('modal__mindId').innerText);">예</button>
-        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m5-o');" >아니오</button>
-        <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="deleteMindAndNodeData(document.getElementById('modal__mindId').innerText);">예</button>
+            <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m5-o');" >아니오</button>
+            <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 삭제 끝 --%>
@@ -249,8 +256,10 @@
 <div class="modal-container" id="m6-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <h1 id="modal__title-del__impossible">루트 노드는 수정/삭제할 수 없습니다.</h1>
-        <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >확인</button>
-        <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >확인</button>
+            <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 삭제 불가능 끝 --%>

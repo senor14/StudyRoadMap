@@ -48,6 +48,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/icomoon.css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tab.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/input.css">
 
 <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />--%>
     <!-- Copyright 1998-2021 by Northwoods Software Corporation. -->
@@ -83,11 +84,11 @@
         <%--        <div>--%>
         <%--            카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>--%>
         <%--        </div>--%>
-        <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+            <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 끝 --%>
@@ -98,15 +99,16 @@
     }
 </script>
 
-<%-- 노드 클릭시 정보 모달 (다이어그램) [수정, 취소] {text} --%>
+<%-- 노드 클릭시 정보 모달 (다이어그램) [확인] {text} --%>
 <div class="modal-container" id="m4-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div style="text-align: center">
             <h1 class="modal__diagram__text" id="modal__diagram__text">제목</h1>
         </div>
-        <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
-        <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="fnCloseModal('#m4-o');" >확인</button>
+            <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 3 끝 --%>
@@ -145,8 +147,10 @@
         <%--        <div>색:--%>
         <%--            <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />--%>
         <%--        </div>--%>
-        <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >확인</button>
-        <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >확인</button>
+            <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 5 끝 --%>
@@ -173,21 +177,25 @@
         <%--        <div>색:--%>
         <%--            <input type="color" class="modal__category__color" id="modal__category__color" disabled>--%>
         <%--        </div>--%>
-        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m8-o');">확인</button>
-        <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m8-o');">확인</button>
+            <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 7 끝 --%>
 
-<%-- 노드 클릭시 정보 모달 (카테고리) [수정, 취소] {category(제목), color} --%>
+<%-- 복제 모달 --%>
 <div class="modal-container" id="m14-o" style="--m-background: hsla(0, 0%, 0%, .4);">
     <div class="modal">
         <div style="text-align: center;">
             <h1 class="modal__category__text" id="modal__duplicate__text" style="color:white;">내 로드맵으로 복제하시겠습니까?</h1>
         </div>
-        <button class="modal__btn" onclick="duplicateStudyRoadmap();">확인</button>
-        <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m14-o');">취소</button>
-        <a onclick="fnCloseModal('#m14-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="duplicateStudyRoadmap();">확인</button>
+            <button class="modal__btn" style="float:right;" onclick="fnCloseModal('#m14-o');">취소</button>
+            <a onclick="fnCloseModal('#m14-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 7 끝 --%>

@@ -82,8 +82,10 @@
         <%--        </div>--%>
         <%--        <div>내용: <textarea rows="5" cols="33" class="modal__content" id="modal__content" disabled></textarea></div>--%>
 
-        <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m2-o');" >확인</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" style="float: right" onclick="fnCloseModal('#m2-o');" >확인</button>
+            <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 기본 끝 --%>

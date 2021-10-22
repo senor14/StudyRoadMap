@@ -90,11 +90,13 @@
 <%--        <div>--%>
 <%--            카테고리:<input type="text" class="modal__node__category" id="modal__node__category" readonly/>--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m3-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
-        <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="hrefMindMap();">마인드맵</button>
+            <button class="modal__btn" onclick="fnOpenModal('#m3-o');">수정</button>
+            <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m2-o');" >취소</button>
+            <a onclick="fnCloseModal('#m2-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 끝 --%>
@@ -135,9 +137,11 @@
 <%--        <div>--%>
 <%--            카테고리:<input type="text" class="modal__node__category" id="modal__node__category-mod" />--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m3-o');">취소</button>
-        <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="updateNodeData();">저장</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m3-o');">취소</button>
+            <a onclick="fnCloseModal('#m3-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 2 끝 --%>
@@ -149,9 +153,11 @@
         <div style="text-align: center">
             <h1 class="modal__diagram__text" id="modal__diagram__text">제목</h1>
         </div>
-        <button class="modal__btn" onclick="fnOpenModal('#m5-o');">수정</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m4-o');">취소</button>
-        <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="fnOpenModal('#m5-o');">수정</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m4-o');">취소</button>
+            <a onclick="fnCloseModal('#m4-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 3 끝 --%>
@@ -172,9 +178,11 @@
             </div>
 <%--            제목:<input type="text" class="modal__diagram__text" id="modal__diagram__text-mod" />--%>
         </div>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m5-o');">취소</button>
-        <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="updateNodeData();">저장</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m5-o');">취소</button>
+            <a onclick="fnCloseModal('#m5-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 4 끝 --%>
@@ -213,10 +221,12 @@
 <%--        <div>색:--%>
 <%--            <input type="color" class="modal__lane__color" id="modal__lane__color" disabled />--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="fnOpenModal('#m7-o');">수정</button>
-        <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >취소</button>
-        <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="fnOpenModal('#m7-o');">수정</button>
+            <button class="modal__btn" onclick="fnOpenModal('#m13-o');">삭제</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m6-o');" >취소</button>
+            <a onclick="fnCloseModal('#m6-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 5 끝 --%>
@@ -267,9 +277,11 @@
 <%--        <div>색:--%>
 <%--            <input type="color" class="modal__lane__color" id="modal__lane__color-mod">--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m7-o');" >취소</button>
-        <a onclick="fnCloseModal('#m7-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="updateNodeData();">저장</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m7-o');" >취소</button>
+            <a onclick="fnCloseModal('#m7-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 6 끝 --%>
@@ -295,10 +307,12 @@
 <%--        <div>색:--%>
 <%--            <input type="color" class="modal__category__color" id="modal__category__color" disabled>--%>
 <%--        </div>--%>
-        <button class="modal__btn" style="float:right;" onclick="fnOpenModal('#m9-o');">수정</button>
-        <button class="modal__btn" style="float:left;" onclick="fnOpenModal('#m13-o');">삭제</button>
-        <button class="modal__btn" style="float:left;" onclick="fnCloseModal('#m8-o');">취소</button>
-        <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" style="float:right;" onclick="fnOpenModal('#m9-o');">수정</button>
+            <button class="modal__btn" style="float:left;" onclick="fnOpenModal('#m13-o');">삭제</button>
+            <button class="modal__btn" style="float:left;" onclick="fnCloseModal('#m8-o');">취소</button>
+            <a onclick="fnCloseModal('#m8-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 7 끝 --%>
@@ -334,9 +348,11 @@
 <%--        <div>--%>
 <%--            색:<input type="color" class="modal__category__color" id="modal__category__color-mod"/>--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="updateNodeData();">저장</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m9-o');">취소</button>
-        <a onclick="fnCloseModal('#m9-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="updateNodeData();">저장</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m9-o');">취소</button>
+            <a onclick="fnCloseModal('#m9-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 8 끝 --%>
@@ -363,7 +379,9 @@
 <%--        <div>--%>
 <%--            제목:<input type="text" id="modal__node__text-add">--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="insertNodeData('Node');">확인</button>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="insertNodeData('Node');">확인</button>
+        </div>
     </div>
 </div>
 <%-- modal 9 끝 --%>
@@ -414,9 +432,11 @@
 <%--        <div>--%>
 <%--            색:<input type="color" id="modal__lane__color-add"/>--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="insertNodeData('Lane');">확인</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m11-o');" >취소</button>
-        <a onclick="fnCloseModal('#m11-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="insertNodeData('Lane');">확인</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m11-o');" >취소</button>
+            <a onclick="fnCloseModal('#m11-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 10 끝--%>
@@ -452,9 +472,11 @@
 <%--        <div>--%>
 <%--            색:<input type="color" id="modal__category__color-add" />--%>
 <%--        </div>--%>
-        <button class="modal__btn" onclick="insertNodeData('Category');">확인</button>
-        <button class="modal__btn" onclick="fnCloseModal('#m12-o');" style="float:right;">취소</button>
-        <a onclick="fnCloseModal('#m12-o');" class="link-2"></a>
+        <div style="display: flex; justify-content: space-evenly">
+            <button class="modal__btn" onclick="insertNodeData('Category');">확인</button>
+            <button class="modal__btn" onclick="fnCloseModal('#m12-o');" style="float:right;">취소</button>
+            <a onclick="fnCloseModal('#m12-o');" class="link-2"></a>
+        </div>
     </div>
 </div>
 <%-- modal 11 끝--%>
